@@ -49,7 +49,7 @@
         $(document).ready(function(){
             
             //link click
-            $("a[target='_blank']:not([href$='.pdf'])").click(function () {
+           /*  $("a[target='_blank']:not([href$='.pdf'])").click(function () {
                 var hrefTemp =$(this).attr('href');
                     var r = confirm(strMsg);
                     alert(r);
@@ -85,7 +85,7 @@
                         return false;
                      }
             });
-
+ */
             var $affectedElements = $("div,p,a,h5,h4,h3,h2, li.nav-link"); // Can be extended, ex. $("div, p, span.someClass")
             var rtext = 0;
                 // Storing the original size in a data attribute so size can be reset
@@ -128,7 +128,8 @@
             // Function to change webpage background color
              
             $(".black").click(function(){
-                $("body").css("background","#000");
+            	 $('body').addClass('black_act')
+              /*   $("body").css("background","#000");
                 $("footer").css("background","#000");
                 $("footer p").css("color","#ff0");
                 $("footer h6").css("color","#ff0");
@@ -142,7 +143,8 @@
                 $(".top-section a span").css("color","#ff0");
                 $(".btn .button .search").css("color","#ff0");
                 $(".date").css("color","#ff0");
-              
+                $(".login-re a").css("color","#02263c");
+                
               //
                 $(".bg-dark_new").css("background","#000");
                 $(".bg-dark_new a").css("color","#ff0");
@@ -201,11 +203,12 @@
                 $(".leftColm .menu li a").css("color","#ff0");
                 //inner-slider
                 $(".inner-slider").css("background","#000");
-                $(".inner-slider h1").css("color","#ff0");
+                $(".inner-slider h1").css("color","#ff0"); */
                
             })
             $(".white").click(function(){
-                $("body").css("background","#fff");
+            	 $('body').removeClass('black_act')
+               /*  $("body").css("background","#fff");
                 $("footer").css("background","#e8e8e8");
                 $("footer p").css("color","#21316c");
 
@@ -216,11 +219,14 @@
                 $("li").css("color","#21316c");
 
                 //top-section
-                $(".top-section").css("background","#ececec");
-                $(".top-section a").css("color","#21316c");
-                $(".top-section a span").css("color","#21316c");
-                $(".btn .button .search").css("color","#21316c");
-                $(".date").css("color","#21316c");
+                $(".top-section").css("background","#02263c");
+                $(".top-section a").css("color","#fff");
+                $(".top-section a span").css("color","#fff");
+                $(".btn .button .search").css("color","#fff");
+                $(".date").css("color","#fff");
+
+
+                $(".login-re a").css("color","#02263c");
                 
                 $(".bg-dark_new").css("background","#21316c");
                 $(".bg-dark_new a").css("color","#fff");
@@ -233,7 +239,7 @@
                 $(".dropdown-submenu").css("background","#fff");
                 $(".dropdown-submenu a").css("background","#fff");
                 $(".dropdown-submenu a").css("color","#16181b");
-                
+                //
                 
                 //slider
                 //$(".slider").css("background","url(/rusafronend/resources/images/slider-bg.jpg) repeat-x");
@@ -279,7 +285,7 @@
                 
                 //inner-slider
                 $(".inner-slider").css("background","#00104a");
-                $(".inner-slider h1").css("color","#fff");
+                $(".inner-slider h1").css("color","#fff"); */
                
             })
         });
