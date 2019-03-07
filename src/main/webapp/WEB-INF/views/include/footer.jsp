@@ -46,10 +46,10 @@
                        			<a href="${socialChannelData[2].urllinks}" target="_blank"><span class="icon-twitter"></span></a>
                        			</c:if>
                        			  <c:if test="${socialChannelData[3].isActive==1}">
-                       			<a href="${socialChannelData[3].urllinks}" target="_blank"><span class="icon-twitter"></span></a>
+                       			<a href="${socialChannelData[3].urllinks}" target="_blank"><span class="icon-linkedin-logo"></span></a>
                        			</c:if>
                        			  <c:if test="${socialChannelData[4].isActive==1}">
-                       			<a href="${socialChannelData[4].urllinks}" target="_blank"><span class="icon-twitter"></span></a> 
+                       			<a href="${socialChannelData[4].urllinks}" target="_blank"><span class="icon-google-plus-logo"></span></a> 
                        			</c:if>
                        			
                   
