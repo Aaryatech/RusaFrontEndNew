@@ -24,8 +24,9 @@ String user = null;
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <meta name="description" content="${sessionScope.homePageMetaData.metaDescription}">
+        <meta name="description" content="${image.pageMetaDescription}">
         <meta name="author" content="${sessionScope.homePageMetaData.metaAuthor}">
+        <meta name="keywords" content="${image.pageMetaKeyword}">
         <link rel="icon" href="../../favicon.ico">
         <title>${sessionScope.homePageMetaData.siteTitle}</title>
           <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
@@ -75,9 +76,9 @@ String user = null;
                         <br><br>
                         <h2>${image.heading}</h2>
                         <p>${image.descriptions}</p>
-                        <h5>Meta Title :</h5><p> ${image.pageMetaTitle}</p>
+                     <%--    <h5>Meta Title :</h5><p> ${image.pageMetaTitle}</p>
                         <h5>Meta Description :</h5> <p>${image.pageMetaDescription}</p>
-                        <h5>KeyWords :</h5> <p>${image.pageMetaKeyword}</p>
+                        <h5>KeyWords :</h5> <p>${image.pageMetaKeyword}</p> --%>
                      </div> 
                    </div>     
                 </div>
