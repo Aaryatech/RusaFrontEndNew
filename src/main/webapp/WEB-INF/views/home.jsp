@@ -101,7 +101,7 @@
 			</div>
 		</div>
 		<div class="row">
-				<div class="col-12 col-sm-6 col-lg-6 news-notifications">
+				<div class="col-12 col-sm-4 col-lg-4 news-notifications">
 				<h3>News and Notification</h3>
 				<div class="tab-content">
 					<div id="update" class="tab-pane active">
@@ -178,7 +178,7 @@
 
 
 					
-    		<div class="col-12 col-sm-3 col-lg-3 gallery">
+    		<div class="col-12 col-sm-4 col-lg-4 gallery">
     		<h3>Recent Gallery</h3>
 						<c:if test="${photoList.size()>0}">
 					   <div class="border-box">
@@ -232,7 +232,7 @@
 						<iframe width="100%" height="223" src="https://www.youtube.com/embed/Dd7gXbkSLeQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
                     </div> -->
-			<div class="col-12 col-sm-3 col-lg-3 gallery">
+			<div class="col-12 col-sm-4 col-lg-4 gallery">
 						<h3>Video</h3>
                         <div class="border-box">	
 					${videoGalleryDetail[0].fileName}	</div>
