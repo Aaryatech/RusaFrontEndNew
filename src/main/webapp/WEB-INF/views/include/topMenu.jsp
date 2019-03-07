@@ -4,12 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 
-<head>
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css" rel="stylesheet" type="text/css" >
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900" rel="stylesheet">
-</head>
+
 <c:url var="checkMaintainance" value="/checkMaintainance" />
 <div class="top-menu" id="top-menu">
 	<div>
@@ -32,14 +27,7 @@
 					</button>
 				</form>
                 </div>
-			<%-- 	<form class="form-inline my-2 my-md-0"
-					action="${pageContext.request.contextPath}/searchData" method="get">
-					<input class="form-control" type="text" placeholder="Search"
-						name="word" value="${seachSentence}">
-					<button type="submit" id="contact-btn" class="btn button search">
-						<span class="icon-search icon"></span>
-					</button>
-				</form> --%>
+	
 			</div>
 		</div>
 	<nav class="navbar navbar-expand-md bg-dark_new justify-content-md-center">

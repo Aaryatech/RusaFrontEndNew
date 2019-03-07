@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  
-<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>    
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jcarousel.responsive.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.jcarousel.min.js"></script>
+     <!-- JavaScript-->
+     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+     <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>    
+     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jcarousel.responsive.js"></script>
+     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.jcarousel.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script>
 <script type="text/javascript">
     $(document).ready(function ($) {
@@ -42,7 +43,7 @@
     
     
 </script>   
-<script>
+ <script>
            
 
         $(document).ready(function(){
@@ -235,8 +236,8 @@
                 
                 
                 //slider
-                //$(".slider").css("background","url(${pageContext.request.contextPath}/resources/images/slider-bg.jpg) repeat-x");
-                document.getElementById('slider').style.backgroundImage="url(${pageContext.request.contextPath}/resources/images/slider-bg.jpg)"; // specify the image path here
+                //$(".slider").css("background","url(/rusafronend/resources/images/slider-bg.jpg) repeat-x");
+                document.getElementById('slider').style.backgroundImage="url(/rusafronend/resources/images/slider-bg.jpg)"; // specify the image path here
 
                 $(".slider h1").css("color","#e1341a");
                 $(".slider h1 span").css("color","#212121");
@@ -284,4 +285,21 @@
         });
      
     </script>
- 
+ <script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("myBtn").style.display = "block";
+  } else {
+    document.getElementById("myBtn").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
