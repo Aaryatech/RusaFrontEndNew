@@ -25,6 +25,7 @@
                             <li><a href="${pageContext.request.contextPath}/siteMap">Site Map</a></li>
                             <li><a href="#">Associate with</a></li>
                             <li><a href="#">FAQ</a></li>
+                              <li><a href="#">Recruitment</a></li>
                             <li><a href="#">MyGov in Media</a></li>
                             <li><a href="#">Website Policies</a></li>
                         </ul>
