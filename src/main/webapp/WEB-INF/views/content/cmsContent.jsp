@@ -242,13 +242,27 @@
 				<c:if test="${pageContent.faqContentList.size()>0}">
 					<h2>FAQ's</h2>
 
-					<c:forEach items="${pageContent.faqContentList}"
-						var="faqContentList" varStatus="loop">
+					
 
-						<ul>
-							<li><strong>${faqContentList.faqQue}</strong><br>
-								<div class="clearfix"></div> ${faqContentList.faqAns}</li>
-						</ul>
+						 
+                <div id="accordion" class="accordion">
+                  
+                    <c:forEach items="${pageContent.faqContentList}"
+						var="faqContentList" varStatus="loop">
+						  <div class="faq-section">
+                        <div class="card-header " data-toggle="collapse" href="#collapseOne">
+                            <a class="card-title">
+                            <span>${faqContentList.faqQue}</span>
+                            </a>
+                        </div>
+                        
+                        <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
+								<div class="clearfix"></div> ${faqContentList.faqAns}
+						</div>
+						</div>
+					 </c:forEach>
+						
+					</div>
 						<c:if test="${loop.last}">
 							<h6 style="text-align: right;">
 								Last Updated on
@@ -258,7 +272,7 @@
 								</c:choose>
 							</h6>
 						</c:if>
-					</c:forEach>
+				
 					<c:set var="find" value="1"></c:set>
 				</c:if>
 
@@ -358,10 +372,10 @@
 				</div>
                 </div> -->
 
-				<c:if test="${find==1}">
+				<%-- <c:if test="${find==1}">
 					<a href="javascript:void(0)" onclick="window.print()"
 						style="text-align: right;"> print</a>
-				</c:if>
+				</c:if> --%>
 
 
 				<c:if test="${find==0}">

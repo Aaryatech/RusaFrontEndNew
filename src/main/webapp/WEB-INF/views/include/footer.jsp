@@ -58,7 +58,7 @@
                       <%--   </c:forEach> --%>
                     </div>
                 </div>
-            </div>
+            </div>  
         </footer>
         <div class="copy-right">
             Copyright 2018 RUSA, Govt. of Maharashtra. | <a href="#">Disclaimer</a> | <a href="#">Privacy Policy</a>
