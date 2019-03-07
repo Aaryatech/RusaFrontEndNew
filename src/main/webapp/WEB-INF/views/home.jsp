@@ -106,71 +106,21 @@
 				<div class="tab-content">
 					<div id="update" class="tab-pane active">
 						<div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+							<h5>Digital Launch of Rashtriya Uchchatar Shiksha Abhiyan (RUSA) Projects</h5>
+							<p>Digital Launch of Rashtriya Uchchatar Shiksha Abhiyan (RUSA) Projects by Hon’ble Prime Minister on 3rd February 2019 ...</p>
 						</div>
 						<div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+							<h5>15th Meeting of the Project Approval Board</h5>
+							<p> 
+							PAB meeting to be held on 24th January 2019.  
+							Click here to view the minutes of the 15th PAB Meeting Presentation of proposals by institutions approved under component.   ...</p>
 						</div>
 						<div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        <div class="tab-content-section">
-							<h5><a href="#">Lorem Ipsum is simply</a></h5>
-							<p>Lorem Ipsum is simply dummy text of the printing and
-								typesetting industry. Lorem Ipsum has been the industry's ...</p>
-						</div>
-                        
+							<h5>RUSA Meeting on Preparedness of Digital Launch</h5>
+							<p>PAB meeting to be held on 24th January 2019.  
+							Click here to view the minutes of the 15th PAB Meeting Presentation of proposals by institutions approved under component.   ...</p>
+												</div>
+                       
                         <a href="#">Read More</a>
 					</div>
 				</div>
