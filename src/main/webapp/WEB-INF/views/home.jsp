@@ -101,28 +101,77 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-12 col-sm-6 col-lg-6">
-				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item nutrition-task-bar-item"><a
-						class="nav-link active" data-toggle="tab" href="#update">News And Notification</a></li>
-
-				</ul>
+				<div class="col-12 col-sm-6 col-lg-6 news-notifications">
+				<h3>News and Notification</h3>
 				<div class="tab-content">
 					<div id="update" class="tab-pane active">
 						<div class="tab-content-section">
-							<h5>Digital Launch of Rashtriya Uchchatar Shiksha Abhiyan (RUSA) Projects</h5>
-							<p>Digital Launch of Rashtriya Uchchatar Shiksha Abhiyan (RUSA) Projects by Hon’ble Prime Minister on 3rd February 2019 ...</p>
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
 						</div>
 						<div class="tab-content-section">
-							<h5>15th Meeting of the Project Approval Board</h5>
-							<p> 
-							PAB meeting to be held on 24th January 2019.  
-							Click here to view the minutes of the 15th PAB Meeting Presentation of proposals by institutions approved under component.   ...</p>
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
 						</div>
 						<div class="tab-content-section">
-							<h5>RUSA Meeting on Preparedness of Digital Launch</h5>
-							<p></p>
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
 						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        <div class="tab-content-section">
+							<h5><a href="#">Lorem Ipsum is simply</a></h5>
+							<p>Lorem Ipsum is simply dummy text of the printing and
+								typesetting industry. Lorem Ipsum has been the industry's ...</p>
+						</div>
+                        
+                        <a href="#">Read More</a>
 					</div>
 				</div>
 			</div>
@@ -130,9 +179,9 @@
 
 					
     		<div class="col-12 col-sm-3 col-lg-3 gallery">
+    		<h3>Recent Gallery</h3>
 						<c:if test="${photoList.size()>0}">
-						<div class="col-12 col-sm-6 col-lg-6">
-							<h3>Recent Gallery</h3>
+					   <div class="border-box">
 							<div id="carouselExampleControls" class="carousel slide"
 								data-ride="carousel">
 								<div class="carousel-inner">
@@ -177,6 +226,12 @@
 						</div>
 					
 
+			<!-- <div class="col-12 col-sm-3 col-lg-3 gallery">
+						<h3>Video</h3>
+                        <div class="border-box">	
+						<iframe width="100%" height="223" src="https://www.youtube.com/embed/Dd7gXbkSLeQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						</div>
+                    </div> -->
 			<div class="col-12 col-sm-3 col-lg-3 gallery">
 						<h3>Video</h3>
                         <div class="border-box">	
@@ -187,11 +242,11 @@
 		</div>
 		<div class="row news-section">
 			<h2>
-				<span>News</span>
+				<span>Updates</span>
 			</h2>
 				<c:forEach items="${newsBlogsList}" var="newsBlogsList"
 										varStatus="count">
-										<div class="col-12 col-sm-3 col-lg-3">
+									<div class="col-12 col-sm-3 col-lg-3">
 				<a href="${newsBlogsList.newsSourceUrlName}"><img src="${sessionScope.gallryImageURL}${newsBlogsList.featuredImage}" width="250" height="228" alt="${newsBlogsList.heading}"></a>
 				<h5>${newsBlogsList.heading}</h5>
 				<c:set var="string4" value="${newsBlogsList.descriptions}" />
@@ -237,10 +292,10 @@
 			<div class="col-12 col-sm-6 col-lg-6">
 				<div class="testimonials">
 						<h5>Testimonials</h5>
-					<div id="carouselExampleControls2" class="carousel slide"
+						<div id="carouselExampleControls2" class="carousel slide"
 						data-ride="carousel">
 						<div class="carousel-inner"> 
-                            <div class="carousel-item active">
+                           
                                  
 							  <c:forEach items="${sessionScope.testImonial}" var="testImonial"
 								varStatus="count">
@@ -249,10 +304,11 @@
 										<div class="carousel-item active">
 
 											<c:if test="${not empty testImonial.imageName}">
+											 <div class="carousel-item active">
 												<img
 													src="${sessionScope.gallryImageURL}${testImonial.imageName}"
 													width="100" height="100" alt="${testImonial.fromName}" class="user">
-
+											</div>
 											</c:if>
 											<p>
 												<strong>${testImonial.fromName}</strong>
@@ -264,10 +320,11 @@
 										<div class="carousel-item ">
 
 											<c:if test="${not empty testImonial.imageName}">
+											 <div class="carousel-item active">
 												<img
 													src="${sessionScope.gallryImageURL}${testImonial.imageName}"
 													width="100" height="100" alt="${testImonial.fromName}" class="user">
-
+												</div>
 											</c:if>
 											<p>
 												<strong>${testImonial.fromName}</strong>
