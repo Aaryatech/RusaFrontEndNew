@@ -1,0 +1,75 @@
+/*!
+ * Lightbox for Bootstrap 3 by @ashleydw
+ * https://github.com/ashleydw/lightbox
+ *
+ * License: https://github.com/ashleydw/lightbox/blob/master/LICENSE
+ */
+
+.ekko-lightbox-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ekko-lightbox-nav-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
+
+.ekko-lightbox-nav-overlay a {
+  z-index: 100;
+  display: inline-block;
+  width:50%;
+  height:30px;
+  padding-top:25%;
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 2px 2px 4px #000;
+  opacity: 1;
+  filter: dropshadow(color=#000000, offx=2, offy=2);
+  -webkit-transition: opacity 0.5s;
+     -moz-transition: opacity 0.5s;
+       -o-transition: opacity 0.5s;
+          transition: opacity 0.5s;
+}
+.ekko-lightbox-nav-overlay a:first-child{
+    text-align: left;
+	padding-left:20px;
+}
+
+.ekko-lightbox-nav-overlay a:last-child{
+    text-align: right;
+	padding-right:20px;
+}
+.ekko-lightbox-nav-overlay a:empty {
+  width: 49%;
+}
+
+.ekko-lightbox a:hover {
+  text-decoration: none;
+  opacity: 1;
+  outline:none;
+}
+
+.ekko-lightbox .glyphicon-chevron-left {
+  left:23px;
+  float: left;
+  padding-left: 15px;
+  text-align: left;
+  background:url(../images/left.png) 0px center no-repeat;
+}
+
+.ekko-lightbox .glyphicon-chevron-right {
+  right:23px;
+  float: right;
+  padding-right: 15px;
+  text-align: right;
+    background:url(../images/right.png) right center no-repeat;
+}
+
+.ekko-lightbox .modal-footer {
+  text-align: left;
+}
