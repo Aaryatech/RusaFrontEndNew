@@ -66,7 +66,7 @@
 			}
 		</script> -->
 
-	<div class="slider" id="slider">
+	<div class="slider" id="slider" >
 		<div class="container">
 			<h1>${editbanner.sliderName}<br> <span>${editbanner.text1}</span>
 			</h1>
