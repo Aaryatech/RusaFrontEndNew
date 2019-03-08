@@ -3094,22 +3094,19 @@ padding:.5rem 1rem
 }
 .nav-item:focus .nav-link {
 	text-decoration: none;
-	color:#ff9500 !important
+	color:#ff9500 
 }
 .nav-item:hover .nav-link{
 	text-decoration: none;
-	color:#ff9500 !important
+	color:#ff9500 
 }
 .nav-item:hover .nav-link{
 	text-decoration: none;
-	color:#ff9500 !important
+	color:#ff9500 
 }
-
 .nav-item:hover .dropdown-toggle:after {
-    border-left-color:#ff9500;
+    border-left-color:#FFF;
 }
-
-
 .nav-link.disabled {
 	color: #6c757d
 }
@@ -3224,7 +3221,10 @@ border-radius:.25rem
 }
 .navbar-nav .nav-link {
 	padding-right: 0;
-	padding-left: 0
+	padding-left: 0;
+	color:#FFF;
+font-size:14px;
+font-weight:400;
 }
 .navbar-nav .dropdown-menu {
 	position: static;
@@ -3332,9 +3332,6 @@ border-left: 1px dotted #919abc;
 .navbar-expand-md .navbar-nav .nav-link {
 padding-right:20px;
 padding-left:20px;
-color:#FFF;
-font-size:14px;
-font-weight:400;
 border-right: 1px dotted #919abc;
 }
 
@@ -4759,7 +4756,8 @@ padding:.5rem .75rem;
 }
 }
 .carousel-item-next, .carousel-item-prev, .carousel-item.active {
-	display: block
+	display: block;
+	text-align: center;
 }
 .carousel-item-next, .carousel-item-prev {
 	position: absolute;
