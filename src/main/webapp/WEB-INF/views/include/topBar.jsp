@@ -34,8 +34,8 @@
             <a href="javascript:void(0);" title="Text Size: Increase" id="btn-increase" class="increase">A+</a></li>
         	<li class="login-re"><a href="#">Login</a>
                 <a href="#">Register</a></li>
-                <li><a href="${pageContext.request.contextPath}/rusafronend/changeLangage/1-/">English</a>
-                <a href="${pageContext.request.contextPath}/rusafronend/changeLangage/2-/">मराठी</a></li>
+                <li><a href="${pageContext.request.contextPath}/changeLangage/1-/">English</a>
+                <a href="${pageContext.request.contextPath}/changeLangage/2-/">मराठी</a></li>
             </ul>
             
            

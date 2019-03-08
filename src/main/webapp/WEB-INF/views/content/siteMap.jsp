@@ -24,6 +24,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
@@ -266,7 +267,7 @@
 																				<span style="padding-right: 40px;"></span>
 																				<a onclick="checkMaintainance()"
 																					href="${subCatList.externalUrl}"
-																					title="${subCatList.subCatName}">${subCatList.subCatName}
+																					title="${subCatList.subCatName}">${subCatList.subCatName}<br>
 																				</a>
 
 																			</c:when>
@@ -274,7 +275,7 @@
 																				<span style="padding-right: 40px;"></span>
 																				<a onclick="checkMaintainance()"
 																					href="${subCatList.externalUrl}"
-																					title="${subCatList.subCatName}">${subCatList.subCatName}
+																					title="${subCatList.subCatName}">${subCatList.subCatName}<br>
 																				</a>
 
 																			</c:otherwise>
@@ -288,14 +289,14 @@
 																				<span style="padding-right: 40px;"></span>
 																				<a onclick="checkMaintainance()"
 																					href="${pageContext.request.contextPath}/${subCatList.externalUrl}"
-																					title="${subCatList.subCatName}" target="_blank">${subCatList.subCatName}
+																					title="${subCatList.subCatName}" target="_blank">${subCatList.subCatName}<br>
 																				</a>
 																			</c:when>
 																			<c:otherwise>
 																				<span style="padding-right: 40px;"></span>
 																				<a onclick="checkMaintainance()"
 																					href="${pageContext.request.contextPath}/${subCatList.externalUrl}"
-																					title="${subCatList.subCatName}">${subCatList.subCatName}
+																					title="${subCatList.subCatName}">${subCatList.subCatName}<br>
 																				</a>
 
 																			</c:otherwise>
@@ -308,7 +309,7 @@
 																<span style="padding-right: 40px;"></span>
 																<a onclick="checkMaintainance()"
 																	href="${pageContext.request.contextPath}/info/${subCatList.subSlugName}"
-																	title="${subCatList.subCatName}">${subCatList.subCatName}
+																	title="${subCatList.subCatName}">${subCatList.subCatName}<br>
 																</a>
 															</c:otherwise>
 														</c:choose>
