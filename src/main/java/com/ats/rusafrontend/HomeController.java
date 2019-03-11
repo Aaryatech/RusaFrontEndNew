@@ -61,6 +61,8 @@ public class HomeController {
 			ImageLink[] image = rest.getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
 			List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 
+			Setting[] settingList = rest.getForObject(Constant.url + "/getAllSettingList", Setting[].class);
+			List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
 			
 			BannerImages editbanner = rest.getForObject(Constant.url + "/getLastSliderImagesByStatus",
 					BannerImages.class);
@@ -105,6 +107,7 @@ public class HomeController {
 			session.setAttribute("url", Constant.getBannerImageURL);
 			session.setAttribute("mapping", "/");
 			session.setAttribute("menuList", sectionTree);
+			session.setAttribute("setting", setting);
 			session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 
 			session.setAttribute("siteFrontEndUrl", Constant.siteFrontEndUrl);

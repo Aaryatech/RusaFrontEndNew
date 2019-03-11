@@ -204,6 +204,8 @@ public class ImageController {
 				contactUs.setEmailId(email);
 				contactUs.setMessage(message);
 				contactUs.setMobileNo(mobileNo);
+				contactUs.setDelStatus(1);
+				contactUs.setStatus(1);
 				contactUs.setStatusByAdmin(0);
 				System.out.println("Verify");
 				// contactUs.setRemark(null);
@@ -222,16 +224,5 @@ public class ImageController {
 		return "redirect:/ContactUs";
 	}
 
-	@RequestMapping(value = "/readMore", method = RequestMethod.POST)
-	public ModelAndView readMore(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("content/readMore");
-		try {
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return model;
-	}
+	
 }

@@ -32,8 +32,8 @@
             <a href="javascript:void(0);" title="Text Size: Decrease" id="btn-decrease" class="decrease">A-</a>
             <a href="javascript:void(0);" title="Text Size: Normal" id="btn-orig" class="reset">A</a>
             <a href="javascript:void(0);" title="Text Size: Increase" id="btn-increase" class="increase">A+</a></li>
-        	<li class="login-re"><a href="#">Login</a>
-                <a href="#">Register</a></li>
+        	<li class="login-re"><a href="${pageContext.request.contextPath}/login">Login</a>
+                <a href="${pageContext.request.contextPath}/registration">Register</a></li>
                 <li><a href="${pageContext.request.contextPath}/changeLangage/1-/">English</a>
                 <a href="${pageContext.request.contextPath}/changeLangage/2-/">मराठी</a></li>
             </ul>
@@ -45,23 +45,6 @@
     </div>
 	
 
-
-    	<!--  <div class="date">09 Dec, 2018 | 12:38 PM IST</div> -->
-     <%--    <div class="top-right-menu">
-        	
-            <a href="#main-content" class="dropdown-arrow"><span>Skip to main content</span></a>
-            <a href="#slider" class="dropdown-arrow"><span>Skip to navigation</span></a>
-            <a href="javascript:void(0);" class="black" data-rel="." title=".">A</a>
-            <a href="javascript:void(0);" class="white" data-rel="," title=",">A</a>
-            <a href="javascript:void(0);" title="Text Size: Decrease" id="btn-decrease" class="decrease">A-</a>
-            <a href="javascript:void(0);" title="Text Size: Normal" id="btn-orig" class="reset">A</a>
-            <a href="javascript:void(0);" title="Text Size: Increase" id="btn-increase" class="increase">A+</a>
-        	<a href="#">Login</a>
-                <a href="#">Register</a>
-                <a href="${pageContext.request.contextPath}/changeLangage/1-${mapping}">English</a>
-                <a href="${pageContext.request.contextPath}/changeLangage/2-${mapping}">मराठी</a>
-        </div>
-		 --%>
         <div class="clearfix"></div>        
     </div>
     </html>
