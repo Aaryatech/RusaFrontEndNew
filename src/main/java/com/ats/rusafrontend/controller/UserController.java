@@ -228,7 +228,21 @@ public class UserController {
 				e1.printStackTrace();
 			}
 
-		return "redirect:/registration";
+		return "redirect:/verifyOtp";
+	}
+	
+
+	@RequestMapping(value = "/verifyOtp", method = RequestMethod.GET)
+	public ModelAndView verifyOtp(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("otp");
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
 	}
 	
 }

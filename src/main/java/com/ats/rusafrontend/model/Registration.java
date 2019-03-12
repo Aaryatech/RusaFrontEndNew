@@ -1,6 +1,5 @@
 package com.ats.rusafrontend.model;
 
-import java.util.UUID;
 
 public class Registration {
 	private int regId;
@@ -58,6 +57,16 @@ public class Registration {
 	private String exVar1;
 	
 	private String exVar2;
+	
+	private String emailCode;
+	
+	private String emailVerified;
+	
+	private String smsCode;
+	
+	private String smsVerified;
+	
+	private String editByAdminuserId;
 
 
 
@@ -285,6 +294,46 @@ public class Registration {
 		this.exVar2 = exVar2;
 	}
 
+	public String getEmailCode() {
+		return emailCode;
+	}
+
+	public void setEmailCode(String emailCode) {
+		this.emailCode = emailCode;
+	}
+
+	public String getEmailVerified() {
+		return emailVerified;
+	}
+
+	public void setEmailVerified(String emailVerified) {
+		this.emailVerified = emailVerified;
+	}
+
+	public String getSmsCode() {
+		return smsCode;
+	}
+
+	public void setSmsCode(String smsCode) {
+		this.smsCode = smsCode;
+	}
+
+	public String getSmsVerified() {
+		return smsVerified;
+	}
+
+	public void setSmsVerified(String smsVerified) {
+		this.smsVerified = smsVerified;
+	}
+
+	public String getEditByAdminuserId() {
+		return editByAdminuserId;
+	}
+
+	public void setEditByAdminuserId(String editByAdminuserId) {
+		this.editByAdminuserId = editByAdminuserId;
+	}
+
 	@Override
 	public String toString() {
 		return "Registration [regId=" + regId + ", userUuid=" + userUuid + ", userType=" + userType + ", emails="
@@ -295,13 +344,9 @@ public class Registration {
 				+ ", tokenId=" + tokenId + ", registerVia=" + registerVia + ", isActive=" + isActive + ", delStatus="
 				+ delStatus + ", addDate=" + addDate + ", editDate=" + editDate + ", addedByUserId=" + addedByUserId
 				+ ", editByUserId=" + editByUserId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + "]";
+				+ ", exVar2=" + exVar2 + ", emailCode=" + emailCode + ", emailVerified=" + emailVerified + ", smsCode="
+				+ smsCode + ", smsVerified=" + smsVerified + ", editByAdminuserId=" + editByAdminuserId + "]";
 	}
 
-
-
-	
-
-	
 
 }
