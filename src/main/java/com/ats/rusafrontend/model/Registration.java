@@ -46,8 +46,6 @@ public class Registration {
 	
 	private String editDate;
 	
-	private int addedByUserId;
-	
 	private int editByUserId;
 
 	private int exInt1;
@@ -246,13 +244,6 @@ public class Registration {
 		this.editDate = editDate;
 	}
 
-	public int getAddedByUserId() {
-		return addedByUserId;
-	}
-
-	public void setAddedByUserId(int addedByUserId) {
-		this.addedByUserId = addedByUserId;
-	}
 
 	public int getEditByUserId() {
 		return editByUserId;
@@ -342,11 +333,12 @@ public class Registration {
 				+ ", designationName=" + designationName + ", departmentName=" + departmentName + ", mobileNumber="
 				+ mobileNumber + ", authorizedPerson=" + authorizedPerson + ", dob=" + dob + ", imageName=" + imageName
 				+ ", tokenId=" + tokenId + ", registerVia=" + registerVia + ", isActive=" + isActive + ", delStatus="
-				+ delStatus + ", addDate=" + addDate + ", editDate=" + editDate + ", addedByUserId=" + addedByUserId
-				+ ", editByUserId=" + editByUserId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", emailCode=" + emailCode + ", emailVerified=" + emailVerified + ", smsCode="
-				+ smsCode + ", smsVerified=" + smsVerified + ", editByAdminuserId=" + editByAdminuserId + "]";
+				+ delStatus + ", addDate=" + addDate + ", editDate=" + editDate + ", editByUserId=" + editByUserId
+				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
+				+ ", emailCode=" + emailCode + ", emailVerified=" + emailVerified + ", smsCode=" + smsCode
+				+ ", smsVerified=" + smsVerified + ", editByAdminuserId=" + editByAdminuserId + "]";
 	}
 
+	
 
 }
