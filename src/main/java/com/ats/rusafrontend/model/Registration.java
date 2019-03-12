@@ -1,5 +1,6 @@
 package com.ats.rusafrontend.model;
 
+import java.util.UUID;
 
 public class Registration {
 	private int regId;
@@ -57,6 +58,8 @@ public class Registration {
 	private String exVar1;
 	
 	private String exVar2;
+
+
 
 	public int getRegId() {
 		return regId;
@@ -294,6 +297,10 @@ public class Registration {
 				+ ", editByUserId=" + editByUserId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + "]";
 	}
+
+
+
+	
 
 	
 

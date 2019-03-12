@@ -121,6 +121,10 @@
                             
                        				     <label>Date Of Birth <span class="text-danger">*</span></label>
                           						  <input type="text" class="form-control" name="dob" placeholder="Name of Department" id="dob">
+                          						  
+                          				 <label>Authorized Name  <span class="text-danger">*</span></label>
+                     					         <input type="text" class="form-control" name="authour" placeholder="Name of Authorized" id="authour">
+                            
                            	  </div>
                            	   	<div class="form-group" style="display:none" id="college">
                            				 <label>Email-ID <span class="text-danger">*</span></label>
@@ -143,10 +147,13 @@
                        						     <input type="text" class="form-control" name="univ" placeholder="University Affiliated" id="univ">
                             
                         			    <label>Name of Department <span class="text-danger">*</span></label>
-                     						       <input type="text" class="form-control" name="dept" placeholder="Name of Department" id="collegeDept">     
-                     						       
-                     						        <label>Designation  <span class="text-danger">*</span></label>
-                     						       <input type="text" class="form-control" name="designationCollege" placeholder="Designation of Person" id="designationCollege">                     
+                     						     <input type="text" class="form-control" name="dept" placeholder="Name of Department" id="collegeDept">     
+                     					      
+                     					<label>Designation  <span class="text-danger">*</span></label>
+                     					        <input type="text" class="form-control" name="designationCollege" placeholder="Designation of Person" id="designationCollege">                     
+                             	
+                             		   <label>Authorized Name  <span class="text-danger">*</span></label>
+                     					        <input type="text" class="form-control" name="collegeAuthour" placeholder="Name of Authorized" id="cAuthour">
                              	  </div>
                            	   	<div class="form-group" style="display:none" id="university">
                            				 <label>Email-ID <span class="text-danger">*</span></label>
@@ -172,6 +179,9 @@
                             			 <label>Designation  <span class="text-danger">*</span></label>
                      						       <input type="text" class="form-control" name="uniDes" placeholder="Designation of Person" id="uniDes">
                             
+                             		   <label>Authorized Name  <span class="text-danger">*</span></label>
+                     					        <input type="text" class="form-control" name="uniAuthour" placeholder="Name of Authorized" id="uniAuthour">
+                             	
                        				   
                            	  </div>
                             <div class="clearfix"></div>
@@ -209,6 +219,7 @@ function showForm() {
 			document.getElementById("depatment").setAttribute("required","true");
 			document.getElementById("dob").setAttribute("required","true"); 
 			document.getElementById("mobile").setAttribute("required","true");
+			document.getElementById("authour").setAttribute("required","true");
 			
 		} 
 		else{
@@ -220,6 +231,7 @@ function showForm() {
 			document.getElementById("depatment").removeAttribute("required");
 			document.getElementById("dob").removeAttribute("required");
 			document.getElementById("mobile").removeAttribute("required");
+			document.getElementById("authour").removeAttribute("required");
 			
 			document.getElementById("individual").style = "display:none"
 		}
@@ -228,12 +240,12 @@ function showForm() {
 			document.getElementById("college").style = "visible"
 			
 			document.getElementById("collegeEmail").setAttribute("required","true");
-			document.getElementById("instituteName").setAttribute("required","true");
-		 
+			document.getElementById("instituteName").setAttribute("required","true");		 
 		 	document.getElementById("univ").setAttribute("required","true");
 			document.getElementById("collegeDept").setAttribute("required","true");
 			document.getElementById("designationCollege").setAttribute("required","true");
 			document.getElementById("collegeNo").setAttribute("required","true");
+			document.getElementById("cAuthour").setAttribute("required","true");			
 			
 		} 
 		else{
@@ -243,6 +255,7 @@ function showForm() {
 			document.getElementById("collegeDept").removeAttribute("required");		
 			document.getElementById("designationCollege").removeAttribute("required");
 			document.getElementById("collegeNo").removeAttribute("required");
+			document.getElementById("cAuthour").removeAttribute("required");
 			
 			document.getElementById("college").style = "display:none"
 		}
@@ -255,6 +268,8 @@ function showForm() {
 			document.getElementById("uniDept").setAttribute("required","true");
 			document.getElementById("uniDes").setAttribute("required","true");
 			document.getElementById("uniNo").setAttribute("required","true");
+			document.getElementById("uniAuthour").setAttribute("required","true");
+			
 			
 		} 
 		else{
@@ -263,6 +278,7 @@ function showForm() {
 			document.getElementById("uniDept").removeAttribute("required");
 			document.getElementById("uniDes").removeAttribute("required");
 			document.getElementById("uniNo").removeAttribute("required");
+			document.getElementById("uniAuthour").removeAttribute("required");
 			
 			document.getElementById("university").style = "display:none"
 		}
