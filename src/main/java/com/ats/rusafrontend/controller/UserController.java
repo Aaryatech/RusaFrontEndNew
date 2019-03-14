@@ -23,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
+import com.ats.rusafrontend.commen.EmailUtility;
+import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.model.OtpResponse;
 import com.ats.rusafrontend.model.Registration;
 
@@ -225,18 +227,18 @@ public class UserController {
 				OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyOtpResponse", map,
 						OtpResponse.class);
 			
-				if (verifyOtp.isError()==false) 
-				{					 				
+			if (verifyOtp.isError()==false) 
+			{					 				
 					mav = new ModelAndView("registration");					
-				} 
-				else 
-				{						
+			} 
+			else 
+			{						
 					  mav = new ModelAndView("otp");
 					  mav.addObject("uuid", uuid);
 
 					  System.out.println("Invalid login credentials"); 
 					  mav.addObject("msg", "Invalid login");
-				}							
+			}							
 			}
 		} catch (Exception e) {
 			System.out.println("HomeController Login API Excep:  " + e.getMessage());
@@ -246,7 +248,40 @@ public class UserController {
 
 		return mav;
 	}
-	
+	@RequestMapping(value = "/resendOtpProcess", method = RequestMethod.GET)
+	public String resendOtpProcess(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("otp");
+		try {
+			/*
+			 * HttpSession session = request.getSession(); 
+			 * session.setAttribute("suuid", suuid);
+			 */
+			
+			  int randomPin = (int) (Math.random() * 9000) + 1000; 
+			  String otp =  String.valueOf(randomPin); 
+			  System.out.println("You OTP is " + otp);
+			 
+			
+			String uuid = request.getParameter("uuid");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("uuid", uuid);
+			
+			Registration reg = rest.postForObject(Constant.url + "/getMobileNumberByUuidId", map,Registration.class);			
+			
+			System.out.println("mobile:" +reg.getMobileNumber());
+			Info info1 = EmailUtility.sendMsg(otp, reg.getMobileNumber());
+			
+			model.addObject("uuid", uuid);
+			
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
 
 	
 }

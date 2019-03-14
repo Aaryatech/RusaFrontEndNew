@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -85,6 +86,14 @@
             		<h5>Register</h5>
                     <p>Register to access your profile</p>
             	</div>
+            	        <c:choose>
+            	<c:when test="${msg!=null}">
+	            	<div class="alert alert-error alert-dismissible fade in">
+		                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+		                <strong>${msg}</strong> 
+	            	</div>
+            	</c:when>
+            </c:choose>
                 
                             <form action="${pageContext.request.contextPath}/insertUserRegistration"
 							onsubmit="return confirm('Do you really want to submit the form?');"

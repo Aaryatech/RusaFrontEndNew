@@ -35,9 +35,9 @@
  <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
 <!-- Bootstrap core CSS -->
 <link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min2.css"
 	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
+<link href="${pageContext.request.contextPath}/resources/css/style2.css"
 	rel="stylesheet">
 <link
 	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
@@ -279,14 +279,18 @@
 											<p>
 												<strong>${testImonial.fromName}</strong>
 											</p>
-											<p>${testImonial.message}</p>
+											
+											<c:set var="string4" value="${testImonial.message}" />
+											<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
+											<p>${string3}....</p>
+											
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="carousel-item ">
 											<c:set var="imgfind" value="0"></c:set>
 											<c:if test="${not empty testImonial.imageName}">
-												<div class="carousel-item active">
+												<div class="carousel-item ">
 													<img
 														src="${sessionScope.gallryImageURL}${testImonial.imageName}"
 														width="100" height="100" alt="${testImonial.fromName}"
@@ -304,7 +308,10 @@
 											<p>
 												<strong>${testImonial.fromName}</strong>
 											</p>
-											<p>${testImonial.message}</p>
+											
+											<c:set var="string4" value="${testImonial.message}" />
+											<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
+											<p>${string3}....</p>
 										</div>
 
 									</c:otherwise>

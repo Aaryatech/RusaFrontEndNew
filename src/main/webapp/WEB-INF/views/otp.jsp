@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%
+<%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
 	String user = null;
@@ -10,6 +11,8 @@
 		contextPath = contextPath + "/retriveSession/" + mapping;
 		response.sendRedirect(contextPath);
 	}
+
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +37,12 @@
 	rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/style1.css"
 	rel="stylesheet">
+	 <link href="${pageContext.request.contextPath}/resources/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
+        <link href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/resources/assets/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/resources/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/resources/assets/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css"/>
 <link
 	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
 	rel="stylesheet" type="text/css">
@@ -70,7 +79,7 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/login">Verify OTP</a>
+				href="${pageContext.request.contextPath}/verifyOtp">Verify OTP</a>
 			>
 		</div>
 	</div>
@@ -85,35 +94,40 @@
             	<div class="login-box">
             	<div class="login-header">
             		<h5>Verify OTP</h5>
-                    <p>Verify OTP</p>
+                 
             	</div>
+          
                 
-                            <form method="post" action="" name="login_form">  
-                            <label>One Time Pin(OTP)</label>
-                            <input type="text" class="form-control" name="" placeholder="Enter One-Time-Pin(OTP) Here">
-                                                                              
-                            <div class="clearfix"></div>
-                            <p>
+                            <form action="${pageContext.request.contextPath}/verifyOtpProcess" method="post" onsubmit="return confirm('Do you really want to submit the form?');" name="login_form">  
+                         
+               		         <c:choose>
+        				       <c:when test="${msg!=null}">
+	            	          	 <div class="alert alert-error alert-dismissible fade in">
+		                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+		                      		 <strong>${msg}</strong> 
+	           			 	 	 </div>
+            				  </c:when>
+        				    </c:choose>
+            
+                            <label>One Time Pin(OTP) <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="userOtp" placeholder="Enter One-Time-Pin(OTP) Here" required>
+                            <input type="hidden" class="form-control" name="uuid" value="${uuid}" required>
+                                                                     
+                            <div class="clearfix"></div>                          
                             <button type="submit" id="log-btn" class="button login-btn">Verify</button>
-                            </p>
-                            <br>
-                              <p>
-                            <button type="submit" id="log-btn" class="button login-btn">Resend</button>
-                            </p>
                             </form>
-                        
+                            <form action="${pageContext.request.contextPath}/resendOtpProcess" method="post" onsubmit="return confirm('Do you really want to submit the form?');" name="login_form">  
+                            <input type="hidden" class="form-control" name="uuid" value="${uuid}" required>
+                          
+                            <button type="submit" id="log-btn" class="button login-btn">Resend</button>
+                           
+                            </form>                       
             </div>
-			</div>
-            	
-        	<div class="col-12 col-sm-12 col-lg-3"></div>
-			
-            
-            
+			</div>            	
+        	<div class="col-12 col-sm-12 col-lg-3"></div>                      
         </div>
     </div>
 </div>
-
-	
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

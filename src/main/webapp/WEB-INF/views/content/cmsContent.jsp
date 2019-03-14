@@ -58,8 +58,11 @@
 			>
 		</div>
 	</div>
+	  
+	
 	<div class="container main-content" id="main-content">
 		<div class="row row-eq-height">
+	
 			<div class="col-12 col-sm-3 col-lg-3">
 				<div class="leftColm">
 					<c:forEach items="${sessionScope.menuList.sectionlist}"
@@ -206,6 +209,8 @@
 
 				</div>
 			</div>
+		
+			
 			<div class="col-12 col-sm-9 col-lg-9 right-Colm">
 				<c:set var="find" value="0"></c:set>
 
@@ -251,13 +256,14 @@
                     <c:forEach items="${pageContent.faqContentList}"
 						var="faqContentList" varStatus="loop">
 						  <div class="faq-section">
-                        <div class="card-header " data-toggle="collapse" href="#collapseOne">
+						  
+                        <div class="card-header " data-toggle="collapse" href="#collapseOne${loop.index}">
                             <a class="card-title">
                             <span>${faqContentList.faqQue}</span>
                             </a>
                         </div>
                         
-                        <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" >
+                        <div id="collapseOne${loop.index}" class="card-body collapse  " data-parent="#accordion" >
 								<div class="clearfix"></div> ${faqContentList.faqAns}
 						</div>
 						</div>
@@ -386,8 +392,7 @@
 			</div>
 		</div>
 	</div>
-
-	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	<!-- JavaScript-->

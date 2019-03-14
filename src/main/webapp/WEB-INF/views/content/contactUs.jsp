@@ -149,6 +149,23 @@ msg-error {
 						<form action="${pageContext.request.contextPath}/insertContactUs"
 							onsubmit="return confirm('Do you really want to submit the form?');"
 							method="post">
+							
+							 <div class="form-check-inline">
+  <label class="form-check-label">
+    <input type="radio" class="form-check-input" name="formType" value="Query" checked> Query
+  </label>
+</div>
+<div class="form-check-inline">
+  <label class="form-check-label">
+    <input type="radio" class="form-check-input" name="formType" value="Feedback"> Feedback
+  </label>
+</div>
+<div class="form-check-inline disabled">
+  <label class="form-check-label">
+    <input type="radio" class="form-check-input" name="formType" value="Message" > Message
+  </label>
+</div> 
+<br>
 							<label>Your Name</label> <input type="text" class="form-control"
 								name="name" id="name" placeholder="Name" required> <label>Your
 								Email</label> <input type="email" class="form-control" name="email"

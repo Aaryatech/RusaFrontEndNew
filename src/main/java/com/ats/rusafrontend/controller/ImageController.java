@@ -182,6 +182,7 @@ public class ImageController {
 			String email = request.getParameter("email");
 			String message = request.getParameter("message");
 			String mobileNo = request.getParameter("mobileNo");
+			String formType = request.getParameter("formType");
 
 			String gRecaptchaResponse = request
 					.getParameter("g-recaptcha-response");
@@ -207,6 +208,7 @@ public class ImageController {
 				contactUs.setDelStatus(1);
 				contactUs.setStatus(1);
 				contactUs.setStatusByAdmin(0);
+				contactUs.setExVar1(formType);
 				System.out.println("Verify");
 				// contactUs.setRemark(null);
 
@@ -222,6 +224,19 @@ public class ImageController {
 		}
 
 		return "redirect:/ContactUs";
+	}
+	
+	@RequestMapping(value = "/screenReader", method = RequestMethod.GET)
+	public ModelAndView screenReader(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("screenReader");
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
 	}
 
 	
