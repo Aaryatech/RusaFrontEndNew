@@ -1,26 +1,21 @@
 package com.ats.rusafrontend.controller;
 
-import java.net.InetAddress;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Properties;
+import java.util.List;
 import java.util.UUID;
 
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Store;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
@@ -28,10 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
-import com.ats.rusafrontend.model.ContactUs;
+import com.ats.rusafrontend.model.OtpResponse;
 import com.ats.rusafrontend.model.Registration;
-import com.ats.rusafrontend.reCaptcha.VerifyRecaptcha;
-import com.fasterxml.uuid.Generators;
 
 @Controller
 @Scope("session")
@@ -43,7 +36,7 @@ public class UserController {
     <groupId>com.fasterxml.uuid</groupId>
     <artifactId>java-uuid-generator</artifactId>
     <version>3.1.4</version>
-</dependency>*/
+	</dependency>*/
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
@@ -63,6 +56,7 @@ public class UserController {
 
 		ModelAndView model = new ModelAndView("registration");
 		try {
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,6 +68,7 @@ public class UserController {
 	@RequestMapping(value = "/insertUserRegistration", method = RequestMethod.POST)
 	public String insertUserRegistration(HttpServletRequest request, HttpServletResponse response) {
 
+		String uuid =null;
 		try {
 			Registration registration=new Registration();
 
@@ -155,88 +150,42 @@ public class UserController {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
 		
-			//UUID uuid1 = Generators.timeBasedGenerator().generate();
-			String suuid = UUID.randomUUID().toString();
-			//String corrId= uuid1;
-			//registration.setCorrId(uuid1);
+		
+			uuid = UUID.randomUUID().toString();
+			
 			registration.setAddDate(sf.format(date));
 			registration.setUserPassword("0");
-			registration.setUserUuid(suuid);
+			registration.setUserUuid(uuid);
 			registration.setIsActive(1);
 			registration.setDelStatus(1);
 			registration.setRegisterVia("web");
 			
-				// contactUs.setRemark(null);
+			// contactUs.setRemark(null);
 
-			Registration res = rest.postForObject(Constant.url + "/saveRegistration", registration, Registration.class);
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("suuid", suuid);
-			map.add("type", type);
-			Registration editReg = rest.postForObject(Constant.url + "/getUserByUUIDAndType", map,
-					Registration.class);
-
-			System.out.println("Send To Email Address" + editReg.getEmails());
-
-			if (res != null) {
-
-				final String emailSMTPserver = "smtp.gmail.com";
-				final String emailSMTPPort = "587";
-				final String mailStoreType = "imaps";
-				final String username = "atsinfosoft@gmail.com";
-				final String password = "atsinfosoft@123";
-
-				System.out.println("username" + username);
-				System.out.println("password" + password);
-
-				Properties props = new Properties();
-				props.put("mail.smtp.host", "smtp.gmail.com");
-				props.put("mail.smtp.socketFactory.port", "465");
-				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-				props.put("mail.smtp.auth", "true");
-				props.put("mail.smtp.port", "587");
-
-				Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(username, password);
-					}
-				});
-
+			Registration res = rest.postForObject(Constant.url + "/saveReg", registration, Registration.class);
 			
-				try {
-					Store mailStore = session.getStore(mailStoreType);
-					mailStore.connect(emailSMTPserver, username, password);
-
-					String mes = " Hello ,\n Greetings !!\n ";
-
-					String address = editReg.getEmails() + " , dhomaneneha@gmail.com";
-
-					String subject = "Activate your account...... ";
-							
-
-					Message mimeMessage = new MimeMessage(session);
-					mimeMessage.setFrom(new InternetAddress(username));
-					mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
-					mimeMessage.setSubject(subject);
-					mimeMessage.setText(mes);
-					Transport.send(mimeMessage);
+		        
 		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-			}
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 
-		return "redirect:/verifyOtp";
+		return "redirect:/ verifyOtp /"+uuid;
 	}
 	
 
-	@RequestMapping(value = "/verifyOtp", method = RequestMethod.GET)
-	public ModelAndView verifyOtp(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/verifyOtp/{uuid}", method = RequestMethod.GET)
+	public ModelAndView verifyOtp(@PathVariable("uuid") String uuid ,HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("otp");
 		try {
+			/*
+			 * HttpSession session = request.getSession(); 
+			 * session.setAttribute("suuid", suuid);
+			 */
+			model.addObject("uuid", uuid);
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -244,5 +193,60 @@ public class UserController {
 
 		return model;
 	}
+	
+	@RequestMapping(value="/verifyOtpProcess" , method = RequestMethod.POST)
+	public ModelAndView verifyOtpProcess(HttpServletRequest request, HttpServletResponse res) throws IOException {
+
+		String userOtp = request.getParameter("userOtp");
+		String uuid = request.getParameter("uuid");
+		
+		System.out.println("UUID :"+uuid+", UserOTP :"+userOtp);
+		
+		ModelAndView mav = new ModelAndView("otp");
+		 mav.addObject("uuid", uuid);
+		RestTemplate rest = new RestTemplate();
+		res.setContentType("text/html");
+		HttpSession session = request.getSession();
+		try {
+			
+			if (userOtp.equalsIgnoreCase("") || userOtp == null ) 
+			{
+				  mav = new ModelAndView("otp");
+				  mav.addObject("uuid", uuid);
+				  mav.addObject("msg", "Invalid Otp");
+			} 
+			else
+			{
+ 
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("userOtp", userOtp);
+				map.add("uuid", uuid);
+				
+				OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyOtpResponse", map,
+						OtpResponse.class);
+			
+				if (verifyOtp.isError()==false) 
+				{					 				
+					mav = new ModelAndView("registration");					
+				} 
+				else 
+				{						
+					  mav = new ModelAndView("otp");
+					  mav.addObject("uuid", uuid);
+
+					  System.out.println("Invalid login credentials"); 
+					  mav.addObject("msg", "Invalid login");
+				}							
+			}
+		} catch (Exception e) {
+			System.out.println("HomeController Login API Excep:  " + e.getMessage());
+			e.printStackTrace();
+			mav.addObject("msg", "Invalid login");
+		}
+
+		return mav;
+	}
+	
+
 	
 }

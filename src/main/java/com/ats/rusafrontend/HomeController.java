@@ -132,63 +132,6 @@ public class HomeController {
 		return model;
 	}
 
-	@RequestMapping(value = "/changeLangage/{url}", method = RequestMethod.GET)
-	public String changeLangage(@PathVariable("url") String url, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		RestTemplate rest = new RestTemplate();
-		HttpSession session = request.getSession();
-
-		Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
-		if (maintainance.getMaintenanceStatus() == 1) {
-			
-			session.setAttribute("maintainance", maintainance);
-			return "maintainance";
-			
-		} else {
-
-			String[] arry = url.split("-");
-
-			try {
-				System.out.println(url);
-				System.out.println(Arrays.toString(arry));
-
-				session.setAttribute("langId", Integer.parseInt(arry[0]));
-
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("langId", arry[0]);
-
-				TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
-
-				session.setAttribute("menuList", sectionTree);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			try {
-
-				String ret = new String();
-				ret = arry[1] + "/";
-				for (int i = 2; i < arry.length; i++) {
-
-					if (i == 2) {
-						ret = ret + arry[i];
-					} else {
-						ret = ret + "-" + arry[i];
-					}
-
-				}
-
-				return "redirect:/" + ret;
-			} catch (Exception e) {
-				return "redirect:/";
-			}
-
-		}
-
-	}
-
 	@RequestMapping(value = "/checkMaintainance", method = RequestMethod.GET)
 	public @ResponseBody Maintainance checkMaintainance(HttpServletRequest request, HttpServletResponse response) {
 

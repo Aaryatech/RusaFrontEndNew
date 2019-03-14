@@ -1,7 +1,7 @@
 package com.ats.rusafrontend.model;
 
-
 public class Registration {
+	
 	private int regId;
 	
 	private String userUuid;
@@ -25,19 +25,19 @@ public class Registration {
 	private String designationName;
 
 	private String departmentName;
-
+	
 	private String mobileNumber;
 	
 	private String authorizedPerson;
 	
 	private String dob;
-
+	
 	private String imageName;
-
+	
 	private String tokenId;
-
+	
 	private String registerVia;
-
+	
 	private int isActive;
 	
 	private int delStatus;
@@ -45,7 +45,7 @@ public class Registration {
 	private String addDate;
 	
 	private String editDate;
-	
+		
 	private int editByUserId;
 
 	private int exInt1;
@@ -58,16 +58,15 @@ public class Registration {
 	
 	private String emailCode;
 	
-	private String emailVerified;
+	private int emailVerified;
 	
 	private String smsCode;
 	
-	private String smsVerified;
+	private int smsVerified;
 	
 	private String editByAdminuserId;
-
-
-
+	
+	
 	public int getRegId() {
 		return regId;
 	}
@@ -244,7 +243,6 @@ public class Registration {
 		this.editDate = editDate;
 	}
 
-
 	public int getEditByUserId() {
 		return editByUserId;
 	}
@@ -293,11 +291,11 @@ public class Registration {
 		this.emailCode = emailCode;
 	}
 
-	public String getEmailVerified() {
+	public int getEmailVerified() {
 		return emailVerified;
 	}
 
-	public void setEmailVerified(String emailVerified) {
+	public void setEmailVerified(int emailVerified) {
 		this.emailVerified = emailVerified;
 	}
 
@@ -309,11 +307,11 @@ public class Registration {
 		this.smsCode = smsCode;
 	}
 
-	public String getSmsVerified() {
+	public int getSmsVerified() {
 		return smsVerified;
 	}
 
-	public void setSmsVerified(String smsVerified) {
+	public void setSmsVerified(int smsVerified) {
 		this.smsVerified = smsVerified;
 	}
 
@@ -339,6 +337,6 @@ public class Registration {
 				+ ", smsVerified=" + smsVerified + ", editByAdminuserId=" + editByAdminuserId + "]";
 	}
 
-	
 
+	
 }
