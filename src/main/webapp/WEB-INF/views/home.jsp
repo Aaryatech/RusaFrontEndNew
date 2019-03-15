@@ -32,7 +32,9 @@
 	content="${sessionScope.homePageMetaData.metaAuthor}">
 <link rel="icon" href="../../favicon.ico">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
- <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min2.css"
@@ -226,26 +228,20 @@
 		</div>
 
 		<div class="row bottom-section">
-			
-		<c:if test="${setting[2].isActive==1}">
-		<div class="col-12 col-sm-3 col-lg-3">
-			<div class="twitter">
-				${setting[2].keyValues}
-			</div>
-			</div> 			
+
+			<c:if test="${setting[2].isActive==1}">
+				<div class="col-12 col-sm-3 col-lg-3">
+					<div class="twitter">${setting[2].keyValues}</div>
+				</div>
 			</c:if>
-			
-			
+
+
 			<c:if test="${setting[3].isActive==1}">
-				<div class="col-12 col-sm-3 col-lg-3">	
-				<div class="twitter">
-			
-					${setting[3].keyValues} 
-				
-						</div>
-							</div>			
-			 	</c:if>
-			
+				<div class="col-12 col-sm-3 col-lg-3">
+					<div class="twitter">${setting[3].keyValues}</div>
+				</div>
+			</c:if>
+
 			<div class="col">
 				<div class="testimonials">
 					<h5>Testimonials</h5>
@@ -263,55 +259,75 @@
 											<c:set var="imgfind" value="0"></c:set>
 
 											<c:if test="${not empty testImonial.imageName}">
-												<div class="carousel-item active">
+												 
 													<img
 														src="${sessionScope.gallryImageURL}${testImonial.imageName}"
 														width="100" height="100" alt="${testImonial.fromName}"
 														class="user">
+													<p>
+														<strong>${testImonial.fromName}</strong>
+													</p>
+
+													<c:set var="string4" value="${testImonial.message}" />
+													<c:set var="string3"
+														value="${fn:substring(string4, 0, 180)}" />
+													<p>${string3}...</p>
 													<c:set var="imgfind" value="1"></c:set>
-												</div>
+												 
 											</c:if>
 											<c:if test="${imgfind==0}">
 												<img
 													src="${pageContext.request.contextPath}/resources/images/user.png"
-													 class="user">
+													class="user">
+												<p>
+													<strong>${testImonial.fromName}</strong>
+												</p>
+
+												<c:set var="string4" value="${testImonial.message}" />
+												<c:set var="string3"
+													value="${fn:substring(string4, 0, 180)}" />
+												<p>${string3}...</p>
 											</c:if>
-											<p>
-												<strong>${testImonial.fromName}</strong>
-											</p>
-											
-											<c:set var="string4" value="${testImonial.message}" />
-											<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
-											<p>${string3}....</p>
-											
+
+
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="carousel-item ">
 											<c:set var="imgfind" value="0"></c:set>
 											<c:if test="${not empty testImonial.imageName}">
-												<div class="carousel-item ">
+												 
 													<img
 														src="${sessionScope.gallryImageURL}${testImonial.imageName}"
 														width="100" height="100" alt="${testImonial.fromName}"
 														class="user">
 													<c:set var="imgfind" value="1"></c:set>
-												</div>
+													<p>
+														<strong>${testImonial.fromName}</strong>
+													</p>
+
+													<c:set var="string4" value="${testImonial.message}" />
+													<c:set var="string3"
+														value="${fn:substring(string4, 0, 150)}" />
+													<p>${string3}...</p>
+												 
 											</c:if>
 											<c:if test="${imgfind==0}">
 
 												<img
 													src="${pageContext.request.contextPath}/resources/images/user.png"
-											    class="user">
+													class="user">
+												<p>
+													<strong>${testImonial.fromName}</strong>
+												</p>
+
+												<c:set var="string4" value="${testImonial.message}" />
+												<c:set var="string3"
+													value="${fn:substring(string4, 0, 150)}" />
+												<p>${string3}...</p>
 
 											</c:if>
-											<p>
-												<strong>${testImonial.fromName}</strong>
-											</p>
-											
-											<c:set var="string4" value="${testImonial.message}" />
-											<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
-											<p>${string3}....</p>
+
 										</div>
 
 									</c:otherwise>
