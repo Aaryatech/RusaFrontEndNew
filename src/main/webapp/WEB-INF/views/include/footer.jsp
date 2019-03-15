@@ -10,15 +10,16 @@
                 <div class="row">
                     <div class="col-12 col-sm-4 col-lg-3">
                         <h6>Contact Us</h6>
-                        <p>Unit No.7, 19th floor, Center No. 1,
-                         World Trade Centre, Cuffe Parade,<br>
-                            Colaba, Mumbai-400005.<br>
-                            Phone: 011 - 49725600
-                        </p>
+                          <c:if test="${setting[8].isActive==1}">
+          				 ${setting[8].keyValues}
+       			 		  </c:if>
                     </div>
                     <div class="col-12 col-sm-5 col-lg-5">
                         <h6>Important Links</h6>
-                        <ul>
+                         <c:if test="${setting[7].isActive==1}">
+          				 ${setting[7].keyValues}
+       			 		  </c:if>
+                       <%--  <ul>
                             <li><a href="/">Home</a></li>
                             <li><a href="https://www.ugc.ac.in/">UGC</a></li>
                             <li><a href="https://mhrd.gov.in/">MHRD</a></li>
@@ -27,7 +28,7 @@
                          
                           <li><a href=" http://aishe.gov.in/aishe/aisheCode">AISHE code</a></li>
                           <li><a href="${pageContext.request.contextPath}/siteMap">Site Map</a></li>
-                        </ul>
+                        </ul> --%>
                     </div>
                     <div class="col-12 col-sm-4 col-lg-4 social-link">
                         <h6>Follow us on:</h6>

@@ -248,8 +248,8 @@ public class UserController {
 
 		return mav;
 	}
-	@RequestMapping(value = "/resendOtpProcess", method = RequestMethod.GET)
-	public String resendOtpProcess(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/resendOtpProcess", method = RequestMethod.POST)
+	public ModelAndView resendOtpProcess(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("otp");
 		try {
@@ -269,8 +269,15 @@ public class UserController {
 			
 			Registration reg = rest.postForObject(Constant.url + "/getMobileNumberByUuidId", map,Registration.class);			
 			
-			System.out.println("mobile:" +reg.getMobileNumber());
-			Info info1 = EmailUtility.sendMsg(otp, reg.getMobileNumber());
+			if(reg!=null)
+			{
+				System.out.println("mobile:" +reg.getMobileNumber());
+				Info info1 = EmailUtility.sendMsg(otp, reg.getMobileNumber());
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("uuid", uuid);
+				map1.add("otp", otp);
+				Registration regOtp = rest.postForObject(Constant.url + "/updateOtpByUuid", map,Registration.class);	
+			}
 			
 			model.addObject("uuid", uuid);
 			
@@ -280,7 +287,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		return "";
+		return model;
 	}
 
 	
