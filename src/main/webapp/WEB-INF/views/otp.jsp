@@ -116,12 +116,12 @@
                             <div class="clearfix"></div>                          
                             <button type="submit" id="log-btn" class="button login-btn">Verify</button>
                             </form>
-                            <%-- <form action="${pageContext.request.contextPath}/resendOtpProcess" method="post" onsubmit="return confirm('Do you really want to submit the form?');" name="login_form">  
+                            <form action="${pageContext.request.contextPath}/resendOtpProcess" method="post" onsubmit="return confirm('Do you really want to submit the form?');" name="login_form">  
                             <input type="hidden" class="form-control" name="uuid" value="${uuid}" required>
                           
                             <button type="submit" id="log-btn" class="button login-btn">Resend</button>
                            
-                            </form>     --%>                   
+                            </form>                       
             </div>
 			</div>            	
         	<div class="col-12 col-sm-12 col-lg-3"></div>                      

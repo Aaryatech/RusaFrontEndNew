@@ -106,12 +106,12 @@
                             <option value="2">Colleges</option>
                             <option value="3">University</option>
                             </select>
-                         	<div class="form-group" style="display:none" id="individual">
+                         	<div class="form-group" style="display:visible" id="individual">
                            				 <label>Email-ID <span class="text-danger">*</span></label>
                          			  		 <input type="email" class="form-control" name="email" placeholder="Email" id="email">
                             
                           				 <label>Alternate Email-ID</label>
-                        					   <input type="email" class="form-control" name="altEmail" placeholder="Email" id="altEmail">
+                        					   <input type="email" class="form-control" name="altEmail" placeholder="Alternate Email" id="altEmail">
                             
                      	   			    <label>Full Name <span class="text-danger">*</span></label>
                      					       <input type="text" class="form-control" name="name" placeholder="Name" id="fullname">
@@ -129,7 +129,7 @@
                      						       <input type="text" class="form-control" name="dept" placeholder="Name of Department" id="depatment">
                             
                        				     <label>Date Of Birth <span class="text-danger">*</span></label>
-                          						  <input type="text" class="form-control" name="dob" placeholder="Name of Department" id="dob">
+                          						  <input type="text" class="form-control" name="dob" placeholder="Date Of Birth" id="dob">
                           						  
                           				 <label>Authorized Name  <span class="text-danger">*</span></label>
                      					         <input type="text" class="form-control" name="authour" placeholder="Name of Authorized" id="authour">
@@ -140,7 +140,7 @@
                          			  		 <input type="email" class="form-control" name="collegeEmail" placeholder="Email" id="collegeEmail">
                             
                           				 <label>Alternate Email-ID</label>
-                        					   <input type="email" class="form-control" name="altEmail" placeholder="Email" id="altEmail">
+                        					   <input type="email" class="form-control" name="altEmail" placeholder="Alternate Email" id="altEmail">
                             
                             				       
                      					<label>Mobile No.<span class="text-danger">*</span></label>
@@ -169,7 +169,7 @@
                          			  		 <input type="email" class="form-control" name="uniEmail" placeholder="Email" id="uniEmail">
                             
                           				 <label>Alternate Email-ID</label>
-                        					   <input type="email" class="form-control" name="altEmail" placeholder="Email" id="altEmail">
+                        					   <input type="email" class="form-control" name="altEmail" placeholder="Alternate Email" id="altEmail">
                             
                             		       
                      					<label>Mobile No.<span class="text-danger">*</span></label>
@@ -211,6 +211,29 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script >
+
+    $(function() 
+    {
+    	$('input[id$=dob]').datepicker({ dateFormat : 'dd-mm-yy' }); 
+    }
+   
+    </script>
+<!-- <script type="text/javascript">
+		$(function() {
+
+			$('.datepicker').datepicker({
+				autoclose : true,
+				format : "dd-mm-yyyy",
+				changeYear : true,
+				changeMonth : true
+
+			});
+		});
+	</script> -->
 <script type="text/javascript">
 function showForm() {
 	//document.getElementById("abc").style = "display:none"

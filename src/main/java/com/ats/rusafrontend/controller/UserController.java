@@ -158,7 +158,7 @@ public class UserController {
 			registration.setAddDate(sf.format(date));
 			registration.setUserPassword("0");
 			registration.setUserUuid(uuid);
-			registration.setIsActive(1);
+			registration.setIsActive(0);
 			registration.setDelStatus(1);
 			registration.setRegisterVia("web");
 			
@@ -251,43 +251,34 @@ public class UserController {
 	@RequestMapping(value = "/resendOtpProcess", method = RequestMethod.POST)
 	public ModelAndView resendOtpProcess(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("otp");
+		ModelAndView mav = new ModelAndView("otp");
 		try {
-			/*
-			 * HttpSession session = request.getSession(); 
-			 * session.setAttribute("suuid", suuid);
-			 */
-			
-			  int randomPin = (int) (Math.random() * 9000) + 1000; 
-			  String otp =  String.valueOf(randomPin); 
-			  System.out.println("You OTP is " + otp);
-			 
 			
 			String uuid = request.getParameter("uuid");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("uuid", uuid);
+						
+			OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyResendOtpResponse", map,OtpResponse.class);			
 			
-			Registration reg = rest.postForObject(Constant.url + "/getMobileNumberByUuidId", map,Registration.class);			
-			
-			if(reg!=null)
-			{
-				System.out.println("mobile:" +reg.getMobileNumber());
-				Info info1 = EmailUtility.sendMsg(otp, reg.getMobileNumber());
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-				map1.add("uuid", uuid);
-				map1.add("otp", otp);
-				Registration regOtp = rest.postForObject(Constant.url + "/updateOtpByUuid", map,Registration.class);	
-			}
-			
-			model.addObject("uuid", uuid);
-			
+				if (verifyOtp.isError()==false) 
+				{					 				
+					 mav = new ModelAndView("otp");
+					 mav.addObject("uuid", uuid);
+					 System.out.println(" update ragistration table new :");
+				} 
+				else 
+				{					
+					 mav = new ModelAndView("registration");		
+				}
+		
+				  mav.addObject("uuid", uuid);
 			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return model;
+		return mav;
 	}
 
 	
