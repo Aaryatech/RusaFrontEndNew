@@ -37,9 +37,9 @@
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
 <link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min2.css"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style2.css"
+<link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet">
 <link
 	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
