@@ -109,10 +109,12 @@
  					<c:forEach items="${event}" var="eventList"	varStatus="count">
 						
                     <div class="row">
+                    			<c:if test="${not empty eventList.featuredImage}">
                     		
                     <div class="col-12 col-sm-3 col-lg-3">
-                    <img src="http://tomcat.aaryatechindia.in:6435/media/gallery/thumbnail2019-03-01_18:46:08_2019-02-15_12_58_10_Digital-Launch-5.jpg" alt="Digital-Launch" title="Digital-Launch" class="img-responsive thumbnail">	
+                    <img src="${sessionScope.gallryImageURL}${eventList.featuredImage}" alt="${eventList.heading}" title="${eventList.heading}" class="img-responsive thumbnail">	
                     </div>
+                    </c:if>
                     <div class="col-12 col-sm-9 col-lg-9">
                     <strong> ${eventList.heading}</strong><br>
                     <p> ${eventList.descriptions}</p>
