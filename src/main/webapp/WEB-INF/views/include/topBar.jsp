@@ -2,15 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*" 
   import = "java.text.SimpleDateFormat"%> 
-<!DOCTYPE html><%-- 
-<html>
-<head>
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css" rel="stylesheet" type="text/css" >
-</head> --%>
-
-  <div class="top-section">
+ 
+   
 
 <%
    Date date = new Date();
@@ -18,10 +11,9 @@
    out.print( "<div class=\"date\">" +sf.format(date)+"</div>");
     
 %>
+
   <div class="top-section">
-   
-<!-- <div class="date">21 Feb, 2019 | 11:39 AM IST</div> -->
-    	<!--  <div class="date">09 Dec, 2018 | 12:38 PM IST</div> -->
+ 
         <div class="top-right-menu">
         	<ul>
             	<li><a href="#main-content" class="dropdown-arrow"><span>Skip to main content</span></a></li>

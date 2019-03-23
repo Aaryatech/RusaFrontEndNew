@@ -80,7 +80,7 @@ msg-error {
 		<div class="row row-eq-height">
 
 
-			<div class="col-12 col-sm-3 col-lg-3">
+			<%-- <div class="col-12 col-sm-3 col-lg-3">
 				<div class="leftColm">
 					<c:forEach items="${sessionScope.menuList.sectionlist}"
 						var="menuList">
@@ -116,7 +116,7 @@ msg-error {
 					</c:forEach>
 
 				</div>
-			</div>
+			</div> --%>
 			<div class="col-12 col-sm-9 col-lg-9 right-Colm">
 
 

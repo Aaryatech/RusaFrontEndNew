@@ -324,8 +324,4 @@
 
 	</div>
 </div>
-<script>
-	function checkMaintainance() {
-
-	}
-</script>
+ 

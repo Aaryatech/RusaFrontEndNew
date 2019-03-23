@@ -36,14 +36,23 @@
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
+
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/calendar.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/ekko-lightbox.css"
+	rel="stylesheet" type="text/css">
+
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet">
 <link
 	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
 	rel="stylesheet" type="text/css">
+
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
 	rel="stylesheet">
@@ -70,33 +79,57 @@
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 
-	<!-- <script>
-			function checkMaintainance() {
+	<div id="myCarousel" class="carousel slide  slider"
+		data-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img class="first-slide"
+					src="${pageContext.request.contextPath}/resources/images/slider2.jpg"
+					alt="First slide">
+				<div class="container">
+					<div class="carousel-caption">
+						<h1>${editbanner.sliderName}<br> <span>${editbanner.text1}</span>
+						</h1>
+						<p>${editbanner.text2}</p>
+						<a href="${editbanner.urlLink}" class="btn button "><span>${editbanner.linkName}</span></a>
+					</div>
+				</div>
 
-				$.getJSON('/rusafronend/checkMaintainance', {
-					 ajax : 'true'
-				});
-			}
-		</script> -->
 
-	<div class="slider" id="slider">
+				<div>
+					<div class="container"></div>
+				</div>
+			</div>
+
+		</div>
+		<a class="carousel-control-prev" href="#myCarousel" role="button"
+			data-slide="prev"> <span class="carousel-control-prev-icon"
+			aria-hidden="true"></span> <span class="sr-only">Previous</span>
+		</a> <a class="carousel-control-next" href="#myCarousel" role="button"
+			data-slide="next"> <span class="carousel-control-next-icon"
+			aria-hidden="true"></span> <span class="sr-only">Next</span>
+		</a>
+	</div>
+
+
+	<%-- <div class="slider" id="slider">
 		<div class="container">
 			<h1>${editbanner.sliderName}<br> <span>${editbanner.text1}</span>
 			</h1>
 			<p>${editbanner.text2}</p>
 			<a href="${editbanner.urlLink}" class="btn button "><span>${editbanner.linkName}</span></a>
 		</div>
-	</div>
-
-	<div class="container main-content" id="main-content">
-		<div class="card sub-link">
+	</div> --%>
+	<div class="card sub-link">
+		<div class="container">
 			<div class="row">
+
 				<c:forEach items="${getCMSDesc}" var="getCMSDesc" varStatus="count">
 
 					<div class="col-12 col-sm-3 col-lg-3">
 						<div class="sub-link-icon">
 							<img
-								src="${pageContext.request.contextPath}/resources/images/icon.jpg"
+								src="${pageContext.request.contextPath}/resources/images/icon.png"
 								alt="">
 						</div>
 						<c:set var="string1" value="${getCMSDesc.pageDesc}" />
@@ -113,33 +146,30 @@
 				</c:forEach>
 			</div>
 		</div>
+	</div>
+
+	<div class="container main-content" id="main-content">
+
 		<div class="row">
 			<div class="col-12 col-sm-4 col-lg-4 news-notifications">
 				<h3>News and Notification</h3>
-				<div class="tab-content">
-					<div id="update" class="tab-pane active">
-						<div class="tab-content-section">
-							<h5>Digital Launch of Rashtriya Uchchatar Shiksha Abhiyan
-								(RUSA) Projects</h5>
-							<p>Digital Launch of Rashtriya Uchchatar Shiksha Abhiyan
-								(RUSA) Projects by Hon’ble Prime Minister on 3rd February 2019
-								...</p>
+				<div class="border-box">
+					<div class="tab-content">
+						<div id="update" class="tab-pane active">
+							<div class="tab-content-section">
+								<c:forEach items="${sessionScope.event}" var="eventList"	varStatus="count">
+								<h5>
+									<a href="#"> ${eventList.heading}</a>
+								</h5>		
+					
+							<c:set var="string4" value="${eventList.descriptions}"/>
+							<c:set var="string3" value="${fn:substring(string4, 0,130)}" />
+							<p>${string3}</p>
+					</c:forEach>
+							</div>
 						</div>
-						<div class="tab-content-section">
-							<h5>15th Meeting of the Project Approval Board</h5>
-							<p>PAB meeting to be held on 24th January 2019. Click here to
-								view the minutes of the 15th PAB Meeting Presentation of
-								proposals by institutions approved under component. ...</p>
-						</div>
-						<div class="tab-content-section">
-							<h5>RUSA Meeting on Preparedness of Digital Launch</h5>
-							<p>PAB meeting to be held on 24th January 2019. Click here to
-								view the minutes of the 15th PAB Meeting Presentation of
-								proposals by institutions approved under component. ...</p>
-						</div>
-
-						<a href="#">Read More</a>
 					</div>
+					<a href="#">Read More</a>
 				</div>
 			</div>
 
@@ -159,16 +189,30 @@
 									<c:choose>
 										<c:when test="${count.last}">
 											<div class="carousel-item active">
-												<img
+												<a
+													href="${sessionScope.gallryImageURL}${editPhotoDetail.fileName}"
+													data-toggle="lightbox" data-gallery="plan" data-title=""
+													class="thumbnail">
+													<div class="over-effect">
+														<span class="icon-search"></span>
+													</div> <img
 													src="${sessionScope.gallryImageURL}${editPhotoDetail.fileName}"
-													width="250" height="228" alt="${editPhotoDetail.title}">
+													alt="${editPhotoDetail.title}" class="img-responsive">
+												</a>
 											</div>
 										</c:when>
 										<c:otherwise>
 											<div class="carousel-item">
-												<img
+												<a
+													href="${sessionScope.gallryImageURL}${editPhotoDetail.fileName}"
+													data-toggle="lightbox" data-gallery="plan" data-title=""
+													class="thumbnail">
+													<div class="over-effect">
+														<span class="icon-search"></span>
+													</div> <img
 													src="${sessionScope.gallryImageURL}${editPhotoDetail.fileName}"
-													width="250" height="228" alt="${editPhotoDetail.title}">
+													alt="${editPhotoDetail.title}" class="img-responsive">
+												</a>
 											</div>
 										</c:otherwise>
 									</c:choose>
@@ -193,165 +237,182 @@
 			</div>
 
 
-			<!-- <div class="col-12 col-sm-3 col-lg-3 gallery">
-						<h3>Video</h3>
-                        <div class="border-box">	
-						<iframe width="100%" height="223" src="https://www.youtube.com/embed/Dd7gXbkSLeQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						</div>
-                    </div> -->
 			<div class="col-12 col-sm-4 col-lg-4 gallery">
 				<h3>Video</h3>
-				<div class="border-box">${videoGalleryDetail[0].fileName}</div>
+
+				<div class="border-box">
+					<div id="videoslide" class="carousel " data-ride="carousel">
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								${videoGalleryDetail[0].fileName}</div>
+
+
+
+
+							<a class="carousel-control-prev" href="#videoslide" role="button"
+								data-slide="prev"> <span class="carousel-control-prev-icon"
+								aria-hidden="true"></span> <span class="sr-only">Previous</span>
+							</a> <a class="carousel-control-next" href="#videoslide"
+								role="button" data-slide="next"> <span
+								class="carousel-control-next-icon" aria-hidden="true"></span> <span
+								class="sr-only">Next</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 
 
-		</div>
-		<div class="row news-section">
-			<h2>
-				<span>Updates</span>
-			</h2>
-			<c:forEach items="${newsBlogsList}" var="newsBlogsList"
-				varStatus="count">
-				<div class="col-12 col-sm-3 col-lg-3">
-					<a href="${newsBlogsList.newsSourceUrlName}"><img
-						src="${sessionScope.gallryImageURL}${newsBlogsList.featuredImage}"
-						width="250" height="228" alt="${newsBlogsList.heading}"></a>
-					<h5>${newsBlogsList.heading}</h5>
-					<c:set var="string4" value="${newsBlogsList.descriptions}" />
-					<c:set var="string3" value="${fn:substring(string4, 0, 100)}" />
-					<p>${string3}</p>
-					<a
-						href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.pageId}/${newsBlogsList.newsblogsId}">more
-					</a>
-				</div>
-			</c:forEach>
-		</div>
 
+
+
+		</div>
+	</div>
+	<div class="news-section">
+		<div class="container main-content">
+			<div class="row">
+				<h2>
+					<span>Updates</span>
+				</h2>
+				<c:forEach items="${newsBlogsList}" var="newsBlogsList"
+					varStatus="count">
+					<div class="col-12 col-sm-3 col-lg-3">
+						<div class="news-box">
+							<div class="new-img">
+								<a href="${newsBlogsList.newsSourceUrlName}"><img
+									src="${sessionScope.gallryImageURL}${newsBlogsList.featuredImage}"
+									width="250" height="228" alt="${newsBlogsList.heading}"></a>
+							</div>
+							<h4> ${newsBlogsList.heading}</h4>
+							<c:set var="string4" value="${newsBlogsList.descriptions}" />
+							<c:set var="string3" value="${fn:substring(string4, 0, 100)}" />
+							<p>${string3}
+								<a
+									href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.pageId}/${newsBlogsList.newsblogsId}">Read
+									More</a>
+							</p>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container main-content">
 		<div class="row bottom-section">
-
 			<c:if test="${setting[2].isActive==1}">
 				<div class="col-12 col-sm-3 col-lg-3">
-					<div class="twitter">${setting[2].keyValues}</div>
+					<div class="twitter border-box">${setting[2].keyValues}</div>
 				</div>
 			</c:if>
-
-
 			<c:if test="${setting[3].isActive==1}">
 				<div class="col-12 col-sm-3 col-lg-3">
-					<div class="twitter">${setting[3].keyValues}</div>
+					<div class="twitter border-box">${setting[3].keyValues}</div>
 				</div>
 			</c:if>
+			<div class="col-12 col-sm-6 col-lg-6"></div>
 
-			<div class="col">
-				<div class="testimonials">
-					<h5>Testimonials</h5>
-					<div id="carouselExampleControls2" class="carousel slide"
-						data-ride="carousel">
-						<div class="carousel-inner">
+		</div>
 
 
-							<c:forEach items="${sessionScope.testImonial}" var="testImonial"
-								varStatus="count">
-								<c:choose>
-									<c:when test="${count.last}">
-										<div class="carousel-item active">
+	</div>
 
-											<c:set var="imgfind" value="0"></c:set>
+	<div class="testimonials">
+		<div class="container">
+			<h5>Testimonials</h5>
+			<div id="carouselExampleControls2" class="carousel slide"
+				data-ride="carousel">
+				<div class="carousel-inner">
+					<c:forEach items="${sessionScope.testImonial}" var="testImonial"
+						varStatus="count">
+						<c:choose>
+							<c:when test="${count.last}">
 
-											<c:if test="${not empty testImonial.imageName}">
-												 
-													<img
-														src="${sessionScope.gallryImageURL}${testImonial.imageName}"
-														width="100" height="100" alt="${testImonial.fromName}"
-														class="user">
-													<p>
-														<strong>${testImonial.fromName}</strong>
-													</p>
+								<div class="carousel-item active">
+									<c:set var="imgfind" value="0"></c:set>
 
-													<c:set var="string4" value="${testImonial.message}" />
-													<c:set var="string3"
-														value="${fn:substring(string4, 0, 180)}" />
-													<p>${string3}...</p>
-													<c:set var="imgfind" value="1"></c:set>
-												 
-											</c:if>
-											<c:if test="${imgfind==0}">
-												<img
-													src="${pageContext.request.contextPath}/resources/images/user.png"
-													class="user">
-												<p>
-													<strong>${testImonial.fromName}</strong>
-												</p>
+									<c:if test="${not empty testImonial.imageName}">
 
-												<c:set var="string4" value="${testImonial.message}" />
-												<c:set var="string3"
-													value="${fn:substring(string4, 0, 180)}" />
-												<p>${string3}...</p>
-											</c:if>
+										<img
+											src="${sessionScope.gallryImageURL}${testImonial.imageName}"
+											width="100" height="100" alt="${testImonial.fromName}"
+											class="user">
+										<p>
+											<strong>${testImonial.fromName}</strong>
+										</p>
 
+										<c:set var="string4" value="${testImonial.message}" />
+										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
+										<p>${string3}...</p>
+										<c:set var="imgfind" value="1"></c:set>
 
-										</div>
-									</c:when>
-									<c:otherwise>
-										<div class="carousel-item ">
-											<c:set var="imgfind" value="0"></c:set>
-											<c:if test="${not empty testImonial.imageName}">
-												 
-													<img
-														src="${sessionScope.gallryImageURL}${testImonial.imageName}"
-														width="100" height="100" alt="${testImonial.fromName}"
-														class="user">
-													<c:set var="imgfind" value="1"></c:set>
-													<p>
-														<strong>${testImonial.fromName}</strong>
-													</p>
+									</c:if>
+									<c:if test="${imgfind==0}">
+										<img
+											src="${pageContext.request.contextPath}/resources/images/user.png"
+											class="user">
+										<p>
+											<strong>${testImonial.fromName}</strong>
+										</p>
 
-													<c:set var="string4" value="${testImonial.message}" />
-													<c:set var="string3"
-														value="${fn:substring(string4, 0, 150)}" />
-													<p>${string3}...</p>
-												 
-											</c:if>
-											<c:if test="${imgfind==0}">
+										<c:set var="string4" value="${testImonial.message}" />
+										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
+										<p>${string3}...</p>
+									</c:if>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="carousel-item ">
+									<c:set var="imgfind" value="0"></c:set>
 
-												<img
-													src="${pageContext.request.contextPath}/resources/images/user.png"
-													class="user">
-												<p>
-													<strong>${testImonial.fromName}</strong>
-												</p>
+									<c:if test="${not empty testImonial.imageName}">
 
-												<c:set var="string4" value="${testImonial.message}" />
-												<c:set var="string3"
-													value="${fn:substring(string4, 0, 150)}" />
-												<p>${string3}...</p>
+										<img
+											src="${sessionScope.gallryImageURL}${testImonial.imageName}"
+											width="100" height="100" alt="${testImonial.fromName}"
+											class="user">
+										<p>
+											<strong>${testImonial.fromName}</strong>
+										</p>
 
-											</c:if>
+										<c:set var="string4" value="${testImonial.message}" />
+										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
+										<p>${string3}...</p>
+										<c:set var="imgfind" value="1"></c:set>
 
-										</div>
+									</c:if>
+									<c:if test="${imgfind==0}">
+										<img
+											src="${pageContext.request.contextPath}/resources/images/user.png"
+											class="user">
+										<p>
+											<strong>${testImonial.fromName}</strong>
+										</p>
 
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</div>
-
-					</div>
-					<a class="carousel-control-prev" href="#carouselExampleControls2"
-						role="button" data-slide="prev"> <span
-						class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-						class="sr-only">Previous</span>
-					</a> <a class="carousel-control-next" href="#carouselExampleControls2"
-						role="button" data-slide="next"> <span
-						class="carousel-control-next-icon" aria-hidden="true"></span> <span
-						class="sr-only">Next</span>
-					</a>
+										<c:set var="string4" value="${testImonial.message}" />
+										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
+										<p>${string3}...</p>
+									</c:if>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 				</div>
-
+				<a class="carousel-control-prev" href="#carouselExampleControls2"
+					role="button" data-slide="prev"> <span
+					class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+					class="sr-only">Previous</span>
+				</a> <a class="carousel-control-next" href="#carouselExampleControls2"
+					role="button" data-slide="next"> <span
+					class="carousel-control-next-icon" aria-hidden="true"></span> <span
+					class="sr-only">Next</span>
+				</a>
 			</div>
 		</div>
 	</div>
-	</div>
-
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

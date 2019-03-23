@@ -23,8 +23,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
+import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.model.*;
-import com.ats.rusafrontend.model.TopMenuList;
 import com.ats.rusafrontend.reCaptcha.VerifyRecaptcha;
 
 import java.io.IOException;
@@ -231,6 +231,46 @@ public class ImageController {
 
 		ModelAndView model = new ModelAndView("screenReader");
 		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	   
+	@RequestMapping(value = "/eventList", method = RequestMethod.GET)
+	public ModelAndView eventList(HttpServletRequest request, HttpServletResponse response) {
+
+		
+		ModelAndView model = new ModelAndView("content/eventList");
+		try {
+
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "eventList");
+			int langId = 1;
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				 model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "eventList");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("langId", langId);
+				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL",map1,
+						NewsDetails[].class);
+				List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
+				
+				model.addObject("event", eventList);
+				model.addObject("pageMetaData", pageMetaData);				
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag=0;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

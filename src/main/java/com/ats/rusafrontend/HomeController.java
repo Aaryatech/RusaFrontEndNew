@@ -86,6 +86,10 @@ public class HomeController {
 					TestImonial[].class);
 			List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 
+			NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL",map,
+					NewsDetails[].class);
+			List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
+			
 			NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map,
 					NewsDetails[].class);
 			List<NewsDetails> newsBlogsList = new ArrayList<NewsDetails>(Arrays.asList(getPagesModule));
@@ -93,7 +97,9 @@ public class HomeController {
 			SocialChannels[] socialList = rest.getForObject(Constant.url + "/getAllSocialList",
 					SocialChannels[].class);
 			List<SocialChannels> socialChannelData = new ArrayList<SocialChannels>(Arrays.asList(socialList));
-			System.out.println("List :"+socialChannelData.toString());
+			System.out.println("event :"+event.toString());
+			
+			session.setAttribute("event", eventList);
 			session.setAttribute("socialChannelData", socialChannelData);
 			session.setAttribute("newsBlogsList", newsBlogsList);
 			session.setAttribute("testImonial", testImonial);

@@ -297,6 +297,4 @@ public class NewsDetails {
 				+ pageMetaDescription + ", pageMetaKeyword=" + pageMetaKeyword + ", languageId=" + languageId + "]";
 	}
 
-
-	
 }
