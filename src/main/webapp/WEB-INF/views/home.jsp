@@ -172,7 +172,7 @@
 									<p>
 										<span><i class="icon-calendar"></i> <strong>Date:</strong>
 											${eventList.eventDateFrom}</span>
-									</p>
+									</p><br>
 								</c:forEach>
 							</div>
 						</div>

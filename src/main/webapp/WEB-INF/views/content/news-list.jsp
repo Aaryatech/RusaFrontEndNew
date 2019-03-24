@@ -73,6 +73,11 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 </script>
+<style>
+.other-gov-site-home {
+	margin-top: 43px;
+}
+</style>
 </head>
 <body>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
@@ -123,7 +128,7 @@
 					<span><i class="icon-calendar"></i> <strong>Date:</strong> ${eventList.eventDateFrom}</span>
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong>+91 ${eventList.eventContactNumber}</span>
                     </p> --%>
-                    <a href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.newsblogsId}">Read More</a>
+                    <a href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.newsblogsId}" target="_blank">Read More</a>
                     </div>
                     </div>
                    </c:forEach>

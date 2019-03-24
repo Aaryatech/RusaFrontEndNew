@@ -62,6 +62,11 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 </script>
+<style>
+.other-gov-site-home {
+    margin-top: 43px;
+}
+</style>
 </head>
 <body>
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
@@ -75,7 +80,7 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/eventList">Event Detail</a>
+				href="${pageContext.request.contextPath}/eventList">Event</a>
 			>
 		</div>
 	</div>

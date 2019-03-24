@@ -91,7 +91,7 @@
     </div>
 	<div class="bridcrumb">
     	<div class="container">
-        	<a href="/">Home</a> > <a href="eventList">Events</a> >
+        	<a href="/">Home</a> > <a href="${pageContext.request.contextPath}/eventList">Events</a> >
         </div>
     </div> 
  <div class="container" id="main-content">
@@ -127,7 +127,7 @@
 					<span><i class="icon-calendar"></i> <strong>Date:</strong> ${eventList.eventDateFrom}</span>
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong>+91 ${eventList.eventContactNumber}</span>
                     </p>
-                    <a href="${pageContext.request.contextPath}/eventDetail/${eventList.newsblogsId}">Read More</a>
+                    <a href="${pageContext.request.contextPath}/eventDetail/${eventList.newsblogsId}" target="_blank">Read More</a>
                     </div>
                     </div>
                    </c:forEach>

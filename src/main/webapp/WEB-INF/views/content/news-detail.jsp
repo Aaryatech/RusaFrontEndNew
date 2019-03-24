@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    
+	pageEncoding="ISO-8859-1"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
@@ -32,7 +32,9 @@
 	content="${sessionScope.homePageMetaData.metaAuthor}">
 <link rel="icon" href="../../favicon.ico">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
- <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
@@ -62,52 +64,59 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 </script>
+<style>
+.other-gov-site-home {
+	margin-top: 43px;
+}
+</style>
 </head>
 <body>
-<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
-		<div class="inner-slider" id="slider">
+	<div class="inner-slider" id="slider">
 		<div class="container">
-				<h1>Event Detail</h1>
+			<h1>${image.heading}</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/eventList">News Detail</a>
-			>
+				href="${pageContext.request.contextPath}/newsList">News</a>>${image.heading}
+
 		</div>
 	</div>
-	 
-            <div class="container" id="main-content">
-        <div class="row row-eq-height">
-         	<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
-                    <div class="row">
-                    	<c:if test="${not empty image.featuredImage}">
-                    <div class="col-12 col-sm-6 col-lg-6">  
-                      <img src="${sessionScope.gallryImageURL}${image.featuredImage}" alt="${image.heading}" title="${image.heading}" class="img-responsive thumbnail">	                                   
-                      </div>
-                    </c:if>
-                    <div class="col-12 col-sm-12 col-lg-12">
-                    		
-                    <strong>${image.heading}</strong><br>
-					<p>${image.descriptions}</p>               
-				
-                  
-                                 
-                    
-                    Source: ${image.newsSourceUrlName}
-                  
-                    </div>
-                    </div>     
-            </div>
-            
-            
-        </div>
-    </div>
- 
-	
+
+	<div class="container" id="main-content">
+		<div class="row row-eq-height">
+			<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
+				<div class="row">
+					<c:if test="${not empty image.featuredImage}">
+						<div class="col-12 col-sm-6 col-lg-6">
+							<img src="${sessionScope.gallryImageURL}${image.featuredImage}"
+								alt="${image.heading}" title="${image.heading}"
+								class="img-responsive thumbnail">
+						</div>
+					</c:if>
+					<div class="col-12 col-sm-12 col-lg-12">
+
+						<strong>${image.heading}</strong><br>
+						<p>${image.descriptions}</p>
+
+
+
+
+						Source: ${image.newsSourceUrlName}
+
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

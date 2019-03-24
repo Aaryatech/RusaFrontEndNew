@@ -180,13 +180,13 @@ public class ImageController {
 				 model.addObject("maintainance", maintainance);
 			}else {
 				
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				/*MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("langId", langId);
 
 				TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
 
 				// HttpSession session = request.getSession();
-				session.setAttribute("menuList", sectionTree);
+				session.setAttribute("menuList", sectionTree);*/
 				session.setAttribute("mapping", "teamDetails");
 
 				TestImonial[] getTeamList = rest.getForObject(Constant.url + "/getTeamDetail", TestImonial[].class);
