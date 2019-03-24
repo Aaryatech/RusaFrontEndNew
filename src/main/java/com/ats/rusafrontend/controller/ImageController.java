@@ -303,7 +303,7 @@ public class ImageController {
 	  LinkedMultiValueMap<String, Object>(); map.add("slugName", "eventList");
 	  PageMetaData pageMetaData = rest.postForObject(Constant.url +
 	  "/getPageMetaData", map, PageMetaData.class);
-	  
+	    
 	  
 	  MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 	  map1.add("langId", langId);
