@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -28,7 +28,9 @@
 	content="${sessionScope.homePageMetaData.metaAuthor}">
 <link rel="icon" href="../../favicon.ico">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
- <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
@@ -60,7 +62,7 @@
 </script>
 </head>
 <body onload="hideText()">
-<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
@@ -71,150 +73,161 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/registration">Login</a>
-			>
+				href="${pageContext.request.contextPath}/registration">Login</a> >
 		</div>
 	</div>
-<div class="login"> 
-    <div class="container" id="main-content">
-        <div class="row row-eq-height">
-        	<div class="col-12 col-sm-12 col-lg-3"></div>
-			
-          	<div class="col-12 col-sm-12 col-lg-6">
-            	<div class="login-box">
-            	<div class="login-header">
-            		<h5>Register</h5>
-                    <p>Register to access your profile</p>
-            	</div>
-            	        <c:choose>
-            	<c:when test="${msg!=null}">
-	            	<div class="alert alert-error alert-dismissible fade in">
-		                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-		                <strong>${msg}</strong> 
-	            	</div>
-            	</c:when>
-            </c:choose>
-                
-                            <form action="${pageContext.request.contextPath}/insertUserRegistration"
-							onsubmit="return confirm('Do you really want to submit the form?');"
-							method="post" name="login_form">  
-                          
-                            <label for="userType">Select Type</label>
-                            <select id="userType" name="userType"  class="form-control" onchange="showForm()" required>
-							<option >Select Type</option>
-                            <option value="1">Individual</option>
-                            <option value="2">Colleges</option>
-                            <option value="3">University</option>
-                            </select>
-                         	<div class="form-group" style="display:visible" id="individual">
-                           				 <label>Email-ID <span class="text-danger">*</span></label>
-                         			  		 <input type="email" class="form-control" name="email" placeholder="Email" id="email">
-                            
-                          				 <label>Alternate Email-ID</label>
-                        					   <input type="email" class="form-control" name="altEmail" placeholder="Alternate Email" id="altEmail">
-                            
-                     	   			    <label>Full Name <span class="text-danger">*</span></label>
-                     					       <input type="text" class="form-control" name="name" placeholder="Name" id="fullname">
-                     					       
-                     					<label>Mobile No.<span class="text-danger">*</span></label>
-                     					       <input type="text" class="form-control" name="mobile"  pattern="[7-9]{1}[0-9]{9}" maxlength="10" placeholder="Mobile No." id="mobile" maxlength="10">
-                            
-                      			       <label>College Name  <span class="text-danger">*</span></label>
-                       						   <input type="text" class="form-control" name="collegeName" placeholder="College Name" id="collegeName">
-                            
-                        			    <label>University Affiliated <span class="text-danger">*</span></label>
-                       						     <input type="text" class="form-control" name="university" placeholder="University Affiliated" id="uniAff">
-                            
-                        			    <label>Name of Department <span class="text-danger">*</span></label>
-                     						       <input type="text" class="form-control" name="dept" placeholder="Name of Department" id="depatment">
-                            
-                       				     <label>Date Of Birth <span class="text-danger">*</span></label>
-                          						  <input type="text" class="form-control" name="dob" placeholder="Date Of Birth" id="dob">
-                          						  
-                          				 <label>Authorized Name  <span class="text-danger">*</span></label>
-                     					         <input type="text" class="form-control" name="authour" placeholder="Name of Authorized" id="authour">
-                            
-                           	  </div>
-                           	   	<div class="form-group" style="display:none" id="college">
-                           				 <label>Email-ID <span class="text-danger">*</span></label>
-                         			  		 <input type="email" class="form-control" name="collegeEmail" placeholder="Email" id="collegeEmail">
-                            
-                          				 <label>Alternate Email-ID</label>
-                        					   <input type="email" class="form-control" name="altEmail" placeholder="Alternate Email" id="altEmail">
-                            
-                            				       
-                     					<label>Mobile No.<span class="text-danger">*</span></label>
-                     					       <input type="text" class="form-control" name="collegeMobile"  pattern="[7-9]{1}[0-9]{9}" maxlength="10" placeholder="Mobile No." id="collegeNo" maxlength="10">
-        
-                     	   			    <label>Institute Name <span class="text-danger">*</span></label>
-                     					       <input type="text" class="form-control" name="institute" placeholder="Institute Name" id="instituteName">
-                            
-                      			       <label>AISHE Code</label>
-                       						   <input type="text" class="form-control" name="aisheName" placeholder="AISHE Code" id="aisheName">
-                            
-                        			    <label>University Affiliated <span class="text-danger">*</span></label>
-                       						     <input type="text" class="form-control" name="univ" placeholder="University Affiliated" id="univ">
-                            
-                        			    <label>Name of Department <span class="text-danger">*</span></label>
-                     						     <input type="text" class="form-control" name="dept" placeholder="Name of Department" id="collegeDept">     
-                     					      
-                     					<label>Designation  <span class="text-danger">*</span></label>
-                     					        <input type="text" class="form-control" name="designationCollege" placeholder="Designation of Person" id="designationCollege">                     
-                             	
-                             		   <label>Authorized Name  <span class="text-danger">*</span></label>
-                     					        <input type="text" class="form-control" name="collegeAuthour" placeholder="Name of Authorized" id="cAuthour">
-                             	  </div>
-                           	   	<div class="form-group" style="display:none" id="university">
-                           				 <label>Email-ID <span class="text-danger">*</span></label>
-                         			  		 <input type="email" class="form-control" name="uniEmail" placeholder="Email" id="uniEmail">
-                            
-                          				 <label>Alternate Email-ID</label>
-                        					   <input type="email" class="form-control" name="altEmail" placeholder="Alternate Email" id="altEmail">
-                            
-                            		       
-                     					<label>Mobile No.<span class="text-danger">*</span></label>
-                     					       <input type="text" class="form-control" name="uniMobile"  pattern="[7-9]{1}[0-9]{9}" maxlength="10" placeholder="Mobile No." id="uniNo" maxlength="10">
-        
-                     	   		 	  <label>AISHE Code</label>
-                       						   <input type="text" class="form-control" name="aisheName" placeholder="AISHE Code" id="aisheName">
-                            
-                      			       <label>University Name <span class="text-danger">*</span></label>
-                       						   <input type="text" class="form-control" name="uniName" placeholder="University Name" id="uniName">
-                            
-                        			  
-                        			    <label>Name of Department <span class="text-danger">*</span></label>
-                     						       <input type="text" class="form-control" name="uniDept" placeholder="Name of Department" id="uniDept">
-                     						       
-                            			 <label>Designation  <span class="text-danger">*</span></label>
-                     						       <input type="text" class="form-control" name="uniDes" placeholder="Designation of Person" id="uniDes">
-                            
-                             		   <label>Authorized Name  <span class="text-danger">*</span></label>
-                     					        <input type="text" class="form-control" name="uniAuthour" placeholder="Name of Authorized" id="uniAuthour">
-                             	
-                       				   
-                           	  </div>
-                            <div class="clearfix"></div>
-                            <p>
-                            
-                            <button type="submit" id="log-btn" class="button login-btn">Register</button>
-                            </p>
-                            
-                            </form>
-                            <p>Already Member <a href="#">Login</a></p>
-            </div>
-			</div>
-            	
-        	<div class="col-12 col-sm-12 col-lg-3"></div>
 
-            
-            
-        </div>
-    </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script >
+
+	<div class="login">
+		<div class="container" id="main-content">
+
+			<div class="login-box register-box">
+				<div class="login-header">
+					<h5>Register</h5>
+					<p>Register to access your profile</p>
+				</div>
+				<form
+					action="${pageContext.request.contextPath}/insertUserRegistration"
+					onsubmit="return confirm('Do you really want to submit the form?');"
+					method="post" name="login_form">
+					<div class="row row-eq-height">
+						<div class="col-12 col-sm-12 col-lg-12">
+							<label ">Select Type</label> <select id="userType"
+								name="userType" class="form-control" onchange="showForm()"
+								required>
+								<option>Select Type</option>
+								<option value="1">Individual</option>
+								<option value="2">Colleges</option>
+								<option value="3">University</option>
+							</select>
+					
+					
+							<div class="form-group" style="display: visible" id="individual">
+
+								<label>Email-ID <span class="text-danger">*</span></label> <input
+									type="email" class="form-control" name="email"
+									placeholder="Email" id="email"> <label>Alternate
+									Email-ID</label> <input type="email" class="form-control"
+									name="altEmail" placeholder="Alternate Email" id="altEmail">
+
+
+								<label>Full Name <span class="text-danger">*</span></label> <input
+									type="text" class="form-control" name="name" placeholder="Name"
+									id="fullname"> <label>Mobile No.<span
+									class="text-danger">*</span></label> <input type="text"
+									class="form-control" name="mobile" pattern="[7-9]{1}[0-9]{9}"
+									maxlength="10" placeholder="Mobile No." id="mobile"
+									maxlength="10"> <label>College Name <span
+									class="text-danger">*</span></label> <input type="text"
+									class="form-control" name="collegeName"
+									placeholder="College Name" id="collegeName"> <label>University
+									Affiliated <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="university"
+									placeholder="University Affiliated" id="uniAff"> <label>Name
+									of Department <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="dept"
+									placeholder="Name of Department" id="depatment"> <label>Date
+									Of Birth <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="dob"
+									placeholder="Date Of Birth" id="dob"> <label>Authorized
+									Name <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="authour"
+									placeholder="Name of Authorized" id="authour">
+
+							</div>
+				
+						
+							<div class="form-group" style="display: none" id="college">
+								<label>Email-ID <span class="text-danger">*</span></label> <input
+									type="email" class="form-control" name="collegeEmail"
+									placeholder="Email" id="collegeEmail"> <label>Alternate
+									Email-ID</label> <input type="email" class="form-control"
+									name="altEmail" placeholder="Alternate Email" id="altEmail">
+
+
+								<label>Mobile No.<span class="text-danger">*</span></label> <input
+									type="text" class="form-control" name="collegeMobile"
+									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
+									placeholder="Mobile No." id="collegeNo" maxlength="10">
+
+								<label>Institute Name <span class="text-danger">*</span></label>
+								<input type="text" class="form-control" name="institute"
+									placeholder="Institute Name" id="instituteName"> <label>AISHE
+									Code</label> <input type="text" class="form-control" name="aisheName"
+									placeholder="AISHE Code" id="aisheName"> <label>University
+									Affiliated <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="univ"
+									placeholder="University Affiliated" id="univ"> <label>Name
+									of Department <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="dept"
+									placeholder="Name of Department" id="collegeDept"> <label>Designation
+									<span class="text-danger">*</span>
+								</label> <input type="text" class="form-control"
+									name="designationCollege" placeholder="Designation of Person"
+									id="designationCollege"> <label>Authorized Name
+									<span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="collegeAuthour"
+									placeholder="Name of Authorized" id="cAuthour">
+							</div>
+						</div>
+					
+							<div class="form-group" style="display: none" id="university">
+								<label>Email-ID <span class="text-danger">*</span></label> <input
+									type="email" class="form-control" name="uniEmail"
+									placeholder="Email" id="uniEmail"> <label>Alternate
+									Email-ID</label> <input type="email" class="form-control"
+									name="altEmail" placeholder="Alternate Email" id="altEmail">
+
+
+								<label>Mobile No.<span class="text-danger">*</span></label> <input
+									type="text" class="form-control" name="uniMobile"
+									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
+									placeholder="Mobile No." id="uniNo" maxlength="10"> <label>AISHE
+									Code</label> <input type="text" class="form-control" name="aisheName"
+									placeholder="AISHE Code" id="aisheName"> <label>University
+									Name <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="uniName"
+									placeholder="University Name" id="uniName"> <label>Name
+									of Department <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="uniDept"
+									placeholder="Name of Department" id="uniDept"> <label>Designation
+									<span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="uniDes"
+									placeholder="Designation of Person" id="uniDes"> <label>Authorized
+									Name <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="uniAuthour"
+									placeholder="Name of Authorized" id="uniAuthour">
+
+							
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="col-12 col-sm-12 col-lg-12">
+							<p>
+								<button type="submit" id="log-btn" class="button login-btn">Register</button>
+							</p>
+						</div>
+
+					</div>
+				</form>
+
+
+				<p>
+					Already Member <a href="/login">Login</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-12 col-lg-3"></div>
+
+
+
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<!--     <script >
 
     $(function() 
     {
@@ -222,7 +235,8 @@
     }
    
     </script>
-<!-- <script type="text/javascript">
+ -->
+	<!-- <script type="text/javascript">
 		$(function() {
 
 			$('.datepicker').datepicker({
@@ -234,7 +248,7 @@
 			});
 		});
 	</script> -->
-<script type="text/javascript">
+	<script type="text/javascript">
 function showForm() {
 	//document.getElementById("abc").style = "display:none"
 		var userType=document.getElementById("userType").value
@@ -322,8 +336,8 @@ function hideText() {
 	document.getElementById("college").style = "display:none"		
 	}
 	</script>
-	
-	
+
+
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

@@ -84,9 +84,11 @@
 			>
 		</div>
 	</div>
-	 
+
             <div class="container" id="main-content">
         <div class="row row-eq-height">
+        
+       
          	<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
                     <div class="row">
                     	<c:if test="${not empty event.featuredImage}">
@@ -109,7 +111,7 @@
                     </p>
                    
                     
-                    <a href="#" class="btn button apply">Apply</a>
+                    <a href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}" class="btn button apply">Apply</a>
                   
                     </div>
                     </div>

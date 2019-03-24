@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -75,7 +78,13 @@
             <p class="last-update">Last Updated on 25 Feb 2019</p>  -->
         </div>
     </div>    
-    
+   <%--     <c:if test="${sessionScope.successMsg!=null}">
+            <div class="col-lg-12">
+    		          <div class="alert alert-success alert-dismissible fade in">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong>Success : </strong> ${sessionScope.successMsg}</div>
+        	                                       </div> 
+            </c:if> --%>
     <div class="container" id="main-content">
         <div class="row row-eq-height">
         	<div class="col-12 col-sm-3 col-lg-3">
@@ -109,7 +118,7 @@
                             </li>
 
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="/rusafrontend/info/about-rusa9">Change Password</a>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                             </li>
                         </ul>
                 </div>
@@ -120,11 +129,11 @@
 
 				<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab" role="tablist">
                                 <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#upcoming"><span class="icon-calendar-with-a-clock-time-tools icon"></span> Upcoming Events</a>
+                                <a class="nav-link active" data-toggle="tab" href="${pageContext.request.contextPath}/upcomingEvents"><span class="icon-calendar-with-a-clock-time-tools icon"></span> Upcoming Events</a>
                                 </li>
                                 
                                 <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#previous"><span class="icon-calendar icon"></span> Previous Events </a>
+                                <a class="nav-link" data-toggle="tab" href="${pageContext.request.contextPath}/previousEvents"><span class="icon-calendar icon"></span> Previous Events </a>
                                 </li>
                             </ul>
 
@@ -133,70 +142,27 @@
                                     <table align="center" cellpadding="0" cellspacing="0"  class="table">
                                     <thead>
                                         <tr>
-                                            <th>Sr. no</th>
-                                            <th>Image</th>
-                                            <th>Name</th>
+                                            <th>Sr.no</th>
+                                            <th>Event Name</th>
+                                            <th>Event Date</th>
                                             <th>Details</th>
-                                            <th>Date</th>
-                                            <th>Venue</th>
+                                          
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                        <tr class="odd">
-                                            <td>1</td>
-                                            <td><img src="http://tomcat.aaryatechindia.in:6435/media/gallery/thumbnail2019-03-01_18:46:08_2019-02-15_12_58_10_Digital-Launch-5.jpg" alt="Digital-Launch" title="Digital-Launch" class="img-responsive thumbnail">	</td>
-                                            <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
-                                            <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </td>
-                                            <td>5 Apr 2019</td>
-                                            <td>Lorem Ipsum is simply</td>
-                                        </tr>
+                                     
+                                        <c:forEach items="${upcoming}" var="upcoming"	varStatus="count">
+									   <tr class="odd">
+                                          	<td>${count.index+1}</td>
+                                            <td>${upcoming.heading}</td>
+                                            <td>${upcoming.eventDateFrom}</td>
+                                            <td> <a href="${pageContext.request.contextPath}/eventDetail/${upcoming.newsblogsId}">Detail</a></td>
+                                               </tr>
+                                            </c:forEach>
+                                       
                                     
-                                        <tr class="even">
-                                                <td>1</td>
-                                                <td><img src="http://tomcat.aaryatechindia.in:6435/media/gallery/thumbnail2019-03-01_18:46:08_2019-02-15_12_58_10_Digital-Launch-5.jpg" alt="Digital-Launch" title="Digital-Launch" class="img-responsive thumbnail">	</td>
-                                                <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
-                                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </td>
-                                                <td>5 Apr 2019</td>
-                                                <td>Lorem Ipsum is simply</td>
-                                            </tr>
-
-                                        <tr class="odd">
-                                            <td>1</td>
-                                            <td><img src="http://tomcat.aaryatechindia.in:6435/media/gallery/thumbnail2019-03-01_18:46:08_2019-02-15_12_58_10_Digital-Launch-5.jpg" alt="Digital-Launch" title="Digital-Launch" class="img-responsive thumbnail">	</td>
-                                            <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
-                                            <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </td>
-                                            <td>5 Apr 2019</td>
-                                            <td>Lorem Ipsum is simply</td>
-                                        </tr>
-                                    
-                                        <tr class="even">
-                                                <td>1</td>
-                                                <td><img src="http://tomcat.aaryatechindia.in:6435/media/gallery/thumbnail2019-03-01_18:46:08_2019-02-15_12_58_10_Digital-Launch-5.jpg" alt="Digital-Launch" title="Digital-Launch" class="img-responsive thumbnail">	</td>
-                                                <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
-                                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </td>
-                                                <td>5 Apr 2019</td>
-                                                <td>Lorem Ipsum is simply</td>
-                                            </tr>
-
-                                        <tr class="odd">
-                                            <td>1</td>
-                                            <td><img src="http://tomcat.aaryatechindia.in:6435/media/gallery/thumbnail2019-03-01_18:46:08_2019-02-15_12_58_10_Digital-Launch-5.jpg" alt="Digital-Launch" title="Digital-Launch" class="img-responsive thumbnail">	</td>
-                                            <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
-                                            <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </td>
-                                            <td>5 Apr 2019</td>
-                                            <td>Lorem Ipsum is simply</td>
-                                        </tr>
-                                    
-                                        <tr class="even">
-                                                <td>1</td>
-                                                <td><img src="http://tomcat.aaryatechindia.in:6435/media/gallery/thumbnail2019-03-01_18:46:08_2019-02-15_12_58_10_Digital-Launch-5.jpg" alt="Digital-Launch" title="Digital-Launch" class="img-responsive thumbnail">	</td>
-                                                <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
-                                                <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </td>
-                                                <td>5 Apr 2019</td>
-                                                <td>Lorem Ipsum is simply</td>
-                                            </tr>
-                                    
+                                       
                                     </tbody>
                                     </table>
                                 
@@ -207,48 +173,24 @@
                                     <thead>
                                         <tr>
                                             <th>Sr. no</th>
-                                            <th>Name</th>
+                                            <th>Event Name</th>
                                             <th>Download</th>
-                                            <th>Applied status</th>
-                                            <th>Feedback</th>
+                                          
+                                            <th>Detail</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+ 								 <c:forEach items="${previous}" var="previous"	varStatus="count">
                                         <tr class="odd">
-                                            <td>1</td>
-                                            <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
-                                            <td><a href="#"><span class="icon-download-2"></span> Download</a></td>
-                                            <td>Process</td>
-                                            <td><a href="#" class="btn apply">Feedback</a></td>
-                                        </tr>
                                         
-                                         <tr class="even">
-                                            <td>1</td>
-                                            <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
+                                            <td>${count.index+1}</td>
+                                            <td>${previous.heading}</td>
                                             <td><a href="#"><span class="icon-download-2"></span> Download</a></td>
-                                            <td>Process</td>
-                                            <td><a href="#" class="btn apply">Feedback</a></td>
+                                            <td><a href="${pageContext.request.contextPath}/eventDetail/${previous.newsblogsId}">Detail</a></td>
+                                          
                                         </tr>
-                           
-                                        <tr class="odd">
-                                            <td>1</td>
-                                            <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
-                                            <td><a href="#"><span class="icon-download-2"></span> Download</a></td>
-                                            <td>Process</td>
-                                            <td><a href="#" class="btn apply">Feedback</a></td>
-                                        </tr>
-                                        
-                                         <tr class="even">
-                                            <td>1</td>
-                                            <td>Lorem Ipsum is simply dummy text typesetting industry.</td>
-                                            <td><a href="#"><span class="icon-download-2"></span> Download</a></td>
-                                            <td>Process</td>
-                                            <td><a href="#" class="btn apply">Feedback</a></td>
-                                        </tr>
-                                    
-                                       
-                                    
+                                        </c:forEach>
+                                      
                                     </tbody>
                                     </table>	
                                 </div>
