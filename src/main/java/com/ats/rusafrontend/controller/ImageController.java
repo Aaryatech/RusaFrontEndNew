@@ -242,6 +242,47 @@ public class ImageController {
 
 		return model;
 	}
+	
+	@RequestMapping(value = "/newsList", method = RequestMethod.GET)
+	public ModelAndView newsList(HttpServletRequest request, HttpServletResponse response) {
+
+		
+		ModelAndView model = new ModelAndView("content/news-list");
+		try {
+
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "newsList");
+			int langId = 1;
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				 model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "newsList");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("langId", langId);
+				NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map1,
+						NewsDetails[].class);
+				List<NewsDetails> newsBlogsList = new ArrayList<NewsDetails>(Arrays.asList(getPagesModule));
+			
+				model.addObject("newsBlogsList", newsBlogsList);
+				model.addObject("pageMetaData", pageMetaData);		
+				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag=0;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
 	   
 	@RequestMapping(value = "/eventList", method = RequestMethod.GET)
 	public ModelAndView eventList(HttpServletRequest request, HttpServletResponse response) {
@@ -268,10 +309,17 @@ public class ImageController {
 				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL",map1,
 						NewsDetails[].class);
 				List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
-				
+				for(int i=0; i<event.size();i++)
+				{
+					event.get(i).setEventDateFrom(DateConvertor.convertToDMY(event.get(i).getEventDateFrom()));					
+					
+				}
+				//model.addObject("event", event);
 				model.addObject("event", eventList);
 				model.addObject("pageMetaData", pageMetaData);				
 				model.addObject("siteKey", Constant.siteKey);
+			    session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+
 				model.addObject("flag", flag);
 				flag=0;
 			}
@@ -293,7 +341,7 @@ public class ImageController {
 	  
 	  HttpSession session = request.getSession(); 
 	  session.setAttribute("mapping","eventList"); 
-	  int langId = 1; 
+	  int langId=1;
 	  Maintainance maintainance =
 	  rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 	  if (maintainance.getMaintenanceStatus() == 1) {
@@ -307,6 +355,7 @@ public class ImageController {
 	  
 	  MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 	  map1.add("langId", langId);
+	
 	  map1.add("newsblogsId", newsblogsId);
 	  NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId",map1, NewsDetails.class); 
 	  
@@ -326,6 +375,52 @@ public class ImageController {
 	  } catch (Exception e) { e.printStackTrace(); }
 	  
 	  return model; }
+	  
+	/*
+	 * @RequestMapping(value = "/eventDetail/{langId}/{pageId}/{newsblogsId}",
+	 * method =RequestMethod.GET) public ModelAndView eventDetail(@PathVariable int
+	 * langId, @PathVariable int pageId, @PathVariable int newsblogsId,
+	 * HttpServletRequest request, HttpServletResponse response) {
+	 * 
+	 * 
+	 * ModelAndView model = new ModelAndView("event-detail"); try {
+	 * 
+	 * HttpSession session = request.getSession();
+	 * session.setAttribute("mapping","eventList");
+	 * 
+	 * Maintainance maintainance = rest.getForObject(Constant.url +
+	 * "/checkIsMaintenance", Maintainance.class); if
+	 * (maintainance.getMaintenanceStatus() == 1) {
+	 * 
+	 * model = new ModelAndView("maintainance"); model.addObject("maintainance",
+	 * maintainance); } else { MultiValueMap<String, Object> map = new
+	 * LinkedMultiValueMap<String, Object>(); map.add("slugName", "eventList");
+	 * PageMetaData pageMetaData = rest.postForObject(Constant.url +
+	 * "/getPageMetaData", map, PageMetaData.class);
+	 * 
+	 * 
+	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
+	 * Object>(); map1.add("langId", langId); map1.add("pageId", pageId);
+	 * map1.add("newsblogsId", newsblogsId); NewsDetails eventList =
+	 * rest.postForObject(Constant.url + "/getEventListByNewsId",map1,
+	 * NewsDetails.class);
+	 * 
+	 * // List<NewsDetails> event = new
+	 * ArrayList<NewsDetails>(Arrays.asList(eventList)); String dateEvent=
+	 * DateConvertor.convertToYMD(eventList.getEventDateFrom());
+	 * model.addObject("event", eventList); model.addObject("dateEvent", dateEvent);
+	 * model.addObject("pageMetaData",pageMetaData); model.addObject("siteKey",
+	 * Constant.siteKey); session.setAttribute("gallryImageURL",
+	 * Constant.getGallryImageURL);
+	 * 
+	 * model.addObject("flag", flag); flag=0;
+	 * 
+	 * }
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); }
+	 * 
+	 * return model; }
+	 */
 	 
 	
 	@RequestMapping(value = "/eventJson", method = RequestMethod.GET)
