@@ -75,7 +75,7 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/eventList">Event Detail</a>
+				href="${pageContext.request.contextPath}/eventList">News Detail</a>
 			>
 		</div>
 	</div>
