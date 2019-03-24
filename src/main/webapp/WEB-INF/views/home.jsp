@@ -313,7 +313,7 @@
 							<c:set var="string3" value="${fn:substring(string4, 0, 100)}" />
 							<p>${string3}
 								<a
-									href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.pageId}/${newsBlogsList.newsblogsId}">Read
+									href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.newsblogsId}">Read
 									More</a>
 							</p>
 						</div>

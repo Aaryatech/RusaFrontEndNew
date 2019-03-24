@@ -92,12 +92,12 @@
                     <div class="col-12 col-sm-12 col-lg-12">
                     		
                     <strong>${image.heading}</strong><br>
-					<p>${image.descriptions}</p>                    
+					<p>${image.descriptions}</p>               
 				
                   
                                  
                     
-                    <a href="${image.newsSourceUrlName}" target="_blank" class="btn button apply">Get News Detail</a>
+                    Source: ${image.newsSourceUrlName}
                   
                     </div>
                     </div>     
