@@ -67,12 +67,8 @@ public class ImageController {
 				model = new ModelAndView("maintainance");
 				 model.addObject("maintainance", maintainance);
 			} else {
-
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("langId", langId);
-				TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
-				model.addObject("menuList", sectionTree);
-
+			
+				
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();				
 				map1.add("newsblogsId", newsblogsId);
 				map1.add("langId", langId);
