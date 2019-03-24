@@ -1,6 +1,7 @@
 package com.ats.rusafrontend.controller;
 
 import java.net.InetAddress;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,14 +20,17 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ats.rusafrontend.commen.Constant;
+ import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.model.*;
 import com.ats.rusafrontend.reCaptcha.VerifyRecaptcha;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -278,6 +282,158 @@ public class ImageController {
 
 		return model;
 	}
+	
+	
+	  @RequestMapping(value = "/eventDetail/{newsblogsId}", method =RequestMethod.GET) 
+	  public ModelAndView eventDetail(@PathVariable int newsblogsId, HttpServletRequest request, HttpServletResponse response) {
+	  
+	  
+	  ModelAndView model = new ModelAndView("event-detail");
+	  try {
+	  
+	  HttpSession session = request.getSession(); 
+	  session.setAttribute("mapping","eventList"); 
+	  int langId = 1; 
+	  Maintainance maintainance =
+	  rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+	  if (maintainance.getMaintenanceStatus() == 1) {
+	  
+	  model = new ModelAndView("maintainance"); model.addObject("maintainance",
+	  maintainance); } else { MultiValueMap<String, Object> map = new
+	  LinkedMultiValueMap<String, Object>(); map.add("slugName", "eventList");
+	  PageMetaData pageMetaData = rest.postForObject(Constant.url +
+	  "/getPageMetaData", map, PageMetaData.class);
+	  
+	  
+	  MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+	  map1.add("langId", langId);
+	  map1.add("newsblogsId", newsblogsId);
+	  NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId",map1, NewsDetails.class); 
+	  
+	//  List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
+	  
+	  model.addObject("event", eventList);
+	  model.addObject("pageMetaData",pageMetaData); 
+	  model.addObject("siteKey", Constant.siteKey);
+	  model.addObject("flag", flag); 
+	  flag=0; 
+	  
+	  }
+	  
+	  } catch (Exception e) { e.printStackTrace(); }
+	  
+	  return model; }
+	 
+	
+	@RequestMapping(value = "/eventJson", method = RequestMethod.GET)
+	public @ResponseBody String eventJson(HttpServletRequest request, HttpServletResponse response) {
 
+		// ModelAndView model = new ModelAndView("moduleForms/showFoldersFiles");
+		String jsonString = new String();
+		try {
+			 
+		 System.out.println("akshay kasar");
+
+		 CalenderList m = new CalenderList();
+		 List<Result> result = new ArrayList<>();
+		 m.setSuccess(1);
+		 
+		 Result r = new Result();
+		 r.setId("1");
+		 r.setTitle("aksshay");
+		 r.set_class("event-info");
+		 r.setUrl("http://www.example.com/");
+		 r.setStart("1362938400000");
+		 r.setEnd("1362938400000");
+		 result.add(r);
+		 m.setResult(result);
+		 
+		 
+		 ObjectMapper mapper = new ObjectMapper();
+			jsonString = mapper.writeValueAsString(m);
+		 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		/*return "{\r\n" + 
+				"	\"success\": 1,\r\n" + 
+				"	\"result\": [\r\n" + 
+				"		{\r\n" + 
+				"			\"id\": \"293\",\r\n" + 
+				"			\"title\": \"This is warning class event with very long title to check how it fits to evet in day view\",\r\n" + 
+				"			\"url\": \"http://www.example.com/\",\r\n" + 
+				"			\"class\": \"event-warning\",\r\n" + 
+				"			\"start\": \"1362938400000\",\r\n" + 
+				"			\"end\":   \"1363197686300\"\r\n" + 
+				"		},\r\n" + 
+				"		{\r\n" + 
+				"			\"id\": \"256\",\r\n" + 
+				"			\"title\": \"Event that ends on timeline\",\r\n" + 
+				"			\"url\": \"http://www.example.com/\",\r\n" + 
+				"			\"class\": \"event-warning\",\r\n" + 
+				"			\"start\": \"1363155300000\",\r\n" + 
+				"			\"end\":   \"1363227600000\"\r\n" + 
+				"		},\r\n" + 
+				"		{\r\n" + 
+				"			\"id\": \"276\",\r\n" + 
+				"			\"title\": \"Short day event\",\r\n" + 
+				"			\"url\": \"http://www.example.com/\",\r\n" + 
+				"			\"class\": \"event-success\",\r\n" + 
+				"			\"start\": \"1363245600000\",\r\n" + 
+				"			\"end\":   \"1363252200000\"\r\n" + 
+				"		},\r\n" + 
+				"		{\r\n" + 
+				"			\"id\": \"294\",\r\n" + 
+				"			\"title\": \"This is information class \",\r\n" + 
+				"			\"url\": \"http://www.example.com/\",\r\n" + 
+				"			\"class\": \"event-info\",\r\n" + 
+				"			\"start\": \"1363111200000\",\r\n" + 
+				"			\"end\":   \"1363284086400\"\r\n" + 
+				"		},\r\n" + 
+				"		{\r\n" + 
+				"			\"id\": \"297\",\r\n" + 
+				"			\"title\": \"This is success event\",\r\n" + 
+				"			\"url\": \"http://www.example.com/\",\r\n" + 
+				"			\"class\": \"event-success\",\r\n" + 
+				"			\"start\": \"1363234500000\",\r\n" + 
+				"			\"end\":   \"1363284062400\"\r\n" + 
+				"		},\r\n" + 
+				"		{\r\n" + 
+				"			\"id\": \"54\",\r\n" + 
+				"			\"title\": \"This is simple event\",\r\n" + 
+				"			\"url\": \"http://www.example.com/\",\r\n" + 
+				"			\"class\": \"\",\r\n" + 
+				"			\"start\": \"1363712400000\",\r\n" + 
+				"			\"end\":   \"1363716086400\"\r\n" + 
+				"		},\r\n" + 
+				"		{\r\n" + 
+				"			\"id\": \"532\",\r\n" + 
+				"			\"title\": \"This is inverse event\",\r\n" + 
+				"			\"url\": \"http://www.example.com/\",\r\n" + 
+				"			\"class\": \"event-inverse\",\r\n" + 
+				"			\"start\": \"1364407200000\",\r\n" + 
+				"			\"end\":   \"1364493686400\"\r\n" + 
+				"		},\r\n" + 
+				"		{\r\n" + 
+				"			\"id\": \"548\",\r\n" + 
+				"			\"title\": \"This is special event\",\r\n" + 
+				"			\"url\": \"http://www.example.com/\",\r\n" + 
+				"			\"class\": \"event-special\",\r\n" + 
+				"			\"start\": \"1363197600000\",\r\n" + 
+				"			\"end\":   \"1363629686400\"\r\n" + 
+				"		},\r\n" + 
+				"		{\r\n" + 
+				"			\"id\": \"295\",\r\n" + 
+				"			\"title\": \"Event 3\",\r\n" + 
+				"			\"url\": \"http://www.example.com/\",\r\n" + 
+				"			\"class\": \"event-important\",\r\n" + 
+				"			\"start\": \"1364320800000\",\r\n" + 
+				"			\"end\":   \"1364407286400\"\r\n" + 
+				"		}\r\n" + 
+				"	]\r\n" + 
+				"}";*/
+		return jsonString;
+	}
 	
 }
