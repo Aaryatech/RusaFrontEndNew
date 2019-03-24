@@ -25,6 +25,7 @@ import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.Info;
+import com.ats.rusafrontend.model.NewsDetails;
 import com.ats.rusafrontend.model.OtpResponse;
 import com.ats.rusafrontend.model.Registration;
 
@@ -45,6 +46,41 @@ public class UserController {
 
 		ModelAndView model = new ModelAndView("login");
 		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	@RequestMapping(value = "/loginResponse", method = RequestMethod.POST)
+	public String loginResponse(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+		
+				String userName = request.getParameter("userName");
+				String password = request.getParameter("password");
+				
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("userName", userName);
+			map.add("password", password);
+			
+			Registration verify = rest.postForObject(Constant.url + "/loginFrontEnd", map,
+					Registration.class);
+	
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+
+		return "redirect:/dashboard";
+	}
+	
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("content/dashboard");
+		try {
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -280,6 +316,42 @@ public class UserController {
 
 		return mav;
 	}
-
 	
+	@RequestMapping(value = "/getCurrentMonthEvents", method = RequestMethod.POST)
+	public ModelAndView getCurrentMonthEvents(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mav = new ModelAndView("");
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dd = new SimpleDateFormat("dd-MM-yyyy");
+
+            Calendar cal = Calendar.getInstance();
+
+            Calendar cal1 = Calendar.getInstance();
+            cal.set(cal1.get(Calendar.YEAR), cal1.get(Calendar.MONTH), 1);
+
+            String firstDate = sdf.format(cal.getTimeInMillis());
+            String firstDate1 = dd.format(cal.getTimeInMillis());
+            cal.set(cal.DAY_OF_MONTH, cal.getActualMaximum(cal.DAY_OF_MONTH));
+            String endDate = sdf.format(cal.getTimeInMillis());
+            String endDate1 = dd.format(cal.getTimeInMillis());
+			String uuid = request.getParameter("uuid");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("firstDate", firstDate);
+			map.add("endDate", endDate);
+			//map.add("firstDate", firstDate);
+					
+			NewsDetails monthDate = rest.postForObject(Constant.url + "/getCurrentMonthEvents", map,NewsDetails.class);			
+						
+				
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return mav;
+	}
+
+		
+
 }
