@@ -33,6 +33,11 @@
 <link rel="icon" href="../../favicon.ico">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
+<style>
+.other-gov-site-home {
+    margin-top: 43px;
+}
+</style>
 </head>
 <body>
 	<c:url var="checkMaintainance" value="/checkMaintainance" />

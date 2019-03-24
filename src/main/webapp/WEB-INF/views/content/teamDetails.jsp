@@ -38,6 +38,11 @@
 	</c:otherwise>
 </c:choose>
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
+<style>
+.other-gov-site-home {
+    margin-top: 43px;
+}
+</style>
 </head>
 <body>
 <c:url var="checkMaintainance" value="/checkMaintainance" />

@@ -55,7 +55,7 @@ public class HomeController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("langId", langId);
-
+			map.add("type", 1);
 			TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
 
 			ImageLink[] image = rest.getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
@@ -86,7 +86,7 @@ public class HomeController {
 					TestImonial[].class);
 			List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 
-			NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL",map,
+			NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllUpcomingEvents",map,
 					NewsDetails[].class);
 			List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
 			
