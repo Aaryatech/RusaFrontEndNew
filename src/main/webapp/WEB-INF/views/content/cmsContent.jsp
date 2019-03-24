@@ -24,7 +24,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon" />
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <c:choose>
 	<c:when test="${not empty pageMetaData.pageMetaTitle}">
@@ -43,7 +45,7 @@
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 <style>
 .other-gov-site-home {
-    margin-top: 43px;
+	margin-top: 43px;
 }
 </style>
 </head>
@@ -64,11 +66,11 @@
 			>
 		</div>
 	</div>
-	  
-	
+
+
 	<div class="container main-content" id="main-content">
 		<div class="row row-eq-height">
-	
+
 			<div class="col-12 col-sm-3 col-lg-3">
 				<div class="leftColm">
 					<c:forEach items="${sessionScope.menuList.sectionlist}"
@@ -177,8 +179,8 @@
 
 																			<a onclick="checkMaintainance()"
 																				title="${subCatList.subCatName}"
-																				href="${pageContext.request.contextPath}/${subCatList.externalUrl}" target="_blank">${subCatList.subCatName}
-																			</a>
+																				href="${pageContext.request.contextPath}/${subCatList.externalUrl}"
+																				target="_blank">${subCatList.subCatName} </a>
 
 																		</c:when>
 																		<c:otherwise>
@@ -215,8 +217,8 @@
 
 				</div>
 			</div>
-		
-			
+
+
 			<div class="col-12 col-sm-9 col-lg-9 right-Colm">
 				<c:set var="find" value="0"></c:set>
 
@@ -254,38 +256,40 @@
 				<c:if test="${pageContent.faqContentList.size()>0}">
 					<h2>FAQ's</h2>
 
-					
 
-						 
-                <div id="accordion" class="accordion">
-                  
-                    <c:forEach items="${pageContent.faqContentList}"
-						var="faqContentList" varStatus="loop">
-						  <div class="faq-section">
-						  
-                        <div class="card-header " data-toggle="collapse" href="#collapseOne${loop.index}">
-                            <a class="card-title">
-                            <span>${faqContentList.faqQue}</span>
-                            </a>
-                        </div>
-                        
-                        <div id="collapseOne${loop.index}" class="card-body collapse  " data-parent="#accordion" >
-								<div class="clearfix"></div> ${faqContentList.faqAns}
-						</div>
-						</div>
-					 </c:forEach>
-						
+
+
+					<div id="accordion" class="accordion">
+
+						<c:forEach items="${pageContent.faqContentList}"
+							var="faqContentList" varStatus="loop">
+							<div class="faq-section">
+
+								<div class="card-header " data-toggle="collapse"
+									href="#collapseOne${loop.index}">
+									<a class="card-title"> <span>${faqContentList.faqQue}</span>
+									</a>
+								</div>
+
+								<div id="collapseOne${loop.index}" class="card-body collapse  "
+									data-parent="#accordion">
+									<div class="clearfix"></div>
+									${faqContentList.faqAns}
+								</div>
+							</div>
+						</c:forEach>
+
 					</div>
-						<c:if test="${loop.last}">
-							<h6 style="text-align: right;">
-								Last Updated on
-								<c:choose>
-									<c:when test="${not empty faqContentList.editDate}">${faqContentList.editDate}</c:when>
-									<c:otherwise>${faqContentList.addDate}</c:otherwise>
-								</c:choose>
-							</h6>
-						</c:if>
-				
+					<c:if test="${loop.last}">
+						<h6 style="text-align: right;">
+							Last Updated on
+							<c:choose>
+								<c:when test="${not empty faqContentList.editDate}">${faqContentList.editDate}</c:when>
+								<c:otherwise>${faqContentList.addDate}</c:otherwise>
+							</c:choose>
+						</h6>
+					</c:if>
+
 					<c:set var="find" value="1"></c:set>
 				</c:if>
 
@@ -305,18 +309,20 @@
 				</c:if>
 
 				<c:if test="${pageContent.testImonialList.size()>0}">
-					<h2>Success Stories</h2>
+					<h2>Testimonials</h2>
 					<div class="row">
 						<c:forEach items="${pageContent.testImonialList}"
 							var="testImonialList">
-							<div class="col-12 col-sm-6 col-lg-6">
-								<div class="success-stories">
-									${testImonialList.message}
-									<p>
-										<i><strong>${testImonialList.fromName}</strong></i>
-									</p>
+							<c:if test="${testImonialList.sectionId==6}">
+								<div class="col-12 col-sm-6 col-lg-6">
+									<div class="success-stories">
+										${testImonialList.message}
+										<p>
+											<i><strong>${testImonialList.fromName}</strong></i>
+										</p>
+									</div>
 								</div>
-							</div>
+							</c:if>
 						</c:forEach>
 					</div>
 
@@ -377,20 +383,80 @@
 					<c:set var="find" value="1"></c:set>
 				</c:if>
 
-				<!-- <div class="row"> 
-				      <div class="col-12 col-sm-3 col-lg-3">
-				        <a href="http://www.youtube.com/watch?v=k6mFF3VmVAs" data-toggle="lightbox" data-gallery="mixedgallery" class="col-sm-4">
-				    <img src="http://i1.ytimg.com/vi/yP11r5n5RNg/mqdefault.jpg" class="img-fluid">
-				</a>
-				</div>
-                </div> -->
+				<c:if test="${pageContent.teamList.size()>0}">
+					<div class="row">
+						<c:forEach items="${pageContent.teamList}" var="testImonialList">
 
-				<%-- <c:if test="${find==1}">
-					<a href="javascript:void(0)" onclick="window.print()"
-						style="text-align: right;"> print</a>
-				</c:if> --%>
+							<div class="col-6 col-sm-4 col-lg-4">
+								<div class="team-wrap">
+									<span class="team-candidates-status"></span>
+									<figure>
+										<c:choose>
+											<c:when test="${not empty testImonialList.imageName}">
+												<a href="#"><img
+													src="${gallryImageURL}${testImonialList.imageName}" alt=""></a>
+											</c:when>
+											<c:otherwise>
+												<a href="#"><img
+													src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+													alt=""></a>
 
+											</c:otherwise>
+										</c:choose>
+									</figure>
+									<div class="team-candidates-text ">
+										<h2>
 
+											<a href="#">${testImonialList.fromName}</a>
+										</h2>
+										<span>${testImonialList.designation}</span>
+									</div>
+								</div>
+							</div>
+
+						</c:forEach>
+					</div>
+					<c:set var="find" value="1"></c:set>
+				</c:if>
+
+				<c:if test="${pageContent.successList.size()>0}"> 
+					<div class="row" id="successstory">
+						<c:forEach items="${pageContent.successList}"
+							var="testImonialList">
+
+							<div class="col-12 col-sm-12 col-lg-12">
+								<div class="success-stories">
+									<div class="row">
+										<div class="col-12 col-sm-3 col-lg-3">
+											<c:choose>
+												<c:when test="${not empty testImonialList.imageName}">
+													<a href="#"><img
+														src="${gallryImageURL}${testImonialList.imageName}" alt="" width="184" height="134"></a>
+												</c:when>
+												<c:otherwise>
+													<a href="#"><img
+														src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+														alt="" width="184" height="134"></a>
+
+												</c:otherwise>
+											</c:choose>
+										</div>
+										<div class="col-12 col-sm-9 col-lg-9">
+											<p>
+												<span class="icon-quote-left quote"></span>${testImonialList.message}
+											</p>
+											<p>
+												<strong>${testImonialList.fromName}</strong> <span class="sup-text">${testImonialList.designation},${testImonialList.location}</span>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</c:forEach>
+					</div>
+					<c:set var="find" value="1"></c:set>
+				</c:if>
 				<c:if test="${find==0}">
 
 					<h2 style="text-align: center;">No Record Found</h2>
@@ -398,7 +464,7 @@
 			</div>
 		</div>
 	</div>
-<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	<!-- JavaScript-->
@@ -408,9 +474,6 @@
 		function checkMaintainance() {
 
 		}
-	</script>
-
-
-
+	</script> 
 </body>
 </html>

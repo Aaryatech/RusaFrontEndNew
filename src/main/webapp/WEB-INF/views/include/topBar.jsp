@@ -3,17 +3,14 @@
 <%@ page import="java.io.*,java.util.*, javax.servlet.*" 
   import = "java.text.SimpleDateFormat"%> 
  
-   
-
-<%
+ 
+  <div class="top-section">
+ <%
    Date date = new Date();
 	SimpleDateFormat sf = new SimpleDateFormat("dd MMM, yyyy | hh:mm a z", Locale.ENGLISH);	
    out.print( "<div class=\"date\">" +sf.format(date)+"</div>");
     
 %>
-
-  <div class="top-section">
- 
         <div class="top-right-menu">
         	<ul>
             	<li><a href="#main-content" class="dropdown-arrow"><span>Skip to main content</span></a></li>
