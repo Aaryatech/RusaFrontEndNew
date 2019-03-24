@@ -52,11 +52,11 @@ public class ImageController {
 	RestTemplate rest = new RestTemplate();
 	ContactUs contactUs = new ContactUs();
 	int flag=0;
-	
+	  
 	@RequestMapping(value = "/NewsDetails/{langId}/{newsblogsId}", method = RequestMethod.GET)
 	public ModelAndView getImageLink(@PathVariable int langId, @PathVariable int newsblogsId,
 			HttpServletRequest request, HttpServletResponse response) {
-
+		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView("content/news-detail");
 		try {
 
@@ -80,7 +80,7 @@ public class ImageController {
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				System.out.println("list_new: " + image.toString());
 				model.addObject("image", image); 
-				model.addObject("getGallryImageURL", Constant.getGallryImageURL);  
+				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);  
 
 			}
 
