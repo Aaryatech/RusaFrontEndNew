@@ -6,8 +6,8 @@
  */
 
 .ekko-lightbox-container {
-  position: relative;
-  overflow: hidden;
+ /*   position: relative;*/
+overflow: hidden;
 }
 
 .ekko-lightbox-nav-overlay {
@@ -22,10 +22,10 @@
 .ekko-lightbox-nav-overlay a {
   z-index: 100;
   display: inline-block;
-  width:50%;
+  width:30px;
   height:30px;
-  padding-top:25%;
-  font-size: 30px;
+  padding-top:30%;
+  font-size: 40px;
   color: #fff;
   text-shadow: 2px 2px 4px #000;
   opacity: 1;
@@ -38,11 +38,14 @@
 .ekko-lightbox-nav-overlay a:first-child{
     text-align: left;
 	padding-left:20px;
+	margin-left: -100px;
 }
 
 .ekko-lightbox-nav-overlay a:last-child{
     text-align: right;
 	padding-right:20px;
+	margin-right:-60px;
+	float: right;
 }
 .ekko-lightbox-nav-overlay a:empty {
   width: 49%;
@@ -71,5 +74,7 @@
 }
 
 .ekko-lightbox .modal-footer {
-  text-align: left;
-}
+text-align: left;
+font-size: 14px;
+float: left;
+display: block;}

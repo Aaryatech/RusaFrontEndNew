@@ -56,7 +56,20 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
 	rel="stylesheet">
-<jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
+        <script type="text/javascript">
+	var st_url = "${sessionScope.siteFrontEndUrl}";
+	var dm_url = "${sessionScope.siteDomainUrl}";
+	
+	 var strMsg = "This link will take you to extneranl web site.";
+     var strMsgPdf = "PDF file that opens in a new window.";
+	</script>
+          <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=809225772483402";
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));</script>
 
 <script>
 	var strMsg = "This link will take you to extneranl web site.";
@@ -159,7 +172,7 @@
 							<div class="tab-content-section">
 								<c:forEach items="${sessionScope.event}" var="eventList"	varStatus="count">
 								<h5>
-									<a href="#"> ${eventList.heading}</a>
+									<a href="eventList"> ${eventList.heading}</a>
 								</h5>		
 					
 							<c:set var="string4" value="${eventList.descriptions}"/>
@@ -169,7 +182,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="#">Read More</a>
+					<a href="eventList">Read More</a>
 				</div>
 			</div>
 
@@ -313,7 +326,15 @@
 					<div class="twitter border-box">${setting[3].keyValues}</div>
 				</div>
 			</c:if>
-			<div class="col-12 col-sm-6 col-lg-6"></div>
+			<div class="col-12 col-sm-6 col-lg-6"><div class="border-box bootom-box">
+                    <div class="btn-group">
+                   <!--  <button class="btn btn-primary button btn-calendar prev" data-calendar-nav="prev">< Prev </button> -->
+                    <button class="btn btn-default button btn-calendar today" data-calendar-nav="today">Today</button>
+                  <!--   <button class="btn btn-primary button btn-calendar next" data-calendar-nav="next">Next ></button> -->
+                    </div>
+                    <h3></h3>
+    				<div id="calendar"></div>
+					</div></div>
 
 		</div>
 
@@ -413,10 +434,160 @@
 			</div>
 		</div>
 	</div>
-	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
+	 <div class="other-gov-site">
+            <div class="container">
+                <div class="jcarousel-wrapper">
+                    <div class="jcarousel">
+                        <ul>
+                            <li><img src="images/1.jpg" alt="" ></li>
+                            <li><img src="images/2.jpg" alt=""></li>
+                            <li><img src="images/3.jpg" alt="" ></li>
+                            <li><img src="images/4.jpg" alt="" ></li>
+                            <li><img src="images/5.jpg" alt="" ></li>
+                            <li><img src="images/6.jpg" alt="" ></li>
+                            <li><img src="images/8.jpg" alt=""></li>
+                            <li><img src="images/77.jpg" alt=""></li>
+                            <li><img src="images/2.jpg" alt=""></li>
+                            <li><img src="images/3.jpg" alt="" ></li>
+                            <li><img src="images/4.jpg" alt="" ></li>
+                            <li><img src="images/5.jpg" alt="" ></li>
+                        </ul>
+                    </div>
+                    <a href="#" class="jcarousel-control-prev pegination-control"><i class="icon-arrowhead-thin-outline-to-the-left icon"></i></a>
+                    <a href="#" class="jcarousel-control-next pegination-control"><i class="icon-arrow-point-to-right icon"></i></a>
+                </div>
+            </div>
+        </div>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+	\        
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/underscore-min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/calendar.js"></script>
+     <%--    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/app.js"></script> --%>
+	       <script src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script>
+<script type="text/javascript">
+(function($) {
+
+	"use strict";
+alert(st_url);
+	var options = {
+		events_source: st_url+'eventJson',
+		view: 'month',
+		tmpl_path: 'http://localhost:8082/rusafrontend/resources/tmpls/',
+		tmpl_cache: false,
+		day: '2013-03-12',
+		onAfterEventsLoad: function(events) {
+			if(!events) {
+				return;
+			}
+			var list = $('#eventlist');
+			list.html('');
+
+			$.each(events, function(key, val) {
+				$(document.createElement('li'))
+					.html('<a href="' + val.url + '">' + val.title + '</a>')
+					.appendTo(list);
+			});
+		},
+		onAfterViewLoad: function(view) {
+			$('.page-header h3').text(this.getTitle());
+			$('.btn-group button').removeClass('active');
+			$('button[data-calendar-view="' + view + '"]').addClass('active');
+		},
+		classes: {
+			months: {
+				general: 'label'
+			}
+		}
+	};
+
+	var calendar = $('#calendar').calendar(options);
+
+	$('.btn-group button[data-calendar-nav]').each(function() {
+		var $this = $(this);
+		$this.click(function() {
+			calendar.navigate($this.data('calendar-nav'));
+		});
+	});
+
+	$('.btn-group button[data-calendar-view]').each(function() {
+		var $this = $(this);
+		$this.click(function() {
+			calendar.view($this.data('calendar-view'));
+		});
+	});
+
+	$('#first_day').change(function(){
+		var value = $(this).val();
+		value = value.length ? parseInt(value) : null;
+		calendar.setOptions({first_day: value});
+		calendar.view();
+	});
+
+	$('#language').change(function(){
+		calendar.setLanguage($(this).val());
+		calendar.view();
+	});
+
+	$('#events-in-modal').change(function(){
+		var val = $(this).is(':checked') ? $(this).val() : null;
+		calendar.setOptions({modal: val});
+	});
+	$('#format-12-hours').change(function(){
+		var val = $(this).is(':checked') ? true : false;
+		calendar.setOptions({format12: val});
+		calendar.view();
+	});
+	$('#show_wbn').change(function(){
+		var val = $(this).is(':checked') ? true : false;
+		calendar.setOptions({display_week_numbers: val});
+		calendar.view();
+	});
+	$('#show_wb').change(function(){
+		var val = $(this).is(':checked') ? true : false;
+		calendar.setOptions({weekbox: val});
+		calendar.view();
+	});
+	$('#events-modal .modal-header, #events-modal .modal-footer').click(function(e){
+		//e.preventDefault();
+		//e.stopPropagation();
+	});
+}(jQuery));
+    $(document).ready(function ($) {
+
+        // delegate calls to data-toggle="lightbox"
+        $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+            event.preventDefault();
+            return $(this).ekkoLightbox({
+                onShown: function() {
+                    if (window.console) {
+                        return console.log('Checking our the events huh?');
+                    }
+                },
+                onNavigate: function(direction, itemIndex) {
+                    if (window.console) {
+                        return console.log('Navigating '+direction+'. Current item: '+itemIndex);
+                    }
+                }
+            });
+        });
+
+        //Programatically call
+        $('#open-image').click(function (e) {
+            e.preventDefault();
+            $(this).ekkoLightbox();
+        });
+        $('#open-youtube').click(function (e) {
+            e.preventDefault();
+            $(this).ekkoLightbox();
+        });
+        
+        
+    });
+    
+    
+</script> 
 </body>
 </html>
 

@@ -74,7 +74,7 @@
 			>
 		</div>
 	</div>
-<div class="login"> 
+<!-- <div class="login"> 
     <div class="container" id="main-content">
         	
         <div class="row row-eq-height">
@@ -94,16 +94,7 @@
                             
                             <label>Password</label>
                             <input type="text" class="form-control" name="" placeholder="Password">
-                            
-                             
-                            <label for="userType">Select Type</label>
-                            <select id="userType" name="userType"  class="form-control" onchange="showForm()" required>
-							<option >Select Type</option>
-                            <option value="1">Individual</option>
-                            <option value="2">Colleges</option>
-                            <option value="3">University</option>
-                            </select>
-                            
+                                                    
                             <div class="clearfix"></div>
                             <p>
                             <button type="button" id="log-btn" class="button login-btn">Login</button>
@@ -121,7 +112,48 @@
         </div>
     </div>
 </div>
+ -->
+ 
+ 
+	<div class="login">
+		<div class="container" id="main-content">
 
+			<div class="row row-eq-height login-box">
+				<div class="col-12 col-sm-12 col-lg-12 login-header">
+					<h5>Login</h5>
+					<p>Login to access your profile</p>
+				</div>
+				<div class="col-12 col-sm-12 col-lg-3"></div>
+
+				<div class="col-12 col-sm-12 col-lg-6">
+
+                            <form method="post" action="${pageContext.request.contextPath}/loginResponse" name="login_form">  
+                            <label>User Name</label>
+                            <input type="text" class="form-control" name="userName" placeholder="User Name">
+                            
+                            <label>Password</label>
+                            <input type="text" class="form-control" name="password" placeholder="Password">
+                                                    
+                            <div class="clearfix"></div>
+                            <p>
+                            <button type="submit" id="log-btn" value="submit" class="button login-btn">Login</button>
+                            </p>
+                            </form>
+                            
+					<p>
+						Need an account? <a href="${pageContext.request.contextPath}/registration">Create account</a>
+					</p>
+
+				</div>
+
+				<div class="col-12 col-sm-12 col-lg-3"></div>
+
+
+
+			</div>
+		</div>
+	</div>
+ 
 	
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>

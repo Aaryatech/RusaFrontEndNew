@@ -52,7 +52,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 }
 body {
 	margin: 0;
-	font-family: 'Open Sans', sans-serif;	
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -1337,7 +1337,7 @@ padding:.75rem;
 	border-top: 1px solid #dee2e6
 }
 .table thead th {
-	vertical-align: middle;
+	vertical-align: bottom;
 	border-bottom: 2px solid #dee2e6
 }
 .table tbody+tbody {
@@ -1543,8 +1543,7 @@ padding:.375rem .75rem;
 	background-clip: padding-box;
 	border: 1px solid #ced4da;
 border-radius:.25rem;
-	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-	margin-bottom: 20px;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
 @media screen and (prefers-reduced-motion:reduce) {
 .form-control {
@@ -3095,49 +3094,50 @@ padding:.5rem 1rem
 }
 .nav-item:focus .nav-link {
 	text-decoration: none;
-	color:#ff9500 
+	color:#ff9500 !important
 }
 .nav-item:hover .nav-link{
 	text-decoration: none;
-	color:#ff9500 
+	color:#ff9500 !important
 }
 .nav-item:hover .nav-link{
 	text-decoration: none;
-	color:#FFF;
-	font-weight:600;
+	color:#ff9500 !important
 }
+
 .nav-item:hover .dropdown-toggle:after {
-    border-left-color:#FFF;
+    border-left-color:#ff9500;
 }
+
+
 .nav-link.disabled {
 	color: #6c757d
 }
 .nav-tabs {
-	width: 100%;
-	display: block;
-	text-align: center;
-}
-.nav-tabs li::before {
-	display:none
+	border: 1px solid #bcbcbc;
+	border-radius:5px 5px 0px 0px;
 }
 .nav-tabs .nav-item {
-	margin:0px 10px 0px 0px;
-	display: inline-block;
+	margin-bottom: -1px
 }
 .nav-tabs .nav-link {
-border:2px solid #FFF;
+border: 1px solid transparent;
+border-top-left-radius:.25rem;
+border-top-right-radius:.25rem;
 font-size:14px;
 font-weight:600;
-color:#FFF;
-background-color:transparent;
+color:#232323;
+background-color:#FFF;
 padding: 10px 17.5px;
+border-right:1px solid #bfc4d6;
 }
 
 .nav-tabs .nav-item:last-child .nav-link{
+border-right:0px solid #bfc4d6;
 }
 
 .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
-	border-color:#21316c #21316c #21316c
+	border-color: #e9ecef #e9ecef #dee2e6
 }
 .nav-tabs .nav-link.disabled {
 	color: #FFF;
@@ -3147,6 +3147,7 @@ padding: 10px 17.5px;
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
 	color: #FFF;
 	background-color:#21316c;
+	border-color:#bfc4d6 #bfc4d6 #fff
 }
 .nav-tabs .dropdown-menu {
 	margin-top: -1px;
@@ -3223,10 +3224,7 @@ border-radius:.25rem
 }
 .navbar-nav .nav-link {
 	padding-right: 0;
-	padding-left: 0;
-	color:#FFF;
-font-size:14px;
-font-weight:400;
+	padding-left: 0
 }
 .navbar-nav .dropdown-menu {
 	position: static;
@@ -3334,6 +3332,9 @@ border-left: 1px dotted #919abc;
 .navbar-expand-md .navbar-nav .nav-link {
 padding-right:20px;
 padding-left:20px;
+color:#FFF;
+font-size:14px;
+font-weight:400;
 border-right: 1px dotted #919abc;
 }
 
@@ -4363,8 +4364,7 @@ button.close {
 	z-index: 1050;
 	display: none;
 	overflow: hidden;
-	outline: 0;
-	background-color: rgba(0,0,0,0.8);
+	outline: 0
 }
 .modal-open .modal {
 	overflow-x: hidden;
@@ -4409,7 +4409,7 @@ min-height:calc(100% - (.5rem * 2))
 	pointer-events: auto;
 	background-color: #fff;
 	background-clip: padding-box;
-	border: 0px solid rgba(0,0,0,.2);
+	border: 1px solid rgba(0,0,0,.2);
 border-radius:.3rem;
 	outline: 0
 }
@@ -4430,7 +4430,7 @@ border-radius:.3rem;
 }
 .modal-header {
 	display: -ms-flexbox;
-	display: inline-block;
+	display: flex;
 	-ms-flex-align: start;
 	align-items: flex-start;
 	-ms-flex-pack: justify;
@@ -4442,7 +4442,7 @@ border-top-right-radius:.3rem
 }
 .modal-header .close {
 	padding: 1rem;
-	margin: -4rem -1rem -1rem auto
+	margin: -1rem -1rem -1rem auto
 }
 .modal-title {
 	margin-bottom: 0;
@@ -4830,6 +4830,7 @@ transform:translate3d(0, 0, 0)
 	width: 15%;
 	color: #fff;
 	text-align: center;
+	opacity: .5
 }
 .carousel-control-next:focus, .carousel-control-next:hover, .carousel-control-prev:focus, .carousel-control-prev:hover {
 	color: #fff;
@@ -4909,7 +4910,7 @@ transform:translate3d(0, 0, 0)
 .carousel-caption {
 	position: absolute;
 	right: 15%;
-	top:15%;	
+	bottom: 20px;
 	left: 15%;
 	z-index: 10;
 	padding-top: 20px;

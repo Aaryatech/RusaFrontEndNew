@@ -14,16 +14,17 @@
 		String contextPath = request.getContextPath();
 		contextPath = contextPath + "/retriveSession/" + mapping;
 		response.sendRedirect(contextPath);
-	} 
-%>  
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<script src="https://www.google.com/recaptcha/api.js"></script>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <c:choose>
 	<c:when test="${not empty pageMetaData.pageMetaTitle}">
@@ -43,18 +44,19 @@
 
 <style type="text/css">
 msg-error {
-  color: #c65848;
+	color: #c65848;
 }
+
 .g-recaptcha.error {
-  border: solid 2px #c64848;
-  padding: .2em;
-  width: 19em;
+	border: solid 2px #c64848;
+	padding: .2em;
+	width: 19em;
 }
 </style>
 
 </head>
 <body>
-<c:url var="checkMaintainance" value="/checkMaintainance" />
+	<c:url var="checkMaintainance" value="/checkMaintainance" />
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
@@ -117,13 +119,13 @@ msg-error {
 
 				</div>
 			</div> --%>
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm">
+			<div class="col-12 col-sm-12 col-lg-12 right-Colm">
 
 
 
 				<div class="row row-eq-height">
 
-					<div class="col-12 col-sm-9 col-lg-9 right-Colm">
+					<div class="col-12 col-sm-12 col-lg-12 right-Colm">
 
 
 						<h2>Rashtriya Uchchatar Shiksha Abhiyan</h2>
@@ -133,9 +135,9 @@ msg-error {
 							Parade,<br> Colaba, Mumbai-400005.<br> Phone: 011 -
 							49725600
 						</p>
-									<c:if test="${flag=='1'}">
-									<div style="color:red;">Please Verify ReCaptcha</div>
-									</c:if>
+						<c:if test="${flag=='1'}">
+							<div style="color: red;">Please Verify ReCaptcha</div>
+						</c:if>
 						<%-- 	<c:choose>
 								<c:when test="test="${flag=='0'}">
 												
@@ -149,38 +151,39 @@ msg-error {
 						<form action="${pageContext.request.contextPath}/insertContactUs"
 							onsubmit="return confirm('Do you really want to submit the form?');"
 							method="post">
-							
-							 <div class="form-check-inline">
-  <label class="form-check-label">
-    <input type="radio" class="form-check-input" name="formType" value="Query" checked> Query
-  </label>
-</div>
-<div class="form-check-inline">
-  <label class="form-check-label">
-    <input type="radio" class="form-check-input" name="formType" value="Feedback"> Feedback
-  </label>
-</div>
-<div class="form-check-inline disabled">
-  <label class="form-check-label">
-    <input type="radio" class="form-check-input" name="formType" value="Message" > Message
-  </label>
-</div> 
-<br>
-							<label>Your Name</label> <input type="text" class="form-control"
-								name="name" id="name" placeholder="Name" required> <label>Your
-								Email</label> <input type="email" class="form-control" name="email"
-								id="email" placeholder="Email" required> <label>Phone
-								Number</label> <input type="text" class="form-control" name="mobileNo"
-								id="mobileNo" pattern="[7-9]{1}[0-9]{9}" maxlength=10
+
+							<div class="form-check-inline">
+								<label class="form-check-label"> <input type="radio"
+									class="form-check-input" name="formType" value="Query" checked>
+									Query
+								</label>
+							</div>
+							<div class="form-check-inline">
+								<label class="form-check-label"> <input type="radio"
+									class="form-check-input" name="formType" value="Feedback">
+									Feedback
+								</label>
+							</div>
+							<div class="form-check-inline disabled">
+								<label class="form-check-label"> <input type="radio"
+									class="form-check-input" name="formType" value="Message">
+									Message
+								</label>
+							</div>
+							<br> <label>Your Name</label> <input type="text"
+								class="form-control" name="name" id="name" placeholder="Name"
+								required> <label>Your Email</label> <input type="email"
+								class="form-control" name="email" id="email" placeholder="Email"
+								required> <label>Phone Number</label> <input type="text"
+								class="form-control" name="mobileNo" id="mobileNo"
+								pattern="[7-9]{1}[0-9]{9}" maxlength=10
 								placeholder="Mobile Number" required> <label>Your
 								Message</label>
 							<textarea name="message" id="message" class="form-control"
 								placeholder="Message"></textarea>
-							<br>
-						<span class="msg-error error"></span>
-						<div id="recaptcha" class="g-recaptcha"
-			data-sitekey="${siteKey}" ></div>
-			</br>
+							<br> <span class="msg-error error"></span>
+							<div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>
+							</br>
 							<button class="btn" id="btn-validate" type="submit">
 								<span>Send</span>
 							</button>
@@ -196,27 +199,27 @@ msg-error {
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	<!-- JavaScript-->
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
-	
-	<script type="text/javascript">
-	$( '#btn-validate' ).click(function(e){
-		  var $captcha = $( '#recaptcha' ),
-		      response = grecaptcha.getResponse();
-		  
-		  if (response.length === 0) {
-		    $( '.msg-error').text( "reCAPTCHA is mandatory" );
-		    if( !$captcha.hasClass( "error" ) ){
-		      $captcha.addClass( "error" );
-		    }
-		    e.preventDefault();
-		  } else {
-		    $( '.msg-error' ).text('');
-		    $captcha.removeClass( "error" );
-		  //  alert( 'reCAPTCHA marked' );
-		  }
-		})
 
+	<script type="text/javascript">
+		$('#btn-validate').click(
+				function(e) {
+					var $captcha = $('#recaptcha'), response = grecaptcha
+							.getResponse();
+
+					if (response.length === 0) {
+						$('.msg-error').text("reCAPTCHA is mandatory");
+						if (!$captcha.hasClass("error")) {
+							$captcha.addClass("error");
+						}
+						e.preventDefault();
+					} else {
+						$('.msg-error').text('');
+						$captcha.removeClass("error");
+						//  alert( 'reCAPTCHA marked' );
+					}
+				})
 	</script>
-<script>
+	<script>
 			function checkMaintainance() {
  
 			}

@@ -95,10 +95,10 @@
 
 				</div>
 			</div>
-			 <div class="col-12 col-sm-9 col-lg-9 right-Colm">
-				<div class="row team">
+			<%--  <div class="col-12 col-sm-9 col-lg-9 right-Colm">
+				<div class="row">
 				 <c:forEach items="${teamList}" var="teamList"	varStatus="count">
-                    	  	<div class="col-6 col-sm-4 col-lg-3">
+                    	  	<div class="col-6 col-sm-4 col-lg-4">
                     	  	<c:choose>
 								<c:when test="${not empty teamList.imageName}">
                     
@@ -121,7 +121,41 @@
               
                                     	
                 </div>    
-            </div>
+            </div> --%>
+          <div class="col-12 col-sm-9 col-lg-9 right-Colm">
+                 <div class="row">
+                 	 <c:forEach items="${teamList}" var="teamList"	varStatus="count">
+          
+                    <div class="col-6 col-sm-4 col-lg-4">
+                        <div class="team-wrap">
+                            <span class="team-candidates-status"></span>
+                            <figure><a href="#">
+                             	<c:choose>
+								<c:when test="${not empty teamList.imageName}">
+                    
+							          <img src="${gallryImageURL}${teamList.imageName}"
+							        	width="200" height="200" alt="">
+						       </c:when>
+						      <c:otherwise>
+						              <img src="${pageContext.request.contextPath}/resources/images/noimage-team.png"
+							        	width="200" height="200" alt="">
+						      </c:otherwise>
+						  </c:choose>
+                            
+                            </a></figure>
+                            <div class="team-candidates-text ">
+                            <h2><a href="#">${teamList.formName}</a></h2>
+                           
+                        	<c:set var="string1" value="${teamList.message}" />
+						<c:set var="string2" value="${fn:substring(string1, 0, 256)}" />
+					    <p><strong>${teamList.fromName}</strong> <br>
+						<span>${string2}</span></p>
+                        </div>
+                        </div>
+                    </div>
+                    </c:forEach>    
+                </div>
+         	   </div>
             
             </div>
 		</div>

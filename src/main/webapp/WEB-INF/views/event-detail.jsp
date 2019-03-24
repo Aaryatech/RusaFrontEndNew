@@ -1,10 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page import="com.ats.rusafrontend.model.Maintainance"%>
-<%@ page session="true"%>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -32,27 +27,16 @@
 	content="${sessionScope.homePageMetaData.metaAuthor}">
 <link rel="icon" href="../../favicon.ico">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
-<link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/resources/images/favicon.png"
-	type="image/x-icon" />
+ <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
 <!-- Bootstrap core CSS -->
-
 <link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
+	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
 	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/calendar.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/ekko-lightbox.css"
-	rel="stylesheet" type="text/css">
-
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
+<link href="${pageContext.request.contextPath}/resources/css/style1.css"
 	rel="stylesheet">
 <link
 	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
 	rel="stylesheet" type="text/css">
-
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
 	rel="stylesheet">
@@ -75,23 +59,25 @@
 </script>
 </head>
 <body>
-	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
-
-   <div class="inner-slider" id="slider">
-    	 <div class="container">
-			<h1>Events</h1>
-         </div>
-    </div>
+		<div class="inner-slider" id="slider">
+		<div class="container">
+			<h1>LOGIN</h1>
+		</div>
+	</div>
 	<div class="bridcrumb">
-    	<div class="container">
-        	<a href="/">Home</a> > <a href="eventList">Events</a> >
-        </div>
-    </div> 
- <div class="container" id="main-content">
+		<div class="container">
+			<a href="/">Home</a> > <a
+				href="${pageContext.request.contextPath}/login">Login</a>
+			>
+		</div>
+	</div>
+	
+	   <div class="container" id="main-content">
         <div class="row row-eq-height">
-        	<!-- <div class="col-12 col-sm-3 col-lg-3">
+        	<div class="col-12 col-sm-3 col-lg-3">
 				<div class="leftColm">
                 	<h3>Gallery</h3>
                     <ul class="menu">
@@ -104,35 +90,45 @@
 
                 	</ul>
                 </div>
-            </div> -->
- 					<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
- 					<c:forEach items="${event}" var="eventList"	varStatus="count">
-						
+            </div>
+            
+            <div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
                     <div class="row">
-                    			<c:if test="${not empty eventList.featuredImage}">
+                    <div class="col-12 col-sm-6 col-lg-6">
+                    <img src="http://tomcat.aaryatechindia.in:6435/media/gallery/thumbnail2019-03-01_18:46:08_2019-02-15_12_58_10_Digital-Launch-5.jpg" alt="Digital-Launch" title="Digital-Launch" class="img-responsive thumbnail">	
+                    </div>
+                    <div class="col-12 col-sm-12 col-lg-12">
                     		
-                    <div class="col-12 col-sm-3 col-lg-3">
-                    <img src="${sessionScope.gallryImageURL}${eventList.featuredImage}" alt="${eventList.heading}" title="${eventList.heading}" class="img-responsive thumbnail">	
-                    </div>
-                    </c:if>
-                    <div class="col-12 col-sm-9 col-lg-9">
-                    <strong> ${eventList.heading}</strong><br>
-                    <p> ${eventList.descriptions}</p>
-                    <p><span><i class="icon-location"></i> <strong>Venue:</strong> ${eventList.eventLocation}</span> 
-					<span><i class="icon-calendar"></i> <strong>Date:</strong> ${eventList.eventDateFrom}</span>
-                    <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong>+91 ${eventList.eventContactNumber}</span>
+                    <strong>${eventList.heading}</strong><br>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+					It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>                    
+					<p><span><i class="icon-location"></i> <strong>Venue:</strong> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
+					<span><i class="icon-calendar"></i> <strong>Date:</strong> 17 Mar 2019</span>
+					<span><i class="icon-man-user"></i> <strong>Contact Person:</strong> Kishore Mishra</span>
+                    <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong> +91 8888888888</span><br> 
+                    <span><i class="icon-download-2"></i> <strong>Download Attachment:</strong> <a href="#">Event Detail</a></span>
                     </p>
-                    <a href="${pageContext.request.contextPath}/eventDetail/${eventList.newsblogsId}">Read More</a>
-                    </div>
-                    </div>
-                   </c:forEach>
+                   
                     
-                 
+                    <a href="#" class="btn button apply">Apply</a>
+                  
+                    </div>
+                    </div>
+                    
+                    
+    
+                    
+                    
+                    
+                    
+                    
             </div>
             
             
         </div>
     </div>
+ 
 	
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
@@ -140,4 +136,3 @@
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 </body>
 </html>
-

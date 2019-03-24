@@ -8,6 +8,9 @@
      <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jcarousel.responsive.js"></script>
      <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.jcarousel.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script>
+
+ 
+        
 <script type="text/javascript">
     $(document).ready(function ($) {
 

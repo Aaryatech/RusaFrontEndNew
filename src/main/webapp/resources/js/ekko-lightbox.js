@@ -27,8 +27,8 @@ var Lightbox = (function ($) {
 		type: null, //force the lightbox into image / youtube mode. if null, or not image|youtube|vimeo; detect it
 		alwaysShowClose: false, //always show the close button, even if there is no title
 		loadingMessage: '<div class="ekko-lightbox-loader"><div><div></div><div></div></div></div>', // http://tobiasahlin.com/spinkit/
-		leftArrow: '<span>&#10094;</span>',
-		rightArrow: '<span>&#10095;</span>',
+		leftArrow: '<span class="icon-back"></span>',
+		rightArrow:'<span class=" icon-next"></span>',
 		strings: {
 			close: 'Close',
 			fail: 'Failed to load image:',
@@ -84,8 +84,8 @@ var Lightbox = (function ($) {
 			this._galleryName = null;
 			this._padding = null;
 			this._border = null;
-			this._titleIsShown = false;
-			this._footerIsShown = false;
+			this._titleIsShown = true;
+			this._footerIsShown = true;
 			this._wantedWidth = 0;
 			this._wantedHeight = 0;
 			this._touchstartX = 0;
@@ -95,12 +95,15 @@ var Lightbox = (function ($) {
 			this._$element = $element instanceof jQuery ? $element : $($element);
 
 			this._isBootstrap3 = $.fn.modal.Constructor.VERSION[0] == 3;
-
+			
+			var h6 = '<h6 class="event-title">' + (this._config.eventtitle || "&nbsp;") + '</h6>';
 			var h4 = '<h4 class="modal-title">' + (this._config.title || "&nbsp;") + '</h4>';
+			
 			var btn = '<button type="button" class="close" data-dismiss="modal" aria-label="' + this._config.strings.close + '"><span aria-hidden="true">&times;</span></button>';
-
-			var header = '<div class="modal-header' + (this._config.title || this._config.alwaysShowClose ? '' : ' hide') + '">' + (this._isBootstrap3 ? btn + h4 : h4 + btn) + '</div>';
-			var footer = '<div class="modal-footer' + (this._config.footer ? '' : ' hide') + '">' + (this._config.footer || "&nbsp;") + '</div>';
+			
+			
+			var header = '<div class="modal-header' + (this._config.eventtitle || this._config.title || this._config.alwaysShowClose ? '' : ' hide') + '">' + (this._isBootstrap4 ? btn + h4 + h6 : h6 + h4 + btn) + '</div>';
+			var footer = '<div class="modal-footer' + (this._config.footer || this._config.footer ? '' : ' ') + '">' + (this._config.footer || "&nbsp;") + '</div>';
 			var body = '<div class="modal-body"><div class="ekko-lightbox-container"><div class="ekko-lightbox-item fade in show"></div><div class="ekko-lightbox-item fade"></div></div></div>';
 			var dialog = '<div class="modal-dialog" role="document"><div class="modal-content">' + header + body + footer + '</div></div>';
 			$(this._config.doc.body).append('<div id="' + this._modalId + '" class="ekko-lightbox modal fade" tabindex="-1" tabindex="-1" role="dialog" aria-hidden="true">' + dialog + '</div>');
