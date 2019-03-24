@@ -52,11 +52,12 @@ public class ImageController {
 	RestTemplate rest = new RestTemplate();
 	ContactUs contactUs = new ContactUs();
 	int flag=0;
-	@RequestMapping(value = "/NewsDetails/{langId}/{pageId}/{newsblogsId}", method = RequestMethod.GET)
-	public ModelAndView getImageLink(@PathVariable int langId, @PathVariable int pageId, @PathVariable int newsblogsId,
+	
+	@RequestMapping(value = "/NewsDetails/{langId}/{newsblogsId}", method = RequestMethod.GET)
+	public ModelAndView getImageLink(@PathVariable int langId, @PathVariable int newsblogsId,
 			HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("content/NewsDetails");
+		ModelAndView model = new ModelAndView("content/news-detail");
 		try {
 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
@@ -72,15 +73,14 @@ public class ImageController {
 				TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
 				model.addObject("menuList", sectionTree);
 
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-				map1.add("langId", langId);
-				map1.add("pageId", pageId);
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();				
 				map1.add("newsblogsId", newsblogsId);
-				NewsDetails image = rest.postForObject(Constant.url + "/getNewsBlogById", map1, NewsDetails.class);
+				map1.add("langId", langId);
+				NewsDetails image = rest.postForObject(Constant.url + "/getNewsListByNewsId", map1, NewsDetails.class);
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				System.out.println("list_new: " + image.toString());
-				model.addObject("image", image);
-				model.addObject("getGallryImageURL", Constant.getGallryImageURL);
+				model.addObject("image", image); 
+				model.addObject("getGallryImageURL", Constant.getGallryImageURL);  
 
 			}
 
@@ -90,6 +90,43 @@ public class ImageController {
 
 		return model;
 	}
+	
+	/*
+	 * @RequestMapping(value = "/NewsDetails/{langId}/{pageId}/{newsblogsId}",
+	 * method = RequestMethod.GET) public ModelAndView getImageLink(@PathVariable
+	 * int langId, @PathVariable int pageId, @PathVariable int newsblogsId,
+	 * HttpServletRequest request, HttpServletResponse response) {
+	 * 
+	 * ModelAndView model = new ModelAndView("content/news-detail"); try {
+	 * 
+	 * Maintainance maintainance = rest.getForObject(Constant.url +
+	 * "/checkIsMaintenance", Maintainance.class);
+	 * 
+	 * if (maintainance.getMaintenanceStatus() == 1) {
+	 * 
+	 * model = new ModelAndView("maintainance"); model.addObject("maintainance",
+	 * maintainance); } else {
+	 * 
+	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+	 * Object>(); map.add("langId", langId); TopMenuList sectionTree =
+	 * rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
+	 * model.addObject("menuList", sectionTree);
+	 * 
+	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
+	 * Object>(); map1.add("langId", langId); map1.add("pageId", pageId);
+	 * map1.add("newsblogsId", newsblogsId); NewsDetails image =
+	 * rest.postForObject(Constant.url + "/getNewsBlogById", map1,
+	 * NewsDetails.class); // List<ImageLink> imagList = new
+	 * ArrayList<ImageLink>(Arrays.asList(image)); System.out.println("list_new: " +
+	 * image.toString()); model.addObject("image", image);
+	 * model.addObject("getGallryImageURL", Constant.getGallryImageURL);
+	 * 
+	 * }
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); }
+	 * 
+	 * return model; }
+	 */
 
 	@RequestMapping(value = "/ContactUs", method = RequestMethod.GET)
 	public ModelAndView ContactUs(HttpServletRequest request, HttpServletResponse response) {
@@ -318,7 +355,7 @@ public class ImageController {
 				model.addObject("event", eventList);
 				model.addObject("pageMetaData", pageMetaData);				
 				model.addObject("siteKey", Constant.siteKey);
-			    session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 
 				model.addObject("flag", flag);
 				flag=0;
