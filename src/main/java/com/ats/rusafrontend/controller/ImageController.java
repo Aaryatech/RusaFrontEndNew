@@ -311,10 +311,13 @@ public class ImageController {
 	  NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId",map1, NewsDetails.class); 
 	  
 	//  List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
-	  
+      String dateEvent=  DateConvertor.convertToYMD(eventList.getEventDateFrom());
 	  model.addObject("event", eventList);
+	  model.addObject("dateEvent", dateEvent);
 	  model.addObject("pageMetaData",pageMetaData); 
 	  model.addObject("siteKey", Constant.siteKey);
+	  session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+
 	  model.addObject("flag", flag); 
 	  flag=0; 
 	  

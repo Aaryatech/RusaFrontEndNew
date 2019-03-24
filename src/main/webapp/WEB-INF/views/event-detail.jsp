@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page import="com.ats.rusafrontend.model.Maintainance"%>
+<%@ page session="true"%>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -64,50 +69,38 @@
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 		<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>LOGIN</h1>
+				<h1>Event Detail</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/login">Login</a>
+				href="${pageContext.request.contextPath}/eventList">Event Detail</a>
 			>
 		</div>
 	</div>
-	
-	   <div class="container" id="main-content">
+	 
+            <div class="container" id="main-content">
         <div class="row row-eq-height">
-        	<div class="col-12 col-sm-3 col-lg-3">
-				<div class="leftColm">
-                	<h3>Gallery</h3>
-                    <ul class="menu">
-                    	<li><a href="about.html">About RUSA</a></li>
-                        <li><a href="rusa-structure.html" class="active">RUSA Structure</a></li>
-                        <li><a href="message-education-minister.html">Message from Education Minister</a></li>
-                        <li><a href="message-state-project-director.html">Message from State Project Director</a></li>
-                        <li><a href="rusa-achievements.html">RUSA Achievements</a></li>
-                        <li><a href="rusa-photo-gallery.html">RUSA Photo Gallery</a></li>
-
-                	</ul>
-                </div>
-            </div>
-            
-            <div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
+         	<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
                     <div class="row">
-                    <div class="col-12 col-sm-6 col-lg-6">
-                    <img src="http://tomcat.aaryatechindia.in:6435/media/gallery/thumbnail2019-03-01_18:46:08_2019-02-15_12_58_10_Digital-Launch-5.jpg" alt="Digital-Launch" title="Digital-Launch" class="img-responsive thumbnail">	
-                    </div>
+                    	<c:if test="${not empty event.featuredImage}">
+                    <div class="col-12 col-sm-6 col-lg-6">  
+                      <img src="${sessionScope.gallryImageURL}${event.featuredImage}" alt="${event.heading}" title="${event.heading}" class="img-responsive thumbnail">	                                   
+                      </div>
+                    </c:if>
                     <div class="col-12 col-sm-12 col-lg-12">
                     		
-                    <strong>${eventList.heading}</strong><br>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. </p>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-					It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>                    
-					<p><span><i class="icon-location"></i> <strong>Venue:</strong> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> 
-					<span><i class="icon-calendar"></i> <strong>Date:</strong> 17 Mar 2019</span>
-					<span><i class="icon-man-user"></i> <strong>Contact Person:</strong> Kishore Mishra</span>
-                    <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong> +91 8888888888</span><br> 
+                    <strong>${event.heading}</strong><br>
+					<p>${event.descriptions}</p>                    
+					<p><span><i class="icon-location"></i> <strong>Venue:</strong>  ${event.eventLocation}</span> 
+					<span><i class="icon-calendar"></i> <strong>Date:</strong>  ${dateEvent}</span>
+					<span><i class="icon-man-user"></i> <strong>Contact Person:</strong>  ${event.eventContactPerson}</span>
+                    <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong> +91  ${event.eventContactNumber}</span><br> 
+                    	<c:if test="${event.exInt2==1}">
                     <span><i class="icon-download-2"></i> <strong>Download Attachment:</strong> <a href="#">Event Detail</a></span>
+                    
+                    </c:if>
                     </p>
                    
                     
