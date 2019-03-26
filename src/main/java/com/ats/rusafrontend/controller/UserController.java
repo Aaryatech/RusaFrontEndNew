@@ -3,6 +3,8 @@ package com.ats.rusafrontend.controller;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -79,6 +81,16 @@ public class UserController {
 				mav = new ModelAndView("content/dashboard");
 				System.out.println("Login :" + verify.getRegId());
 				session.setAttribute("UserDetail", verify.getRegId());
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+				map1.add("langId", 1);
+				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+						List.class);
+				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
+				System.out.println("list_new: " + upcoming.toString());
+				mav.addObject("upcoming", upcoming);
+				// model.addObject("pageMetaData", pageMetaData);
+				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 			} else {
 				mav = new ModelAndView("login");
 				System.out.println("Invalid login credentials");
@@ -101,6 +113,7 @@ public class UserController {
 		try {
 			Registration UserDetail = (Registration) session.getAttribute("UserDetail");
 			System.err.println("User Id: " + UserDetail.getRegId());
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -356,41 +369,64 @@ public class UserController {
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		// Registration userDetail=null;
+		int userDetail=0;
 		ModelAndView mav = null;
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			// userDetail =(Registration) session.getAttribute("UserDetail");
-			int userDetail = (int) session.getAttribute("UserDetail");
+			try {
+				userDetail = (int) session.getAttribute("UserDetail");
 
+			}catch (Exception e) {
+				userDetail=0 ;
+				e.printStackTrace();
+			}
+		
 			// System.out.println("userDetail "+userDetail.getRegId());
 			if (userDetail > 0) {
 
 				System.out.println("User Id: " + userDetail);
-				EventRegistration eventReg = new EventRegistration();
+				
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
-				Date date = new Date(); // your date
-				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				eventReg.setDelStatus(1);
-				// eventReg.setEventRegId();
-				eventReg.setIsActive(0);
-				eventReg.setNewsblogsId(newsblogsId);
-				eventReg.setRegDate(sf.format(date));
-				eventReg.setUserId(userDetail);
+				map1.add("newsblogsId", newsblogsId);
+				map1.add("userId", userDetail);
+				List<EventRegistration> appliedevent = rest.postForObject(Constant.url + "/getAppliedEvents", map1,List.class);
+				if(appliedevent==null)
+				{
+					EventRegistration eventReg = new EventRegistration();
 
-				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
-						EventRegistration.class);
+					Date date = new Date(); // your date
+					SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					eventReg.setDelStatus(1);
+					// eventReg.setEventRegId();
+					eventReg.setIsActive(0);
+					eventReg.setNewsblogsId(newsblogsId);
+					eventReg.setRegDate(sf.format(date));
+					eventReg.setUserId(userDetail);
 
-				System.out.println("res Id: " + res.toString());
+					EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+							EventRegistration.class);
 
-				if (res != null) {
+					System.out.println("res Id: " + res.toString());
 
-					mav = new ModelAndView("eventList");
-					mav.addObject("msg", "Successfully Registed Event");
+					if (res != null) {
+
+						mav = new ModelAndView("content/eventList");
+						mav.addObject("msg", "Successfully Registed Event");
+					}
 				}
+				else
+				{
+					System.out.println("User Id: " + userDetail);
+					mav = new ModelAndView("content/eventList");
+					mav.addObject("msg", "Event Already Registered");
+				}
+			
 
 			} else {
 				System.out.println("User Id: " + userDetail);
@@ -407,7 +443,7 @@ public class UserController {
 	@RequestMapping(value = "/upcomingEvents", method = RequestMethod.GET)
 	public ModelAndView upcomingEvents(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		ModelAndView model = new ModelAndView("content/dashboard");
+		ModelAndView model = new ModelAndView("content/upcoming-dashboard");
 		try {
 
 			// session.setAttribute("mapping", "upcomingEvents");
@@ -428,8 +464,7 @@ public class UserController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
-				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
-						List.class);
+				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,List.class);
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				System.out.println("list_new: " + upcoming.toString());
 				model.addObject("upcoming", upcoming);
@@ -448,7 +483,7 @@ public class UserController {
 	@RequestMapping(value = "/previousEvents", method = RequestMethod.GET)
 	public ModelAndView previousEvents(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		ModelAndView model = new ModelAndView("content/dashboard");
+		ModelAndView model = new ModelAndView("content/previous-dashboard");
 		try {
 
 			// session.setAttribute("mapping", "upcomingEvents");
@@ -469,9 +504,9 @@ public class UserController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
-				List<NewsDetails> previous = rest.postForObject(Constant.url + "/getAllPreviousEvents", map1,
-						List.class);
-				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
+				NewsDetails[] previousList = rest.postForObject(Constant.url + "/getAllPreviousEvents", map1,
+						NewsDetails[].class);
+				 List<NewsDetails> previous = new ArrayList<NewsDetails>(Arrays.asList(previousList));
 				System.out.println("list_new: " + previous.toString());
 				model.addObject("previous", previous);
 				// model.addObject("pageMetaData", pageMetaData);
@@ -485,4 +520,27 @@ public class UserController {
 
 		return model;
 	}
+	/*
+	 * @RequestMapping(value = "/getUsetDetailsByUserId", method =
+	 * RequestMethod.POST) public ModelAndView
+	 * getUsetDetailsByUserId(HttpServletRequest request, HttpServletResponse res)
+	 * throws IOException {
+	 * 
+	 * HttpSession session = request.getSession(); int userDetail=0; try {
+	 * 
+	 * try { userDetail = (int) session.getAttribute("UserDetail");
+	 * 
+	 * }catch (Exception e) { userDetail=0 ; e.printStackTrace(); }
+	 * 
+	 * // System.out.println("userDetail "+userDetail.getRegId()); if (userDetail >
+	 * 0) {
+	 * 
+	 * }
+	 * 
+	 * } catch (Exception e) {
+	 * System.out.println("HomeController Login API Excep:  " + e.getMessage());
+	 * e.printStackTrace(); mav.addObject("msg", "Invalid login"); }
+	 * 
+	 * return mav; }
+	 */
 }

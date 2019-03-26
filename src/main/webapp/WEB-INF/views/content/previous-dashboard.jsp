@@ -129,16 +129,16 @@
 
 				<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab" role="tablist">
                                 <li class="nav-item">
-                                <a class=" active"  href="${pageContext.request.contextPath}/upcomingEvents"><span class="icon-calendar-with-a-clock-time-tools icon"></span> Upcoming Events</a>
+                                <a class=" " href="${pageContext.request.contextPath}/upcomingEvents"><span class="icon-calendar-with-a-clock-time-tools icon"></span> Upcoming Events</a>
                                 </li>
                                 
                                 <li class="nav-item">
-                                <a class=""  href="${pageContext.request.contextPath}/previousEvents"><span class="icon-calendar icon"></span> Previous Events </a>
+                                <a class=" active"  href="${pageContext.request.contextPath}/previousEvents"><span class="icon-calendar icon"></span> Previous Events </a>
                                 </li>
                             </ul>
 
-                            <div class="tab-content">
-                                <div id="upcoming" class="tab-pane active"> 
+                           <%--  <div class="tab-content">
+                               <div id="upcoming" class="tab-pane "> 
                                     <table align="center" cellpadding="0" cellspacing="0"  class="table">
                                     <thead>
                                         <tr>
@@ -166,16 +166,14 @@
                                     </tbody>
                                     </table>
                                 
-                                </div>
-                                
-                                <div id="previous" class="tab-pane"> 
+                                </div> --%>
+                                <div id="previous" class="tab-pane active"> 
                                 	 <table align="center" cellpadding="0" cellspacing="0"  class="table">
                                     <thead>
                                         <tr>
                                             <th>Sr. no</th>
                                             <th>Event Name</th>
-                                            <th>Download</th>
-                                          
+                                            <th>Download</th>                                          
                                             <th>Detail</th>
                                         </tr>
                                     </thead>
@@ -185,7 +183,17 @@
                                         
                                             <td>${count.index+1}</td>
                                             <td>${previous.heading}</td>
-                                            <td><a href="#"><span class="icon-download-2"></span> Download</a></td>
+                                            <c:choose>
+                                            <c:when test="${not empty previous.downloadPdf}">
+                                              <td><a href="${sessionScope.getUploadDocURL}${previous.downloadPdf}"><span class="icon-download-2"></span> Download</a></td>
+                                         
+                                            </c:when>
+                                            <c:otherwise>
+                                              <td><a href="#"><span class="icon-download-2"></span> -- </a></td>
+                                         
+                                            </c:otherwise>
+                                            </c:choose>
+                                           
                                             <td><a href="${pageContext.request.contextPath}/eventDetail/${previous.newsblogsId}">Detail</a></td>
                                           
                                         </tr>

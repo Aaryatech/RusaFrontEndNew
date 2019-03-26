@@ -132,7 +132,7 @@
                             <input type="text" class="form-control" name="userName" placeholder="User Name">
                             
                             <label>Password</label>
-                            <input type="text" class="form-control" name="password" placeholder="Password">
+                            <input type="password" class="form-control" name="password" placeholder="Password">
                                                     
                             <div class="clearfix"></div>
                             <p>

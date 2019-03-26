@@ -126,10 +126,9 @@
             
             <div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
             	<h2>Dashboard</h2>
-
 				<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab" role="tablist">
                                 <li class="nav-item">
-                                <a class=" active"  href="${pageContext.request.contextPath}/upcomingEvents"><span class="icon-calendar-with-a-clock-time-tools icon"></span> Upcoming Events</a>
+                                <a class=" active" href="${pageContext.request.contextPath}/upcomingEvents"><span class="icon-calendar-with-a-clock-time-tools icon"></span> Upcoming Events</a>
                                 </li>
                                 
                                 <li class="nav-item">
@@ -168,7 +167,7 @@
                                 
                                 </div>
                                 
-                                <div id="previous" class="tab-pane"> 
+                               <%--  <div id="previous" class="tab-pane"> 
                                 	 <table align="center" cellpadding="0" cellspacing="0"  class="table">
                                     <thead>
                                         <tr>
@@ -193,7 +192,7 @@
                                       
                                     </tbody>
                                     </table>	
-                                </div>
+                                </div> --%>
                             </div>	
                 
             </div>
