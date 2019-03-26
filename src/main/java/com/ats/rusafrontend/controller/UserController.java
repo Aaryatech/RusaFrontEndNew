@@ -21,6 +21,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -113,7 +114,6 @@ public class UserController {
 		try {
 			Registration UserDetail = (Registration) session.getAttribute("UserDetail");
 			System.err.println("User Id: " + UserDetail.getRegId());
-		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -369,7 +369,7 @@ public class UserController {
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		// Registration userDetail=null;
-		int userDetail=0;
+		int userDetail = 0;
 		ModelAndView mav = null;
 		try {
 
@@ -379,23 +379,23 @@ public class UserController {
 			try {
 				userDetail = (int) session.getAttribute("UserDetail");
 
-			}catch (Exception e) {
-				userDetail=0 ;
+			} catch (Exception e) {
+				userDetail = 0;
 				e.printStackTrace();
 			}
-		
+
 			// System.out.println("userDetail "+userDetail.getRegId());
 			if (userDetail > 0) {
 
 				System.out.println("User Id: " + userDetail);
-				
+
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("newsblogsId", newsblogsId);
 				map1.add("userId", userDetail);
-				List<EventRegistration> appliedevent = rest.postForObject(Constant.url + "/getAppliedEvents", map1,List.class);
-				if(appliedevent==null)
-				{
+				List<EventRegistration> appliedevent = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
+						List.class);
+				if (appliedevent == null) {
 					EventRegistration eventReg = new EventRegistration();
 
 					Date date = new Date(); // your date
@@ -419,14 +419,11 @@ public class UserController {
 						mav = new ModelAndView("content/eventList");
 						mav.addObject("msg", "Successfully Registed Event");
 					}
-				}
-				else
-				{
+				} else {
 					System.out.println("User Id: " + userDetail);
 					mav = new ModelAndView("content/eventList");
 					mav.addObject("msg", "Event Already Registered");
 				}
-			
 
 			} else {
 				System.out.println("User Id: " + userDetail);
@@ -464,7 +461,8 @@ public class UserController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
-				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,List.class);
+				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+						List.class);
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				System.out.println("list_new: " + upcoming.toString());
 				model.addObject("upcoming", upcoming);
@@ -506,7 +504,7 @@ public class UserController {
 				map1.add("langId", 1);
 				NewsDetails[] previousList = rest.postForObject(Constant.url + "/getAllPreviousEvents", map1,
 						NewsDetails[].class);
-				 List<NewsDetails> previous = new ArrayList<NewsDetails>(Arrays.asList(previousList));
+				List<NewsDetails> previous = new ArrayList<NewsDetails>(Arrays.asList(previousList));
 				System.out.println("list_new: " + previous.toString());
 				model.addObject("previous", previous);
 				// model.addObject("pageMetaData", pageMetaData);
@@ -520,27 +518,91 @@ public class UserController {
 
 		return model;
 	}
-	/*
-	 * @RequestMapping(value = "/getUsetDetailsByUserId", method =
-	 * RequestMethod.POST) public ModelAndView
-	 * getUsetDetailsByUserId(HttpServletRequest request, HttpServletResponse res)
-	 * throws IOException {
-	 * 
-	 * HttpSession session = request.getSession(); int userDetail=0; try {
-	 * 
-	 * try { userDetail = (int) session.getAttribute("UserDetail");
-	 * 
-	 * }catch (Exception e) { userDetail=0 ; e.printStackTrace(); }
-	 * 
-	 * // System.out.println("userDetail "+userDetail.getRegId()); if (userDetail >
-	 * 0) {
-	 * 
-	 * }
-	 * 
-	 * } catch (Exception e) {
-	 * System.out.println("HomeController Login API Excep:  " + e.getMessage());
-	 * e.printStackTrace(); mav.addObject("msg", "Invalid login"); }
-	 * 
-	 * return mav; }
-	 */
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public Info changePassword(HttpServletRequest request, HttpServletResponse response) {
+
+		String newPass = request.getParameter("newPass");
+		System.out.println( "newPass : " + newPass );
+		ModelAndView mav= new ModelAndView("change-pass");
+		HttpSession session = request.getSession();
+		
+		Info info = new Info();
+		try {
+			int userDetail = (int) session.getAttribute("UserDetail");
+			if (newPass.equalsIgnoreCase("") || newPass == null) {
+				mav = new ModelAndView("change-pass");
+				mav.addObject("msg", "Invalid password");
+			} else {
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("regId",userDetail);
+				map.add("password", newPass);
+
+				info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
+				mav = new ModelAndView("change-pass");
+				System.out.println(info.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
+	public ModelAndView changePass(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("change-pass");
+		HttpSession session = request.getSession();
+		try {
+			
+			//int userDetail = (int) session.getAttribute("UserDetail");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/getPasswordCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getPasswordCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		Registration verify = null;
+		HttpSession session = request.getSession();
+		String pass = request.getParameter("pass");
+
+	//	int userDetail = 0;
+		ModelAndView mav = null;
+		int userDetail = (int) session.getAttribute("UserDetail");
+		mav = new ModelAndView("change-pass");
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("userId", userDetail);
+			map.add("pass", pass);
+
+			info = rest.postForObject(Constant.url + "/getLastPassword", map, Info.class);
+			/*
+			 * if (verify.isError() == false) { mav = new ModelAndView("changePass");
+			 * 
+			 * } else { mav = new ModelAndView("changePass");
+			 * System.out.println("Invalid Password "); mav.addObject("msg",
+			 * "Invalid Password"); }
+			 */
+			System.out.println(info.toString());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		return info;
+	}
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		System.out.println("User Logout");
+
+		session.invalidate();
+		return "redirect:/";
+	}
 }

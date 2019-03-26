@@ -20,12 +20,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
  import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
+import com.ats.rusafrontend.commen.Info;
+import com.ats.rusafrontend.commen.VpsImageUpload;
 import com.ats.rusafrontend.model.*;
 import com.ats.rusafrontend.reCaptcha.VerifyRecaptcha;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -482,5 +486,169 @@ public class ImageController {
 		 
 		return jsonString;
 	}
+	@RequestMapping(value = "/submtEventAppliedForm", method = RequestMethod.POST)
+	public ModelAndView submtEventAppliedForm(@RequestParam("pagePdf") List<MultipartFile> pagePdf
+			,HttpServletRequest request, HttpServletResponse response) {
+
+		// ModelAndView model = new ModelAndView("masters/addEmployee");
+		Info info = new Info();
+		String pdfName = new String(); 
+		ModelAndView mav= new ModelAndView("content/eventList");
+		int newsblogsId = Integer.parseInt(request.getParameter("newsblogsId"));
+		try {
+			HttpSession session = request.getSession();
+			int userDetail = (int) session.getAttribute("UserDetail");
+			mav= new ModelAndView("content/eventList");
+				
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		 
+			VpsImageUpload upload = new VpsImageUpload();		
+			pdfName =  dateTimeInGMT.format(date)+"_"+pagePdf.get(0).getOriginalFilename();
+				 
+		/*
+		 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
+		 * Object>();
+		 * 
+		 * map1.add("newsblogsId", newsblogsId); map1.add("userId", userDetail);
+		 * List<EventRegistration> appliedevent = rest.postForObject(Constant.url +
+		 * "/getAppliedEvents", map1, List.class);
+		 */
+			/*if (appliedevent == null) {
+				EventRegistration eventReg = new EventRegistration();				
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				eventReg.setDelStatus(1);
+				// eventReg.setEventRegId();
+				eventReg.setIsActive(0);
+				eventReg.setNewsblogsId(newsblogsId);
+				eventReg.setRegDate(sf.format(date));
+				eventReg.setUserId(userDetail);
+				eventReg.setDoc1(pdfName);
+				
+				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+						EventRegistration.class);
+
+				System.out.println("res Id: " + res.toString());
+
+				if (res != null) {
+
+					mav = new ModelAndView("content/eventList");
+					mav.addObject("msg", "Successfully Registed Event");
+				}
+				 
+			}*/
+
+			  MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
+			  Object>();
+			  
+			  map1.add("newsblogsId", newsblogsId); map1.add("userId", userDetail);
+			  List<EventRegistration> appliedevent = rest.postForObject(Constant.url +"/getAppliedEvents", map1, List.class);
+			 
+			if (appliedevent == null) {
+				System.out.println("hello");
+					EventRegistration eventReg = new EventRegistration();				
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				eventReg.setDelStatus(1);
+				// eventReg.setEventRegId();
+				eventReg.setIsActive(0);
+				eventReg.setNewsblogsId(newsblogsId);
+				eventReg.setRegDate(sf.format(date));
+				eventReg.setUserId(userDetail);
+				eventReg.setDoc1(pdfName);
+				
+				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+						EventRegistration.class);
+
+				System.out.println("res Id: " + res.toString());
+
+				if (res != null) {
+
+					mav = new ModelAndView("content/eventList");
+					mav.addObject("msg", "Successfully Registed Event");
+				}
+				mav = new ModelAndView("content/eventList");
+			}
+			else
+			{
+				
+				System.out.println("hii");
+				if(pagePdf.get(0).getOriginalFilename()==null || pagePdf.get(0).getOriginalFilename()=="") {
+					try
+					{						
+						mav = new ModelAndView("content/eventList");
+						mav.addObject("msg", "Invalid Document");
+						
+					}catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+				}else {
+				 
+				
+					//pdfName =  dateTimeInGMT.format(date)+"_"+pagePdf.get(0).getOriginalFilename();
+					 
+					try {
+						
+						MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+						map.add("regId", userDetail);
+						map.add("newsblogsId", newsblogsId);
+						map.add("pdfName", pdfName);
+
+						info = rest.postForObject(Constant.url + "/uploadEventDocument", map, Info.class);
+						mav = new ModelAndView("content/eventList");
+						System.out.println(info.toString());
+						if(info.isError()==true)
+						{
+							EventRegistration eventReg = new EventRegistration();
+
+							
+							Calendar cal = Calendar.getInstance();
+							cal.setTime(date);
+							eventReg.setDelStatus(1);
+							// eventReg.setEventRegId();
+							eventReg.setIsActive(0);
+							eventReg.setNewsblogsId(newsblogsId);
+							eventReg.setRegDate(sf.format(date));
+							eventReg.setUserId(userDetail);
+
+							EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+									EventRegistration.class);
+
+							System.out.println("res Id: " + res.toString());
+
+							if (res != null) {
+
+								mav = new ModelAndView("content/eventList");
+								mav.addObject("msg", "Successfully Registed Event");
+							}
+							mav = new ModelAndView("content/eventList");
+						}
+						mav = new ModelAndView("content/eventList");
+						
+						upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL,pdfName);
+						}catch (Exception e) {
+							// TODO: handle exception
+							e.printStackTrace();
+						}
+					mav = new ModelAndView("content/eventList");
+				}
+			}
+			
+				
+				
+			
+			
+						} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return mav;
+	}
+  
 	
 }

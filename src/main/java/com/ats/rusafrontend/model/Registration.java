@@ -1,72 +1,72 @@
 package com.ats.rusafrontend.model;
 
 public class Registration {
-	
+
 	private int regId;
-	
+
 	private String userUuid;
-	
+
 	private int userType;
-	
+
 	private String emails;
-	
+
 	private String alternateEmail;
 
 	private String userPassword;
-	
+
 	private String name;
-	
+
 	private String aisheCode;
-	
+
 	private String collegeName;
-	
+
 	private String unversityName;
-	
+
 	private String designationName;
 
 	private String departmentName;
-	
+
 	private String mobileNumber;
-	
+
 	private String authorizedPerson;
-	
+
 	private String dob;
-	
+
 	private String imageName;
-	
+
 	private String tokenId;
-	
+
 	private String registerVia;
-	
+
 	private int isActive;
-	
+
 	private int delStatus;
-	
+
 	private String addDate;
-	
+
 	private String editDate;
-		
+
 	private int editByUserId;
 
 	private int exInt1;
-	
+
 	private int exInt2;
-	
+
 	private String exVar1;
-	
+
 	private String exVar2;
-	
+
 	private String emailCode;
-	
+
 	private int emailVerified;
-	
+
 	private String smsCode;
-	
+
 	private int smsVerified;
-	
+
 	private int editByAdminuserId;
-private String msg;
-	
+	private String msg;
+
 	private boolean isError;
 
 	public int getRegId() {
@@ -355,10 +355,5 @@ private String msg;
 				+ ", smsVerified=" + smsVerified + ", editByAdminuserId=" + editByAdminuserId + ", msg=" + msg
 				+ ", isError=" + isError + "]";
 	}
-	
-	
-	
 
-	
-	
 }
