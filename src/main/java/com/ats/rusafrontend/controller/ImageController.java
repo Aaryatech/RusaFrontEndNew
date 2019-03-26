@@ -465,10 +465,10 @@ public class ImageController {
 			 
 		 System.out.println("akshay kasar");
 
-		 CalenderList m = new CalenderList();
-		 List<Result> result = new ArrayList<>();
-		 m.setSuccess(1);
-		 
+		 CalenderList m =rest.getForObject(Constant.url +
+				  "/getEventListforCalender", CalenderList.class);
+		/* List<Result> result = new ArrayList<>();
+		 m.setSuccess(1); 
 		 Result r = new Result();
 		 r.setId("1");
 		 r.setTitle("aksshay");
@@ -477,12 +477,16 @@ public class ImageController {
 		 r.setStart("1362938400000");
 		 r.setEnd("1362938400000");
 		 result.add(r);
-		 m.setResult(result);
+		 m.setResult(result);*/
+		 m.getResult().get(0).setStart("1362938400000");
+		 m.getResult().get(1).setStart("1364320800000");
 		 
+		 m.getResult().get(0).setEnd("1362938400000");
+		 m.getResult().get(1).setEnd("1364320800000");
 		 
 		 ObjectMapper mapper = new ObjectMapper();
 			jsonString = mapper.writeValueAsString(m);
-		 
+		 System.out.println(jsonString);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

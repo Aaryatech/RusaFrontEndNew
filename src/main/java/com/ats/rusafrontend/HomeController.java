@@ -97,7 +97,7 @@ public class HomeController {
 			SocialChannels[] socialList = rest.getForObject(Constant.url + "/getAllSocialList",
 					SocialChannels[].class);
 			List<SocialChannels> socialChannelData = new ArrayList<SocialChannels>(Arrays.asList(socialList));
-			System.out.println("event :"+event.toString());
+			//System.out.println("event :"+event.toString());
 			
 			session.setAttribute("event", eventList);
 			session.setAttribute("socialChannelData", socialChannelData);
@@ -122,7 +122,7 @@ public class HomeController {
 			MetaData metaData = rest.postForObject(Constant.url + "/getHomePageMetaDataByLangId", map, MetaData.class);
 			session.setAttribute("homePageMetaData", metaData);
 
-			System.out.println(metaData);
+			//System.out.println(metaData);
 
 		} catch (Exception e) {
 			e.printStackTrace();
