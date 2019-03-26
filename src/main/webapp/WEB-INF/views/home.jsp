@@ -4,7 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
 <%@ page session="true"%>
-
+<%@ page import="java.io.*,java.util.*, javax.servlet.*" 
+  import = "java.text.SimpleDateFormat"%> 
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -463,14 +464,21 @@
 	<script type="text/javascript">
 		(function($) {
 
+		 <%
+			   Date date = new Date();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");	
+			   out.print( "var date_var = '" +sf.format(date)+"' ");
+			    
+			%>  
 			"use strict";
-			//alert(st_url);
+		//	 alert(date_var);
+			  
 			var options = {
 				events_source : st_url + 'eventJson',
 				view : 'month',
-				tmpl_path : 'http://localhost:8081/rusafrontend/resources/tmpls/',
+				tmpl_path : st_url+'resources/tmpls/',
 				tmpl_cache : false,
-				day : '2013-03-12',
+				day : date_var,
 				onAfterEventsLoad : function(events) {
 					if (!events) {
 						return;

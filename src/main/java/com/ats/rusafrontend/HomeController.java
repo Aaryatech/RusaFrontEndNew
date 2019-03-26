@@ -86,10 +86,7 @@ public class HomeController {
 					TestImonial[].class);
 			List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 
-			NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllUpcomingEvents",map,
-					NewsDetails[].class);
-			List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
-			
+			 
 			NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map,
 					NewsDetails[].class);
 			List<NewsDetails> newsBlogsList = new ArrayList<NewsDetails>(Arrays.asList(getPagesModule));
@@ -99,7 +96,7 @@ public class HomeController {
 			List<SocialChannels> socialChannelData = new ArrayList<SocialChannels>(Arrays.asList(socialList));
 			//System.out.println("event :"+event.toString());
 			
-			session.setAttribute("event", eventList);
+			
 			session.setAttribute("socialChannelData", socialChannelData);
 			session.setAttribute("newsBlogsList", newsBlogsList);
 			session.setAttribute("testImonial", testImonial);
@@ -122,6 +119,10 @@ public class HomeController {
 			MetaData metaData = rest.postForObject(Constant.url + "/getHomePageMetaDataByLangId", map, MetaData.class);
 			session.setAttribute("homePageMetaData", metaData);
 
+			NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllUpcomingEvents",map,
+					NewsDetails[].class);
+			List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
+			session.setAttribute("event", eventList);
 			//System.out.println(metaData);
 
 		} catch (Exception e) {
