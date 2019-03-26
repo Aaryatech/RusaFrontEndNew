@@ -74,7 +74,9 @@
 	<div class="bridcrumb">
     	<div class="container">
         	<a href="/">Home</a> > <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
-            <a href="#" class="print"><span></span></a> <!-- 
+        	
+              <a href="${pageContext.request.contextPath}/logout" class="last-update" style="margin:left=100px;">Logout <span class="glyphicon glyphicon-log-out"></span></a>
+    <!-- 
             <p class="last-update">Last Updated on 25 Feb 2019</p>  -->
         </div>
     </div>    
@@ -92,14 +94,14 @@
 				<div class="leftColm">
                     <div class="profile-section">
                         <div class="upload-photo">
-                            <div class="dashboard-profile-img">
+                            <!-- <div class="dashboard-profile-img">
   	                          <img id="blah" src="images/no-img.jpg" alt="" />
                             </div>	
-                        
+                         -->
                             <div class="fileUpload btn">
-                                <div class="user-name">Jules Truong</div>
+                              <div class="user-name">Welcome</div>
                           
-                               <a href="my-profile-edit.html"> <span>Update Picture</span></a>
+                             <!--   <a href="my-profile-edit.html"> <span>Update Picture</span></a> -->
                             </div>	
                         </div>
                         
@@ -108,19 +110,25 @@
                     </div>
                     
                     <div class="clearfix"></div>
-                        <ul class="menu">
-                            <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="/rusafrontend/info/about-rusa9">Dashboard</a>
+                       <ul class="menu">
+					   <li>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="/${pageContext.request.contextPath}/dashboard">Dashboard</a>
                             </li>
 
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="/rusafrontend/info/about-rusa9">My Profile</a>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
                             </li>
 
                             <li>
 	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                             </li>
-                        </ul>
+                              <li>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/eventList">Event List</a>
+                            </li>
+                              <li>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/logout">Logout</a>
+                            </li>
+					</ul>
                 </div>
             </div>
             

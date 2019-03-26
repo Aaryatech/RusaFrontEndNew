@@ -44,7 +44,10 @@
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
 	rel="stylesheet">
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
-
+<!-- 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 <script>
 	var strMsg = "This link will take you to extneranl web site.";
 	var strMsgPdf = "PDF file that opens in a new window.";
@@ -74,10 +77,15 @@
 	<div class="bridcrumb">
     	<div class="container">
         	<a href="/">Home</a> > <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
-            <a href="#" class="print"><span></span></a> <!-- 
-            <p class="last-update">Last Updated on 25 Feb 2019</p>  -->
-        </div>
-    </div>    
+         
+               <a href="${pageContext.request.contextPath}/logout" class="last-update" style="margin:left=100px;">Logout <span class="glyphicon glyphicon-log-out"></span></a>
+      <!--   <a href="#">
+          <span class="glyphicon glyphicon-log-out"></span>
+        </a>
+      -->
+         
+        </div> 
+    </div>   
    <%--     <c:if test="${sessionScope.successMsg!=null}">
             <div class="col-lg-12">
     		          <div class="alert alert-success alert-dismissible fade in">
@@ -92,14 +100,14 @@
 				<div class="leftColm">
                     <div class="profile-section">
                         <div class="upload-photo">
-                            <div class="dashboard-profile-img">
+                         <!--    <div class="dashboard-profile-img">
   	                          <img id="blah" src="images/no-img.jpg" alt="" />
-                            </div>	
+                            </div> -->	
                         
                             <div class="fileUpload btn">
-                                <div class="user-name">Jules Truong</div>
+                                <div class="user-name">Welcome</div>
                           
-                               <a href="my-profile-edit.html"> <span>Update Picture</span></a>
+                              <!--  <a href="my-profile-edit.html"> <span>Update Picture</span></a> -->
                             </div>	
                         </div>
                         
@@ -110,15 +118,21 @@
                     <div class="clearfix"></div>
                         <ul class="menu">
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="/rusafrontend/info/about-rusa9">Dashboard</a>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="/${pageContext.request.contextPath}/dashboard">Dashboard</a>
                             </li>
 
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="/rusafrontend/info/about-rusa9">My Profile</a>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
                             </li>
 
                             <li>
 	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/changePass">Change Password</a>
+                            </li>
+                              <li>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/eventList">Event List</a>
+                            </li>
+                              <li>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/logout">Logout</a>
                             </li>
                         </ul>
                 </div>
@@ -201,7 +215,7 @@
             
         </div>
     </div>
- 
+ <br>
 	
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
