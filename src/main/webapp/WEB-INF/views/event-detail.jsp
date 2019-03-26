@@ -121,7 +121,7 @@
 																		</div>
 																			<input type="hidden" name="newsblogsId" value="${event.newsblogsId}">
 																			
-																			<button type="submit" class="btn button apply">Submit</button>
+																			<button type="submit" class="btn button apply">Apply</button>
 																	</div>
 								
                <!--      <span><i class="icon-download-2"></i> <strong>Download Attachment:</strong> <a href="#">Event Detail</a></span> -->

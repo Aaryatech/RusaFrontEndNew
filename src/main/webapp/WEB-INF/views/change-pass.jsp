@@ -94,7 +94,7 @@
 </head>
 <body>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
+<%-- 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include> --%>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
@@ -174,22 +174,22 @@
 
 					<div class="clearfix"></div>
 					<ul class="menu">
-						   <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="/${pageContext.request.contextPath}/dashboard">Dashboard</a>
+						    <li>
+	                            <a onclick="checkMaintainance()" title="Dashboard" href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
                             </li>
 
-                            <li>
+                           <%--  <li>
 	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
                             </li>
-
+ --%>
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/changePass">Change Password</a>
+	                            <a onclick="checkMaintainance()" title="Change Password" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                             </li>
-                              <li>
+                          <%--     <li>
 	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/eventList">Event List</a>
-                            </li>
-                            <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/logout">Logout</a>
+                            </li> --%>
+                              <li>
+	                            <a onclick="checkMaintainance()" title="Logout" href="${pageContext.request.contextPath}/logout">Logout</a>
                             </li>
 					</ul>
 				</div>

@@ -107,7 +107,7 @@ public class UserController {
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model = new ModelAndView("content/dashboard");
+		ModelAndView model = new ModelAndView("content/upcoming-dashboard");
 
 		HttpSession session = request.getSession();
 
