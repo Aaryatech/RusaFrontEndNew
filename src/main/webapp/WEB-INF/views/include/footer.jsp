@@ -47,7 +47,7 @@
                        			</c:if>
                        			<c:if test="${socialChannelData[3].isActive==1}">
                        			
-                       				<a href="${socialChannelData[3].urllinks}" class="skype"><span><img src="${pageContext.request.contextPath}/resources/images/index.png"></span></a>
+                       				<a href="${socialChannelData[3].urllinks}" class="skype"><span><img src="${pageContext.request.contextPath}/resources/images/skype.png"></span></a>
                        		
                        			</c:if>
                        			  <c:if test="${socialChannelData[4].isActive==1}">
