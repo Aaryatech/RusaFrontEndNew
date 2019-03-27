@@ -325,6 +325,53 @@ public class ImageController {
 	public ModelAndView eventList(HttpServletRequest request, HttpServletResponse response) {
 
 		
+		ModelAndView model = new ModelAndView("content/event-List");
+		try {
+
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "eventList");
+			int langId = 1;
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				 model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "eventList");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("langId", langId);
+				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL",map1,
+						NewsDetails[].class);
+				List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
+				for(int i=0; i<event.size();i++)
+				{
+					event.get(i).setEventDateFrom(DateConvertor.convertToDMY(event.get(i).getEventDateFrom()));					
+					
+				}
+				//model.addObject("event", event);
+				model.addObject("event", eventList);
+				model.addObject("pageMetaData", pageMetaData);				
+				model.addObject("siteKey", Constant.siteKey);
+				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+
+				model.addObject("flag", flag);
+				flag=0;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/eventfrontList", method = RequestMethod.GET)
+	public ModelAndView eventfrontList(HttpServletRequest request, HttpServletResponse response) {
+
+		
 		ModelAndView model = new ModelAndView("content/eventList");
 		try {
 
@@ -368,12 +415,11 @@ public class ImageController {
 		return model;
 	}
 	
-	
-	  @RequestMapping(value = "/eventDetail/{newsblogsId}", method =RequestMethod.GET) 
-	  public ModelAndView eventDetail(@PathVariable int newsblogsId, HttpServletRequest request, HttpServletResponse response) {
+	  @RequestMapping(value = "/eventDetailfront/{newsblogsId}", method =RequestMethod.GET) 
+	  public ModelAndView eventDetailfront(@PathVariable int newsblogsId, HttpServletRequest request, HttpServletResponse response) {
 	  
 	  
-	  ModelAndView model = new ModelAndView("event-detail");
+	  ModelAndView model = new ModelAndView("event-detail-front");
 	  try {
 	  
 	  HttpSession session = request.getSession(); 
@@ -608,4 +654,47 @@ public class ImageController {
 				
 		return ss;
 	}  	
+	 @RequestMapping(value = "/eventDetail/{newsblogsId}", method =RequestMethod.GET) 
+	  public ModelAndView eventDetail(@PathVariable int newsblogsId, HttpServletRequest request, HttpServletResponse response) {
+	  
+	  
+	  ModelAndView model = new ModelAndView("event-detail");
+	  try {
+	  
+	  HttpSession session = request.getSession(); 
+	  session.setAttribute("mapping","eventList"); 
+	  int langId=1;
+	  Maintainance maintainance =
+	  rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+	  if (maintainance.getMaintenanceStatus() == 1) {
+	  
+	  model = new ModelAndView("maintainance"); model.addObject("maintainance",
+	  maintainance); } else { MultiValueMap<String, Object> map = new
+	  LinkedMultiValueMap<String, Object>(); map.add("slugName", "eventList");
+	  PageMetaData pageMetaData = rest.postForObject(Constant.url +
+	  "/getPageMetaData", map, PageMetaData.class);
+	    
+	  
+	  MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+	  map1.add("langId", langId);
+	
+	  map1.add("newsblogsId", newsblogsId);
+	  NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId",map1, NewsDetails.class); 
+	  
+	//  List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
+     String dateEvent=  DateConvertor.convertToYMD(eventList.getEventDateFrom());
+	  model.addObject("event", eventList);
+	  model.addObject("dateEvent", dateEvent);
+	  model.addObject("pageMetaData",pageMetaData); 
+	  model.addObject("siteKey", Constant.siteKey);
+	
+	  session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+	  model.addObject("flag", flag); 
+	  flag=0; 
+	  
+	  }
+	  
+	  } catch (Exception e) { e.printStackTrace(); }
+	  
+	  return model; }
 }

@@ -466,6 +466,8 @@ public class UserController {
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				System.out.println("list_new: " + upcoming.toString());
 				model.addObject("upcoming", upcoming);
+			//	model.addObject("value", 0);
+				
 				// model.addObject("pageMetaData", pageMetaData);
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 
@@ -606,4 +608,58 @@ public class UserController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	@RequestMapping(value = "/forgetPass", method = RequestMethod.GET)
+	public ModelAndView forgetPass(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("forget-pass");
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)
+	public ModelAndView forgetPassword(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+
+		String userName = request.getParameter("userName");
+		//String password = request.getParameter("password");
+		ModelAndView mav = new ModelAndView("login");
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("userName", userName);
+			//map.add("password", password);
+
+			Registration verify = rest.postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
+			if (verify.isError() == false) {
+				mav = new ModelAndView("content/dashboard");
+				System.out.println("Login :" + verify.getRegId());
+				session.setAttribute("UserDetail", verify.getRegId());
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+				map1.add("langId", 1);
+				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+						List.class);
+				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
+				System.out.println("list_new: " + upcoming.toString());
+				mav.addObject("upcoming", upcoming);
+				// model.addObject("pageMetaData", pageMetaData);
+				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+			} else {
+				mav = new ModelAndView("login");
+				System.out.println("Invalid login credentials");
+				mav.addObject("msg", "Invalid login");
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		return mav;
+	}
+
 }

@@ -63,6 +63,8 @@
 </head>
 <body onload="upcomingEvents">
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include>
+	
 	<%-- <jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include> --%>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 		
@@ -136,11 +138,11 @@
             	<h2>Dashboard</h2>
 				<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab" role="tablist">
                                 <li class="nav-item">
-                                <a class=" active" href="${pageContext.request.contextPath}/upcomingEvents"><span class="icon-calendar-with-a-clock-time-tools icon"></span> Upcoming Events</a>
+                                <a class="nav-link active" href="${pageContext.request.contextPath}/upcomingEvents"><span class="icon-calendar-with-a-clock-time-tools icon"></span> Upcoming Events</a>
                                 </li>
                                 
                                 <li class="nav-item">
-                                <a class=""  href="${pageContext.request.contextPath}/previousEvents"><span class="icon-calendar icon"></span> Previous Events </a>
+                                <a class="nav-link"  href="${pageContext.request.contextPath}/previousEvents"><span class="icon-calendar icon"></span> Previous Events </a>
                                 </li>
                             </ul>
 

@@ -91,7 +91,39 @@
 					onsubmit="return confirm('Do you really want to submit the form?');"
 					method="post" name="login_form">
 					<div class="row row-eq-height">
-						<div class="col-12 col-sm-12 col-lg-12">
+					<div class="col-12 col-sm-12 col-lg-3"></div>
+					
+					<div class="col-12 col-sm-6 col-lg-2">
+                                	  <input type="radio" name="radi" value="all" checked="" id="radio9">
+                                    <label for="radio9"></label>
+                                    <span>Individual</span>
+                                </div>
+                                
+                                
+					
+					<div class="col-12 col-sm-6 col-lg-2">
+                                	  <input type="radio" name="radi" value="all"  id="radio7">
+                                    <label for="radio7"></label>
+                                    <span>Colleges</span>
+                                </div>
+                                
+                                
+                                <div class="col-12 col-sm-6 col-lg-2">
+                                	  <input type="radio" name="radi" value="all" id="radio6">
+                                    <label for="radio6"></label>
+                                    <span>University</span>
+                                </div>
+                                
+                              
+                             
+                                
+					<div class="col-12 col-sm-12 col-lg-3"></div>
+					
+                          
+                          
+                          
+                                <div class="col-12 col-sm-12 col-lg-3"></div>      
+						<div class="col-12 col-sm-12 col-lg-6">
 							<label ">Select Type</label> 
 							<select id="userType" name="userType" class="form-control" onchange="showForm()"
 								required>
@@ -100,104 +132,206 @@
 								<option value="2">Colleges</option>
 								<option value="3">University</option>
 							</select>
+							</div>
+							</div>
 					
+                                <div class="col-12 col-sm-12 col-lg-3"></div>
 					
-							<div class="form-group" style="display: visible" id="individual">
-
-								<label>Email-ID <span class="text-danger">*</span></label> <input
+							<div class="form-group row row-eq-height" style="display: visible" id="individual">
+					<div class="col-12 col-sm-12 col-lg-6">
+								<label>Email-ID <span class="text-danger">*</span></label> 
+								<input
 									type="email" class="form-control" name="email"
-									placeholder="Email" id="email"> <label>Alternate
+									placeholder="Email" id="email"> 
+					</div>
+					
+							<div class="col-12 col-sm-12 col-lg-6">		
+									<label>Alternate
 									Email-ID</label> <input type="email" class="form-control"
 									name="altEmail" placeholder="Alternate Email" id="altEmail">
+					</div>
+					
+					<div class="col-12 col-sm-12 col-lg-6">
 
-
-								<label>Full Name <span class="text-danger">*</span></label> <input
+								<label>Full Name <span class="text-danger">*</span></label> 
+								
+								<input
 									type="text" class="form-control" name="name" placeholder="Name"
-									id="fullname"> <label>Mobile No.<span
-									class="text-danger">*</span></label> <input type="text"
+									id="fullname"> 
+							</div>		
+									
+									<div class="col-12 col-sm-12 col-lg-6">
+									<label>Mobile No.<span
+									class="text-danger">*</span></label> 
+									
+									<input type="text"
 									class="form-control" name="mobile" pattern="[7-9]{1}[0-9]{9}"
 									maxlength="10" placeholder="Mobile No." id="mobile"
-									maxlength="10"> <label>College Name <span
+									maxlength="10"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">
+									<label>College Name <span
 									class="text-danger">*</span></label> <input type="text"
 									class="form-control" name="collegeName"
-									placeholder="College Name" id="collegeName"> <label>University
+									placeholder="College Name" id="collegeName"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">
+									<label>University
 									Affiliated <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="university"
-									placeholder="University Affiliated" id="uniAff"> <label>Name
+									placeholder="University Affiliated" id="uniAff"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">
+									
+									<label>Name
 									of Department <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="dept"
-									placeholder="Name of Department" id="depatment"> <label>Date
+									placeholder="Name of Department" id="depatment"> 
+									</div>
+									
+									
+									<div class="col-12 col-sm-12 col-lg-6">
+									
+									<label>Date
 									Of Birth <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="dob"
-									placeholder="Date Of Birth" id="dob"> <label>Authorized
+									placeholder="Date Of Birth" id="dob"> 
+									</div>
+									
+								<div class="col-12 col-sm-12 col-lg-6">	
+									<label>Authorized
 									Name <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="authour"
 									placeholder="Name of Authorized" id="authour">
-
+							</div>
 							</div>
 				
 						
-							<div class="form-group" style="display: none" id="college">
-								<label>Email-ID <span class="text-danger">*</span></label> <input
+							<div class="form-group row row-eq-height" style="display: none" id="college">
+								<div class="col-12 col-sm-12 col-lg-6">	
+								<label>Email-ID <span class="text-danger">*</span></label> 
+								
+								<input
 									type="email" class="form-control" name="collegeEmail"
-									placeholder="Email" id="collegeEmail"> <label>Alternate
+									placeholder="Email" id="collegeEmail"> 
+									</div>
+									
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>Alternate
 									Email-ID</label> <input type="email" class="form-control"
 									name="altEmail" placeholder="Alternate Email" id="altEmail">
-
-
+							</div>
+							
+							
+							<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
 									type="text" class="form-control" name="collegeMobile"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 									placeholder="Mobile No." id="collegeNo" maxlength="10">
-
+							</div>
+					
+					<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Institute Name <span class="text-danger">*</span></label>
 								<input type="text" class="form-control" name="institute"
-									placeholder="Institute Name" id="instituteName"> <label>AISHE
+									placeholder="Institute Name" id="instituteName"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>AISHE
 									Code</label> <input type="text" class="form-control" name="aisheName"
-									placeholder="AISHE Code" id="aisheName"> <label>University
+									placeholder="AISHE Code" id="aisheName"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>University
 									Affiliated <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="univ"
-									placeholder="University Affiliated" id="univ"> <label>Name
+									placeholder="University Affiliated" id="univ"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>Name
 									of Department <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="dept"
-									placeholder="Name of Department" id="collegeDept"> <label>Designation
+									placeholder="Name of Department" id="collegeDept"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>Designation
 									<span class="text-danger">*</span>
 								</label> <input type="text" class="form-control"
 									name="designationCollege" placeholder="Designation of Person"
-									id="designationCollege"> <label>Authorized Name
+									id="designationCollege"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>Authorized Name
 									<span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="collegeAuthour"
 									placeholder="Name of Authorized" id="cAuthour">
+									</div>
 							</div>
-						</div>
+						
 					
-							<div class="form-group" style="display: none" id="university">
+							<div class="form-group row row-eq-height" style="display: none" id="university">
+								<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Email-ID <span class="text-danger">*</span></label> <input
 									type="email" class="form-control" name="uniEmail"
-									placeholder="Email" id="uniEmail"> <label>Alternate
+									placeholder="Email" id="uniEmail"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>Alternate
 									Email-ID</label> <input type="email" class="form-control"
 									name="altEmail" placeholder="Alternate Email" id="altEmail">
+							</div>
 
-
+<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
 									type="text" class="form-control" name="uniMobile"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="uniNo" maxlength="10"> <label>AISHE
+									placeholder="Mobile No." id="uniNo" maxlength="10"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>AISHE
 									Code</label> <input type="text" class="form-control" name="aisheName"
-									placeholder="AISHE Code" id="aisheName"> <label>University
+									placeholder="AISHE Code" id="aisheName"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>University
 									Name <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="uniName"
-									placeholder="University Name" id="uniName"> <label>Name
+									placeholder="University Name" id="uniName"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>Name
 									of Department <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="uniDept"
-									placeholder="Name of Department" id="uniDept"> <label>Designation
+									placeholder="Name of Department" id="uniDept"> 
+									</div>
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>Designation
 									<span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="uniDes"
-									placeholder="Designation of Person" id="uniDes"> <label>Authorized
+									placeholder="Designation of Person" id="uniDes">
+									</div>
+									
+									
+									<div class="col-12 col-sm-12 col-lg-6">	
+									
+									 <label>Authorized
 									Name <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="uniAuthour"
 									placeholder="Name of Authorized" id="uniAuthour">
-
+								</div>
 							
 						</div>
 						<div class="clearfix"></div>
@@ -207,14 +341,14 @@
 								<button type="submit" id="log-btn" class="button login-btn">Register</button>
 							</p>
 						</div>
-
+<p>
+					Already Member <a href="${pageContext.request.contextPath}/login">Login</a>
+				</p>
 					</div>
 				</form>
 
 
-				<p>
-					Already Member <a href="/login">Login</a>
-				</p>
+				
 			</div>
 		</div>
 	</div>

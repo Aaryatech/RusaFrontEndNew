@@ -80,9 +80,9 @@
 </head>
 <body>
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-
-	<jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include>
-	
+<% if(userDetail==0){%>
+	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
+	<% } %>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 		<div class="inner-slider" id="slider">
 		<div class="container">
@@ -100,49 +100,8 @@
             <div class="container" id="main-content">
         <div class="row row-eq-height">
         
-       <div class="col-12 col-sm-3 col-lg-3">
-            	
-				<div class="leftColm">
-                    <div class="profile-section"> 
-                        <div class="upload-photo">
-                            <!-- <div class="dashboard-profile-img">
-  	                          <img id="blah" src="images/no-img.jpg" alt="" />
-                            </div>	
-                         -->
-                            <div class="fileUpload btn">
-                              <div class="user-name">Welcome</div>
-                          
-                             <!--   <a href="my-profile-edit.html"> <span>Update Picture</span></a> -->
-                            </div>	
-                        </div>
-                        
-                        
-                        <div class="clearfix"></div>
-                    </div>
-                    
-                    <div class="clearfix"></div>
-                       <ul class="menu">
-					  <li>
-	                            <a onclick="checkMaintainance()" title="Dashboard" href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
-                            </li>
-
-                           <%--  <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
-                            </li>
- --%>
-                            <li>
-	                            <a onclick="checkMaintainance()" title="Change Password" href="${pageContext.request.contextPath}/changePass">Change Password</a>
-                            </li>
-                          <%--     <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/eventList">Event List</a>
-                            </li> --%>
-                              <li>
-	                            <a onclick="checkMaintainance()" title="Logout" href="${pageContext.request.contextPath}/logout">Logout</a>
-                            </li>
-					</ul>
-                </div>
-            </div>
-         	<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
+  
+         	<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
                     <div class="row">
                     	<c:if test="${not empty event.featuredImage}">
                     <div class="col-12 col-sm-6 col-lg-6">  
@@ -157,7 +116,7 @@
 					<span><i class="icon-calendar"></i> <strong>Date:</strong>  ${dateEvent}</span>
 					<span><i class="icon-man-user"></i> <strong>Contact Person:</strong>  ${event.eventContactPerson}</span>
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong> +91  ${event.eventContactNumber}</span><br> </p>
-                  
+                      <c:if test="${value==1}">
                     	<c:if test="${event.exInt2==1}">
                     		<form class="form-horizontal"
 										action="${pageContext.request.contextPath}/submtEventAppliedForm"
@@ -170,7 +129,7 @@
 																			<input type="file" name="pagePdf" id="pagePdf"
 																				class="form-control" data-parsley-minlength="2" required
 																				accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-																		<p>Please upload .doc, .docx, .pptx,.pdf and .xlsx only</p>
+																		<p>Please upload .xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip</p>
 																		</div>
 																			<input type="hidden" name="newsblogsId" value="${event.newsblogsId}">
 																			
@@ -179,10 +138,14 @@
 								
                <!--      <span><i class="icon-download-2"></i> <strong>Download Attachment:</strong> <a href="#">Event Detail</a></span> -->
               						
-				    </form>
+																			
+																	
+																		
+																
+                    </form>
                     </c:if>
-                   
-                   
+                    
+                   </c:if>
                       	<c:if test="${event.exInt2==0}">
                     <a href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}" class="btn button apply">Apply</a>
                   </c:if>
