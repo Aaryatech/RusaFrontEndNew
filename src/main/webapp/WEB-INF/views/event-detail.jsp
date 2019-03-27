@@ -15,6 +15,16 @@
 		contextPath = contextPath + "/retriveSession/" + mapping;
 		response.sendRedirect(contextPath);
 	}
+	
+	int userDetail=0;
+	
+	try {
+		userDetail = (int) session.getAttribute("UserDetail");
+		System.out.println("userDetail: "+userDetail);
+	} catch (Exception e) {
+		userDetail = 0;
+		e.printStackTrace();
+	}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,7 +80,9 @@
 </head>
 <body>
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<% if(userDetail==0){%>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
+	<% } %>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 		<div class="inner-slider" id="slider">
 		<div class="container">

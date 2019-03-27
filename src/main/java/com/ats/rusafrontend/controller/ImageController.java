@@ -487,18 +487,30 @@ public class ImageController {
 		return jsonString;
 	}
 	@RequestMapping(value = "/submtEventAppliedForm", method = RequestMethod.POST)
-	public ModelAndView submtEventAppliedForm(@RequestParam("pagePdf") List<MultipartFile> pagePdf
+	public String submtEventAppliedForm(@RequestParam("pagePdf") List<MultipartFile> pagePdf
 			,HttpServletRequest request, HttpServletResponse response) {
 
 		// ModelAndView model = new ModelAndView("masters/addEmployee");
 		Info info = new Info();
-		String pdfName = new String(); 
-		ModelAndView mav= new ModelAndView("content/eventList");
+		String pdfName = new String();
+		String ss = new String(); 
+		HttpSession session = request.getSession();
 		int newsblogsId = Integer.parseInt(request.getParameter("newsblogsId"));
+		ModelAndView mav= new ModelAndView("event-detail");
+		mav.addObject("newsblogsId",newsblogsId);
+		System.out.println("newsblogsId :"+newsblogsId);
+		int userDetail=0;
+		
 		try {
-			HttpSession session = request.getSession();
-			int userDetail = (int) session.getAttribute("UserDetail");
-			mav= new ModelAndView("content/eventList");
+			userDetail = (int) session.getAttribute("UserDetail");
+			System.out.println("userDetail: "+userDetail);
+		} catch (Exception e) {
+			userDetail = 0;
+			e.printStackTrace();
+		}
+		
+
+		if (userDetail > 0) {
 				
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
@@ -506,90 +518,44 @@ public class ImageController {
 		 
 			VpsImageUpload upload = new VpsImageUpload();		
 			pdfName =  dateTimeInGMT.format(date)+"_"+pagePdf.get(0).getOriginalFilename();
-				 
-		/*
-		 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
-		 * Object>();
-		 * 
-		 * map1.add("newsblogsId", newsblogsId); map1.add("userId", userDetail);
-		 * List<EventRegistration> appliedevent = rest.postForObject(Constant.url +
-		 * "/getAppliedEvents", map1, List.class);
-		 */
-			/*if (appliedevent == null) {
-				EventRegistration eventReg = new EventRegistration();				
-				
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				eventReg.setDelStatus(1);
-				// eventReg.setEventRegId();
-				eventReg.setIsActive(0);
-				eventReg.setNewsblogsId(newsblogsId);
-				eventReg.setRegDate(sf.format(date));
-				eventReg.setUserId(userDetail);
-				eventReg.setDoc1(pdfName);
-				
-				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
-						EventRegistration.class);
-
-				System.out.println("res Id: " + res.toString());
-
-				if (res != null) {
-
-					mav = new ModelAndView("content/eventList");
-					mav.addObject("msg", "Successfully Registed Event");
-				}
-				 
-			}*/
-
-			  MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
-			  Object>();
+		
+			  MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,Object>();
 			  
-			  map1.add("newsblogsId", newsblogsId); map1.add("userId", userDetail);
+			  map1.add("newsblogsId", newsblogsId); 
+			  map1.add("userId", userDetail);
 			  List<EventRegistration> appliedevent = rest.postForObject(Constant.url +"/getAppliedEvents", map1, List.class);
 			 
 			if (appliedevent == null) {
-				System.out.println("hello");
-					EventRegistration eventReg = new EventRegistration();				
+			EventRegistration eventReg = new EventRegistration();
 				
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(date);
-				eventReg.setDelStatus(1);
-				// eventReg.setEventRegId();
-				eventReg.setIsActive(0);
+				eventReg.setDelStatus(1);			
+				eventReg.setIsActive(1);
 				eventReg.setNewsblogsId(newsblogsId);
 				eventReg.setRegDate(sf.format(date));
 				eventReg.setUserId(userDetail);
 				eventReg.setDoc1(pdfName);
 				
-				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
-						EventRegistration.class);
+				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,EventRegistration.class);
 
 				System.out.println("res Id: " + res.toString());
+				//ss="redirect:/eventDetail/"+newsblogsId;
 
-				if (res != null) {
-
-					mav = new ModelAndView("content/eventList");
-					mav.addObject("msg", "Successfully Registed Event");
-				}
-				mav = new ModelAndView("content/eventList");
 			}
 			else
 			{
-				
-				System.out.println("hii");
 				if(pagePdf.get(0).getOriginalFilename()==null || pagePdf.get(0).getOriginalFilename()=="") {
 					try
 					{						
-						mav = new ModelAndView("content/eventList");
-						mav.addObject("msg", "Invalid Document");
+					
 						
 					}catch (Exception e) {
 						// TODO: handle exception
 						e.printStackTrace();
 					}
 				}else {
-				 
-				
+				 				
 					//pdfName =  dateTimeInGMT.format(date)+"_"+pagePdf.get(0).getOriginalFilename();
 					 
 					try {
@@ -600,55 +566,46 @@ public class ImageController {
 						map.add("pdfName", pdfName);
 
 						info = rest.postForObject(Constant.url + "/uploadEventDocument", map, Info.class);
-						mav = new ModelAndView("content/eventList");
+					
 						System.out.println(info.toString());
 						if(info.isError()==true)
 						{
 							EventRegistration eventReg = new EventRegistration();
-
 							
 							Calendar cal = Calendar.getInstance();
 							cal.setTime(date);
 							eventReg.setDelStatus(1);
+							eventReg.setIsActive(1);
 							// eventReg.setEventRegId();
-							eventReg.setIsActive(0);
+							//eventReg.setIsActive(1);
 							eventReg.setNewsblogsId(newsblogsId);
 							eventReg.setRegDate(sf.format(date));
 							eventReg.setUserId(userDetail);
-
+							eventReg.setDoc1(pdfName);
 							EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
 									EventRegistration.class);
 
-							System.out.println("res Id: " + res.toString());
-
-							if (res != null) {
-
-								mav = new ModelAndView("content/eventList");
-								mav.addObject("msg", "Successfully Registed Event");
-							}
-							mav = new ModelAndView("content/eventList");
+							System.out.println("res Id: " + res.toString());						
+							
 						}
-						mav = new ModelAndView("content/eventList");
+					
 						
 						upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL,pdfName);
 						}catch (Exception e) {
 							// TODO: handle exception
 							e.printStackTrace();
-						}
-					mav = new ModelAndView("content/eventList");
-				}
-			}
+						}					
+					}
+				}	
+			ss="redirect:/eventDetail/"+newsblogsId;	
+			} 
+			else
+			{
+				System.out.println("User Id: " + userDetail);
+				ss="redirect:/login";
+			}		
 			
 				
-				
-			
-			
-						} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return mav;
-	}
-  
-	
+		return ss;
+	}  	
 }

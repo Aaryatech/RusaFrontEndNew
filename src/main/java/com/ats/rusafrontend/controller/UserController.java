@@ -404,7 +404,7 @@ public class UserController {
 					cal.setTime(date);
 					eventReg.setDelStatus(1);
 					// eventReg.setEventRegId();
-					eventReg.setIsActive(0);
+					eventReg.setIsActive(1);
 					eventReg.setNewsblogsId(newsblogsId);
 					eventReg.setRegDate(sf.format(date));
 					eventReg.setUserId(userDetail);
@@ -601,7 +601,8 @@ public class UserController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		System.out.println("User Logout");
-
+		//int userDetail = (int) session.getAttribute("UserDetail");
+		session.removeAttribute("userDetail");
 		session.invalidate();
 		return "redirect:/";
 	}

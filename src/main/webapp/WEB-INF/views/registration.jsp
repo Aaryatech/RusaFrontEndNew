@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+ <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
@@ -92,8 +92,8 @@
 					method="post" name="login_form">
 					<div class="row row-eq-height">
 						<div class="col-12 col-sm-12 col-lg-12">
-							<label ">Select Type</label> <select id="userType"
-								name="userType" class="form-control" onchange="showForm()"
+							<label ">Select Type</label> 
+							<select id="userType" name="userType" class="form-control" onchange="showForm()"
 								required>
 								<option>Select Type</option>
 								<option value="1">Individual</option>

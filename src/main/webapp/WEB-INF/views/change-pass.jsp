@@ -83,11 +83,12 @@
 		var confirmPassword = document.getElementById("confirmPass").value;
 		/// alert(password);
 		//  alert(confirmPassword);
+		
 		if (password != confirmPassword) {
 			alert("Passwords do not match.");
-			return false;
+			$('#log_btn').attr('disabled','disabled');
 		}
-		return true;
+		$('#log_btn').removeAttr('disabled');
 	}
 </script>
 
@@ -220,14 +221,14 @@
 						<div class="col-12 col-sm-12 col-lg-12">
 							<label>Confirm password</label> <input type="password"
 								class="form-control" name="confirmPass" id="confirmPass"
-								placeholder="Confirm password" required>
+								placeholder="Confirm password"  required>
 						</div>
 
 
 
 						<div class="col-12 col-sm-12 col-lg-12">
 							<input type="submit" id="log_btn" value="Submit"
-								class="button login-btn" onclick="Validate()" />
+								class="button login-btn" onchange="Validate()" />
 							  <!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
 						</div>
@@ -262,11 +263,12 @@
 				ajax : 'true',
 
 			}, function(data) {
-			//	alert("hi"+data.error);
+				
 				if (data.error == true) {
-				//	alert("hi");
+					alert(data.msg);
 					$('#log_btn').attr('disabled','disabled');
 				} else {
+					alert(data.msg);
 					$('#log_btn').removeAttr('disabled');
 				}
 			}
