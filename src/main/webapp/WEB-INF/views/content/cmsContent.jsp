@@ -394,7 +394,7 @@
 										<c:choose>
 											<c:when test="${not empty testImonialList.imageName}">
 												<a href="#"><img
-													src="${gallryImageURL}${testImonialList.imageName}" alt=""></a>
+													src="${gallryImageURL}${testImonialList.imageName}" alt="" style="height: 200px;width: 200px;"></a>
 											</c:when>
 											<c:otherwise>
 												<a href="#"><img

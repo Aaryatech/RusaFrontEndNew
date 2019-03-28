@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
- <div class="other-gov-site other-gov-site-home">
+ <div class="other-gov-site other-gov-site-home" style="vertical-align: middle;">
             <div class="container">
             <div class="jcarousel-wrapper">
             <div class="jcarousel">
