@@ -242,13 +242,13 @@
 								</a>
 							</div>
 						</c:if>
-						<h6 style="text-align: right;">
+						<%-- <h6 style="text-align: right;">
 							Last Updated on
 							<c:choose>
 								<c:when test="${not empty cmsContentList.editDate}">${cmsContentList.editDate}</c:when>
 								<c:otherwise>${cmsContentList.addDate}</c:otherwise>
 							</c:choose>
-						</h6>
+						</h6> --%>
 					</c:forEach>
 					<c:set var="find" value="1"></c:set>
 				</c:if>
