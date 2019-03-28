@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
-
+ 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.model.*;
 
@@ -215,6 +215,15 @@ public class HomeController {
 				MetaData metaData = rest.postForObject(Constant.url + "/getHomePageMetaDataByLangId", map,
 						MetaData.class);
 				session.setAttribute("homePageMetaData", metaData);
+				
+				Setting[] settingList = rest.getForObject(Constant.url + "/getAllSettingList", Setting[].class);
+				List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
+				session.setAttribute("setting", setting);
+				
+				SocialChannels[] socialList = rest.getForObject(Constant.url + "/getAllSocialList",
+						SocialChannels[].class);
+				List<SocialChannels> socialChannelData = new ArrayList<SocialChannels>(Arrays.asList(socialList)); 
+				session.setAttribute("socialChannelData", socialChannelData);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -259,4 +268,63 @@ public class HomeController {
 		}
 
 	}
+	
+	@RequestMapping(value = "/changeLangage/{url}", method = RequestMethod.GET)
+	public String changeLangage(@PathVariable("url") String url, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		RestTemplate rest = new RestTemplate();
+		HttpSession session = request.getSession();
+
+		Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+		if (maintainance.getMaintenanceStatus() == 1) {
+			
+			session.setAttribute("maintainance", maintainance);
+			return "maintainance";
+			
+		} else {
+
+			String[] arry = url.split("-");
+
+			try {
+				System.out.println(url);
+				System.out.println(Arrays.toString(arry));
+
+				session.setAttribute("langId", Integer.parseInt(arry[0]));
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("langId", arry[0]);
+				map.add("type", 1);
+				TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
+
+				session.setAttribute("menuList", sectionTree);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+
+				String ret = new String();
+				ret = arry[1] + "/";
+				for (int i = 2; i < arry.length; i++) {
+
+					if (i == 2) {
+						ret = ret + arry[i];
+					} else {
+						ret = ret + "-" + arry[i];
+					}
+
+				}
+
+				return "redirect:/" + ret;
+			} catch (Exception e) {
+				return "redirect:/";
+			}
+
+		}
+
+	}
+	
+	
 }

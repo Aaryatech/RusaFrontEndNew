@@ -280,7 +280,7 @@
 						</c:forEach>
 
 					</div>
-					<c:if test="${loop.last}">
+					<%-- <c:if test="${loop.last}">
 						<h6 style="text-align: right;">
 							Last Updated on
 							<c:choose>
@@ -288,7 +288,7 @@
 								<c:otherwise>${faqContentList.addDate}</c:otherwise>
 							</c:choose>
 						</h6>
-					</c:if>
+					</c:if> --%>
 
 					<c:set var="find" value="1"></c:set>
 				</c:if>
@@ -366,18 +366,21 @@
 								<c:set var="string2" value="${fn:substring(string1, 0, 256)}" />
 								<h2>${detailNewsList.heading}</h2>
 								<p>${string2}</p>
-								<a
+								<%-- <a
 									href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.languageId}/${detailNewsList.pageId}/${detailNewsList.newsblogsId}">more
+								</a> --%>
+								<a
+									href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.languageId}/${detailNewsList.newsblogsId}">more
 								</a>
 							</div>
 						</div>
-						<h6 style="text-align: right;">
+						<%-- <h6 style="text-align: right;">
 							Last Updated on
 							<c:choose>
 								<c:when test="${not empty detailNewsList.editDate}">${detailNewsList.editDate}</c:when>
 								<c:otherwise>${detailNewsList.addDate}</c:otherwise>
 							</c:choose>
-						</h6>
+						</h6> --%>
 					</c:forEach>
 
 					<c:set var="find" value="1"></c:set>
