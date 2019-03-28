@@ -415,8 +415,94 @@ public class ImageController {
 		return model;
 	}
 	
-	  @RequestMapping(value = "/eventDetailfront/{newsblogsId}", method =RequestMethod.GET) 
-	  public ModelAndView eventDetailfront(@PathVariable int newsblogsId, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/upcomingEventsList", method = RequestMethod.GET)
+	public ModelAndView upcomingEventsList(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		ModelAndView model = new ModelAndView("content/upcoming-front");
+		try {
+
+			// session.setAttribute("mapping", "upcomingEvents");
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+
+				/*
+				 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+				 * Object>(); map.add("slugName", "upcomingEvents"); PageMetaData pageMetaData =
+				 * rest.postForObject(Constant.url + "/getPageMetaData", map,
+				 * PageMetaData.class);
+				 */
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+				map1.add("langId", 1);
+				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+						List.class);
+				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
+				System.out.println("list_new: " + upcoming.toString());
+				model.addObject("upcoming", upcoming);
+				model.addObject("typeId", 2);
+			//	model.addObject("value", 0);
+				
+				// model.addObject("pageMetaData", pageMetaData);
+				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/previousEventsList", method = RequestMethod.GET)
+	public ModelAndView previousEventsList(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		ModelAndView model = new ModelAndView("content/previousfront");
+		try {
+
+			// session.setAttribute("mapping", "upcomingEvents");
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+
+				/*
+				 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+				 * Object>(); map.add("slugName", "upcomingEvents"); PageMetaData pageMetaData =
+				 * rest.postForObject(Constant.url + "/getPageMetaData", map,
+				 * PageMetaData.class);
+				 */
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+				map1.add("langId", 1);
+				NewsDetails[] previousList = rest.postForObject(Constant.url + "/getAllPreviousEvents", map1,
+						NewsDetails[].class);
+				List<NewsDetails> previous = new ArrayList<NewsDetails>(Arrays.asList(previousList));
+				System.out.println("list_new: " + previous.toString());
+				model.addObject("previous", previous);
+				model.addObject("typeId", 1);
+				// model.addObject("pageMetaData", pageMetaData);
+				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	  @RequestMapping(value = "/eventDetailfront/{newsblogsId}/{typeId}", method =RequestMethod.GET) 
+	  public ModelAndView eventDetailfront(@PathVariable int newsblogsId,@PathVariable int typeId, HttpServletRequest request, HttpServletResponse response) {
 	  
 	  
 	  ModelAndView model = new ModelAndView("event-detail-front");
@@ -448,6 +534,8 @@ public class ImageController {
 	  model.addObject("dateEvent", dateEvent);
 	  model.addObject("pageMetaData",pageMetaData); 
 	  model.addObject("siteKey", Constant.siteKey);
+	  model.addObject("typeId", typeId);
+		 
 	  session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 
 	  model.addObject("flag", flag); 
@@ -654,8 +742,8 @@ public class ImageController {
 				
 		return ss;
 	}  	
-	 @RequestMapping(value = "/eventDetail/{newsblogsId}", method =RequestMethod.GET) 
-	  public ModelAndView eventDetail(@PathVariable int newsblogsId, HttpServletRequest request, HttpServletResponse response) {
+	 @RequestMapping(value = "/eventDetail/{newsblogsId}/{typeId}", method =RequestMethod.GET) 
+	  public ModelAndView eventDetail(@PathVariable int newsblogsId, @PathVariable int typeId, HttpServletRequest request, HttpServletResponse response) {
 	  
 	  
 	  ModelAndView model = new ModelAndView("event-detail");
@@ -687,7 +775,10 @@ public class ImageController {
 	  model.addObject("dateEvent", dateEvent);
 	  model.addObject("pageMetaData",pageMetaData); 
 	  model.addObject("siteKey", Constant.siteKey);
-	
+	  model.addObject("typeId", typeId);
+		
+	  
+	  System.out.println("typeId :"+typeId);
 	  session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 	  model.addObject("flag", flag); 
 	  flag=0; 

@@ -127,7 +127,7 @@
 					<span><i class="icon-calendar"></i> <strong>Date:</strong> ${eventList.eventDateFrom}</span>
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong>+91 ${eventList.eventContactNumber}</span>
                     </p>
-                    <a href="${pageContext.request.contextPath}/eventDetailfront/${eventList.newsblogsId}" target="_blank">Read More</a>
+                    <a href="${pageContext.request.contextPath}/eventDetailfront/${eventList.newsblogsId}/2" target="_blank">Read More</a>
                     </div>
                     </div>
                    </c:forEach>

@@ -93,7 +93,7 @@
 					<div class="row row-eq-height">
 					<div class="col-12 col-sm-12 col-lg-3"></div>
 					
-					<div class="col-12 col-sm-6 col-lg-2">
+					<!-- <div class="col-12 col-sm-6 col-lg-2">
                                 	  <input type="radio" name="radi" value="all" checked="" id="radio9">
                                     <label for="radio9"></label>
                                     <span>Individual</span>
@@ -113,7 +113,7 @@
                                     <label for="radio6"></label>
                                     <span>University</span>
                                 </div>
-                                
+                                 -->
                               
                              
                                 
@@ -344,14 +344,12 @@
 <p>
 					Already Member <a href="${pageContext.request.contextPath}/login">Login</a>
 				</p>
-					</div>
+					
 				</form>
-
-
-				
+				</div>				
 			</div>
 		</div>
-	</div>
+	
 	<div class="col-12 col-sm-12 col-lg-3"></div>
 
 

@@ -116,7 +116,7 @@
 					<span><i class="icon-calendar"></i> <strong>Date:</strong>  ${dateEvent}</span>
 					<span><i class="icon-man-user"></i> <strong>Contact Person:</strong>  ${event.eventContactPerson}</span>
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong> +91  ${event.eventContactNumber}</span><br> </p>
-                      <c:if test="${value==1}">
+                      <c:if test="${typeId==2}">
                     	<c:if test="${event.exInt2==1}">
                     		<form class="form-horizontal"
 										action="${pageContext.request.contextPath}/submtEventAppliedForm"
@@ -129,7 +129,7 @@
 																			<input type="file" name="pagePdf" id="pagePdf"
 																				class="form-control" data-parsley-minlength="2" required
 																				accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-																		<p>Please upload .xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip</p>
+																	<p>Please upload .doc, .docx, .pptx,.pdf and .xlsx only</p>
 																		</div>
 																			<input type="hidden" name="newsblogsId" value="${event.newsblogsId}">
 																			
@@ -137,32 +137,18 @@
 																	</div>
 								
                <!--      <span><i class="icon-download-2"></i> <strong>Download Attachment:</strong> <a href="#">Event Detail</a></span> -->
-              						
-																			
-																	
-																		
-																
-                    </form>
+                      </form>
                     </c:if>
                     
-                   </c:if>
+                 
                       	<c:if test="${event.exInt2==0}">
                     <a href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}" class="btn button apply">Apply</a>
                   </c:if>
+                    </c:if>
                     </div>
                     </div>
-                    
-                    
-    
-                    
-                    
-                    
-                    
-                    
-            </div>
-            
-            
-        </div>
+       	  </div>
+          </div>
     </div>
  
 	

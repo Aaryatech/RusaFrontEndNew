@@ -141,7 +141,10 @@
                             </form>
                             
 					<p>
-						Need an account? <a href="${pageContext.request.contextPath}/registration">Create account</a>
+						Need an account? <a href="${pageContext.request.contextPath}/registration">Create account</a> &nbsp &nbsp &nbsp
+				 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+				 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+						<a href="${pageContext.request.contextPath}/forgetPass">Forgot Password</a>
 					</p>
 
 				</div>

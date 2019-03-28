@@ -203,7 +203,7 @@
                                             </c:otherwise>
                                             </c:choose>
                                            
-                                            <td><a href="${pageContext.request.contextPath}/eventDetail/${previous.newsblogsId}">Detail</a></td>
+                                            <td><a href="${pageContext.request.contextPath}/eventDetail/${previous.newsblogsId}/${typeId}">Detail</a></td>
                                           
                                         </tr>
                                         </c:forEach>

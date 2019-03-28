@@ -166,7 +166,7 @@
                                           	<td>${count.index+1}</td>
                                             <td>${upcoming.heading}</td>
                                             <td>${upcoming.eventDateFrom}</td>
-                                            <td><a href="${pageContext.request.contextPath}/eventDetail/${upcoming.newsblogsId}">Detail</a></td>
+                                            <td><a href="${pageContext.request.contextPath}/eventDetail/${upcoming.newsblogsId}/${typeId}">Detail</a></td>
                                                </tr>
                                             </c:forEach>
                                        

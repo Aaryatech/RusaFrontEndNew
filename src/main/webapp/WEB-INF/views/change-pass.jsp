@@ -91,6 +91,32 @@
 		$('#log_btn').removeAttr('disabled');
 	}
 </script>
+<script type="text/javascript">
+function checkPassword(form) { 
+    password1 = form.newPass.value; 
+    password2 = form.confirmPass.value; 
+
+    // If password not entered 
+    if (password1 == '') 
+        alert ("Please enter Password"); 
+          
+    // If confirm password not entered 
+    else if (password2 == '') 
+        alert ("Please enter confirm password"); 
+          
+    // If Not same return False.     
+    else if (password1 != password2) { 
+        alert ("\nPassword did not match: Please try again...") 
+        return false; 
+    } 
+
+    // If same return True. 
+    else{ 
+        alert("Password Match: Welcome to GeeksforGeeks!") 
+        return true; 
+    } 
+} 
+</script>
 
 </head>
 <body>
@@ -113,46 +139,6 @@
    
 		</div>
 	</div>
-	<!-- <div class="login"> 
-    <div class="container" id="main-content">
-        	
-        <div class="row row-eq-height">
-       
-        	<div class="col-12 col-sm-12 col-lg-3"></div>
-			
-          	<div class="col-12 col-sm-12 col-lg-6">
-            	<div class="login-box">
-            	<div class="login-header">
-            		<h5>Login</h5>
-                    <p>Login to access your profile</p>
-            	</div>
-                
-                            <form method="post" action="" name="login_form">  
-                            <label>User Name</label>
-                            <input type="text" class="form-control" name="" placeholder="User Name">
-                            
-                            <label>Password</label>
-                            <input type="text" class="form-control" name="" placeholder="Password">
-                                                    
-                            <div class="clearfix"></div>
-                            <p>
-                            <button type="button" id="log-btn" class="button login-btn">Login</button>
-                            </p>
-                            
-                            </form>
-                            <p>Need an account? <a href="#">Create your account</a></p>
-            </div>
-			</div>
-            	
-        	<div class="col-12 col-sm-12 col-lg-3"></div>
-			
-            
-            
-        </div>
-    </div>
-</div>
- -->
-
 
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
@@ -197,12 +183,12 @@
 					</ul>
 				</div>
 			</div>
-
+<!-- onchange="getCheck()"  -->
 			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
 				<h2>Change Password</h2>
 
 				<form method="post"
-					action="${pageContext.request.contextPath}/changePassword"
+					action="${pageContext.request.contextPath}/changePassword" onSubmit = "return checkPassword(this)"
 					name="login_form">
 					<div class="row row-eq-height">
 
@@ -230,7 +216,7 @@
 
 						<div class="col-12 col-sm-12 col-lg-12">
 							<input type="submit" id="log_btn" value="Submit"
-								class="button login-btn" onchange="Validate()" />
+								class="button login-btn"  />
 							  <!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
 						</div>

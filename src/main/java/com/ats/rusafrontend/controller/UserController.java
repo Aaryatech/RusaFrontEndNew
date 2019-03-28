@@ -466,6 +466,7 @@ public class UserController {
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				System.out.println("list_new: " + upcoming.toString());
 				model.addObject("upcoming", upcoming);
+				model.addObject("typeId", 2);
 			//	model.addObject("value", 0);
 				
 				// model.addObject("pageMetaData", pageMetaData);
@@ -509,6 +510,7 @@ public class UserController {
 				List<NewsDetails> previous = new ArrayList<NewsDetails>(Arrays.asList(previousList));
 				System.out.println("list_new: " + previous.toString());
 				model.addObject("previous", previous);
+				model.addObject("typeId", 1);
 				// model.addObject("pageMetaData", pageMetaData);
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 
@@ -522,7 +524,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-	public Info changePassword(HttpServletRequest request, HttpServletResponse response) {
+	public String changePassword(HttpServletRequest request, HttpServletResponse response) {
 
 		String newPass = request.getParameter("newPass");
 		System.out.println( "newPass : " + newPass );
@@ -549,7 +551,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		return info;
+		return "redirect:/changePass";
 	}
 
 	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
@@ -622,44 +624,34 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)
-	public ModelAndView forgetPassword(HttpServletRequest request, HttpServletResponse response) {
+	public String forgetPassword(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
 
 		String userName = request.getParameter("userName");
-		//String password = request.getParameter("password");
-		ModelAndView mav = new ModelAndView("login");
+		String mobileNumber = request.getParameter("phone");
+	
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("userName", userName);
-			//map.add("password", password);
+			map.add("email", userName);
+			map.add("mobileNumber", mobileNumber);
 
-			Registration verify = rest.postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
-			if (verify.isError() == false) {
-				mav = new ModelAndView("content/dashboard");
-				System.out.println("Login :" + verify.getRegId());
-				session.setAttribute("UserDetail", verify.getRegId());
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-
-				map1.add("langId", 1);
-				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
-						List.class);
-				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
-				System.out.println("list_new: " + upcoming.toString());
-				mav.addObject("upcoming", upcoming);
-				// model.addObject("pageMetaData", pageMetaData);
-				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+			Registration verify = rest.postForObject(Constant.url + "/forgetPassword", map, Registration.class);
+			if (verify.isError() == false) {			
+			//	System.out.println("Login :" + verify.getRegId());
+				//session.setAttribute("UserDetail", verify.getRegId());
+				
 			} else {
-				mav = new ModelAndView("login");
-				System.out.println("Invalid login credentials");
-				mav.addObject("msg", "Invalid login");
+				
+				System.out.println("Invalid credentials");
+				
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
-		return mav;
+		return "redirect:/login";
 	}
 
 }

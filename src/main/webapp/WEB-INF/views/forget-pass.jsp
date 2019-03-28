@@ -128,12 +128,13 @@
 				<div class="col-12 col-sm-12 col-lg-6">
 
                             <form method="post" action="${pageContext.request.contextPath}/forgetPassword" name="login_form">  
-                            <label>User Name</label>
-                            <input type="text" class="form-control" name="userName" placeholder="Email-Id">
+                            <label>Email-Id</label>
+                            <input type="email" class="form-control" name="userName" placeholder="Email-Id">
                             
-                          <!--   <label>Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Password">
-                                                     -->
+                            <label>Mobile Number</label>
+                            <input type="text" class="form-control" name="phone" pattern="[7-9]{1}[0-9]{9}"
+									maxlength="10" placeholder="Mobile Number">
+                                                  
                             <div class="clearfix"></div>
                             <p>
                             <button type="submit" id="log-btn" value="submit" class="button login-btn">Submit</button>
@@ -141,7 +142,7 @@
                             </form>
                             
 					<p>
-						Need an account? <a href="${pageContext.request.contextPath}/login">Login</a>
+						Login to access account? <a href="${pageContext.request.contextPath}/login">Login</a>
 					</p>
 
 				</div>
