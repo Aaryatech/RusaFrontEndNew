@@ -328,16 +328,16 @@
 	<div class="container main-content">
 		<div class="row bottom-section">
 			<c:if test="${setting[2].isActive==1}">
-				<div class="col-12 col-sm-3 col-lg-3">
+				<div class="col-12 col-sm-4 col-lg-4">
 					<div class="twitter border-box bootom-box">${setting[2].keyValues}</div>
 				</div>
 			</c:if>
 			<c:if test="${setting[3].isActive==1}">
-				<div class="col-12 col-sm-3 col-lg-3">
+				<div class="col-12 col-sm-4 col-lg-4">
 					<div class="twitter border-box bootom-box">${setting[3].keyValues}</div>
 				</div>
 			</c:if>
-			<div class="col-12 col-sm-6 col-lg-6">
+			<div class="col-12 col-sm-4 col-lg-4">
 				<div class="border-box bootom-box">
 					<div class="btn-group">
 						<!--  <button class="btn btn-primary button btn-calendar prev" data-calendar-nav="prev">< Prev </button> -->
