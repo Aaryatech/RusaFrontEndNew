@@ -2,6 +2,7 @@ package com.ats.rusafrontend.controller;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
-
+ 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.model.*;
 
@@ -137,6 +138,116 @@ public class CmsController {
 				SearchData searchData = rest.postForObject(Constant.url + "/serchWordFromTable", map, SearchData.class);
 				model.addObject("searchData", searchData);
 				//System.out.println(searchData);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/imgGallary", method = RequestMethod.GET)
+	public ModelAndView imgGallary(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("content/imageGallary");
+		try {
+
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "imgGallary");
+			
+			String slugname= new String();
+			
+			
+			try {
+				
+				slugname= request.getParameter("name") ;
+				 
+			}catch(Exception e) {
+				
+				slugname="rusa-181";
+				
+			}
+			  
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				 model.addObject("maintainance", maintainance);
+			}else {
+				
+				
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("sectionId", 15); 
+				GetCategory[] category = rest.postForObject(Constant.url + "/getAllCatIdBySectionId", map,
+						GetCategory[].class); 
+				List<GetCategory> categoryList = new ArrayList<GetCategory>(Arrays.asList(category));
+				model.addObject("rusaList", categoryList);
+				
+				 
+				if(slugname==null) {
+					slugname="rusa-181";
+				}
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", slugname); 
+				System.out.println(map);
+				PageContent pageContent = rest.postForObject(Constant.url + "/getImages", map,
+						PageContent.class);  
+				model.addObject("imageList", pageContent);
+				model.addObject("gallryImageURL", Constant.getGallryImageURL);
+				model.addObject("slugname", slugname);
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/imgGallaryDetail/{slugname}/{catId}/{cateName}", method = RequestMethod.GET)
+	public ModelAndView imgGallaryDetail(@PathVariable("slugname") String slugname,@PathVariable("catId") int catId,
+			@PathVariable("cateName") String cateName,HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("content/imgGallaryDetail");
+		try {
+
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "imgGallary");
+		 
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				 model.addObject("maintainance", maintainance);
+			}else {
+				
+				
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("sectionId", 15); 
+				GetCategory[] category = rest.postForObject(Constant.url + "/getAllCatIdBySectionId", map,
+						GetCategory[].class); 
+				List<GetCategory> categoryList = new ArrayList<GetCategory>(Arrays.asList(category));
+				model.addObject("rusaList", categoryList);
+				
+				 
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", slugname); 
+				System.out.println(map);
+				PageContent pageContent = rest.postForObject(Constant.url + "/getImages", map,
+						PageContent.class);  
+				model.addObject("imageList", pageContent.getGallaryDetailList());
+				model.addObject("gallryImageURL", Constant.getGallryImageURL);
+				model.addObject("catId", catId);
+				model.addObject("cateName", cateName);
 			}
 			
 

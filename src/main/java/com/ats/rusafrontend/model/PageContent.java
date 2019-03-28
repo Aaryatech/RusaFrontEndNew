@@ -1,6 +1,7 @@
 package com.ats.rusafrontend.model;
 
-import java.util.List; 
+import java.util.List;
+ 
 public class PageContent {
 	
 	private int pageId;
@@ -15,6 +16,8 @@ public class PageContent {
 	List<NewsDetails> detailNewsList;
 	List<TestImonial> successList;
 	List<TestImonial> teamList;
+	
+	List<ImageListByCategory> imageListByCategory;
 	
 	public int getPageId() {
 		return pageId;
@@ -91,13 +94,19 @@ public class PageContent {
 	public void setTeamList(List<TestImonial> teamList) {
 		this.teamList = teamList;
 	}
+	public List<ImageListByCategory> getImageListByCategory() {
+		return imageListByCategory;
+	}
+	public void setImageListByCategory(List<ImageListByCategory> imageListByCategory) {
+		this.imageListByCategory = imageListByCategory;
+	}
 	@Override
 	public String toString() {
 		return "PageContent [pageId=" + pageId + ", pageName=" + pageName + ", slugName=" + slugName + ", sectioinId="
 				+ sectioinId + ", cmsContentList=" + cmsContentList + ", faqContentList=" + faqContentList
 				+ ", documentUploadList=" + documentUploadList + ", testImonialList=" + testImonialList
 				+ ", gallaryDetailList=" + gallaryDetailList + ", detailNewsList=" + detailNewsList + ", successList="
-				+ successList + ", teamList=" + teamList + "]";
+				+ successList + ", teamList=" + teamList + ", imageListByCategory=" + imageListByCategory + "]";
 	}
 	
 
