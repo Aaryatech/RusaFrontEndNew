@@ -4,14 +4,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 
-
+<Style>
+.headerlogo img{
+max-height: 64px;
+max-width: 369px; overflow: hidden;
+}
+</Style>
 <c:url var="checkMaintainance" value="/checkMaintainance" />
 <div class="top-menu" id="top-menu">
 	<div>
 		<div class="navbar navbar-expand-md menusats"><%--  --%>
-			<div class="container">
+			<div class="container headerlogo">
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><img
-					src="${logoUrl}${logo.logoMain}" alt=""></a>
+					src="${logoUrl}${logo.logoMain}" alt="" class="websitelogo"></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarsExample01" aria-controls="navbarsExample01"
 					aria-expanded="false" aria-label="Toggle navigation">
