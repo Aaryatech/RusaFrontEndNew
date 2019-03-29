@@ -79,7 +79,7 @@ public class UserController {
 
 			Registration verify = rest.postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
 			if (verify.isError() == false) {
-				mav = new ModelAndView("content/dashboard");
+				mav = new ModelAndView("content/upcoming-dashboard");
 				System.out.println("Login :" + verify.getRegId());
 				session.setAttribute("UserDetail", verify.getRegId());
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
@@ -92,6 +92,7 @@ public class UserController {
 				mav.addObject("upcoming", upcoming);
 				// model.addObject("pageMetaData", pageMetaData);
 				mav.addObject("typeId", 2);
+				mav.addObject("msg", "Login Successful");
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 			} else {
 				mav = new ModelAndView("login");
@@ -119,6 +120,7 @@ public class UserController {
 			map.add("regId", userDetail); 
 			Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 			model.addObject("editReg", editReg);
+			session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -420,7 +422,8 @@ public class UserController {
 
 					if (res != null) {
 
-						mav = new ModelAndView("content/eventList");
+						mav = new ModelAndView("event-detail");
+						//mav.addObject("",);
 						mav.addObject("msg", "Successfully Registed Event");
 					}
 				} else {
@@ -432,6 +435,7 @@ public class UserController {
 			} else {
 				System.out.println("User Id: " + userDetail);
 				mav = new ModelAndView("login");
+				mav.addObject("msg", "Please Login ");
 			}
 
 		} catch (Exception e) {
@@ -575,7 +579,12 @@ public class UserController {
 		HttpSession session = request.getSession();
 		try {
 			
-			//int userDetail = (int) session.getAttribute("UserDetail");
+			int userDetail = (int) session.getAttribute("UserDetail");
+			System.out.println("userDetail : "+userDetail);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("regId", userDetail); 
+			Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+			model.addObject("editReg", editReg);
 
 		} catch (Exception e) {
 			e.printStackTrace();

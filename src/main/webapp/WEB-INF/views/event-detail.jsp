@@ -102,17 +102,26 @@
         
        <div class="col-12 col-sm-3 col-lg-3">
  	
-				<div class="leftColm">
-                    <div class="profile-section">
+			<div class="leftColm">
+                   <div class="profile-section">
                         <div class="upload-photo">
+                       <c:if test="${not empty editReg.imageName}">
                             <div class="dashboard-profile-img">
-  	                          <img id="blah" src="images/no-img.jpg" alt="" />
+  	                          <img id="blah" src="${sessionScope.gallryImageURL}${editReg.imageName}" alt="" />
                             </div>	
+                            </c:if>
                         
                             <div class="fileUpload btn">
                                 <div class="user-name">${editReg.name}</div>
-                                <input type="file" class="upload" id="imgInp" />
-                                <span>Update Picture</span>
+                                	<%-- <form class="dropzone" id="myForm"
+										action="${pageContext.request.contextPath}/uploadProfilePhoto"
+										method="post" enctype="multipart/form-data">
+										<input name="isImage" value="1" type="hidden" />
+									
+											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
+								   </form>  <span>Update Picture</span> --%>
+                               <!--  <input type="file" class="upload" id="imgInp" /> -->
+                              
                             </div>	
                         </div>
                         
@@ -127,7 +136,7 @@
                             </li>
 
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/myProfile">My Profile</a>
                             </li>
  
                             <li>
@@ -142,7 +151,16 @@
                         </ul>
                 </div>
             </div>
+            
+        
          	<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
+         	
+            <div class="col-lg-12">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Success : </strong> abc</div>
+        	                                       </div> 
+           
                     <div class="row">
                     	<c:if test="${not empty event.featuredImage}">
                     <div class="col-12 col-sm-6 col-lg-6">  

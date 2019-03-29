@@ -75,7 +75,7 @@
     </div>
 	<div class="bridcrumb">
     	<div class="container">
-        	<a href="/">Home</a> > <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
+        	<a href="${pageContext.request.contextPath}/">Home</a> > <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
         	
               <a href="${pageContext.request.contextPath}/logout" class="last-update" style="margin:left=100px;">Logout <span class="glyphicon glyphicon-log-out"></span></a>
     <!-- 
@@ -94,17 +94,25 @@
         	<div class="col-12 col-sm-3 col-lg-3">
             	
 				
-				<div class="leftColm">
-                    <div class="profile-section">
+			<div class="leftColm">
+                   <div class="profile-section">
                         <div class="upload-photo">
-                        <c:if test="${not empty editReg.imageName}">
+                       <c:if test="${not empty editReg.imageName}">
                             <div class="dashboard-profile-img">
   	                          <img id="blah" src="${sessionScope.gallryImageURL}${editReg.imageName}" alt="" />
                             </div>	
-                        </c:if>
+                            </c:if>
+                        
                             <div class="fileUpload btn">
                                 <div class="user-name">${editReg.name}</div>
-                                <input type="file" class="upload" id="imgInp" />
+                                	<form class="dropzone" id="myForm"
+										action="${pageContext.request.contextPath}/uploadProfilePhoto"
+										method="post" enctype="multipart/form-data">
+										<input name="isImage" value="1" type="hidden" />
+									
+											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
+								   </form>
+                               <!--  <input type="file" class="upload" id="imgInp" /> -->
                                 <span>Update Picture</span>
                             </div>	
                         </div>
@@ -120,7 +128,7 @@
                             </li>
 
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/myProfile">My Profile</a>
                             </li>
  
                             <li>

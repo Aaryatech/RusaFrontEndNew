@@ -123,6 +123,7 @@
 					<h5>Login</h5>
 					<p>Login to access your profile</p>
 				</div>
+				<p>${msg}</p>
 				<div class="col-12 col-sm-12 col-lg-3"></div>
 
 				<div class="col-12 col-sm-12 col-lg-6">

@@ -86,7 +86,7 @@
         	<div class="col-12 col-sm-3 col-lg-3">
             	
 					
-				<div class="leftColm">
+					<div class="leftColm">
                     <div class="profile-section">
                         <div class="upload-photo">
                             <div class="dashboard-profile-img">
@@ -95,8 +95,15 @@
                         
                             <div class="fileUpload btn">
                                 <div class="user-name">${editReg.name}</div>
-                                <input type="file" class="upload" id="imgInp" />
-                                <span>Update Picture</span>
+                                	<%-- <form class="dropzone" id="myForm"
+										action="${pageContext.request.contextPath}/uploadProfilePhoto"
+										method="post" enctype="multipart/form-data">
+										<input name="isImage" value="1" type="hidden" />
+									
+											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
+								   </form>  <span>Update Picture</span> --%>
+                               <!--  <input type="file" class="upload" id="imgInp" /> -->
+                                
                             </div>	
                         </div>
                         
@@ -111,7 +118,7 @@
                             </li>
 
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/myProfile">My Profile</a>
                             </li>
  
                             <li>

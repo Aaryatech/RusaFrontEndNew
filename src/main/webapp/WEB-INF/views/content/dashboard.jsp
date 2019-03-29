@@ -79,7 +79,7 @@
     </div>
 	<div class="bridcrumb">
     	<div class="container">
-        	<a href="/">Home</a> > <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
+        	<a href="${pageContext.request.contextPath}/">Home</a> > <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
          
                <a href="${pageContext.request.contextPath}/logout" class="last-update" style="margin:left=100px;">Logout <span class="glyphicon glyphicon-log-out"></span></a>
       <!--   <a href="#">
@@ -96,6 +96,7 @@
                 <strong>Success : </strong> ${sessionScope.successMsg}</div>
         	                                       </div> 
             </c:if> --%>
+        <%--    <p> ${msg}</p> --%>
     <div class="container" id="main-content">
         <div class="row row-eq-height">
         	<div class="col-12 col-sm-3 col-lg-3">
@@ -132,7 +133,7 @@
                             </li>
 
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/myProfile">My Profile</a>
                             </li>
  
                             <li>

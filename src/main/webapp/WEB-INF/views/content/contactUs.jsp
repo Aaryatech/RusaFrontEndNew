@@ -52,8 +52,9 @@ msg-error {
 	padding: .2em;
 	width: 19em;
 }
+
 .other-gov-site-home {
-    margin-top: 43px;
+	margin-top: 43px;
 }
 </style>
 
@@ -65,80 +66,44 @@ msg-error {
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>${pageContent.pageName}</h1>
+			<h1>Contact Us</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<%-- <a href="index.html">Home</a> > <a href="${pageContext.request.contextPath}/info/${pageContent.slugName}">${pageContent.pageName}</a> > --%>
+			 <a href="${pageContext.request.contextPath}/">Home</a> >  <a href="${pageContext.request.contextPath}/ContactUs">Contact Us</a>
 		</div>
 	</div>
 
 	<div class="container main-content" id="main-content">
-		<div class="row">
-			<div class="col-12 col-sm-12 col-lg-12 ">
-				<iframe class="map"
-					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.577356534086!2d72.89611441799786!3d19.149897683543813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86e528cb077%3A0xbeb39574202b3e0e!2sRusa+International!5e0!3m2!1sen!2sin!4v1549861576012"
-					style="border: 0" allowfullscreen="" width="100%" height="350"
-					frameborder="0"></iframe>
-			</div>
-		</div>
+
 		<div class="row row-eq-height">
 
 
-			<%-- <div class="col-12 col-sm-3 col-lg-3">
-				<div class="leftColm">
-					<c:forEach items="${sessionScope.menuList.sectionlist}"
-						var="menuList">
-						<c:if test="${menuList.sectionId==pageMetaData.sectionId}">
-							<h3>${menuList.sectionName}</h3>
-							<ul class="menu">
-
-								<c:forEach items="${sessionScope.menuList.categoryList}"
-									var="catList">
-									<!-- class="active" -->
-
-									<c:if test="${catList.sectionId==pageMetaData.sectionId}">
-										<li><c:choose>
-												<c:when test="${not empty catList.externalUrl}">
-													<a  onclick="checkMaintainance()"
-														title="${catList.catName}"
-														href="${pageContext.request.contextPath}/${catList.externalUrl}">${catList.catName}<span
-														class="caret"></span></a>
-												</c:when>
-												<c:otherwise>
-													<a   onclick="checkMaintainance()"
-														title="${catList.catName}"
-														href="${pageContext.request.contextPath}/info/${catList.slugName}">${catList.catName}<span
-														class="caret"></span></a>
-												</c:otherwise>
-											</c:choose> </li>
-									</c:if>
-
-								</c:forEach>
-							</ul>
-
-						</c:if>
-					</c:forEach>
-
-				</div>
-			</div> --%>
+	
 			<div class="col-12 col-sm-12 col-lg-12 right-Colm">
 
 
 
 				<div class="row row-eq-height">
 
-					<div class="col-12 col-sm-12 col-lg-12 right-Colm">
-
-
+					<div class="col-12 col-sm-12 col-lg-6">
 						<h2>Rashtriya Uchchatar Shiksha Abhiyan</h2>
-
 						<p>
 							Unit No.7, 19th floor, Center No. 1, World Trade Centre, Cuffe
 							Parade,<br> Colaba, Mumbai-400005.<br> Phone: 011 -
 							49725600
 						</p>
+						<iframe class="map"
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.577356534086!2d72.89611441799786!3d19.149897683543813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86e528cb077%3A0xbeb39574202b3e0e!2sRusa+International!5e0!3m2!1sen!2sin!4v1549861576012"
+							style="border: 0" allowfullscreen="" width="100%" height="540"
+							frameborder="0"></iframe>
+					</div>
+
+					<div class="col-12 col-sm-12 col-lg-6">
+
+
+
 						<c:if test="${flag=='1'}">
 							<div style="color: red;">Please Verify ReCaptcha</div>
 						</c:if>
@@ -155,25 +120,29 @@ msg-error {
 						<form action="${pageContext.request.contextPath}/insertContactUs"
 							onsubmit="return confirm('Do you really want to submit the form?');"
 							method="post">
+							<p>
+								<strong>Please send your message</strong>
+							</p>
+							<div class="row">
+								<div class="col-12 col-sm-6 col-lg-3">
+									<input type="radio" name="formType" value="all" checked=""
+										id="radio1"> <label for="radio1"></label> <span>Query</span>
+								</div>
 
-							<div class="form-check-inline">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="formType" value="Query" checked>
-									Query
-								</label>
+
+								<div class="col-12 col-sm-6 col-lg-3">
+									<input type="radio" name="formType" value="all" checked=""
+										id="radio2"> <label for="radio2"></label> <span>Feedback</span>
+								</div>
+
+
+
+								<div class="col-12 col-sm-6 col-lg-3">
+									<input type="radio" name="formType" value="all" checked=""
+										id="radio3"> <label for="radio3"></label> <span>Message</span>
+								</div>
 							</div>
-							<div class="form-check-inline">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="formType" value="Feedback">
-									Feedback
-								</label>
-							</div>
-							<div class="form-check-inline disabled">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="formType" value="Message">
-									Message
-								</label>
-							</div>
+
 							<br> <label>Your Name</label> <input type="text"
 								class="form-control" name="name" id="name" placeholder="Name"
 								required> <label>Your Email</label> <input type="email"
@@ -188,11 +157,14 @@ msg-error {
 							<br> <span class="msg-error error"></span>
 							<div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>
 							</br>
-							<button class="btn" id="btn-validate" type="submit">
+							<button class="btn button view-more send" id="btn-validate"
+								type="submit">
 								<span>Send</span>
 							</button>
 						</form>
 					</div>
+
+
 				</div>
 			</div>
 		</div>

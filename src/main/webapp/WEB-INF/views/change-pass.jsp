@@ -146,29 +146,32 @@ function checkPassword(form) {
 
 					
 				<div class="leftColm">
-                    <div class="profile-section">
+                     <div class="profile-section">
                         <div class="upload-photo">
+                       <c:if test="${not empty editReg.imageName}">
                             <div class="dashboard-profile-img">
-  	                          <img id="blah" src="images/no-img.jpg" alt="" />
+  	                          <img id="blah" src="${sessionScope.gallryImageURL}${editReg.imageName}" alt="" />
                             </div>	
+                            </c:if>
                         
                             <div class="fileUpload btn">
                                 <div class="user-name">${editReg.name}</div>
-                                	<form class="dropzone" id="myForm"
+                               <%--  	<form class="dropzone" id="myForm"
 										action="${pageContext.request.contextPath}/uploadProfilePhoto"
 										method="post" enctype="multipart/form-data">
 										<input name="isImage" value="1" type="hidden" />
 									
 											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
-								   </form>
+								   </form>   <span>Update Picture</span>--%>
                                <!--  <input type="file" class="upload" id="imgInp" /> -->
-                                <span>Update Picture</span>
+                             
                             </div>	
                         </div>
                         
                         
                         <div class="clearfix"></div>
                     </div>
+                    
                     
                     <div class="clearfix"></div>
                         <ul class="menu">
@@ -177,7 +180,7 @@ function checkPassword(form) {
                             </li>
 
                             <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/myProfile">My Profile</a>
                             </li>
  
                             <li>

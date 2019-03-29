@@ -136,7 +136,7 @@
             </div>
             
             <div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
-            	<h2>My Profile <c:if test="${editReg.userType==1}">
+            	<h2>Edit Profile <c:if test="${editReg.userType==1}">
             	(Individual)
 							</c:if>
 								<c:if test="${editReg.userType==2}">
@@ -145,13 +145,18 @@
 									<c:if test="${editReg.userType==3}">
 									(University)
 									</c:if>
-								<a href="${pageContext.request.contextPath}/editProfile" class="edit-profile">Edit Profile</a></h2>
+							</h2>
 
 				<form
 					action="${pageContext.request.contextPath}/editUserRegistration"
 					onsubmit="return confirm('Do you really want to submit the form?');"
 					method="post" name="login_form">
-				
+					<div class="row row-eq-height">
+					<div class="col-12 col-sm-12 col-lg-3"></div>
+					                          
+                             
+                                
+					<div class="col-12 col-sm-12 col-lg-3"></div>
 					
                           
                                 <div class="col-12 col-sm-12 col-lg-3"></div>      
@@ -167,10 +172,13 @@
 								</c:if>
 									<c:if test="${editReg.userType==3}">
 										<option value="${editReg.userType}">University</option>
-									</c:if>								
+									</c:if>
+								
+						
+							
 							</select>
 							</div> --%>
-						
+							</div>
 							<input type="hidden" name="userType" value="${editReg.userType}" onchange="showForm()" >
 							
 						
@@ -182,13 +190,13 @@
 								<label>Email-ID <span class="text-danger">*</span></label> 
 								<input
 									type="email" class="form-control" name="email" value="${editReg.emails}"
-									placeholder="Email" id="email" readonly> 
+									placeholder="Email" id="email"> 
 					</div>
 					
 							<div class="col-12 col-sm-12 col-lg-6">		
 									<label>Alternate
 									Email-ID</label> <input type="email" class="form-control" value="${editReg.alternateEmail}"
-									name="altEmail" placeholder="Alternate Email" id="altEmail" readonly>
+									name="altEmail" placeholder="Alternate Email" id="altEmail">
 					</div>
 					
 					<div class="col-12 col-sm-12 col-lg-6">
@@ -206,21 +214,21 @@
 									
 									<input type="text"
 									class="form-control" name="mobile" pattern="[7-9]{1}[0-9]{9}"
-									maxlength="10" placeholder="Mobile No." id="mobile"  value="${editReg.mobileNumber}" readonly>  
+									maxlength="10" placeholder="Mobile No." id="mobile"  value="${editReg.mobileNumber}"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">
 									<label>College Name <span
 									class="text-danger">*</span></label> <input type="text"
 									class="form-control" name="collegeName" value="${editReg.collegeName}"
-									placeholder="College Name" id="collegeName" readonly> 
+									placeholder="College Name" id="collegeName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">
 									<label>University
 									Affiliated <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="university"  value="${editReg.unversityName}"
-									placeholder="University Affiliated" id="uniAff" readonly> 
+									placeholder="University Affiliated" id="uniAff"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">
@@ -228,7 +236,7 @@
 									<label>Name
 									of Department <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="dept" value="${editReg.departmentName}"
-									placeholder="Name of Department" id="depatment" readonly> 
+									placeholder="Name of Department" id="depatment"> 
 									</div>
 									
 									
@@ -237,14 +245,14 @@
 									<label>Date
 									Of Birth <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="dob" value="${dobDate}"
-									placeholder="Date Of Birth" id="dob" readonly> 
+									placeholder="Date Of Birth" id="dob"> 
 									</div>
 									
 								<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Authorized
 									Name <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="authour" value="${editReg.authorizedPerson}"
-									placeholder="Name of Authorized" id="authour" readonly>
+									placeholder="Name of Authorized" id="authour">
 							</div>
 							</div>
 				
@@ -255,14 +263,14 @@
 								
 								<input
 									type="email" class="form-control" name="collegeEmail" value="${editReg.emails}"
-									placeholder="Email" id="collegeEmail" readonly> 
+									placeholder="Email" id="collegeEmail"> 
 									</div>
 									
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Alternate
 									Email-ID</label> <input type="email" class="form-control" value="${editReg.alternateEmail}"
-									name="altEmail" placeholder="Alternate Email" id="altEmail" readonly>
+									name="altEmail" placeholder="Alternate Email" id="altEmail">
 							</div>
 							
 							
@@ -270,33 +278,33 @@
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
 									type="text" class="form-control" name="collegeMobile"  value="${editReg.mobileNumber}"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="collegeNo" maxlength="10" readonly>
+									placeholder="Mobile No." id="collegeNo" maxlength="10">
 							</div>
 					
 					<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Institute Name <span class="text-danger">*</span></label>
 								<input type="text" class="form-control" name="institute" value="${editReg.name}"
-									placeholder="Institute Name" id="instituteName" readonly> 
+									placeholder="Institute Name" id="instituteName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>AISHE
 									Code</label> <input type="text" class="form-control" name="aisheName" value="${editReg.aisheCode}"
-									placeholder="AISHE Code" id="aisheName" readonly> 
+									placeholder="AISHE Code" id="aisheName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>University
 									Affiliated <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="univ" value="${editReg.unversityName}" 
-									placeholder="University Affiliated" id="univ" readonly> 
+									placeholder="University Affiliated" id="univ"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Name
 									of Department <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="dept" value="${editReg.departmentName}"
-									placeholder="Name of Department" id="collegeDept" readonly> 
+									placeholder="Name of Department" id="collegeDept"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
@@ -304,14 +312,14 @@
 									<span class="text-danger">*</span>
 								</label> <input type="text" class="form-control"
 									name="designationCollege" placeholder="Designation of Person" value="${editReg.designationName}"
-									id="designationCollege" readonly> 
+									id="designationCollege"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Authorized Name
 									<span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="collegeAuthour" value="${editReg.authorizedPerson}"
-									placeholder="Name of Authorized" id="cAuthour" readonly>
+									placeholder="Name of Authorized" id="cAuthour">
 									</div>
 							</div>
 						
@@ -320,40 +328,40 @@
 								<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Email-ID <span class="text-danger">*</span></label> <input
 									type="email" class="form-control" name="uniEmail" value="${editReg.emails}"
-									placeholder="Email" id="uniEmail" readonly> 
+									placeholder="Email" id="uniEmail"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Alternate
 									Email-ID</label> <input type="email" class="form-control" value="${editReg.alternateEmail}"
-									name="altEmail" placeholder="Alternate Email" id="altEmail" readonly>
+									name="altEmail" placeholder="Alternate Email" id="altEmail">
 							</div>
 
 								<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
 									type="text" class="form-control" name="uniMobile"  value="${editReg.mobileNumber}"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="uniNo" maxlength="10" readonly> 
+									placeholder="Mobile No." id="uniNo" maxlength="10"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>AISHE
 									Code</label> <input type="text" class="form-control" name="aisheName" value="${editReg.aisheCode}"
-									placeholder="AISHE Code" id="aisheName" readonly> 
+									placeholder="AISHE Code" id="aisheName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>University
 									Name <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="uniName" value="${editReg.unversityName}" 
-									placeholder="University Name" id="uniName" readonly> 
+									placeholder="University Name" id="uniName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Name
 									of Department <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="uniDept" value="${editReg.departmentName}"
-									placeholder="Name of Department" id="uniDept" readonly> 
+									placeholder="Name of Department" id="uniDept"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
@@ -369,17 +377,17 @@
 									 <label>Authorized
 									Name <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="uniAuthour" value="${editReg.authorizedPerson}"
-									placeholder="Name of Authorized" id="uniAuthour" readonly>
+									placeholder="Name of Authorized" id="uniAuthour">
 								</div>
 							
 						</div>
 						<div class="clearfix"></div>
 
-						<!-- <div class="col-12 col-sm-12 col-lg-12">
+						<div class="col-12 col-sm-12 col-lg-12">
 							<p>
 								<button type="submit" id="log-btn" class="button login-btn">Save</button>
 							</p>
-						</div> -->
+						</div>
 
 					
 				</form>             	

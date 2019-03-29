@@ -54,8 +54,8 @@ public class loginController {
 	 * return model; }
 	 */
 	
-	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
-	public ModelAndView editProfile(HttpServletRequest request,	HttpServletResponse response) {
+	@RequestMapping(value = "/myProfile", method = RequestMethod.GET)
+	public ModelAndView myProfile(HttpServletRequest request,	HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView("edit-profile");
@@ -64,7 +64,9 @@ public class loginController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("regId", userDetail); 
 			editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+			String dobDate = DateConvertor.convertToDMY(editReg.getDob());
 			model.addObject("editReg", editReg);
+			model.addObject("dobDate", dobDate);
 			model.addObject("isEdit",1);
 		//	model.addObject("url", Constant.bannerImageURL);
 
@@ -74,6 +76,30 @@ public class loginController {
 
 		return model;
 	}
+	
+	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
+	public ModelAndView editProfile(HttpServletRequest request,	HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+		ModelAndView model = new ModelAndView("edit-my-profile");
+		try {
+			int userDetail = (int) session.getAttribute("UserDetail");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("regId", userDetail); 
+			editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+			String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+			model.addObject("editReg", editReg);
+			model.addObject("dobDate", dobDate);
+			model.addObject("isEdit",1);
+		//	model.addObject("url", Constant.bannerImageURL);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
 	@RequestMapping(value = "/editUserRegistration", method = RequestMethod.POST)
 	public String editUserRegistration(HttpServletRequest request, HttpServletResponse response) {
 
@@ -290,7 +316,7 @@ public class loginController {
 				OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyOtpResponse", map, OtpResponse.class);
 
 				if (verifyOtp.isError() == false) {
-					mav = new ModelAndView("edit-profile");
+					mav = new ModelAndView("edit-my-profile");
 					
 					//mav.addObject("userDetail",userDetail);
 				} else {
@@ -320,7 +346,7 @@ public class loginController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("uuid", uuid);
 
-			OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyResendOtpResponse", map,
+			OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyEditResendOtp", map,
 					OtpResponse.class);
 
 			if (verifyOtp.isError() == false) {
@@ -328,7 +354,7 @@ public class loginController {
 				mav.addObject("uuid", uuid);
 				System.out.println(" update ragistration table new :");
 			} else {
-				mav = new ModelAndView("edit-profile");
+				mav = new ModelAndView("edit-my-profile");
 			}
 
 			mav.addObject("uuid", uuid);

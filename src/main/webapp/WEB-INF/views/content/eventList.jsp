@@ -91,7 +91,7 @@
     </div>
 	<div class="bridcrumb">
     	<div class="container">
-        	<a href="/">Home</a> > <a href="${pageContext.request.contextPath}/eventList">Events</a> >
+        	<a href="${pageContext.request.contextPath}/">Home</a> > <a href="${pageContext.request.contextPath}/eventList">Events</a> >
         </div>
     </div> 
  <div class="container" id="main-content">

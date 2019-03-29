@@ -22,6 +22,8 @@
             <a href="javascript:void(0);" title="Text Size: Decrease" id="btn-decrease" class="decrease">A-</a>
             <a href="javascript:void(0);" title="Text Size: Normal" id="btn-orig" class="reset">A</a>
             <a href="javascript:void(0);" title="Text Size: Increase" id="btn-increase" class="increase">A+</a></li>
+            <li class="login-re"><a href="${pageContext.request.contextPath}/dashboard">My Account</a>
+              </li>
         	<li class="login-re"><a href="${pageContext.request.contextPath}/logout">Logout</a>
               </li>
                 <li><a href="${pageContext.request.contextPath}/changeLangage/1-/">English</a>
