@@ -1,15 +1,21 @@
 package com.ats.rusafrontend.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -17,11 +23,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
+import com.ats.rusafrontend.commen.VpsImageUpload;
+import com.ats.rusafrontend.model.ContentImages;
 import com.ats.rusafrontend.model.OtpResponse;
 import com.ats.rusafrontend.model.Registration;
 
@@ -328,5 +339,82 @@ public class loginController {
 
 		return mav;
 	}
+	@RequestMapping(value = "/uploadProfilePhoto", method = RequestMethod.POST)
+	public ModelAndView uploadProfilePhoto(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request, HttpServletResponse response) {
 
+		ModelAndView mav=new ModelAndView("content/upcoming-dashboard");
+		HttpSession session = request.getSession();
+		try {
+			System.out.println("Profile Photo");
+			 
+		   Date date = new Date();
+		   SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		   String imageName = new String(); 
+			imageName =  dateTimeInGMT.format(date)+"_"+file.get(0).getOriginalFilename();
+			VpsImageUpload upload = new VpsImageUpload();
+			 
+			int userDetail = (int) session.getAttribute("UserDetail");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("regId", userDetail);
+			 try {
+				// upload.saveUploadedImge(file.get(0), Constant.otherDocURL,imageName,Constant.values,0,0,0,0,0);
+					editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				
+				 upload.saveUploadedImge(file.get(0), Constant.gallryImageURL,imageName,Constant.DocValues,0,0,0,0,0);
+				 editReg.setImageName(imageName);
+				 System.out.println("Data :"+editReg.toString());				 
+				 Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,  Registration.class);
+				 
+				}catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				} 
+			 session.setAttribute("gallryImageURL", Constant.gallryImageURL);
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	/*
+	 * @RequestMapping(value = "/uploadPhoto", method = RequestMethod.GET) public
+	 * ModelAndView uploadPhoto( HttpServletRequest request, HttpServletResponse
+	 * response) {
+	 * 
+	 * ModelAndView model = new ModelAndView("change-pass"); try {
+	 * 
+	 * List<ContentImages> list = new ArrayList<ContentImages>();
+	 * 
+	 * File folder = new File(Constant.otherDocURL); File[] listOfFiles =
+	 * folder.listFiles();
+	 * 
+	 * for (int i = 0; i < listOfFiles.length; i++) { if (listOfFiles[i].isFile()) {
+	 * 
+	 * 
+	 * ContentImages contentImages = new ContentImages();
+	 * contentImages.setImage(listOfFiles[i].getName());
+	 * contentImages.setThumb(Constant.getOtherDocURL+listOfFiles[i].getName());
+	 * 
+	 * contentImages.setLastmod(String.valueOf(listOfFiles[i].lastModified()));
+	 * contentImages.setType(Files.probeContentType(listOfFiles[i].toPath()));
+	 * 
+	 * 
+	 * DiskFileItem fileItem = new DiskFileItem(listOfFiles[i].getName(),
+	 * contentImages.getType(), false, listOfFiles[i].getName(), (int)
+	 * listOfFiles[i].length() , listOfFiles[i].getParentFile());
+	 * fileItem.getOutputStream(); MultipartFile multipartFile = new
+	 * CommonsMultipartFile(fileItem);
+	 * contentImages.setSize(FilenameUtils.getExtension(multipartFile.
+	 * getOriginalFilename()));
+	 * 
+	 * 
+	 * list.add(contentImages); } } System.out.println(list);
+	 * 
+	 * model.addObject("list", list);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); }
+	 * 
+	 * return model; }
+	 */
+	
 }

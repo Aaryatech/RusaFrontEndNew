@@ -133,7 +133,7 @@ function checkPassword(form) {
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/changePass">Login</a> >
+				href="${pageContext.request.contextPath}/changePass">Change Password</a> >
 				
 				    <a href="${pageContext.request.contextPath}/logout" class="last-update" style="margin:left=100px;">Logout <span class="glyphicon glyphicon-log-out"></span></a>
    
@@ -154,12 +154,12 @@ function checkPassword(form) {
                         
                             <div class="fileUpload btn">
                                 <div class="user-name">${editReg.name}</div>
-                                	<form class="dropzone"
-										action="${pageContext.request.contextPath}/uploadOtherMediaProccess"
+                                	<form class="dropzone" id="myForm"
+										action="${pageContext.request.contextPath}/uploadProfilePhoto"
 										method="post" enctype="multipart/form-data">
 										<input name="isImage" value="1" type="hidden" />
 									
-											<input name="file" class="upload" type="file" multiple />
+											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
 								   </form>
                                <!--  <input type="file" class="upload" id="imgInp" /> -->
                                 <span>Update Picture</span>
@@ -271,6 +271,13 @@ function checkPassword(form) {
 			}
 
 			);
+
+		}
+		
+		function upImage() {
+
+	alert("hi");
+	document.getElementById("myForm").submit();
 
 		}
 	</script>

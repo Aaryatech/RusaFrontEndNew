@@ -104,12 +104,19 @@
                     <div class="profile-section">
                         <div class="upload-photo">
                             <div class="dashboard-profile-img">
-  	                          <img id="blah" src="images/no-img.jpg" alt="" />
+  	                          <img id="blah" src="${sessionScope.gallryImageURL}${editReg.imageName}" alt="" />
                             </div>	
                         
                             <div class="fileUpload btn">
                                 <div class="user-name">${editReg.name}</div>
-                                <input type="file" class="upload" id="imgInp" />
+                                	<form class="dropzone" id="myForm"
+										action="${pageContext.request.contextPath}/uploadProfilePhoto"
+										method="post" enctype="multipart/form-data">
+										<input name="isImage" value="1" type="hidden" />
+									
+											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
+								   </form>
+                               <!--  <input type="file" class="upload" id="imgInp" /> -->
                                 <span>Update Picture</span>
                             </div>	
                         </div>
@@ -219,7 +226,14 @@
         </div>
     </div>
  <br>
-	
+	<script>
+	function upImage() {
+
+		//alert("hi");
+		document.getElementById("myForm").submit();
+
+			}
+	</script>
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

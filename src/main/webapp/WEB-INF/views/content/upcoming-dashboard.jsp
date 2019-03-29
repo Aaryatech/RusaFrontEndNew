@@ -97,10 +97,11 @@
 				<div class="leftColm">
                     <div class="profile-section">
                         <div class="upload-photo">
+                        <c:if test="${not empty editReg.imageName}">
                             <div class="dashboard-profile-img">
-  	                          <img id="blah" src="images/no-img.jpg" alt="" />
+  	                          <img id="blah" src="${sessionScope.gallryImageURL}${editReg.imageName}" alt="" />
                             </div>	
-                        
+                        </c:if>
                             <div class="fileUpload btn">
                                 <div class="user-name">${editReg.name}</div>
                                 <input type="file" class="upload" id="imgInp" />

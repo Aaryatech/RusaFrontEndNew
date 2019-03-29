@@ -70,13 +70,13 @@
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>REGISTRATION</h1>
+			<h1>Edit Profile</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/registration">Login</a> >
+				href="${pageContext.request.contextPath}/editProfile">Edit Profile</a> >
 		</div>
 	</div>
  
