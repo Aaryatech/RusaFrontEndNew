@@ -127,7 +127,7 @@
 							<label ">Select Type</label> 
 							<select id="userType" name="userType" class="form-control" onchange="showForm()"
 								required>
-								<option>Select Type</option>
+							
 								<option value="1">Individual</option>
 								<option value="2">Colleges</option>
 								<option value="3">University</option>

@@ -91,6 +91,7 @@ public class UserController {
 				System.out.println("list_new: " + upcoming.toString());
 				mav.addObject("upcoming", upcoming);
 				// model.addObject("pageMetaData", pageMetaData);
+				mav.addObject("typeId", 2);
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 			} else {
 				mav = new ModelAndView("login");
@@ -108,13 +109,16 @@ public class UserController {
 	public ModelAndView dashboard(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("content/upcoming-dashboard");
-
 		HttpSession session = request.getSession();
 
-		try {
-			Registration UserDetail = (Registration) session.getAttribute("UserDetail");
-			System.err.println("User Id: " + UserDetail.getRegId());
-
+		try {			
+		
+			int userDetail = (int) session.getAttribute("UserDetail");
+			System.out.println("userDetail : "+userDetail);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("regId", userDetail); 
+			Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+			model.addObject("editReg", editReg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -260,7 +264,7 @@ public class UserController {
 
 		String userOtp = request.getParameter("userOtp");
 		String uuid = request.getParameter("uuid");
-
+		//int type = Integer.parseInt(request.getParameter("type")); 
 		System.out.println("UUID :" + uuid + ", UserOTP :" + userOtp);
 
 		ModelAndView mav = new ModelAndView("otp");
@@ -443,6 +447,7 @@ public class UserController {
 		ModelAndView model = new ModelAndView("content/upcoming-dashboard");
 		try {
 
+			int userDetail = (int) session.getAttribute("UserDetail");
 			// session.setAttribute("mapping", "upcomingEvents");
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
@@ -458,12 +463,17 @@ public class UserController {
 				 * rest.postForObject(Constant.url + "/getPageMetaData", map,
 				 * PageMetaData.class);
 				 */
+				
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
 				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
 						List.class);
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("regId", userDetail); 
+				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				model.addObject("editReg", editReg);
 				System.out.println("list_new: " + upcoming.toString());
 				model.addObject("upcoming", upcoming);
 				model.addObject("typeId", 2);
@@ -546,6 +556,10 @@ public class UserController {
 				info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
 				mav = new ModelAndView("change-pass");
 				System.out.println(info.toString());
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("regId", userDetail); 
+				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
+				mav.addObject("editReg", editReg);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

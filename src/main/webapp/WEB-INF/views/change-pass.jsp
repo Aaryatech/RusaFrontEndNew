@@ -112,7 +112,7 @@ function checkPassword(form) {
 
     // If same return True. 
     else{ 
-        alert("Password Match: Welcome to GeeksforGeeks!") 
+        alert("Password Match") 
         return true; 
     } 
 } 
@@ -144,33 +144,42 @@ function checkPassword(form) {
 		<div class="row row-eq-height">
 			<div class="col-12 col-sm-3 col-lg-3">
 
+					
 				<div class="leftColm">
-					<div class="profile-section">
-						<div class="upload-photo">
-							<!--    <div class="dashboard-profile-img">
+                    <div class="profile-section">
+                        <div class="upload-photo">
+                            <div class="dashboard-profile-img">
   	                          <img id="blah" src="images/no-img.jpg" alt="" />
-                            </div>	 -->
-
-							<div class="fileUpload btn">
-								<div class="user-name">Welcome</div>
-
-							</div>
-						</div>
-
-
-						<div class="clearfix"></div>
-					</div>
-
-					<div class="clearfix"></div>
-					<ul class="menu">
-						    <li>
+                            </div>	
+                        
+                            <div class="fileUpload btn">
+                                <div class="user-name">${editReg.name}</div>
+                                	<form class="dropzone"
+										action="${pageContext.request.contextPath}/uploadOtherMediaProccess"
+										method="post" enctype="multipart/form-data">
+										<input name="isImage" value="1" type="hidden" />
+									
+											<input name="file" class="upload" type="file" multiple />
+								   </form>
+                               <!--  <input type="file" class="upload" id="imgInp" /> -->
+                                <span>Update Picture</span>
+                            </div>	
+                        </div>
+                        
+                        
+                        <div class="clearfix"></div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                        <ul class="menu">
+                            <li>
 	                            <a onclick="checkMaintainance()" title="Dashboard" href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
                             </li>
 
-                           <%--  <li>
+                            <li>
 	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
                             </li>
- --%>
+ 
                             <li>
 	                            <a onclick="checkMaintainance()" title="Change Password" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                             </li>
@@ -180,8 +189,8 @@ function checkPassword(form) {
                               <li>
 	                            <a onclick="checkMaintainance()" title="Logout" href="${pageContext.request.contextPath}/logout">Logout</a>
                             </li>
-					</ul>
-				</div>
+                        </ul>
+                </div>
 			</div>
 <!-- onchange="getCheck()"  -->
 			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">

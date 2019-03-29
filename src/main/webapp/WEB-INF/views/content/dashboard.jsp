@@ -103,14 +103,14 @@
 				<div class="leftColm">
                     <div class="profile-section">
                         <div class="upload-photo">
-                         <!--    <div class="dashboard-profile-img">
+                            <div class="dashboard-profile-img">
   	                          <img id="blah" src="images/no-img.jpg" alt="" />
-                            </div> -->	
+                            </div>	
                         
                             <div class="fileUpload btn">
-                                <div class="user-name">Welcome</div>
-                          
-                              <!--  <a href="my-profile-edit.html"> <span>Update Picture</span></a> -->
+                                <div class="user-name">${editReg.name}</div>
+                                <input type="file" class="upload" id="imgInp" />
+                                <span>Update Picture</span>
                             </div>	
                         </div>
                         
@@ -124,10 +124,10 @@
 	                            <a onclick="checkMaintainance()" title="Dashboard" href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
                             </li>
 
-                           <%--  <li>
+                            <li>
 	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/editProfile">My Profile</a>
                             </li>
- --%>
+ 
                             <li>
 	                            <a onclick="checkMaintainance()" title="Change Password" href="${pageContext.request.contextPath}/changePass">Change Password</a>
                             </li>
@@ -174,7 +174,7 @@
                                           	<td>${count.index+1}</td>
                                             <td>${upcoming.heading}</td>
                                             <td>${upcoming.eventDateFrom}</td>
-                                            <td><a href="${pageContext.request.contextPath}/eventDetail/${upcoming.newsblogsId}">Detail</a></td>
+                                            <td><a href="${pageContext.request.contextPath}/eventDetail/${upcoming.newsblogsId}/${typeId}">Detail</a></td>
                                                </tr>
                                             </c:forEach>
                                        

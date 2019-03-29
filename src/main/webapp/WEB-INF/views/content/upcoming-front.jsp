@@ -112,7 +112,7 @@
                 </div>
             </div> -->
  					<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
- 					<c:forEach items="${event}" var="eventList"	varStatus="count">
+ 					<c:forEach items="${upcoming}" var="eventList"	varStatus="count">
 						
                     <div class="row">
                     			<c:if test="${not empty eventList.featuredImage}">
