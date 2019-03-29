@@ -4,7 +4,9 @@ public class ImageListByCategory {
 	 
 	private int galleryDetailsId; 
 	private int galleryCatId; 
+	private int totalCount;
 	private int picCount; 
+	private int videoCount;
 	private String cateName; 
 	private String fileName;
 	public int getGalleryDetailsId() {
@@ -37,12 +39,25 @@ public class ImageListByCategory {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+	public int getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+	public int getVideoCount() {
+		return videoCount;
+	}
+	public void setVideoCount(int videoCount) {
+		this.videoCount = videoCount;
+	}
 	@Override
 	public String toString() {
 		return "ImageListByCategory [galleryDetailsId=" + galleryDetailsId + ", galleryCatId=" + galleryCatId
-				+ ", picCount=" + picCount + ", cateName=" + cateName + ", fileName=" + fileName + "]";
+				+ ", totalCount=" + totalCount + ", picCount=" + picCount + ", videoCount=" + videoCount + ", cateName="
+				+ cateName + ", fileName=" + fileName + "]";
 	}
-	
+	 
 	
 
 }

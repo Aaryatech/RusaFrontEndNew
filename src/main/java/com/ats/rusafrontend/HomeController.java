@@ -233,7 +233,7 @@ public class HomeController {
 
 				String ret = new String();
 
-				if (ArrayUtils.contains(arry, "info")) {
+				/*if (ArrayUtils.contains(arry, "info")) {
 					ret = "info" + "/";
 					for (int i = 1; i < arry.length; i++) {
 
@@ -258,9 +258,9 @@ public class HomeController {
 
 					}
 				}
-				System.out.println("ret" + ret);
+				System.out.println("ret" + ret);*/
 
-				return "redirect:/" + ret;
+				return "redirect:/" + session.getAttribute("mapping");
 
 			} catch (Exception e) {
 				return "redirect:/";
@@ -305,19 +305,9 @@ public class HomeController {
 
 			try {
 
-				String ret = new String();
-				ret = arry[1] + "/";
-				for (int i = 2; i < arry.length; i++) {
+				 
 
-					if (i == 2) {
-						ret = ret + arry[i];
-					} else {
-						ret = ret + "-" + arry[i];
-					}
-
-				}
-
-				return "redirect:/" + ret;
+				return "redirect:/" + session.getAttribute("mapping");
 			} catch (Exception e) {
 				return "redirect:/";
 			}

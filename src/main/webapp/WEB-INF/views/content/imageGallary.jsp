@@ -91,7 +91,8 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <%-- <a
+			<a href="${pageContext.request.contextPath}/">Home</a>  
+			<%-- <a
 				href="${pageContext.request.contextPath}/eventList">Events</a> > --%>
 		</div>
 	</div>
@@ -187,22 +188,52 @@
 
 						<div class="row">
 
-							<c:forEach items="${imageList.imageListByCategory}" var="imageList" varStatus="count">
+							<c:forEach items="${imageList.imageListByCategory}"
+								var="imageList" varStatus="count">
 
 								<div class="col-12 col-sm-3 col-lg-3">
-									<a href="${pageContext.request.contextPath}/imgGallaryDetail/${slugname}/${imageList.galleryCatId}/${imageList.cateName}"
-										class="thumbnail thumbnail-listing" target="_blank"> <img
-										src="${gallryImageURL}thumbnail${imageList.fileName}"
-										alt="Rusa 2" title="Rusa 2" class="img-responsive">
-										<p class="thumbnail-heading">
-											${imageList.cateName} <br> <span><i
-												class="icon-frame-landscape icon"></i> (${imageList.picCount})</span>  
-										</p>
-									</a>
+
+									<c:choose>
+										<c:when
+											test="${imageList.picCount==0 && imageList.videoCount>0}">
+											
+											<a
+												href="${pageContext.request.contextPath}/imgGallaryDetail/${slugname}/${imageList.galleryCatId}/${imageList.cateName}"
+												class="thumbnail thumbnail-listing" target="_blank"> <img
+												src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+												alt="Rusa 2" title="Rusa 2" class="img-responsive" width="261" height="190">
+												<p class="thumbnail-heading">
+													${imageList.cateName} <br> <span><i
+														class="icon-frame-landscape icon"></i>
+														(${imageList.picCount})</span> <span><i
+														class="icon-video-camera icon"></i>
+														(${imageList.videoCount})</span>
+												</p>
+											</a>
+
+										</c:when>
+										<c:otherwise>
+											<a
+												href="${pageContext.request.contextPath}/imgGallaryDetail/${slugname}/${imageList.galleryCatId}/${imageList.cateName}"
+												class="thumbnail thumbnail-listing" target="_blank"> <img
+												src="${gallryImageURL}thumbnail${imageList.fileName}"
+												alt="Rusa 2" title="Rusa 2" class="img-responsive">
+												<p class="thumbnail-heading">
+													${imageList.cateName} <br> <span><i
+														class="icon-frame-landscape icon"></i>
+														(${imageList.picCount})</span> <span><i
+														class="icon-video-camera icon"></i>
+														(${imageList.videoCount})</span>
+												</p>
+											</a>
+
+										</c:otherwise>
+									</c:choose>
+
 								</div>
 
 							</c:forEach>
- 
+
 						</div>
 					</div>
 

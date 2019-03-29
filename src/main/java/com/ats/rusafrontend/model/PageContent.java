@@ -19,6 +19,8 @@ public class PageContent {
 	
 	List<ImageListByCategory> imageListByCategory;
 	
+	List<GallaryDetail> videoList; 
+	
 	public int getPageId() {
 		return pageId;
 	}
@@ -100,13 +102,20 @@ public class PageContent {
 	public void setImageListByCategory(List<ImageListByCategory> imageListByCategory) {
 		this.imageListByCategory = imageListByCategory;
 	}
+	public List<GallaryDetail> getVideoList() {
+		return videoList;
+	}
+	public void setVideoList(List<GallaryDetail> videoList) {
+		this.videoList = videoList;
+	}
 	@Override
 	public String toString() {
 		return "PageContent [pageId=" + pageId + ", pageName=" + pageName + ", slugName=" + slugName + ", sectioinId="
 				+ sectioinId + ", cmsContentList=" + cmsContentList + ", faqContentList=" + faqContentList
 				+ ", documentUploadList=" + documentUploadList + ", testImonialList=" + testImonialList
 				+ ", gallaryDetailList=" + gallaryDetailList + ", detailNewsList=" + detailNewsList + ", successList="
-				+ successList + ", teamList=" + teamList + ", imageListByCategory=" + imageListByCategory + "]";
+				+ successList + ", teamList=" + teamList + ", imageListByCategory=" + imageListByCategory
+				+ ", videoList=" + videoList + "]";
 	}
 	
 

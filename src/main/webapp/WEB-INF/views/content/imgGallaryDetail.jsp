@@ -91,8 +91,9 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <%-- <a
-				href="${pageContext.request.contextPath}/eventList">Events</a> > --%>
+			<a href="${pageContext.request.contextPath}/">Home</a> >
+			  <a
+				href="${pageContext.request.contextPath}/imgGallary">Back</a>    
 		</div>
 	</div>
 	<div class="container" id="main-content">
@@ -104,29 +105,26 @@
 				<div class="main-tab">
 					<ul class="nav nav-tabs rusa-gallery-tab" role="tablist">
 
-						 
-									<li class="nav-item"><a class="nav-link"
-										href="#">${cateName}</a></li>
 
-								 
-					 
+						<li class="nav-item"><a class="nav-link" href="#">${cateName}</a></li>
+
+
+
 					</ul>
 				</div>
 				<div class="tab-content">
-					<div id="eventone" class="tab-pane active show">
-						<!-- 
-						<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
-							role="tablist">
-							<li class="nav-item"><a class="nav-link active"
-								data-toggle="tab" href="#task-bar"><span
-									class="icon-frame-landscape icon"></span> Photos</a></li>
 
-							<li class="nav-item"><a class="nav-link" data-toggle="tab"
-								href="#pre-made"><span class="icon-video-camera icon"></span>
-									Videos</a></li>
-						</ul> -->
+					<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
+						role="tablist">
+						<li class="nav-item"><a class="nav-link active show"
+							data-toggle="tab" href="#photos"><span
+								class="icon-frame-landscape icon"></span> Photos</a></li>
 
-
+						<li class="nav-item"><a class="nav-link" data-toggle="tab"
+							href="#videos"><span class="icon-video-camera icon"></span>
+								Videos</a></li>
+					</ul>
+					<div id="photos" class="tab-pane active show">
 						<div class="row">
 
 							<c:forEach items="${imageList}" var="imageList" varStatus="count">
@@ -141,6 +139,20 @@
 											</div> <img src="${gallryImageURL}thumbnail${imageList.fileName}"
 											alt="Rusa 2" title="Rusa 2" class="img-responsive">
 										</a> <span class="thumbnail-heading">${imageList.title}</span>
+									</div>
+								</c:if>
+							</c:forEach>
+
+						</div>
+					</div>
+
+					<div id="videos" class="tab-pane ">
+						<div class="row">
+
+							<c:forEach items="${videoList}" var="videoList" varStatus="count">
+								<c:if test="${videoList.galleryCatId==catId}">
+									<div class="col-12 col-sm-3 col-lg-3">
+										${videoList.fileName}
 									</div>
 								</c:if>
 							</c:forEach>
