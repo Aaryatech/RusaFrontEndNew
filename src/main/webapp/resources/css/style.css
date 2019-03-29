@@ -794,7 +794,7 @@ margin-bottom:0px;
 	font-size: 23px;
 	color: #2d2d2d;
 	font-weight: 600;
-	margin: 0px 0px 30px 0px;
+	margin: 0px 0px 10px 0px;
 	border-bottom: 1px dashed #ccc;
     padding-bottom: 10px;
 }
@@ -1069,17 +1069,19 @@ textarea {
 
 .send{
 	background-color:#fe9500;
+	margin:0px 0px 0px 0px;
+	
 }
 .send:hover{
 	background-color:#f18d00;
 }
-.send span::after {
+/* .send span::after {
     font-family: 'icomoon' !important;
     content: "\e90f";
     font-size: 15px;
     color: #21316c;
     margin: 0px 0px 0px 24px;
-}
+}*/
 .nav-item.dropdown:hover .dropdown-menu {
 	display: block;
 }
@@ -1476,8 +1478,8 @@ select {
 }
 
 .login-btn{
-	background-color:#fe9500;
-	border:0px;
+	background-color:#fe9500 !important;
+	border:0px !important;
 	margin:30px auto 0;
 	display: block;
 }
@@ -1924,6 +1926,7 @@ box-shadow: 0 .10rem .20rem rgba(189, 195, 199, 0.9);
 	background-color: #21316c;
 	color: #FFF !important;
 	margin: 0 !important;
+	height: 50px;
 }
 .border-box-search{
     background-color: #FFF;

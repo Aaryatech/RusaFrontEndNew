@@ -2448,7 +2448,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	float: left;
 	min-width: 10rem;
 	padding:0rem 0 0 -1px;
-	margin:.125rem 0 0;
+	margin:-0.1rem 0 0;
 	font-size: 13px;
 	    font-weight: 600;
 	color: #212529;
@@ -3104,7 +3104,7 @@ padding:.5rem 1rem
 .nav-item:hover .nav-link{
 	text-decoration: none;
 	color:#FFF;
-	font-weight:600;
+	
 }
 .nav-item:hover .dropdown-toggle:after {
     border-left-color:#FFF;
