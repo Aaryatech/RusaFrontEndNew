@@ -156,10 +156,21 @@
          	<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
          	
             <div class="col-lg-12">
+            
+           <c:if test="${sessionScope.success != null}">
+    		         
+			<div class="col-12 col-sm-12 col-lg-12 ">
     		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                <strong>Success : </strong> abc</div>
-        	                                       </div> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong>Success : </strong> ${success}</div>
+       </div></c:if>
+       <c:if test="${sessionScope.errorMsg != null}">
+     	<div class="col-12 col-sm-12 col-lg-12 ">
+    		          <div class="alert alert-danger ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong>Error : </strong> ${errorMsg}</div>
+       </div>
+       </c:if>
            
                     <div class="row">
                     	<c:if test="${not empty event.featuredImage}">
@@ -172,7 +183,7 @@
                     <strong>${event.heading}</strong><br>
 					<p>${event.descriptions}</p>                    
 					<p><span><i class="icon-location"></i> <strong>Venue:</strong>  ${event.eventLocation}</span> 
-					<span><i class="icon-calendar"></i> <strong>Date:</strong>  ${dateEvent}</span>
+					<span><i class="icon-calendar"></i> <strong>Date:</strong>  ${event.eventDateFrom}</span>
 					<span><i class="icon-man-user"></i> <strong>Contact Person:</strong>  ${event.eventContactPerson}</span>
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong> +91  ${event.eventContactNumber}</span><br> </p>
                   <c:if test="${typeId==2}">
@@ -207,19 +218,9 @@
                   
                   </c:if>
                     </div>
-                    </div>
-                    
-                    
-    
-                    
-                    
-                    
-                    
-                    
-            </div>
-            
-            
-        </div>
+                 </div>
+             </div>
+          </div>
     </div>
  
 	

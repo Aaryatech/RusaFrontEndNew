@@ -353,7 +353,27 @@ public class Registration {
 				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
 				+ ", emailCode=" + emailCode + ", emailVerified=" + emailVerified + ", smsCode=" + smsCode
 				+ ", smsVerified=" + smsVerified + ", editByAdminuserId=" + editByAdminuserId + ", msg=" + msg
-				+ ", isError=" + isError + "]";
+				+ ", isError=" + isError + ", getRegId()=" + getRegId() + ", getUserUuid()=" + getUserUuid()
+				+ ", getUserType()=" + getUserType() + ", getEmails()=" + getEmails() + ", getAlternateEmail()="
+				+ getAlternateEmail() + ", getUserPassword()=" + getUserPassword() + ", getName()=" + getName()
+				+ ", getAisheCode()=" + getAisheCode() + ", getCollegeName()=" + getCollegeName()
+				+ ", getUnversityName()=" + getUnversityName() + ", getDesignationName()=" + getDesignationName()
+				+ ", getDepartmentName()=" + getDepartmentName() + ", getMobileNumber()=" + getMobileNumber()
+				+ ", getAuthorizedPerson()=" + getAuthorizedPerson() + ", getDob()=" + getDob() + ", getImageName()="
+				+ getImageName() + ", getTokenId()=" + getTokenId() + ", getRegisterVia()=" + getRegisterVia()
+				+ ", getIsActive()=" + getIsActive() + ", getDelStatus()=" + getDelStatus() + ", getAddDate()="
+				+ getAddDate() + ", getEditDate()=" + getEditDate() + ", getEditByUserId()=" + getEditByUserId()
+				+ ", getExInt1()=" + getExInt1() + ", getExInt2()=" + getExInt2() + ", getExVar1()=" + getExVar1()
+				+ ", getExVar2()=" + getExVar2() + ", getEmailCode()=" + getEmailCode() + ", getEmailVerified()="
+				+ getEmailVerified() + ", getSmsCode()=" + getSmsCode() + ", getSmsVerified()=" + getSmsVerified()
+				+ ", getEditByAdminuserId()=" + getEditByAdminuserId() + ", getMsg()=" + getMsg() + ", isError()="
+				+ isError() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
+	
+	
+	
+	
+	
 
 }

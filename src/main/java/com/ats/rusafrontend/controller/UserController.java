@@ -89,15 +89,21 @@ public class UserController {
 						List.class);
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				System.out.println("list_new: " + upcoming.toString());
+				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+				map2.add("regId",  verify.getRegId()); 
+				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
+				mav.addObject("editReg", editReg);
 				mav.addObject("upcoming", upcoming);
 				// model.addObject("pageMetaData", pageMetaData);
 				mav.addObject("typeId", 2);
-				mav.addObject("msg", "Login Successful");
+				session.setAttribute("successMsg", "Login Successful !");			
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 			} else {
 				mav = new ModelAndView("login");
 				System.out.println("Invalid login credentials");
-				mav.addObject("msg", "Invalid login");
+				
+				session.setAttribute("errorMsg", true);
+				session.setAttribute("errorMsg", "Invalid login credentials !");
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -119,7 +125,15 @@ public class UserController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("regId", userDetail); 
 			Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+			
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+			map1.add("langId", 1);
+			List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,List.class);
 			model.addObject("editReg", editReg);
+			System.out.println("list_new: " + upcoming.toString());
+			model.addObject("upcoming", upcoming);
+			model.addObject("typeId", 2);
 			session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 		} catch (Exception e) {
 			e.printStackTrace();
