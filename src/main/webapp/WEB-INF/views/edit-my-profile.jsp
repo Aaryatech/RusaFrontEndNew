@@ -96,13 +96,13 @@
                         
                             <div class="fileUpload btn">
                                 <div class="user-name">${editReg.name}</div>
-                               <%--  	<form class="dropzone" id="myForm"
+                                	<form class="dropzone" id="myForm"
 										action="${pageContext.request.contextPath}/uploadProfilePhoto"
 										method="post" enctype="multipart/form-data">
 										<input name="isImage" value="1" type="hidden" />
 									
 											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
-								   </form>   <span>Update Picture</span>--%>
+								   </form>   <span>Update Picture</span>
                                <!--  <input type="file" class="upload" id="imgInp" /> -->
                              
                             </div>	
@@ -151,35 +151,8 @@
 					action="${pageContext.request.contextPath}/editUserRegistration"
 					onsubmit="return confirm('Do you really want to submit the form?');"
 					method="post" name="login_form">
-					<div class="row row-eq-height">
-					<div class="col-12 col-sm-12 col-lg-3"></div>
-					                          
-                             
-                                
-					<div class="col-12 col-sm-12 col-lg-3"></div>
-					
-                          
-                                <div class="col-12 col-sm-12 col-lg-3"></div>      
-					<%-- 	<div class="col-12 col-sm-12 col-lg-6">
-							<label>Select Type</label> 
-							<select id="userType" name="userType"  class="form-control" onchange="showForm()"
-								required>
-							<c:if test="${editReg.userType==1}">
-								<option value="${editReg.userType}">Individual</option>
-							</c:if>
-								<c:if test="${editReg.userType==2}">
-									<option value="${editReg.userType}">Colleges</option>
-								</c:if>
-									<c:if test="${editReg.userType==3}">
-										<option value="${editReg.userType}">University</option>
-									</c:if>
-								
-						
-							
-							</select>
-							</div> --%>
-							</div>
-							<input type="hidden" name="userType" value="${editReg.userType}" onchange="showForm()" >
+				
+										<input type="hidden" name="userType" value="${editReg.userType}" onchange="showForm()" >
 							
 						
 					
@@ -481,6 +454,14 @@ function hideText() {
 	//alert("hii");
 	document.getElementById("college").style = "display:none"		
 	}
+	</script>
+		<script>
+	function upImage() {
+
+		//alert("hi");
+		document.getElementById("myForm").submit();
+
+			}
 	</script>
     <br>
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>

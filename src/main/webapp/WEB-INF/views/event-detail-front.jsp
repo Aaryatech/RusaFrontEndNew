@@ -4,6 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="today" class="java.util.Date" />
+<fmt:formatDate var="todayString" value="${today}" pattern="dd/MM/yyyy" />
+<fmt:formatDate var="dateString" value="${bean.date}" pattern="dd/MM/yyyy" />
+
 <%@ page session="true"%>
 <%
 	//allow access only if session exists
@@ -99,8 +104,10 @@
 
             <div class="container" id="main-content">
         <div class="row row-eq-height">
-        
+        <c:set var="today_date" value="<%=new java.util.Date()%>"/>
   
+  
+ 
          	<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
                     <div class="row">
                     	<c:if test="${not empty event.featuredImage}">
@@ -113,10 +120,12 @@
                     <strong>${event.heading}</strong><br>
 					<p>${event.descriptions}</p>                    
 					<p><span><i class="icon-location"></i> <strong>Venue:</strong>  ${event.eventLocation}</span> 
-					<span><i class="icon-calendar"></i> <strong>Date:</strong>  ${dateEvent}</span>
+					<span><i class="icon-calendar"></i> <strong>Date:</strong>  ${dateEvent} </span>
 					<span><i class="icon-man-user"></i> <strong>Contact Person:</strong>  ${event.eventContactPerson}</span>
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong> +91  ${event.eventContactNumber}</span><br> </p>
-                      <c:if test="${typeId==2}">
+                     
+                    
+                 	<c:if test="${dateEvent >= todayString}">
                     	<c:if test="${event.exInt2==1}">
                     		<form class="form-horizontal"
 										action="${pageContext.request.contextPath}/submtEventAppliedForm"
@@ -137,13 +146,13 @@
 																	</div>
 								
                <!--      <span><i class="icon-download-2"></i> <strong>Download Attachment:</strong> <a href="#">Event Detail</a></span> -->
-                      </form>
-                    </c:if>
+                      </form></c:if>
+                  
                     
                  
                       	<c:if test="${event.exInt2==0}">
                     <a href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}" class="btn button apply">Apply</a>
-                  </c:if>
+                  </c:if>  
                     </c:if>
                     </div>
                     </div>

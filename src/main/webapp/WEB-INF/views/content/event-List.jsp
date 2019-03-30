@@ -95,33 +95,71 @@
         	<a href="${pageContext.request.contextPath}/">Home</a> > <a href="${pageContext.request.contextPath}/eventList">Events</a> >
         </div>
     </div> 
- <div class="container" id="main-content">
+ 
+            <div class="container" id="main-content">
         <div class="row row-eq-height">
-        	<!-- <div class="col-12 col-sm-3 col-lg-3">
+        
+        		<div class="col-12 col-sm-3 col-lg-3">
+            	
 				<div class="leftColm">
-                	<h3>Gallery</h3>
-                    <ul class="menu">
-                    	<li><a href="about.html">About RUSA</a></li>
-                        <li><a href="rusa-structure.html" class="active">RUSA Structure</a></li>
-                        <li><a href="message-education-minister.html">Message from Education Minister</a></li>
-                        <li><a href="message-state-project-director.html">Message from State Project Director</a></li>
-                        <li><a href="rusa-achievements.html">RUSA Achievements</a></li>
-                        <li><a href="rusa-photo-gallery.html">RUSA Photo Gallery</a></li>
+                    <div class="profile-section">
+                        <div class="upload-photo">
+                            <div class="dashboard-profile-img">
+  	                          <img id="blah" src="${sessionScope.gallryImageURL}${editReg.imageName}" alt="" />
+                            </div>	
+                        
+                            <div class="fileUpload btn">
+                                <div class="user-name">${editReg.name}</div>
+                                <%-- 	<form class="dropzone" id="myForm"
+										action="${pageContext.request.contextPath}/uploadProfilePhoto"
+										method="post" enctype="multipart/form-data">
+										<input name="isImage" value="1" type="hidden" />
+									
+											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
+								   </form>
+                               <!--  <input type="file" class="upload" id="imgInp" /> -->
+                                <span>Update Picture</span> --%>
+                            </div>	
+                        </div>
+                        
+                        
+                        <div class="clearfix"></div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                        <ul class="menu">
+                            <li>
+	                            <a onclick="checkMaintainance()" title="Dashboard" href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
+                            </li>
 
-                	</ul>
+                            <li>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/myProfile">My Profile</a>
+                            </li>
+ 
+                            <li>
+	                            <a onclick="checkMaintainance()" title="Change Password" href="${pageContext.request.contextPath}/changePass">Change Password</a>
+                            </li>
+                          <%--     <li>
+	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/eventList">Event List</a>
+                            </li> --%>
+                              <li>
+	                            <a onclick="checkMaintainance()" title="Logout" href="${pageContext.request.contextPath}/logout">Logout</a>
+                            </li>
+                        </ul>
                 </div>
-            </div> -->
- 					<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
+          </div>
+            
+ 					<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
  					<c:forEach items="${event}" var="eventList"	varStatus="count">
 						
                     <div class="row">
                     			<c:if test="${not empty eventList.featuredImage}">
                     		
-                    <div class="col-12 col-sm-3 col-lg-3">
+                    <div class="col-12 col-sm-6 col-lg-6">
                     <img src="${sessionScope.gallryImageURL}${eventList.featuredImage}" alt="${eventList.heading}" title="${eventList.heading}" class="img-responsive thumbnail">	
                     </div>
                     </c:if>
-                    <div class="col-12 col-sm-9 col-lg-9">
+                    <div class="col-12 col-sm-12 col-lg-12">
                     <strong> ${eventList.heading}</strong><br>
                     <p> ${eventList.descriptions}</p>
                     <p><span><i class="icon-location"></i> <strong>Venue:</strong> ${eventList.eventLocation}</span> 
@@ -136,10 +174,9 @@
                  
             </div>
             
-            
+            </div>
         </div>
-    </div>
-	
+   
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

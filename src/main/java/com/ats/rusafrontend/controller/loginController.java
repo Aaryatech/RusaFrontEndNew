@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,9 +32,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
+import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.VpsImageUpload;
 import com.ats.rusafrontend.model.ContentImages;
+import com.ats.rusafrontend.model.Maintainance;
+import com.ats.rusafrontend.model.NewsDetails;
 import com.ats.rusafrontend.model.OtpResponse;
+import com.ats.rusafrontend.model.PageMetaData;
 import com.ats.rusafrontend.model.Registration;
 
 
@@ -267,6 +272,44 @@ public class loginController {
 		return redirect ;
 	}
 	
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public String changePassword(HttpServletRequest request, HttpServletResponse response) {
+
+		String newPass = request.getParameter("newPass");
+		System.out.println( "newPass : " + newPass );
+		ModelAndView mav= new ModelAndView("change-pass");
+		HttpSession session = request.getSession();
+		
+		Info info = new Info();
+		try {
+			int userDetail = (int) session.getAttribute("UserDetail");
+			if (newPass.equalsIgnoreCase("") || newPass == null) {
+				mav = new ModelAndView("change-pass");
+				mav.addObject("msg", "Invalid password");
+			} else {
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("regId",userDetail);
+				map.add("password", newPass);
+
+				info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
+				mav = new ModelAndView("change-pass");
+				System.out.println(info.toString());
+			
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("regId", userDetail); 
+				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
+				String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+				mav.addObject("editReg", editReg);
+				mav.addObject("dobDate", dobDate);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/changePass";
+	}
+	
 	@RequestMapping(value = "/editVerifyOtp/{uuid}", method = RequestMethod.GET)
 	public ModelAndView editVerifyOtp( @PathVariable("uuid") String uuid, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -366,9 +409,9 @@ public class loginController {
 		return mav;
 	}
 	@RequestMapping(value = "/uploadProfilePhoto", method = RequestMethod.POST)
-	public ModelAndView uploadProfilePhoto(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request, HttpServletResponse response) {
+	public String uploadProfilePhoto(@RequestParam("file") List<MultipartFile> file, HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView mav=new ModelAndView("content/upcoming-dashboard");
+		//ModelAndView mav=new ModelAndView("edit-my-profile");
 		HttpSession session = request.getSession();
 		try {
 			System.out.println("Profile Photo");
@@ -400,47 +443,57 @@ public class loginController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return mav;
+		return "redirect:/editProfile";
 	}
-	/*
-	 * @RequestMapping(value = "/uploadPhoto", method = RequestMethod.GET) public
-	 * ModelAndView uploadPhoto( HttpServletRequest request, HttpServletResponse
-	 * response) {
-	 * 
-	 * ModelAndView model = new ModelAndView("change-pass"); try {
-	 * 
-	 * List<ContentImages> list = new ArrayList<ContentImages>();
-	 * 
-	 * File folder = new File(Constant.otherDocURL); File[] listOfFiles =
-	 * folder.listFiles();
-	 * 
-	 * for (int i = 0; i < listOfFiles.length; i++) { if (listOfFiles[i].isFile()) {
-	 * 
-	 * 
-	 * ContentImages contentImages = new ContentImages();
-	 * contentImages.setImage(listOfFiles[i].getName());
-	 * contentImages.setThumb(Constant.getOtherDocURL+listOfFiles[i].getName());
-	 * 
-	 * contentImages.setLastmod(String.valueOf(listOfFiles[i].lastModified()));
-	 * contentImages.setType(Files.probeContentType(listOfFiles[i].toPath()));
-	 * 
-	 * 
-	 * DiskFileItem fileItem = new DiskFileItem(listOfFiles[i].getName(),
-	 * contentImages.getType(), false, listOfFiles[i].getName(), (int)
-	 * listOfFiles[i].length() , listOfFiles[i].getParentFile());
-	 * fileItem.getOutputStream(); MultipartFile multipartFile = new
-	 * CommonsMultipartFile(fileItem);
-	 * contentImages.setSize(FilenameUtils.getExtension(multipartFile.
-	 * getOriginalFilename()));
-	 * 
-	 * 
-	 * list.add(contentImages); } } System.out.println(list);
-	 * 
-	 * model.addObject("list", list);
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); }
-	 * 
-	 * return model; }
-	 */
-	
+	@RequestMapping(value = "/eventList", method = RequestMethod.GET)
+	public ModelAndView eventList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("content/event-List");
+		HttpSession session = request.getSession();
+		try {
+
+			
+			int userDetail = (int) session.getAttribute("UserDetail");
+			session.setAttribute("mapping", "eventList");
+			int langId = 1;
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "eventList");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("langId", langId);
+				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL", map1,
+						NewsDetails[].class);
+				List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
+				for (int i = 0; i < event.size(); i++) {
+					event.get(i).setEventDateFrom(DateConvertor.convertToDMY(event.get(i).getEventDateFrom()));
+
+				}
+				// model.addObject("event", event);
+			
+				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+				map2.add("regId", userDetail); 
+				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
+				String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+				model.addObject("editReg", editReg);
+				model.addObject("dobDate", dobDate);
+				model.addObject("event", event);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
 }

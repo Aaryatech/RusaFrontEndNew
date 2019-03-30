@@ -105,15 +105,15 @@
                         
                             <div class="fileUpload btn">
                                 <div class="user-name">${editReg.name}</div>
-                                	<form class="dropzone" id="myForm"
+                                	<%-- <form class="dropzone" id="myForm"
 										action="${pageContext.request.contextPath}/uploadProfilePhoto"
 										method="post" enctype="multipart/form-data">
 										<input name="isImage" value="1" type="hidden" />
 									
 											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
-								   </form>
+								   </form> --%>
                                <!--  <input type="file" class="upload" id="imgInp" /> -->
-                                <span>Update Picture</span>
+                               
                             </div>	
                         </div>
                         

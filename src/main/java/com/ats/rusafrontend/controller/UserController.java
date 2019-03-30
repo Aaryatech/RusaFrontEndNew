@@ -537,40 +537,7 @@ public class UserController {
 		return model;
 	}
 
-	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-	public String changePassword(HttpServletRequest request, HttpServletResponse response) {
-
-		String newPass = request.getParameter("newPass");
-		System.out.println( "newPass : " + newPass );
-		ModelAndView mav= new ModelAndView("change-pass");
-		HttpSession session = request.getSession();
-		
-		Info info = new Info();
-		try {
-			int userDetail = (int) session.getAttribute("UserDetail");
-			if (newPass.equalsIgnoreCase("") || newPass == null) {
-				mav = new ModelAndView("change-pass");
-				mav.addObject("msg", "Invalid password");
-			} else {
-
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("regId",userDetail);
-				map.add("password", newPass);
-
-				info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
-				mav = new ModelAndView("change-pass");
-				System.out.println(info.toString());
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-				map1.add("regId", userDetail); 
-				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
-				mav.addObject("editReg", editReg);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return "redirect:/changePass";
-	}
+	
 
 	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
 	public ModelAndView changePass(HttpServletRequest request, HttpServletResponse response) {
