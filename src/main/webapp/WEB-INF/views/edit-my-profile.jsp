@@ -136,6 +136,11 @@
             </div>
             
             <div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
+                <div class="col-lg-12">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Success : </strong> abc</div>
+        	                                       </div>
             	<h2>Edit Profile <c:if test="${editReg.userType==1}">
             	(Individual)
 							</c:if>

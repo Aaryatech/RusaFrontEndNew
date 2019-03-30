@@ -35,6 +35,7 @@ import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.VpsImageUpload;
 import com.ats.rusafrontend.model.ContentImages;
+import com.ats.rusafrontend.model.EventRegistration;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
 import com.ats.rusafrontend.model.OtpResponse;
@@ -496,4 +497,267 @@ public class loginController {
 
 		return model;
 	}
+	
+	@RequestMapping(value = "/eventDetail/{newsblogsId}/{typeId}", method = RequestMethod.GET)
+	public ModelAndView eventDetail(@PathVariable int newsblogsId, @PathVariable int typeId, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("event-detail");
+		HttpSession session = request.getSession();
+		try {
+			int userDetail = (int) session.getAttribute("UserDetail");
+		
+			session.setAttribute("mapping", "eventList");
+			int langId = 1;
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "eventList");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("langId", langId);
+
+				map1.add("newsblogsId", newsblogsId);
+				NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId", map1,
+						NewsDetails.class);
+
+				// List<NewsDetails> event = new
+				// ArrayList<NewsDetails>(Arrays.asList(eventList));
+				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+				map2.add("regId", userDetail); 
+				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
+				
+				model.addObject("editReg", editReg);
+				
+				String dateEvent = DateConvertor.convertToDMY(eventList.getEventDateFrom());
+				model.addObject("event", eventList);
+				model.addObject("dateEvent", dateEvent);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("typeId", typeId);
+
+				System.out.println("typeId :" + typeId);
+				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);				
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	@RequestMapping(value = "/applyEvent/{newsblogsId}", method = RequestMethod.GET)
+	public ModelAndView applyEvent(@PathVariable int newsblogsId, HttpServletRequest request,
+			HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		// Registration userDetail=null;
+		int userDetail = 0;
+		ModelAndView mav = null;
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			// userDetail =(Registration) session.getAttribute("UserDetail");
+			try {
+				userDetail = (int) session.getAttribute("UserDetail");
+
+			} catch (Exception e) {
+				userDetail = 0;
+				e.printStackTrace();
+			}
+
+			// System.out.println("userDetail "+userDetail.getRegId());
+			if (userDetail > 0) {
+
+				System.out.println("User Id: " + userDetail);
+
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+				map1.add("newsblogsId", newsblogsId);
+				map1.add("userId", userDetail);
+				List<EventRegistration> appliedevent = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
+						List.class);
+				if (appliedevent == null) {
+					EventRegistration eventReg = new EventRegistration();
+
+					Date date = new Date(); // your date
+					SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					eventReg.setDelStatus(1);
+					// eventReg.setEventRegId();
+					eventReg.setIsActive(1);
+					eventReg.setNewsblogsId(newsblogsId);
+					eventReg.setRegDate(sf.format(date));
+					eventReg.setUserId(userDetail);
+
+					EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+							EventRegistration.class);
+
+					System.out.println("res Id: " + res.toString());
+
+					if (res != null) {
+
+						mav = new ModelAndView("event-detail");
+						mav.addObject("newsblogsId",newsblogsId);
+
+						MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+						map2.add("regId", userDetail); 
+						editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
+						String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+						mav.addObject("editReg", editReg);
+						//mav.addObject("",);
+						mav.addObject("msg", "Successfully Registed Event");
+					}
+				} else {
+					System.out.println("User Id: " + userDetail);
+					mav = new ModelAndView("event-detail");
+
+					MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+					map2.add("regId", userDetail); 
+					editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
+					String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+					mav.addObject("editReg", editReg);
+					mav.addObject("newsblogsId",newsblogsId);
+					mav.addObject("typeId",2);
+					mav.addObject("msg", "Event Already Registered");
+				}
+
+			} else {
+				System.out.println("User Id: " + userDetail);
+				mav = new ModelAndView("login");
+				mav.addObject("msg", "Please Login ");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return mav;
+	}
+	
+	@RequestMapping(value = "/submtEventAppliedForm", method = RequestMethod.POST)
+	public String submtEventAppliedForm(@RequestParam("pagePdf") List<MultipartFile> pagePdf,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		// ModelAndView model = new ModelAndView("masters/addEmployee");
+		Info info = new Info();
+		String pdfName = new String();
+		String ss = new String();
+		HttpSession session = request.getSession();
+		int newsblogsId = Integer.parseInt(request.getParameter("newsblogsId"));
+		ModelAndView mav = new ModelAndView("event-detail");
+		mav.addObject("newsblogsId", newsblogsId);
+		mav.addObject("typeId", 2);
+		System.out.println("newsblogsId :" + newsblogsId);
+		int userDetail = 0;
+
+		try {
+			userDetail = (int) session.getAttribute("UserDetail");
+			System.out.println("userDetail: " + userDetail);
+		} catch (Exception e) {
+			userDetail = 0;
+			e.printStackTrace();
+		}
+
+		if (userDetail > 0) {
+
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+
+			VpsImageUpload upload = new VpsImageUpload();
+			pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
+
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+			map1.add("newsblogsId", newsblogsId);
+			map1.add("userId", userDetail);
+			List<EventRegistration> appliedevent = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
+					List.class);
+
+			if (appliedevent == null) {
+				EventRegistration eventReg = new EventRegistration();
+
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				eventReg.setDelStatus(1);
+				eventReg.setIsActive(1);
+				eventReg.setNewsblogsId(newsblogsId);
+				eventReg.setRegDate(sf.format(date));
+				eventReg.setUserId(userDetail);
+				eventReg.setDoc1(pdfName);
+
+				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+						EventRegistration.class);
+
+				System.out.println("res Id: " + res.toString());
+				// ss="redirect:/eventDetail/"+newsblogsId;
+
+			} else {
+				if (pagePdf.get(0).getOriginalFilename() == null || pagePdf.get(0).getOriginalFilename() == "") {
+					try {
+						
+						ss = "redirect:/eventDetail/" + newsblogsId + 2;
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+				} else {
+
+					// pdfName =
+					// dateTimeInGMT.format(date)+"_"+pagePdf.get(0).getOriginalFilename();
+
+					try {
+
+						MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+						map.add("regId", userDetail);
+						map.add("newsblogsId", newsblogsId);
+						map.add("pdfName", pdfName);
+
+						info = rest.postForObject(Constant.url + "/uploadEventDocument", map, Info.class);
+
+						System.out.println(info.toString());
+						if (info.isError() == true) {
+							EventRegistration eventReg = new EventRegistration();
+
+							Calendar cal = Calendar.getInstance();
+							cal.setTime(date);
+							eventReg.setDelStatus(1);
+							eventReg.setIsActive(1);
+							// eventReg.setEventRegId();
+							// eventReg.setIsActive(1);
+							eventReg.setNewsblogsId(newsblogsId);
+							eventReg.setRegDate(sf.format(date));
+							eventReg.setUserId(userDetail);
+							eventReg.setDoc1(pdfName);
+							EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+									EventRegistration.class);
+
+							System.out.println("res Id: " + res.toString());
+
+						}
+
+						upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+				}
+			}
+			ss = "redirect:/eventDetail/" + newsblogsId + 2;
+		} else {
+			System.out.println("User Id: " + userDetail);
+			ss = "redirect:/login";
+		}
+
+		return ss;
+	}
+
 }

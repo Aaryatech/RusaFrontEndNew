@@ -135,6 +135,11 @@
             </div>
             
             <div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
+                <div class="col-lg-12">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Success : </strong> abc</div>
+        	                                       </div>
             	<h2>Verify OTP </h2>
 
 			    <form action="${pageContext.request.contextPath}/verifyEditOtpProcess" method="post" onsubmit="return confirm('Do you really want to submit the form?');" name="login_form">  

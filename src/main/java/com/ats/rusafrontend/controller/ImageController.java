@@ -445,8 +445,8 @@ public class ImageController {
 	 * return model; }
 	 */
 
-	@RequestMapping(value = "/eventDetailfront/{newsblogsId}/{typeId}", method = RequestMethod.GET)
-	public ModelAndView eventDetailfront(@PathVariable int newsblogsId, @PathVariable int typeId,
+	@RequestMapping(value = "/eventDetailfront/{newsblogsId}", method = RequestMethod.GET)
+	public ModelAndView eventDetailfront(@PathVariable int newsblogsId,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("event-detail-front");
@@ -480,7 +480,7 @@ public class ImageController {
 				model.addObject("dateEvent", dateEvent);
 				model.addObject("pageMetaData", pageMetaData);
 				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("typeId", typeId);
+				//model.addObject("typeId", typeId);
 
 				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 
@@ -566,8 +566,8 @@ public class ImageController {
 		return jsonString;
 	}
 
-	@RequestMapping(value = "/submtEventAppliedForm", method = RequestMethod.POST)
-	public String submtEventAppliedForm(@RequestParam("pagePdf") List<MultipartFile> pagePdf,
+	@RequestMapping(value = "/submtFrontEventAppliedForm", method = RequestMethod.POST)
+	public String submtFrontEventAppliedForm(@RequestParam("pagePdf") List<MultipartFile> pagePdf,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		// ModelAndView model = new ModelAndView("masters/addEmployee");
@@ -576,7 +576,7 @@ public class ImageController {
 		String ss = new String();
 		HttpSession session = request.getSession();
 		int newsblogsId = Integer.parseInt(request.getParameter("newsblogsId"));
-		ModelAndView mav = new ModelAndView("event-detail");
+		ModelAndView mav = new ModelAndView("event-detail-front");
 		mav.addObject("newsblogsId", newsblogsId);
 		System.out.println("newsblogsId :" + newsblogsId);
 		int userDetail = 0;
@@ -626,7 +626,7 @@ public class ImageController {
 			} else {
 				if (pagePdf.get(0).getOriginalFilename() == null || pagePdf.get(0).getOriginalFilename() == "") {
 					try {
-
+						ss = "redirect:/eventDetailfront/" + newsblogsId;
 					} catch (Exception e) {
 						// TODO: handle exception
 						e.printStackTrace();
@@ -673,7 +673,7 @@ public class ImageController {
 					}
 				}
 			}
-			ss = "redirect:/eventDetail/" + newsblogsId;
+			ss = "redirect:/eventDetailfront/" + newsblogsId;
 		} else {
 			System.out.println("User Id: " + userDetail);
 			ss = "redirect:/login";
@@ -682,54 +682,5 @@ public class ImageController {
 		return ss;
 	}
 
-	@RequestMapping(value = "/eventDetail/{newsblogsId}/{typeId}", method = RequestMethod.GET)
-	public ModelAndView eventDetail(@PathVariable int newsblogsId, @PathVariable int typeId, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("event-detail");
-		try {
-
-			HttpSession session = request.getSession();
-			session.setAttribute("mapping", "eventList");
-			int langId = 1;
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
-			if (maintainance.getMaintenanceStatus() == 1) {
-
-				model = new ModelAndView("maintainance");
-				model.addObject("maintainance", maintainance);
-			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "eventList");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
-
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-				map1.add("langId", langId);
-
-				map1.add("newsblogsId", newsblogsId);
-				NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId", map1,
-						NewsDetails.class);
-
-				// List<NewsDetails> event = new
-				// ArrayList<NewsDetails>(Arrays.asList(eventList));
-				String dateEvent = DateConvertor.convertToDMY(eventList.getEventDateFrom());
-				model.addObject("event", eventList);
-				model.addObject("dateEvent", dateEvent);
-				model.addObject("pageMetaData", pageMetaData);
-				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("typeId", typeId);
-
-				System.out.println("typeId :" + typeId);
-				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
-				model.addObject("flag", flag);
-				flag = 0;
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return model;
-	}
+	
 }

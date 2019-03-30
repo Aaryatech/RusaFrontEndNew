@@ -109,6 +109,11 @@
   
  
          	<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
+         	    <div class="col-lg-12">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Success : </strong> abc</div>
+        	                                       </div>
                     <div class="row">
                     	<c:if test="${not empty event.featuredImage}">
                     <div class="col-12 col-sm-6 col-lg-6">  
@@ -128,7 +133,7 @@
                  	<c:if test="${dateEvent >= todayString}">
                     	<c:if test="${event.exInt2==1}">
                     		<form class="form-horizontal"
-										action="${pageContext.request.contextPath}/submtEventAppliedForm"
+										action="${pageContext.request.contextPath}/submtFrontEventAppliedForm"
 										method="post" enctype="multipart/form-data"
 										name="form_sample_2" id="form_sample_2"
 										onsubmit="return confirm('Do you really want to submit the form?');">
@@ -151,7 +156,7 @@
                     
                  
                       	<c:if test="${event.exInt2==0}">
-                    <a href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}" class="btn button apply">Apply</a>
+                    <a href="${pageContext.request.contextPath}/applyEventFront/${event.newsblogsId}" class="btn button apply">Apply</a>
                   </c:if>  
                     </c:if>
                     </div>

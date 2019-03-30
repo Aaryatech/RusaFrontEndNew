@@ -370,8 +370,8 @@ public class UserController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/applyEvent/{newsblogsId}", method = RequestMethod.GET)
-	public ModelAndView applyEvent(@PathVariable int newsblogsId, HttpServletRequest request,
+	@RequestMapping(value = "/applyEventFront/{newsblogsId}", method = RequestMethod.GET)
+	public ModelAndView applyEventFront(@PathVariable int newsblogsId, HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		// Registration userDetail=null;
@@ -422,13 +422,15 @@ public class UserController {
 
 					if (res != null) {
 
-						mav = new ModelAndView("event-detail");
+						mav = new ModelAndView("event-detail-front");
+						mav.addObject("newsblogsId",newsblogsId);
 						//mav.addObject("",);
 						mav.addObject("msg", "Successfully Registed Event");
 					}
 				} else {
 					System.out.println("User Id: " + userDetail);
-					mav = new ModelAndView("content/eventList");
+					mav = new ModelAndView("event-detail-front");
+					mav.addObject("newsblogsId",newsblogsId);
 					mav.addObject("msg", "Event Already Registered");
 				}
 

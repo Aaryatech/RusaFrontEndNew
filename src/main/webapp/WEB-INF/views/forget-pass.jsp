@@ -124,7 +124,11 @@
 					<p></p>
 				</div>
 				<div class="col-12 col-sm-12 col-lg-3"></div>
-
+    <div class="col-lg-12">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Success : </strong> abc</div>
+        	                                       </div>
 				<div class="col-12 col-sm-12 col-lg-6">
 
                             <form method="post" action="${pageContext.request.contextPath}/forgetPassword" name="login_form">  

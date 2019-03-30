@@ -74,45 +74,7 @@
 			>
 		</div>
 	</div>
-<!-- <div class="login"> 
-    <div class="container" id="main-content">
-        	
-        <div class="row row-eq-height">
-       
-        	<div class="col-12 col-sm-12 col-lg-3"></div>
-			
-          	<div class="col-12 col-sm-12 col-lg-6">
-            	<div class="login-box">
-            	<div class="login-header">
-            		<h5>Login</h5>
-                    <p>Login to access your profile</p>
-            	</div>
-                
-                            <form method="post" action="" name="login_form">  
-                            <label>User Name</label>
-                            <input type="text" class="form-control" name="" placeholder="User Name">
-                            
-                            <label>Password</label>
-                            <input type="text" class="form-control" name="" placeholder="Password">
-                                                    
-                            <div class="clearfix"></div>
-                            <p>
-                            <button type="button" id="log-btn" class="button login-btn">Login</button>
-                            </p>
-                            
-                            </form>
-                            <p>Need an account? <a href="#">Create your account</a></p>
-            </div>
-			</div>
-            	
-        	<div class="col-12 col-sm-12 col-lg-3"></div>
-			
-            
-            
-        </div>
-    </div>
-</div>
- -->
+
  
  
 	<div class="login">
@@ -125,7 +87,11 @@
 				</div>
 				<p>${msg}</p>
 				<div class="col-12 col-sm-12 col-lg-3"></div>
-
+    <div class="col-lg-12">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Success : </strong> abc</div>
+        	                                       </div>
 				<div class="col-12 col-sm-12 col-lg-6">
 
                             <form method="post" action="${pageContext.request.contextPath}/loginResponse" name="login_form">  

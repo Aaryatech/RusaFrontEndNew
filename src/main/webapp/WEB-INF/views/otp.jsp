@@ -89,7 +89,11 @@
         <div class="row row-eq-height">
        
         	<div class="col-12 col-sm-12 col-lg-3"></div>
-			
+			    <div class="col-lg-12">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Success : </strong> abc</div>
+        	                                       </div>
           	<div class="col-12 col-sm-12 col-lg-6">
             	<div class="login-box">
             	<div class="login-header">
@@ -100,14 +104,7 @@
                 
                             <form action="${pageContext.request.contextPath}/verifyOtpProcess" method="post" onsubmit="return confirm('Do you really want to submit the form?');" name="login_form">  
                          
-               		         <c:choose>
-        				       <c:when test="${msg!=null}">
-	            	          	 <div class="alert alert-error alert-dismissible fade in">
-		                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-		                      		 <strong>${msg}</strong> 
-	           			 	 	 </div>
-            				  </c:when>
-        				    </c:choose>
+               		       
             
                             <label>One Time Pin(OTP) <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="userOtp" placeholder="Enter One-Time-Pin(OTP) Here" required>
