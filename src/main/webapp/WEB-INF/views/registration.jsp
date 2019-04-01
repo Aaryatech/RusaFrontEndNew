@@ -142,13 +142,13 @@
 								<label>Email-ID <span class="text-danger">*</span></label> 
 								<input
 									type="email" class="form-control" name="email"
-									placeholder="Email" id="email"> 
+									placeholder="Email" id="email" required> 
 					</div>
 					
 							<div class="col-12 col-sm-12 col-lg-6">		
 									<label>Alternate
 									Email-ID</label> <input type="email" class="form-control"
-									name="altEmail" placeholder="Alternate Email" id="altEmail">
+									name="altEmail" placeholder="Alternate Email" id="altEmail" >
 					</div>
 					
 					<div class="col-12 col-sm-12 col-lg-6">
@@ -157,7 +157,7 @@
 								
 								<input
 									type="text" class="form-control" name="name" placeholder="Name"
-									id="fullname"> 
+									id="fullname" required> 
 							</div>		
 									
 									<div class="col-12 col-sm-12 col-lg-6">
@@ -167,21 +167,21 @@
 									<input type="text"
 									class="form-control" name="mobile" pattern="[7-9]{1}[0-9]{9}"
 									maxlength="10" placeholder="Mobile No." id="mobile"
-									maxlength="10"> 
+									maxlength="10" required> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">
 									<label>College Name <span
 									class="text-danger">*</span></label> <input type="text"
 									class="form-control" name="collegeName"
-									placeholder="College Name" id="collegeName"> 
+									placeholder="College Name" id="collegeName" required> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">
 									<label>University
 									Affiliated <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="university"
-									placeholder="University Affiliated" id="uniAff"> 
+									placeholder="University Affiliated" id="uniAff" required> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">
@@ -189,7 +189,7 @@
 									<label>Name
 									of Department <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="dept"
-									placeholder="Name of Department" id="depatment"> 
+									placeholder="Name of Department" id="depatment" required> 
 									</div>
 									
 									
@@ -198,14 +198,14 @@
 									<label>Date
 									Of Birth <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="dob"
-									placeholder="Date Of Birth" id="dob"> 
+									placeholder="Date Of Birth" id="dob" required> 
 									</div>
 									
 								<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Authorized
 									Name <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="authour"
-									placeholder="Name of Authorized" id="authour">
+									placeholder="Name of Authorized" id="authour" required>
 							</div>
 							</div>
 				
@@ -216,14 +216,14 @@
 								
 								<input
 									type="email" class="form-control" name="collegeEmail"
-									placeholder="Email" id="collegeEmail"> 
+									placeholder="Email" id="collegeEmail" > 
 									</div>
 									
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Alternate
 									Email-ID</label> <input type="email" class="form-control"
-									name="altEmail" placeholder="Alternate Email" id="altEmail">
+									name="altEmail" placeholder="Alternate Email" id="altEmail" >
 							</div>
 							
 							
@@ -290,7 +290,7 @@
 									name="altEmail" placeholder="Alternate Email" id="altEmail">
 							</div>
 
-<div class="col-12 col-sm-12 col-lg-6">	
+								<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
 									type="text" class="form-control" name="uniMobile"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
