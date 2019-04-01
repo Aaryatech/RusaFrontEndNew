@@ -221,7 +221,7 @@
                  </div>
              </div>
           </div>
-    </div>
+    </div></div>
  
 	
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
