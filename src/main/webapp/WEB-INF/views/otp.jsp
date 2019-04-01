@@ -83,25 +83,17 @@
 			>
 		</div>
 	</div>
-<div class="login"> 
-    <div class="container" id="main-content">
-        	
-        <div class="row row-eq-height">
-       
-        	<div class="col-12 col-sm-12 col-lg-3"></div>
-			    <div class="col-lg-12">
-    		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                <strong>Success : </strong> abc</div>
-        	                                       </div>
-          	<div class="col-12 col-sm-12 col-lg-6">
-            	<div class="login-box">
-            	<div class="login-header">
+		<div class="login">
+		<div class="container" id="main-content">
+	<div class="row row-eq-height login-box">
+			
+				<div class="col-12 col-sm-12 col-lg-12 login-header">
+            
             		<h5>Verify OTP</h5>
                  
-            	</div>
+            	</div>	<div class="col-12 col-sm-12 col-lg-3"></div>
           
-                
+                <div class="col-12 col-sm-12 col-lg-6">
                             <form action="${pageContext.request.contextPath}/verifyOtpProcess" method="post" onsubmit="return confirm('Do you really want to submit the form?');" name="login_form">  
                          
                		       
@@ -119,12 +111,15 @@
                             <button type="submit" id="log-btn" class="button login-btn">Resend</button>
                            
                             </form>                       
-            </div>
-			</div>            	
-        	<div class="col-12 col-sm-12 col-lg-3"></div>                      
-        </div>
-    </div>
+           
+				</div>
+
+				<div class="col-12 col-sm-12 col-lg-3"></div>
+
 </div>
+</div>
+			</div>
+		<br>
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

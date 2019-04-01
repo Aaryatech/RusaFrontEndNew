@@ -92,31 +92,7 @@
 					method="post" name="login_form">
 					<div class="row row-eq-height">
 					<div class="col-12 col-sm-12 col-lg-3"></div>
-					
-					<!-- <div class="col-12 col-sm-6 col-lg-2">
-                                	  <input type="radio" name="radi" value="all" checked="" id="radio9">
-                                    <label for="radio9"></label>
-                                    <span>Individual</span>
-                                </div>
-                                
-                                
-					
-					<div class="col-12 col-sm-6 col-lg-2">
-                                	  <input type="radio" name="radi" value="all"  id="radio7">
-                                    <label for="radio7"></label>
-                                    <span>Colleges</span>
-                                </div>
-                                
-                                
-                                <div class="col-12 col-sm-6 col-lg-2">
-                                	  <input type="radio" name="radi" value="all" id="radio6">
-                                    <label for="radio6"></label>
-                                    <span>University</span>
-                                </div>
-                                 -->
-                              
-                             
-                                
+					                                
 					<div class="col-12 col-sm-12 col-lg-3"></div>
 					
                           
@@ -124,7 +100,7 @@
                           
                                 <div class="col-12 col-sm-12 col-lg-3"></div>      
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label ">Select Type</label> 
+							<label >Select Type</label> 
 							<select id="userType" name="userType" class="form-control" onchange="showForm()"
 								required>
 							
@@ -341,11 +317,12 @@
 								<button type="submit" id="log-btn" class="button login-btn">Register</button>
 							</p>
 						</div>
-<p>
-					Already Member <a href="${pageContext.request.contextPath}/login">Login</a>
-				</p>
+
 					
 				</form>
+				<p>
+					Already Member <a href="${pageContext.request.contextPath}/login">Login</a>
+				</p>
 				</div>				
 			</div>
 		</div>

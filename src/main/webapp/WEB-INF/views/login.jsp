@@ -134,10 +134,7 @@
 				</div>
 
 				<div class="col-12 col-sm-12 col-lg-3"></div>
-
-
-
-			</div>
+				</div>
 		</div>
 	</div>
  

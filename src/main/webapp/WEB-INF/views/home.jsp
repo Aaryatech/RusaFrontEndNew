@@ -390,9 +390,9 @@
 											<strong>${testImonial.fromName}</strong>
 										</p>
 
-										<c:set var="string4" value="${testImonial.message}" />
-										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
-										<p>${string3}...</p>
+									<%-- 	<c:set var="string4" value="${testImonial.message}" />
+										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
+										<p>${testImonial.message}</p>
 										<c:set var="imgfind" value="1"></c:set>
 
 									</c:if>
@@ -404,9 +404,9 @@
 											<strong>${testImonial.fromName}</strong>
 										</p>
 
-										<c:set var="string4" value="${testImonial.message}" />
-										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
-										<p>${string3}...</p>
+									<%-- 	<c:set var="string4" value="${testImonial.message}" />
+										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
+										<p>${testImonial.message}</p>
 									</c:if>
 								</div>
 							</c:when>
@@ -424,9 +424,9 @@
 											<strong>${testImonial.fromName}</strong>
 										</p>
 
-										<c:set var="string4" value="${testImonial.message}" />
-										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
-										<p>${string3}...</p>
+										<%-- <c:set var="string4" value="${testImonial.message}" />
+										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
+										<p>${testImonial.message}</p>
 										<c:set var="imgfind" value="1"></c:set>
 
 									</c:if>
@@ -437,10 +437,10 @@
 										<p>
 											<strong>${testImonial.fromName}</strong>
 										</p>
-
+<%-- 
 										<c:set var="string4" value="${testImonial.message}" />
-										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" />
-										<p>${string3}...</p>
+										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
+										<p>${testImonial.message}</p>
 									</c:if>
 								</div>
 							</c:otherwise>
