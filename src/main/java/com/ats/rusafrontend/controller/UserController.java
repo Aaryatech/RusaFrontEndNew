@@ -423,7 +423,7 @@ public class UserController {
 				map1.add("userId", userDetail);
 				info = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
 						Info.class);
-				if (info.isError()== false) {
+				if (info.isError()== true) {
 					EventRegistration eventReg = new EventRegistration();
 
 					Date date = new Date(); // your date

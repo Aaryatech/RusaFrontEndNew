@@ -1,22 +1,16 @@
 package com.ats.rusafrontend.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -27,14 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.VpsImageUpload;
-import com.ats.rusafrontend.model.ContentImages;
 import com.ats.rusafrontend.model.EventRegistration;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
@@ -564,7 +555,7 @@ public class loginController {
 				map1.add("userId", userDetail);
 				info  = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
 						Info.class);
-				if (info.isError() == false) {
+				if (info.isError() == true) {
 					EventRegistration eventReg = new EventRegistration();
 
 					Date date = new Date(); // your date
@@ -630,7 +621,7 @@ public class loginController {
 			info  = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
 					Info.class);
 
-			if (info.isError() == false) {
+			if (info.isError() == true) {
 				EventRegistration eventReg = new EventRegistration();
 
 				Calendar cal = Calendar.getInstance();
