@@ -536,27 +536,25 @@ public class loginController {
 	}
 
 	@RequestMapping(value = "/applyEvent/{newsblogsId}", method = RequestMethod.GET)
-	public ModelAndView applyEvent(@PathVariable int newsblogsId, HttpServletRequest request,
+	public String applyEvent(@PathVariable int newsblogsId, HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		// Registration userDetail=null;
 		int userDetail = 0;
+		Info info=null;
+	//	String redirect=null;
 		ModelAndView mav = null;
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			// userDetail =(Registration) session.getAttribute("UserDetail");
-			try {
+			
 				userDetail = (int) session.getAttribute("UserDetail");
 
-			} catch (Exception e) {
-				userDetail = 0;
-				e.printStackTrace();
-			}
 
 			// System.out.println("userDetail "+userDetail.getRegId());
-			if (userDetail > 0) {
+		
 
 				System.out.println("User Id: " + userDetail);
 
@@ -564,9 +562,9 @@ public class loginController {
 
 				map1.add("newsblogsId", newsblogsId);
 				map1.add("userId", userDetail);
-				List<EventRegistration> appliedevent = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
-						List.class);
-				if (appliedevent == null) {
+				info  = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
+						Info.class);
+				if (info.isError() == false) {
 					EventRegistration eventReg = new EventRegistration();
 
 					Date date = new Date(); // your date
@@ -586,73 +584,37 @@ public class loginController {
 					System.out.println("res Id: " + res.toString());
 
 					if (res != null) {
-
-						mav = new ModelAndView("event-detail");
-						mav.addObject("newsblogsId", newsblogsId);
-
-						MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
-						map2.add("regId", userDetail);
-						editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
-						String dobDate = DateConvertor.convertToDMY(editReg.getDob());
-						mav.addObject("editReg", editReg);
-						// mav.addObject("",);
-						mav.addObject("msg", "Successfully Registed Event");
 						session.setAttribute("success", "Successfully Registed Event !");
 					}
 				} else {
 					System.out.println("User Id: " + userDetail);
-					mav = new ModelAndView("event-detail");
-
-					MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
-					map2.add("regId", userDetail);
-					editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
-					String dobDate = DateConvertor.convertToDMY(editReg.getDob());
-					mav.addObject("editReg", editReg);
-					mav.addObject("newsblogsId", newsblogsId);
-					mav.addObject("typeId", 2);
-					mav.addObject("msg", "Event Already Registered");
+							
 					session.setAttribute("errorMsg", "Event Already Registered !");
-				}
-
-			} else {
-				System.out.println("User Id: " + userDetail);
-				mav = new ModelAndView("login");
-				mav.addObject("msg", "Please Login ");
-				session.setAttribute("errorMsg", "Please Login..  !");
-			}
+				}	
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return mav;
+		return "redirect:/eventDetail"+"/" +newsblogsId +"/2";
 	}
 
 	@RequestMapping(value = "/submtEventAppliedForm", method = RequestMethod.POST)
-	public ModelAndView submtEventAppliedForm(@RequestParam("pagePdf") List<MultipartFile> pagePdf,
+	public String submtEventAppliedForm(@RequestParam("pagePdf") List<MultipartFile> pagePdf,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		// ModelAndView model = new ModelAndView("masters/addEmployee");
 		Info info = new Info();
 		String pdfName = new String();
-		String ss = new String();
+		
 		HttpSession session = request.getSession();
 		int newsblogsId = Integer.parseInt(request.getParameter("newsblogsId"));
-		ModelAndView mav = new ModelAndView("event-detail");
-		mav.addObject("newsblogsId", newsblogsId);
-		mav.addObject("typeId", 2);
 		System.out.println("newsblogsId :" + newsblogsId);
 		int userDetail = 0;
 
 		try {
 			userDetail = (int) session.getAttribute("UserDetail");
 			System.out.println("userDetail: " + userDetail);
-		} catch (Exception e) {
-			userDetail = 0;
-			e.printStackTrace();
-		}
-
-		if (userDetail > 0) {
 
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
@@ -668,7 +630,7 @@ public class loginController {
 			info  = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
 					Info.class);
 
-			if (info.isError() == true) {
+			if (info.isError() == false) {
 				EventRegistration eventReg = new EventRegistration();
 
 				Calendar cal = Calendar.getInstance();
@@ -684,12 +646,9 @@ public class loginController {
 						EventRegistration.class);
 
 				System.out.println("res Id: " + res.toString());
-				// ss="redirect:/eventDetail/"+newsblogsId;
-				mav = new ModelAndView("event-detail");
-				mav.addObject("newsblogsId" , newsblogsId);
-				mav.addObject("typeId", 2);
+								
 				session.setAttribute("success", "Successfully Registed Event !");
-
+				upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
 			}
 			else
 			{
@@ -704,41 +663,74 @@ public class loginController {
 
 					System.out.println(info.toString());
 					if (info.isError() == false) {
-						mav = new ModelAndView("event-detail");
-						mav.addObject("newsblogsId" , newsblogsId);
-						mav.addObject("typeId", 2);
+						
 						session.setAttribute("success", "Successfully Registed Event !");
 						
-					}
+					}			
+					
+					
 					upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
-					mav = new ModelAndView("event-detail");
-					mav.addObject("newsblogsId" , newsblogsId);
-					mav.addObject("typeId", 2);
-					session.setAttribute("success", "Already updated !");
-
 				
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
+			
+				session.setAttribute("errorMsg", "Event Already Registered !");
 
-				mav = new ModelAndView("event-detail");
-				mav.addObject("newsblogsId" , newsblogsId);
-				mav.addObject("typeId", 2);									
-				session.setAttribute("success", "Already updated !");
 			}
 			
-			
-		} else {
-			System.out.println("User Id: " + userDetail);
-			
-			mav = new ModelAndView("event-detail");
-			mav.addObject("newsblogsId" , newsblogsId);
-			mav.addObject("typeId", 2);			
-			session.setAttribute("errorMsg", "Please Login..  !");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/eventDetail"+"/" +newsblogsId +"/2";
+	}
+	@RequestMapping(value = "/firstChangePass", method = RequestMethod.GET)
+	public ModelAndView firstChangePass(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("changePass");
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	@RequestMapping(value = "/firstChangePassword", method = RequestMethod.POST)
+	public ModelAndView FirstChangePassword(HttpServletRequest request, HttpServletResponse response) {
+
+		String newPass = request.getParameter("newPass");
+		System.out.println("newPass : " + newPass);
+		ModelAndView mav = new ModelAndView("changePass");
+		HttpSession session = request.getSession();
+
+		Info info = new Info();
+		try {
+			int userDetail = (int) session.getAttribute("UserDetail");
+			if (newPass.equalsIgnoreCase(" ") || newPass == null) {
+				
+				mav = new ModelAndView("changePass");				
+			} else {
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("regId", userDetail);
+				map.add("password", newPass);
+
+				info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
+				if(info.isError() == false)
+				{
+					mav = new ModelAndView("login");
+					System.out.println(info.toString());
+					//session.setAttribute("success", "Successfully Updated Password !");					
+				}
+						
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		return mav;
 	}
-
 }

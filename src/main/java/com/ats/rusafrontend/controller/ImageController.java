@@ -588,7 +588,7 @@ public class ImageController {
 			userDetail = 0;
 			e.printStackTrace();
 		}
-
+		try {
 		if (userDetail > 0) {
 
 			Date date = new Date();
@@ -602,10 +602,10 @@ public class ImageController {
 
 			map1.add("newsblogsId", newsblogsId);
 			map1.add("userId", userDetail);
-			List<EventRegistration> appliedevent = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
-					List.class);
+			info = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
+					Info.class);
 
-			if (appliedevent == null) {
+			if (info.isError() == false) {
 				EventRegistration eventReg = new EventRegistration();
 
 				Calendar cal = Calendar.getInstance();
@@ -620,8 +620,9 @@ public class ImageController {
 				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
 						EventRegistration.class);
 
-				System.out.println("res Id: " + res.toString());
-				// ss="redirect:/eventDetail/"+newsblogsId;
+				session.setAttribute("success", "Successfully Registed Event !");
+				upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
+			
 
 			} else {
 				if (pagePdf.get(0).getOriginalFilename() == null || pagePdf.get(0).getOriginalFilename() == "") {
@@ -632,9 +633,6 @@ public class ImageController {
 						e.printStackTrace();
 					}
 				} else {
-
-					// pdfName =
-					// dateTimeInGMT.format(date)+"_"+pagePdf.get(0).getOriginalFilename();
 
 					try {
 
@@ -661,9 +659,8 @@ public class ImageController {
 							eventReg.setDoc1(pdfName);
 							EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
 									EventRegistration.class);
-
-							System.out.println("res Id: " + res.toString());
-
+							session.setAttribute("success", "Successfully Registed Event !");
+							
 						}
 
 						upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
@@ -676,7 +673,13 @@ public class ImageController {
 			ss = "redirect:/eventDetailfront/" + newsblogsId;
 		} else {
 			System.out.println("User Id: " + userDetail);
+			session.setAttribute("errorMsg", "Please Login !");
 			ss = "redirect:/login";
+			
+		}
+		} catch (Exception e) {
+			userDetail = 0;
+			e.printStackTrace();
 		}
 
 		return ss;

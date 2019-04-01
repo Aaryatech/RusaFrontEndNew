@@ -79,6 +79,13 @@ public class UserController {
 
 			Registration verify = rest.postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
 			if (verify.isError() == false) {
+				if(verify.getExInt1()==0)
+				{
+					mav = new ModelAndView("changePass");
+					session.setAttribute("UserDetail", verify.getRegId());
+				}
+				else
+				{
 				mav = new ModelAndView("content/upcoming-dashboard");
 				System.out.println("Login :" + verify.getRegId());
 				session.setAttribute("UserDetail", verify.getRegId());
@@ -98,10 +105,10 @@ public class UserController {
 				mav.addObject("typeId", 2);
 				session.setAttribute("successMsg", "Login Successful !");			
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+				}
 			} else {
 				mav = new ModelAndView("login");
-				System.out.println("Invalid login credentials");
-				
+				System.out.println("Invalid login credentials");				
 				session.setAttribute("errorMsg", true);
 				session.setAttribute("errorMsg", "Invalid login credentials !");
 			}
@@ -385,11 +392,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/applyEventFront/{newsblogsId}", method = RequestMethod.GET)
-	public ModelAndView applyEventFront(@PathVariable int newsblogsId, HttpServletRequest request,
+	public String applyEventFront(@PathVariable int newsblogsId, HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		// Registration userDetail=null;
 		int userDetail = 0;
+		Info info=null;
 		ModelAndView mav = null;
 		try {
 
@@ -413,9 +421,9 @@ public class UserController {
 
 				map1.add("newsblogsId", newsblogsId);
 				map1.add("userId", userDetail);
-				List<EventRegistration> appliedevent = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
-						List.class);
-				if (appliedevent == null) {
+				info = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
+						Info.class);
+				if (info.isError()== false) {
 					EventRegistration eventReg = new EventRegistration();
 
 					Date date = new Date(); // your date
@@ -432,33 +440,28 @@ public class UserController {
 					EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
 							EventRegistration.class);
 
-					System.out.println("res Id: " + res.toString());
+				
 
 					if (res != null) {
 
-						mav = new ModelAndView("event-detail-front");
-						mav.addObject("newsblogsId",newsblogsId);
-						//mav.addObject("",);
-						mav.addObject("msg", "Successfully Registed Event");
+						session.setAttribute("success", "Successfully Registed Event !");
 					}
 				} else {
-					System.out.println("User Id: " + userDetail);
-					mav = new ModelAndView("event-detail-front");
-					mav.addObject("newsblogsId",newsblogsId);
-					mav.addObject("msg", "Event Already Registered");
+					session.setAttribute("errorMsg", "Event Already Registered !");
+				//	session.setAttribute("msg", "Event Already Registered");
 				}
 
 			} else {
-				System.out.println("User Id: " + userDetail);
-				mav = new ModelAndView("login");
-				mav.addObject("msg", "Please Login ");
+				session.setAttribute("errorMsg", "Please Login !");
+				
+			
 			}
-
+			session.setAttribute("errorMsg", "Please Login !");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return mav;
+		return "redirect:/login";
 	}
 
 	@RequestMapping(value = "/upcomingEvents", method = RequestMethod.GET)

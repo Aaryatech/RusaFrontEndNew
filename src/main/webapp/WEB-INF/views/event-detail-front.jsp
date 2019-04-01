@@ -109,11 +109,7 @@
   
  
          	<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
-         	    <div class="col-lg-12">
-    		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                <strong>Success : </strong> abc</div>
-        	                                       </div>
+         	  
                     <div class="row">
                     	<c:if test="${not empty event.featuredImage}">
                     <div class="col-12 col-sm-6 col-lg-6">  
