@@ -402,7 +402,7 @@ public class loginController {
 				// Constant.otherDocURL,imageName,Constant.values,0,0,0,0,0);
 				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 
-				upload.saveUploadedImge(file.get(0), Constant.gallryImageURL, imageName, Constant.DocValues, 0, 0, 0, 0,
+				upload.saveUploadedImge(file.get(0), Constant.getUserProfileURL, imageName, Constant.values, 0, 0, 0, 0,
 						0);
 				editReg.setImageName(imageName);
 				System.out.println("Data :" + editReg.toString());
@@ -412,7 +412,7 @@ public class loginController {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
-			session.setAttribute("gallryImageURL", Constant.gallryImageURL);
+			session.setAttribute("gallryImageURL", Constant.getUserProfileURL);
 
 		} catch (Exception e) {
 			e.printStackTrace();

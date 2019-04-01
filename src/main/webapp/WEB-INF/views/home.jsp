@@ -4,8 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
 <%@ page session="true"%>
-<%@ page import="java.io.*,java.util.*, javax.servlet.*" 
-  import = "java.text.SimpleDateFormat"%> 
+<%@ page import="java.io.*,java.util.*, javax.servlet.*"
+	import="java.text.SimpleDateFormat"%>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -173,7 +173,8 @@
 									<p>
 										<span><i class="icon-calendar"></i> <strong>Date:</strong>
 											${eventList.eventDateFrom}</span>
-									</p><br>
+									</p>
+									<br>
 								</c:forEach>
 							</div>
 						</div>
@@ -305,14 +306,24 @@
 					<div class="col-12 col-sm-3 col-lg-3">
 						<div class="news-box">
 							<div class="new-img">
-								<a href="${newsBlogsList.newsSourceUrlName}"><img
-									src="${sessionScope.gallryImageURL}${newsBlogsList.featuredImage}"
-									width="250" height="228" alt="${newsBlogsList.heading}"></a>
+
+								<c:choose>
+									<c:when test="${not empty newsBlogsList.featuredImage}">
+										<a href="${newsBlogsList.newsSourceUrlName}"><img
+											src="${sessionScope.gallryImageURL}${newsBlogsList.featuredImage}"
+											width="250" height="228" alt="${newsBlogsList.heading}"></a>
+									</c:when>
+									<c:otherwise>
+									<a href="#"><img
+											src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+											width="250" height="228" alt="${newsBlogsList.heading}"></a>
+									</c:otherwise>
+								</c:choose>
+
+
 							</div>
-							<h4>${newsBlogsList.heading}</h4>
-							<c:set var="string4" value="${newsBlogsList.descriptions}" />
-							<c:set var="string3" value="${fn:substring(string4, 0, 100)}" />
-							<p>${string3}
+							<h4>${fn:substring(newsBlogsList.heading, 0, 80)}</h4> 
+							<p>${fn:substring(newsBlogsList.descriptions, 0, 80)}
 								<a
 									href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.newsblogsId}">Read
 									More</a>
@@ -463,20 +474,16 @@
 		src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script>
 	<script type="text/javascript">
 		(function($) {
+	<%Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			out.print("var date_var = '" + sf.format(date) + "' ");%>
+		"use strict";
+			//	 alert(date_var);
 
-		 <%
-			   Date date = new Date();
-				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");	
-			   out.print( "var date_var = '" +sf.format(date)+"' ");
-			    
-			%>  
-			"use strict";
-		//	 alert(date_var);
-			  
 			var options = {
 				events_source : st_url + 'eventJson',
 				view : 'month',
-				tmpl_path : st_url+'resources/tmpls/',
+				tmpl_path : st_url + 'resources/tmpls/',
 				tmpl_cache : false,
 				day : date_var,
 				onAfterEventsLoad : function(events) {
