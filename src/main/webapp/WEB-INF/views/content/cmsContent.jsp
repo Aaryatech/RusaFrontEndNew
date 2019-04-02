@@ -314,14 +314,45 @@
 						<c:forEach items="${pageContent.testImonialList}"
 							var="testImonialList">
 							<c:if test="${testImonialList.sectionId==6}">
-								<div class="col-12 col-sm-6 col-lg-6">
+								<%-- <div class="col-12 col-sm-6 col-lg-6">
 									<div class="success-stories">
 										${testImonialList.message}
 										<p>
 											<i><strong>${testImonialList.fromName}</strong></i>
 										</p>
 									</div>
+								</div> --%>
+
+								<div class="col-12 col-sm-12 col-lg-12">
+									<div class="success-stories testimonials-detail">
+										<div class="testimonials-user-photo">
+
+											<c:choose>
+												<c:when test="${not empty testImonialList.imageName}">
+													<img src="${gallryImageURL}${testImonialList.imageName}"
+														alt="" style="height: 100px; width: 100px;">
+												</c:when>
+												<c:otherwise>
+													<img
+														src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+														alt="" style="height: 100px; width: 100px;">
+
+												</c:otherwise>
+											</c:choose>
+
+
+
+										</div>
+										<p>
+											<span class="icon-quote-left quote"></span>${testImonialList.message}
+										</p>
+										<p>
+											<strong>${testImonialList.fromName}</strong> <span
+													class="sup-text">${testImonialList.designation},${testImonialList.location}</span>
+										</p>
+									</div>
 								</div>
+
 							</c:if>
 						</c:forEach>
 					</div>
@@ -397,7 +428,8 @@
 										<c:choose>
 											<c:when test="${not empty testImonialList.imageName}">
 												<a href="#"><img
-													src="${gallryImageURL}${testImonialList.imageName}" alt="" style="height: 200px;width: 200px;"></a>
+													src="${gallryImageURL}${testImonialList.imageName}" alt=""
+													style="height: 200px; width: 200px;"></a>
 											</c:when>
 											<c:otherwise>
 												<a href="#"><img
@@ -422,7 +454,7 @@
 					<c:set var="find" value="1"></c:set>
 				</c:if>
 
-				<c:if test="${pageContent.successList.size()>0}"> 
+				<c:if test="${pageContent.successList.size()>0}">
 					<div class="row" id="successstory">
 						<c:forEach items="${pageContent.successList}"
 							var="testImonialList">
@@ -434,7 +466,8 @@
 											<c:choose>
 												<c:when test="${not empty testImonialList.imageName}">
 													<a href="#"><img
-														src="${gallryImageURL}${testImonialList.imageName}" alt="" width="184" height="134"></a>
+														src="${gallryImageURL}${testImonialList.imageName}" alt=""
+														width="184" height="134"></a>
 												</c:when>
 												<c:otherwise>
 													<a href="#"><img
@@ -449,7 +482,8 @@
 												<span class="icon-quote-left quote"></span>${testImonialList.message}
 											</p>
 											<p>
-												<strong>${testImonialList.fromName}</strong> <span class="sup-text">${testImonialList.designation},${testImonialList.location}</span>
+												<strong>${testImonialList.fromName}</strong> <span
+													class="sup-text">${testImonialList.designation},${testImonialList.location}</span>
 											</p>
 										</div>
 									</div>
@@ -477,6 +511,6 @@
 		function checkMaintainance() {
 
 		}
-	</script> 
+	</script>
 </body>
 </html>
