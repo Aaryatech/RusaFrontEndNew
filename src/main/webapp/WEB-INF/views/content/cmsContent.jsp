@@ -374,7 +374,7 @@
 									title="${gallaryDetailList.title}" class="img-responsive"></a>
 							</div>
 						</c:forEach>
-					</div>
+					</div><br>
 
 					<c:set var="find" value="1"></c:set>
 				</c:if>
@@ -390,7 +390,7 @@
 									<img src="${gallryImageURL}${detailNewsList.featuredImage}"
 										alt=""
 										style="float:${detailNewsList.featuredImageAlignment}; padding-left:20px; padding-right:20px; padding-bottom:20px;"
-										height="" width="">
+										height="317px" width="555px">
 								</c:if>
 								<%-- 	<img src="${gallryImageURL}${detailNewsList.featuredImage}"> --%>
 								<c:set var="string1" value="${detailNewsList.descriptions}" />

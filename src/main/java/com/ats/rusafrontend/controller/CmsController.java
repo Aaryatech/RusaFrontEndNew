@@ -34,7 +34,7 @@ public class CmsController {
 		ModelAndView model = new ModelAndView("content/cmsContent");
 		try {
 			HttpSession session = request.getSession();
-			session.setAttribute("mapping", "info/" + slugName);
+			session.setAttribute("mapping", "info-" + slugName);
 			int langId = (Integer) session.getAttribute("langId");
 			System.out.println(slugName);
 
@@ -110,6 +110,8 @@ public class CmsController {
 		return model;
 	}
 
+	
+	
 	@RequestMapping(value = "/searchData", method = RequestMethod.GET)
 	public ModelAndView searchData(HttpServletRequest request, HttpServletResponse response) {
 

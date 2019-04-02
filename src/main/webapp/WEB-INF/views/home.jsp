@@ -206,7 +206,7 @@
 													<div class="over-effect">
 														<span class="icon-search"></span>
 													</div> <img
-													src="${sessionScope.gallryImageURL}${editPhotoDetail.fileName}"
+													src="${sessionScope.gallryImageURL}thumbnail${editPhotoDetail.fileName}"
 													alt="${editPhotoDetail.title}" class="img-responsive">
 												</a>
 											</div>
@@ -220,7 +220,7 @@
 													<div class="over-effect">
 														<span class="icon-search"></span>
 													</div> <img
-													src="${sessionScope.gallryImageURL}${editPhotoDetail.fileName}"
+													src="${sessionScope.gallryImageURL}thumbnail${editPhotoDetail.fileName}"
 													alt="${editPhotoDetail.title}" class="img-responsive">
 												</a>
 											</div>
