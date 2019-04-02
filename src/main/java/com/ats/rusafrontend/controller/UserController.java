@@ -27,16 +27,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
-import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.Info;
-import com.ats.rusafrontend.model.ContactUs;
 import com.ats.rusafrontend.model.EventRegistration;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
 import com.ats.rusafrontend.model.OtpResponse;
-import com.ats.rusafrontend.model.PageMetaData;
 import com.ats.rusafrontend.model.Registration;
-import com.ats.rusafrontend.reCaptcha.VerifyRecaptcha;
+
 
 @Controller
 @Scope("session")
@@ -166,10 +163,12 @@ public class UserController {
 	public String insertUserRegistration(HttpServletRequest request, HttpServletResponse response) {
 
 		String uuid = null;
+		
 		try {
 			Registration registration = new Registration();
 
 			int type = Integer.parseInt(request.getParameter("userType"));
+			
 			if (type == 1) {
 				String email = request.getParameter("email");
 				String altEmail1 = request.getParameter("altEmail");
@@ -191,7 +190,7 @@ public class UserController {
 				registration.setMobileNumber(mobile);
 				registration.setAuthorizedPerson(authour);
 				registration.setDob(DateConvertor.convertToYMD(dob));
-
+				
 			}
 			if (type == 2) {
 				String collegeEmail = request.getParameter("collegeEmail");
@@ -214,7 +213,7 @@ public class UserController {
 				registration.setDepartmentName(collegeDept);
 				registration.setDesignationName(designation);
 				registration.setUserType(2);
-
+			
 			}
 			if (type == 3) {
 				String uniEmail = request.getParameter("uniEmail");
@@ -235,7 +234,7 @@ public class UserController {
 				registration.setDepartmentName(uniDept);
 				registration.setDesignationName(uniDes);
 				registration.setUserType(3);
-
+				
 			}
 
 			Date date = new Date(); // your date
@@ -252,11 +251,11 @@ public class UserController {
 			registration.setDelStatus(1);
 			registration.setRegisterVia("web");
 
-			// contactUs.setRemark(null);
-
+			
 			Registration res = rest.postForObject(Constant.url + "/saveReg", registration, Registration.class);
 
 		} catch (Exception e1) {
+			System.out.println("ex " +e1.getMessage());
 			e1.printStackTrace();
 		}
 
@@ -286,8 +285,7 @@ public class UserController {
 	public ModelAndView verifyOtpProcess(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
 		String userOtp = request.getParameter("userOtp");
-		String uuid = request.getParameter("uuid");
-		//int type = Integer.parseInt(request.getParameter("type")); 
+		String uuid = request.getParameter("uuid"); 
 		System.out.println("UUID :" + uuid + ", UserOTP :" + userOtp);
 
 		ModelAndView mav = new ModelAndView("otp");
@@ -300,7 +298,8 @@ public class UserController {
 			if (userOtp.equalsIgnoreCase("") || userOtp == null) {
 				mav = new ModelAndView("otp");
 				mav.addObject("uuid", uuid);
-				mav.addObject("msg", "Invalid Otp");
+				//mav.addObject("msg", "Invalid Otp");
+				session.setAttribute("errorMsg", "Invalid OTP !");
 			} else {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -311,18 +310,19 @@ public class UserController {
 
 				if (verifyOtp.isError() == false) {
 					mav = new ModelAndView("registration");
+					session.setAttribute("success", "Registration Successful !");
 				} else {
 					mav = new ModelAndView("otp");
 					mav.addObject("uuid", uuid);
-
-					System.out.println("Invalid login credentials");
-					mav.addObject("msg", "Invalid login");
+					session.setAttribute("errorMsg", "Invalid OTP !");
+					
 				}
 			}
 		} catch (Exception e) {
 			System.out.println("HomeController Login API Excep:  " + e.getMessage());
 			e.printStackTrace();
 			mav.addObject("msg", "Invalid login");
+			session.setAttribute("errorMsg", "Invalid OTP !");
 		}
 
 		return mav;
@@ -519,7 +519,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView("content/previous-dashboard");
 		try {
-
+			int userDetail = (int) session.getAttribute("UserDetail");
 			// session.setAttribute("mapping", "upcomingEvents");
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
@@ -541,6 +541,12 @@ public class UserController {
 				NewsDetails[] previousList = rest.postForObject(Constant.url + "/getAllPreviousEvents", map1,
 						NewsDetails[].class);
 				List<NewsDetails> previous = new ArrayList<NewsDetails>(Arrays.asList(previousList));
+				
+				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("regId", userDetail); 
+				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				model.addObject("editReg", editReg);
 				System.out.println("list_new: " + previous.toString());
 				model.addObject("previous", previous);
 				model.addObject("typeId", 1);

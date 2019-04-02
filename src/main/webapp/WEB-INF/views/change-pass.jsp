@@ -112,7 +112,7 @@ function checkPassword(form) {
 
     // If same return True. 
     else{ 
-        alert("Password Match") 
+       // alert("Password Match") 
         return true; 
     } 
 } 
@@ -135,8 +135,7 @@ function checkPassword(form) {
 			<a href="/">Home</a> > <a
 				href="${pageContext.request.contextPath}/changePass">Change Password</a> >
 				
-				    <a href="${pageContext.request.contextPath}/logout" class="last-update" style="margin:left=100px;">Logout <span class="glyphicon glyphicon-log-out"></span></a>
-   
+				 
 		</div>
 	</div>
 
@@ -197,7 +196,21 @@ function checkPassword(form) {
 			</div>
 <!-- onchange="getCheck()"  -->
 			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
-			  
+			       <c:if test="${sessionScope.success != null}">
+    		         
+			<div class="col-12 col-sm-12 col-lg-12 ">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong>Success : </strong> ${success}</div>
+       </div></c:if>
+     <% session.removeAttribute("success"); %> 
+       <c:if test="${sessionScope.errorMsg != null}">
+     	<div class="col-12 col-sm-12 col-lg-12 ">
+    		          <div class="alert alert-danger ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong>Error : </strong> ${errorMsg}</div>
+       </div>
+       </c:if>    <% session.removeAttribute("errorMsg"); %> 
 				<h2>Change Password</h2>
 
 				<form method="post"

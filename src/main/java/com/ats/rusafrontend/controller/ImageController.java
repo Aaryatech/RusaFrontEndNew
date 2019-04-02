@@ -625,14 +625,7 @@ public class ImageController {
 			
 
 			} else {
-				if (pagePdf.get(0).getOriginalFilename() == null || pagePdf.get(0).getOriginalFilename() == "") {
-					try {
-						ss = "redirect:/eventDetailfront/" + newsblogsId;
-					} catch (Exception e) {
-						// TODO: handle exception
-						e.printStackTrace();
-					}
-				} else {
+				
 
 					try {
 
@@ -667,7 +660,7 @@ public class ImageController {
 					} catch (Exception e) {
 						// TODO: handle exception
 						e.printStackTrace();
-					}
+				
 				}
 			}
 			ss = "redirect:/eventDetailfront/" + newsblogsId;

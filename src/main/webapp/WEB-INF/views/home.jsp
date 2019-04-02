@@ -141,7 +141,7 @@
 						<p>${string2}</p>
 						<div class="more" style="clear: both">
 							<a
-								href="${pageContext.request.contextPath}/info/${getCMSDesc.pageSlug}">more...
+								href="${pageContext.request.contextPath}/info/${getCMSDesc.pageSlug}">Read More
 							</a>
 						</div>
 					</div>
@@ -164,7 +164,7 @@
 									varStatus="count">
 									<h5>
 										<a
-											href="${pageContext.request.contextPath}/eventDetail/${eventList.newsblogsId}">
+											href="${pageContext.request.contextPath}/eventDetailfront/${eventList.newsblogsId}">
 											${eventList.heading}</a>
 									</h5>
 
@@ -179,7 +179,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="eventList">Read More</a>
+					<a href="${pageContext.request.contextPath}/eventfrontList">Read More</a>
 				</div>
 			</div>
 

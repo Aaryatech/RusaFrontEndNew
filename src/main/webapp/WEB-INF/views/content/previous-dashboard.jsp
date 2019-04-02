@@ -192,7 +192,8 @@
                                         <tr>
                                             <th>Sr. no</th>
                                             <th>Event Name</th>
-                                            <th>Download</th>                                          
+                                            <th>Download</th>   
+                                            <th>Event Applied Status</th>                                        
                                             <th>Detail</th>
                                         </tr>
                                     </thead>
@@ -209,6 +210,15 @@
                                             </c:when>
                                             <c:otherwise>
                                               <td> -- </td>
+                                         
+                                            </c:otherwise>
+                                            </c:choose>
+                                              <c:choose>
+                                            <c:when test="${previous.exInt1==1}">
+                                              <td>YES</td>                                         
+                                            </c:when>
+                                            <c:otherwise>
+                                              <td> NO </td>
                                          
                                             </c:otherwise>
                                             </c:choose>

@@ -253,9 +253,10 @@ public class loginController {
 		Info info = new Info();
 		try {
 			int userDetail = (int) session.getAttribute("UserDetail");
-			if (newPass.equalsIgnoreCase("") || newPass == null) {
+			if (newPass.equalsIgnoreCase(" ") || newPass == null) {
 				mav = new ModelAndView("change-pass");
-				mav.addObject("msg", "Invalid password");
+				session.setAttribute("errorMsg", "Invalid Password !");
+				
 			} else {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -265,7 +266,7 @@ public class loginController {
 				info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
 				mav = new ModelAndView("change-pass");
 				System.out.println(info.toString());
-
+			
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("regId", userDetail);
 				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1,
@@ -273,6 +274,7 @@ public class loginController {
 				String dobDate = DateConvertor.convertToDMY(editReg.getDob());
 				mav.addObject("editReg", editReg);
 				mav.addObject("dobDate", dobDate);
+				session.setAttribute("success", "Successfully Updated Password !");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -317,7 +319,7 @@ public class loginController {
 
 		try {
 
-			if (userOtp.equalsIgnoreCase("") || userOtp == null) {
+			if (userOtp.equalsIgnoreCase(" ") || userOtp == null) {
 				mav = new ModelAndView("editRegOtp");
 				mav.addObject("uuid", uuid);
 				mav.addObject("msg", "Invalid Otp");
@@ -644,23 +646,18 @@ public class loginController {
 			else
 			{
 				try {
-
-					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-					map.add("regId", userDetail);
-					map.add("newsblogsId", newsblogsId);
-					map.add("pdfName", pdfName);
-
-					info = rest.postForObject(Constant.url + "/uploadEventDocument", map, Info.class);
-
-					System.out.println(info.toString());
-					if (info.isError() == false) {
-						
-						session.setAttribute("success", "Successfully Registed Event !");
-						
-					}			
-					
-					
-					upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
+					/*
+					 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+					 * Object>(); map.add("regId", userDetail); map.add("newsblogsId", newsblogsId);
+					 * map.add("pdfName", pdfName);
+					 * 
+					 * info = rest.postForObject(Constant.url + "/uploadEventDocument", map,
+					 * Info.class);
+					 * 
+					 * System.out.println(info.toString());
+					 * 
+					 * upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
+					 */
 				
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -702,7 +699,8 @@ public class loginController {
 			int userDetail = (int) session.getAttribute("UserDetail");
 			if (newPass.equalsIgnoreCase(" ") || newPass == null) {
 				
-				mav = new ModelAndView("changePass");				
+				mav = new ModelAndView("changePass");	
+				session.setAttribute("errorMsg", "Invalid Password !");	
 			} else {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -714,7 +712,7 @@ public class loginController {
 				{
 					mav = new ModelAndView("login");
 					System.out.println(info.toString());
-					//session.setAttribute("success", "Successfully Updated Password !");					
+					session.setAttribute("success", "Successfully Updated Password !");					
 				}
 						
 			}

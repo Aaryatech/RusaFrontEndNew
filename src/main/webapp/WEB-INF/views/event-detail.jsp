@@ -78,7 +78,7 @@
 }
 </style>
 </head>
-<body>
+<body onload="show()">
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
 	<jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include>
@@ -164,13 +164,14 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <strong>Success : </strong> ${success}</div>
        </div></c:if>
+     <% session.removeAttribute("success"); %> 
        <c:if test="${sessionScope.errorMsg != null}">
      	<div class="col-12 col-sm-12 col-lg-12 ">
     		          <div class="alert alert-danger ">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <strong>Error : </strong> ${errorMsg}</div>
        </div>
-       </c:if>
+       </c:if>    <% session.removeAttribute("errorMsg"); %> 
            
                     <div class="row">
                     	<c:if test="${not empty event.featuredImage}">
@@ -222,7 +223,12 @@
              </div>
           </div>
     </div></div>
- 
+ <script type="text/javascript">
+ function show()
+ {
+	
+ }
+ </script>
 	
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>

@@ -81,12 +81,18 @@
  
 	<div class="login">
 		<div class="container" id="main-content">
+			<c:if test="${sessionScope.success != null}">
+			<div class="col-12 col-sm-12 col-lg-12 ">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong>Success : </strong> ${success}</div>
+       </div></c:if>   <% session.removeAttribute("success"); %>
 		<c:if test="${sessionScope.errorMsg != null}">
 			<div class="col-12 col-sm-12 col-lg-12 ">
     		          <div class="alert alert-danger ">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <strong>Error : </strong> ${errorMsg}</div>
-       </div></c:if>
+       </div></c:if>  <% session.removeAttribute("errorMsg"); %>
 
 	
 	  

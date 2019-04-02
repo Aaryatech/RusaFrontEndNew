@@ -1,5 +1,7 @@
  <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib
+	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	//allow access only if session exists
@@ -80,7 +82,18 @@
 
 	<div class="login">
 		<div class="container" id="main-content">
-
+	<c:if test="${sessionScope.success != null}">
+			<div class="col-12 col-sm-12 col-lg-12 ">
+    		          <div class="alert alert-success ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong>Success : </strong> ${success}</div>
+       </div></c:if>   <% session.removeAttribute("success"); %>
+		<c:if test="${sessionScope.errorMsg != null}">
+			<div class="col-12 col-sm-12 col-lg-12 ">
+    		          <div class="alert alert-danger ">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <strong>Error : </strong> ${errorMsg}</div>
+       </div></c:if>  <% session.removeAttribute("errorMsg"); %> 
 			<div class="login-box register-box">
 				<div class="login-header">
 					<h5>Register</h5>
@@ -178,8 +191,7 @@
 									</div>
 									
 								<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Authorized
-									Name <span class="text-danger">*</span>
+									<label>Authorized Person Name <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="authour"
 									placeholder="Name of Authorized" id="authour" required>
 							</div>
@@ -245,7 +257,7 @@
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Authorized Name
+									<label>Authorized Person Name
 									<span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="collegeAuthour"
 									placeholder="Name of Authorized" id="cAuthour">
@@ -303,8 +315,7 @@
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									
-									 <label>Authorized
-									Name <span class="text-danger">*</span>
+									 <label>Authorized Person Name <span class="text-danger">*</span>
 								</label> <input type="text" class="form-control" name="uniAuthour"
 									placeholder="Name of Authorized" id="uniAuthour">
 								</div>
