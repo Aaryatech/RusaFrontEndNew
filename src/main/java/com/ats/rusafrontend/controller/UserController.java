@@ -271,7 +271,7 @@ public class UserController {
 			/*
 			 * HttpSession session = request.getSession(); session.setAttribute("suuid",
 			 * suuid);
-			 */
+			 */ 
 			model.addObject("uuid", uuid);
 
 		} catch (Exception e) {
