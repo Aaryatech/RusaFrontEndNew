@@ -32,6 +32,7 @@ import com.ats.rusafrontend.model.EventRegistration;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
 import com.ats.rusafrontend.model.OtpResponse;
+import com.ats.rusafrontend.model.PageMetaData;
 import com.ats.rusafrontend.model.Registration;
 
 
@@ -40,7 +41,7 @@ import com.ats.rusafrontend.model.Registration;
 public class UserController {
 
 	RestTemplate rest = new RestTemplate();
-
+	int flag = 0;
 	/*
 	 * <dependency> <groupId>com.fasterxml.uuid</groupId>
 	 * <artifactId>java-uuid-generator</artifactId> <version>3.1.4</version>
@@ -52,7 +53,24 @@ public class UserController {
 
 		ModelAndView model = new ModelAndView("login");
 		try {
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "login");
 
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "login");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,46 +87,64 @@ public class UserController {
 		String password = request.getParameter("password");
 		ModelAndView mav = new ModelAndView("login");
 		try {
+			session.setAttribute("mapping", "loginResponse");
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("userName", userName);
-			map.add("password", password);
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
 
-			Registration verify = rest.postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
-			if (verify.isError() == false) {
-				if(verify.getExInt1()==0)
-				{
-					mav = new ModelAndView("changePass");
-					session.setAttribute("UserDetail", verify.getRegId());
-				}
-				else
-				{
-				mav = new ModelAndView("content/upcoming-dashboard");
-				System.out.println("Login :" + verify.getRegId());
-				session.setAttribute("UserDetail", verify.getRegId());
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-
-				map1.add("langId", 1);
-				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
-						List.class);
-				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
-				System.out.println("list_new: " + upcoming.toString());
-				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
-				map2.add("regId",  verify.getRegId()); 
-				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
-				mav.addObject("editReg", editReg);
-				mav.addObject("upcoming", upcoming);
-				// model.addObject("pageMetaData", pageMetaData);
-				mav.addObject("typeId", 2);
-				session.setAttribute("successMsg", "Login Successful !");			
-				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
-				}
+				mav = new ModelAndView("maintainance");
+				mav.addObject("maintainance", maintainance);
 			} else {
-				mav = new ModelAndView("login");
-				System.out.println("Invalid login credentials");				
-				session.setAttribute("errorMsg", true);
-				session.setAttribute("errorMsg", "Invalid login credentials !");
+				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
+				map3.add("slugName", "loginResponse");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
+						PageMetaData.class);
+				mav.addObject("pageMetaData", pageMetaData);
+				mav.addObject("siteKey", Constant.siteKey);
+				mav.addObject("flag", flag);
+				flag = 0;
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("userName", userName);
+				map.add("password", password);
+
+				Registration verify = rest.postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
+				if (verify.isError() == false) {
+					if(verify.getExInt1()==0)
+					{
+						mav = new ModelAndView("changePass");
+						session.setAttribute("UserDetail", verify.getRegId());
+					}
+					else
+					{
+					mav = new ModelAndView("content/upcoming-dashboard");
+					System.out.println("Login :" + verify.getRegId());
+					session.setAttribute("UserDetail", verify.getRegId());
+					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+					map1.add("langId", 1);
+					List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+							List.class);
+					// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
+					System.out.println("list_new: " + upcoming.toString());
+					MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+					map2.add("regId",  verify.getRegId()); 
+					Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
+					mav.addObject("editReg", editReg);
+					mav.addObject("upcoming", upcoming);
+					// model.addObject("pageMetaData", pageMetaData);
+					mav.addObject("typeId", 2);
+					session.setAttribute("successMsg", "Login Successful !");			
+					session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+					}
+				} else {
+					mav = new ModelAndView("login");
+					System.out.println("Invalid login credentials");				
+					session.setAttribute("errorMsg", true);
+					session.setAttribute("errorMsg", "Invalid login credentials !");
+				}
 			}
+			
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -123,7 +159,22 @@ public class UserController {
 		HttpSession session = request.getSession();
 
 		try {			
-		
+			session.setAttribute("mapping", "dashboard");
+
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
+				map3.add("slugName", "dashboard");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
 			int userDetail = (int) session.getAttribute("UserDetail");
 			System.out.println("userDetail : "+userDetail);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -139,6 +190,7 @@ public class UserController {
 			model.addObject("upcoming", upcoming);
 			model.addObject("typeId", 2);
 			session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -151,7 +203,24 @@ public class UserController {
 
 		ModelAndView model = new ModelAndView("registration");
 		try {
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "registration");
 
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "registration");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -176,9 +245,9 @@ public class UserController {
 				String collegeName = request.getParameter("collegeName");
 				String university = request.getParameter("university");
 				String dept = request.getParameter("dept");
-				String dob = request.getParameter("dob");
+			//	String dob = request.getParameter("dob");
 				String mobile = request.getParameter("mobile");
-				String authour = request.getParameter("authour");
+				String designation = request.getParameter("authour");
 
 				registration.setEmails(email);
 				registration.setAlternateEmail(altEmail1);
@@ -188,8 +257,7 @@ public class UserController {
 				registration.setDepartmentName(dept);
 				registration.setUserType(1);
 				registration.setMobileNumber(mobile);
-				registration.setAuthorizedPerson(authour);
-				registration.setDob(DateConvertor.convertToYMD(dob));
+				registration.setDesignationName(designation);
 				
 			}
 			if (type == 2) {
@@ -269,9 +337,21 @@ public class UserController {
 		ModelAndView model = new ModelAndView("otp");
 		try {
 			/*
-			 * HttpSession session = request.getSession(); session.setAttribute("suuid",
-			 * suuid);
-			 */ 
+			 * HttpSession session = request.getSession(); session.setAttribute("mapping",
+			 * "verifyOtp");
+			 * 
+			 * Maintainance maintainance = rest.getForObject(Constant.url +
+			 * "/checkIsMaintenance", Maintainance.class); if
+			 * (maintainance.getMaintenanceStatus() == 1) {
+			 * 
+			 * model = new ModelAndView("maintainance"); model.addObject("maintainance",
+			 * maintainance); } else { MultiValueMap<String, Object> map = new
+			 * LinkedMultiValueMap<String, Object>(); map.add("slugName", "login");
+			 * PageMetaData pageMetaData = rest.postForObject(Constant.url +
+			 * "/getPageMetaData", map, PageMetaData.class); model.addObject("pageMetaData",
+			 * pageMetaData); model.addObject("siteKey", Constant.siteKey);
+			 * model.addObject("flag", flag); flag = 0; }
+			 */
 			model.addObject("uuid", uuid);
 
 		} catch (Exception e) {
@@ -295,7 +375,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		try {
 
-			if (userOtp.equalsIgnoreCase("") || userOtp == null) {
+			if (userOtp.equalsIgnoreCase(" ") || userOtp == null) {
 				mav = new ModelAndView("otp");
 				mav.addObject("uuid", uuid);
 				//mav.addObject("msg", "Invalid Otp");
@@ -332,8 +412,24 @@ public class UserController {
 	public ModelAndView resendOtpProcess(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mav = new ModelAndView("otp");
+		HttpSession session = request.getSession();
 		try {
+			session.setAttribute("mapping", "resendOtpProcess");
 
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				mav = new ModelAndView("maintainance");
+				mav.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
+				map3.add("slugName", "resendOtpProcess");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
+						PageMetaData.class);
+				mav.addObject("pageMetaData", pageMetaData);
+				mav.addObject("siteKey", Constant.siteKey);
+				mav.addObject("flag", flag);
+				flag = 0;
 			String uuid = request.getParameter("uuid");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("uuid", uuid);
@@ -350,7 +446,7 @@ public class UserController {
 			}
 
 			mav.addObject("uuid", uuid);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -469,24 +565,24 @@ public class UserController {
 		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView("content/upcoming-dashboard");
 		try {
+			session.setAttribute("mapping", "upcomingEvents");
 
-			int userDetail = (int) session.getAttribute("UserDetail");
-			// session.setAttribute("mapping", "upcomingEvents");
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
-
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-
-				/*
-				 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
-				 * Object>(); map.add("slugName", "upcomingEvents"); PageMetaData pageMetaData =
-				 * rest.postForObject(Constant.url + "/getPageMetaData", map,
-				 * PageMetaData.class);
-				 */
-				
+				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
+				map3.add("slugName", "upcomingEvents");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
+			int userDetail = (int) session.getAttribute("UserDetail");
+							
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
@@ -520,7 +616,7 @@ public class UserController {
 		ModelAndView model = new ModelAndView("content/previous-dashboard");
 		try {
 			int userDetail = (int) session.getAttribute("UserDetail");
-			// session.setAttribute("mapping", "upcomingEvents");
+			session.setAttribute("mapping", "previousEvents");
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
@@ -528,13 +624,14 @@ public class UserController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-
-				/*
-				 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
-				 * Object>(); map.add("slugName", "upcomingEvents"); PageMetaData pageMetaData =
-				 * rest.postForObject(Constant.url + "/getPageMetaData", map,
-				 * PageMetaData.class);
-				 */
+				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
+				map3.add("slugName", "previousEvents");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
@@ -570,14 +667,29 @@ public class UserController {
 		ModelAndView model = new ModelAndView("change-pass");
 		HttpSession session = request.getSession();
 		try {
-			
+			session.setAttribute("mapping", "changePass");
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
+				map3.add("slugName", "changePass");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
 			int userDetail = (int) session.getAttribute("UserDetail");
 			System.out.println("userDetail : "+userDetail);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("regId", userDetail); 
 			Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 			model.addObject("editReg", editReg);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -629,8 +741,25 @@ public class UserController {
 	public ModelAndView forgetPass(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("forget-pass");
+		HttpSession session = request.getSession();
 		try {
+			session.setAttribute("mapping", "forgetPass");
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
+				map3.add("slugName", "forgetPass");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -230,20 +230,9 @@
 								</label> <input type="text" class="form-control" name="dept" value="${editReg.departmentName}"
 									placeholder="Name of Department" id="depatment" readonly> 
 									</div>
-									
-									
-									<div class="col-12 col-sm-12 col-lg-6">
-									
-									<label>Date
-									Of Birth <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dob" value="${dobDate}"
-									placeholder="Date Of Birth" id="dob" readonly> 
-									</div>
-									
-								<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Authorized
-									Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="authour" value="${editReg.authorizedPerson}"
+									<div class="col-12 col-sm-12 col-lg-6">	
+									<label>Designation of Person <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="authour" value="${editReg.designationName}"
 									placeholder="Name of Authorized" id="authour" readonly>
 							</div>
 							</div>

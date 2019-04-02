@@ -38,6 +38,7 @@ import com.ats.rusafrontend.model.Registration;
 public class loginController {
 	RestTemplate rest = new RestTemplate();
 	Registration editReg = new Registration();
+	int flag = 0;
 	/*
 	 * @RequestMapping(value = "/editProfile", method = RequestMethod.GET) public
 	 * ModelAndView editProfile(HttpServletRequest request, HttpServletResponse
@@ -56,16 +57,33 @@ public class loginController {
 		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView("edit-profile");
 		try {
+		
+			session.setAttribute("mapping", "myProfile");
+
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "myProfile");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
 			int userDetail = (int) session.getAttribute("UserDetail");
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("regId", userDetail);
-			editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+			map1.add("regId", userDetail);
+			editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
 			String dobDate = DateConvertor.convertToDMY(editReg.getDob());
 			model.addObject("editReg", editReg);
 			model.addObject("dobDate", dobDate);
 			model.addObject("isEdit", 1);
 			// model.addObject("url", Constant.bannerImageURL);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,6 +97,22 @@ public class loginController {
 		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView("edit-my-profile");
 		try {
+			session.setAttribute("mapping", "editProfile");
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
+				map3.add("slugName", "editProfile");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
 			int userDetail = (int) session.getAttribute("UserDetail");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("regId", userDetail);
@@ -88,7 +122,7 @@ public class loginController {
 			model.addObject("dobDate", dobDate);
 			model.addObject("isEdit", 1);
 			// model.addObject("url", Constant.bannerImageURL);
-
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,9 +149,9 @@ public class loginController {
 				String collegeName = request.getParameter("collegeName");
 				String university = request.getParameter("university");
 				String dept = request.getParameter("dept");
-				String dob = request.getParameter("dob");
+			//	String dob = request.getParameter("dob");
 				String mobile = request.getParameter("mobile");
-				String authour = request.getParameter("authour");
+				String designation = request.getParameter("authour");
 
 				editReg.setAlternateEmail(altEmail1);
 				editReg.setName(name);
@@ -125,8 +159,8 @@ public class loginController {
 				editReg.setUnversityName(university);
 				editReg.setDepartmentName(dept);
 				editReg.setUserType(1);
-				editReg.setAuthorizedPerson(authour);
-				editReg.setDob(DateConvertor.convertToYMD(dob));
+				editReg.setDesignationName(designation);
+				//editReg.setDob(DateConvertor.convertToYMD(dob));
 
 				if (editReg.getEmails().equals(email)) {
 					editReg.setEmails(email);
@@ -252,6 +286,22 @@ public class loginController {
 
 		Info info = new Info();
 		try {
+			session.setAttribute("mapping", "changePassword");
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				mav = new ModelAndView("maintainance");
+				mav.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
+				map3.add("slugName", "changePassword");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
+						PageMetaData.class);
+				mav.addObject("pageMetaData", pageMetaData);
+				mav.addObject("siteKey", Constant.siteKey);
+				mav.addObject("flag", flag);
+				flag = 0;
 			int userDetail = (int) session.getAttribute("UserDetail");
 			if (newPass.equalsIgnoreCase(" ") || newPass == null) {
 				mav = new ModelAndView("change-pass");
@@ -276,6 +326,7 @@ public class loginController {
 				mav.addObject("dobDate", dobDate);
 				session.setAttribute("success", "Successfully Updated Password !");
 			}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -289,6 +340,7 @@ public class loginController {
 
 		ModelAndView model = new ModelAndView("editRegOtp");
 		try {
+			
 			/*
 			 * HttpSession session = request.getSession(); session.setAttribute("suuid",
 			 * suuid);
@@ -678,8 +730,26 @@ public class loginController {
 	public ModelAndView firstChangePass(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("changePass");
+		HttpSession session = request.getSession();	
 		try {
+				
+			session.setAttribute("mapping", "firstChangePass");
 
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "firstChangePass");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+				model.addObject("pageMetaData", pageMetaData);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				flag = 0;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -696,6 +766,22 @@ public class loginController {
 
 		Info info = new Info();
 		try {
+			session.setAttribute("mapping", "firstChangePassword");
+
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				mav = new ModelAndView("maintainance");
+				mav.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("slugName", "firstChangePassword");
+				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+						PageMetaData.class);
+				mav.addObject("pageMetaData", pageMetaData);
+				mav.addObject("siteKey", Constant.siteKey);
+				mav.addObject("flag", flag);
+				flag = 0;
 			int userDetail = (int) session.getAttribute("UserDetail");
 			if (newPass.equalsIgnoreCase(" ") || newPass == null) {
 				
@@ -703,18 +789,18 @@ public class loginController {
 				session.setAttribute("errorMsg", "Invalid Password !");	
 			} else {
 
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("regId", userDetail);
-				map.add("password", newPass);
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("regId", userDetail);
+				map1.add("password", newPass);
 
-				info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
+				info = rest.postForObject(Constant.url + "/changePassword", map1, Info.class);
 				if(info.isError() == false)
 				{
 					mav = new ModelAndView("login");
 					System.out.println(info.toString());
 					session.setAttribute("success", "Successfully Updated Password !");					
 				}
-						
+			}		
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -174,7 +174,7 @@
 							<div class="col-12 col-sm-12 col-lg-6">		
 									<label>Alternate
 									Email-ID</label> <input type="email" class="form-control" value="${editReg.alternateEmail}"
-									name="altEmail" placeholder="Alternate Email" id="altEmail">
+									name="altEmail" placeholder="Alternate Email" id="altEmail" onchange="trim(this)">
 					</div>
 					
 					<div class="col-12 col-sm-12 col-lg-6">
@@ -192,13 +192,13 @@
 									
 									<input type="text"
 									class="form-control" name="mobile" pattern="[7-9]{1}[0-9]{9}"
-									maxlength="10" placeholder="Mobile No." id="mobile"  value="${editReg.mobileNumber}"> 
+									maxlength="10" placeholder="Mobile No." id="mobile" onchange="trim(this)" value="${editReg.mobileNumber}"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">
 									<label>College Name <span
 									class="text-danger">*</span></label> <input type="text"
-									class="form-control" name="collegeName" value="${editReg.collegeName}"
+									class="form-control" name="collegeName" onchange="trim(this)" value="${editReg.collegeName}"
 									placeholder="College Name" id="collegeName"> 
 									</div>
 									
@@ -213,23 +213,13 @@
 									
 									<label>Name
 									of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dept" value="${editReg.departmentName}"
+								</label> <input type="text" class="form-control" name="dept" onchange="trim(this)" value="${editReg.departmentName}"
 									placeholder="Name of Department" id="depatment"> 
 									</div>
-									
-									
-									<div class="col-12 col-sm-12 col-lg-6">
-									
-									<label>Date
-									Of Birth <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dob" value="${dobDate}"
-									placeholder="Date Of Birth" id="dob"> 
-									</div>
-									
+																		
 								<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Authorized
-									Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="authour" value="${editReg.authorizedPerson}"
+									<label>Designation of Person <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="authour" onchange="trim(this)" value="${editReg.designationName}"
 									placeholder="Name of Authorized" id="authour">
 							</div>
 							</div>
@@ -240,48 +230,48 @@
 								<label>Email-ID <span class="text-danger">*</span></label> 
 								
 								<input
-									type="email" class="form-control" name="collegeEmail" value="${editReg.emails}"
+									type="email" class="form-control" name="collegeEmail" onchange="trim(this)" value="${editReg.emails}"
 									placeholder="Email" id="collegeEmail"> 
 									</div>
 									
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Alternate
-									Email-ID</label> <input type="email" class="form-control" value="${editReg.alternateEmail}"
+									Email-ID</label> <input type="email" class="form-control" onchange="trim(this)" value="${editReg.alternateEmail}"
 									name="altEmail" placeholder="Alternate Email" id="altEmail">
 							</div>
 							
 							
 							<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="collegeMobile"  value="${editReg.mobileNumber}"
+									type="text" class="form-control" name="collegeMobile" onchange="trim(this)" value="${editReg.mobileNumber}"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 									placeholder="Mobile No." id="collegeNo" maxlength="10">
 							</div>
 					
 					<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Institute Name <span class="text-danger">*</span></label>
-								<input type="text" class="form-control" name="institute" value="${editReg.name}"
+								<input type="text" class="form-control" name="institute" onchange="trim(this)" value="${editReg.name}"
 									placeholder="Institute Name" id="instituteName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>AISHE
-									Code</label> <input type="text" class="form-control" name="aisheName" value="${editReg.aisheCode}"
+									Code</label> <input type="text" class="form-control" onchange="trim(this)" name="aisheName" value="${editReg.aisheCode}"
 									placeholder="AISHE Code" id="aisheName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>University
 									Affiliated <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="univ" value="${editReg.unversityName}" 
+								</label> <input type="text" class="form-control" name="univ" onchange="trim(this)" value="${editReg.unversityName}" 
 									placeholder="University Affiliated" id="univ"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Name
 									of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dept" value="${editReg.departmentName}"
+								</label> <input type="text" class="form-control" name="dept" onchange="trim(this)" value="${editReg.departmentName}"
 									placeholder="Name of Department" id="collegeDept"> 
 									</div>
 									
@@ -289,14 +279,14 @@
 									<label>Designation
 									<span class="text-danger">*</span>
 								</label> <input type="text" class="form-control"
-									name="designationCollege" placeholder="Designation of Person" value="${editReg.designationName}"
+									name="designationCollege" placeholder="Designation of Person" onchange="trim(this)" value="${editReg.designationName}"
 									id="designationCollege"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Authorized Name
 									<span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="collegeAuthour" value="${editReg.authorizedPerson}"
+								</label> <input type="text" class="form-control" name="collegeAuthour" onchange="trim(this)" value="${editReg.authorizedPerson}"
 									placeholder="Name of Authorized" id="cAuthour">
 									</div>
 							</div>
@@ -305,47 +295,47 @@
 							<div class="form-group row row-eq-height" style="display: none" id="university">
 								<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Email-ID <span class="text-danger">*</span></label> <input
-									type="email" class="form-control" name="uniEmail" value="${editReg.emails}"
+									type="email" class="form-control" name="uniEmail" onchange="trim(this)" value="${editReg.emails}"
 									placeholder="Email" id="uniEmail"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Alternate
-									Email-ID</label> <input type="email" class="form-control" value="${editReg.alternateEmail}"
+									Email-ID</label> <input type="email" class="form-control" onchange="trim(this)" value="${editReg.alternateEmail}"
 									name="altEmail" placeholder="Alternate Email" id="altEmail">
 							</div>
 
 								<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="uniMobile"  value="${editReg.mobileNumber}"
+									type="text" class="form-control" name="uniMobile" onchange="trim(this)" value="${editReg.mobileNumber}"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 									placeholder="Mobile No." id="uniNo" maxlength="10"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>AISHE
-									Code</label> <input type="text" class="form-control" name="aisheName" value="${editReg.aisheCode}"
+									Code</label> <input type="text" class="form-control" onchange="trim(this)" name="aisheName" value="${editReg.aisheCode}"
 									placeholder="AISHE Code" id="aisheName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>University
 									Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniName" value="${editReg.unversityName}" 
+								</label> <input type="text" class="form-control" name="uniName" onchange="trim(this)" value="${editReg.unversityName}" 
 									placeholder="University Name" id="uniName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Name
 									of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniDept" value="${editReg.departmentName}"
+								</label> <input type="text" class="form-control" name="uniDept" onchange="trim(this)" value="${editReg.departmentName}"
 									placeholder="Name of Department" id="uniDept"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Designation
 									<span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniDes" value="${editReg.designationName}"
+								</label> <input type="text" class="form-control" name="uniDes" onchange="trim(this)" value="${editReg.designationName}"
 									placeholder="Designation of Person" id="uniDes">
 									</div>
 									
@@ -354,7 +344,7 @@
 									
 									 <label>Authorized
 									Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniAuthour" value="${editReg.authorizedPerson}"
+								</label> <input type="text" class="form-control" name="uniAuthour" onchange="trim(this)" value="${editReg.authorizedPerson}"
 									placeholder="Name of Authorized" id="uniAuthour">
 								</div>
 							

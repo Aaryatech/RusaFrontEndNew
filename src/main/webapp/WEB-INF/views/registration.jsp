@@ -130,13 +130,13 @@
 					<div class="col-12 col-sm-12 col-lg-6">
 								<label>Email-ID <span class="text-danger">*</span></label> 
 								<input
-									type="email" class="form-control" name="email"
+									type="email" class="form-control" name="email" onchange="trim(this)"
 									placeholder="Email" id="email" required> 
 					</div>
 					
 							<div class="col-12 col-sm-12 col-lg-6">		
 									<label>Alternate
-									Email-ID</label> <input type="email" class="form-control"
+									Email-ID</label> <input type="email" class="form-control" onchange="trim(this)"
 									name="altEmail" placeholder="Alternate Email" id="altEmail" >
 					</div>
 					
@@ -145,7 +145,7 @@
 								<label>Full Name <span class="text-danger">*</span></label> 
 								
 								<input
-									type="text" class="form-control" name="name" placeholder="Name"
+									type="text" class="form-control" name="name" placeholder="Name" onchange="trim(this)"
 									id="fullname" required> 
 							</div>		
 									
@@ -154,22 +154,22 @@
 									class="text-danger">*</span></label> 
 									
 									<input type="text"
-									class="form-control" name="mobile" pattern="[7-9]{1}[0-9]{9}"
-									maxlength="10" placeholder="Mobile No." id="mobile"
-									maxlength="10" required> 
+									class="form-control" name="mobile" pattern="[7-9]{1}[0-9]{9}" onchange="trim(this)"
+									maxlength="10" placeholder="Mobile No." id="mobile" oninput="checkUnique(this.value,1)"
+									 required> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">
 									<label>College Name <span
 									class="text-danger">*</span></label> <input type="text"
-									class="form-control" name="collegeName"
+									class="form-control" name="collegeName" onchange="trim(this)"
 									placeholder="College Name" id="collegeName" required> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">
 									<label>University
 									Affiliated <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="university"
+								</label> <input type="text" class="form-control" name="university" onchange="trim(this)"
 									placeholder="University Affiliated" id="uniAff" required> 
 									</div>
 									
@@ -177,23 +177,15 @@
 									
 									<label>Name
 									of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dept"
+								</label> <input type="text" class="form-control" name="dept" onchange="trim(this)"
 									placeholder="Name of Department" id="depatment" required> 
 									</div>
-									
-									
-									<div class="col-12 col-sm-12 col-lg-6">
-									
-									<label>Date
-									Of Birth <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dob"
-									placeholder="Date Of Birth" id="dob" required> 
-									</div>
+										
 									
 								<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Authorized Person Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="authour"
-									placeholder="Name of Authorized" id="authour" required>
+									<label>Designation of Person <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="authour" onchange="trim(this)"
+									placeholder="Designation of Person" id="authour" required>
 							</div>
 							</div>
 				
@@ -203,14 +195,14 @@
 								<label>Email-ID <span class="text-danger">*</span></label> 
 								
 								<input
-									type="email" class="form-control" name="collegeEmail"
+									type="email" class="form-control" name="collegeEmail" onchange="trim(this)"
 									placeholder="Email" id="collegeEmail" > 
 									</div>
 									
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Alternate
-									Email-ID</label> <input type="email" class="form-control"
+									Email-ID</label> <input type="email" class="form-control" onchange="trim(this)"
 									name="altEmail" placeholder="Alternate Email" id="altEmail" >
 							</div>
 							
@@ -219,32 +211,32 @@
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
 									type="text" class="form-control" name="collegeMobile"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="collegeNo" maxlength="10">
+									placeholder="Mobile No." id="collegeNo" onchange="trim(this)">
 							</div>
 					
 					<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Institute Name <span class="text-danger">*</span></label>
-								<input type="text" class="form-control" name="institute"
+								<input type="text" class="form-control" name="institute" onchange="trim(this)"
 									placeholder="Institute Name" id="instituteName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>AISHE
-									Code</label> <input type="text" class="form-control" name="aisheName"
+									Code</label> <input type="text" class="form-control" name="aisheName" onchange="trim(this)"
 									placeholder="AISHE Code" id="aisheName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>University
 									Affiliated <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="univ"
+								</label> <input type="text" class="form-control" name="univ" onchange="trim(this)"
 									placeholder="University Affiliated" id="univ"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Name
 									of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dept"
+								</label> <input type="text" class="form-control" name="dept" onchange="trim(this)"
 									placeholder="Name of Department" id="collegeDept"> 
 									</div>
 									
@@ -252,14 +244,14 @@
 									<label>Designation
 									<span class="text-danger">*</span>
 								</label> <input type="text" class="form-control"
-									name="designationCollege" placeholder="Designation of Person"
+									name="designationCollege" placeholder="Designation of Person" onchange="trim(this)"
 									id="designationCollege"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Authorized Person Name
 									<span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="collegeAuthour"
+								</label> <input type="text" class="form-control" name="collegeAuthour" onchange="trim(this)"
 									placeholder="Name of Authorized" id="cAuthour">
 									</div>
 							</div>
@@ -267,48 +259,48 @@
 					
 							<div class="form-group row row-eq-height" style="display: none" id="university">
 								<div class="col-12 col-sm-12 col-lg-6">	
-								<label>Email-ID <span class="text-danger">*</span></label> <input
-									type="email" class="form-control" name="uniEmail"
+								<label>Email-ID <span class="text-danger">*</span></label> <input 
+									type="email" class="form-control" name="uniEmail" onchange="trim(this)"
 									placeholder="Email" id="uniEmail"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Alternate
-									Email-ID</label> <input type="email" class="form-control"
+									Email-ID</label> <input type="email" class="form-control" onchange="trim(this)"
 									name="altEmail" placeholder="Alternate Email" id="altEmail">
 							</div>
 
 								<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="uniMobile"
+									type="text" class="form-control" name="uniMobile" onchange="trim(this)"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 									placeholder="Mobile No." id="uniNo" maxlength="10"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>AISHE
-									Code</label> <input type="text" class="form-control" name="aisheName"
+									Code</label> <input type="text" class="form-control" name="aisheName" onchange="trim(this)"
 									placeholder="AISHE Code" id="aisheName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>University
 									Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniName"
+								</label> <input type="text" class="form-control" name="uniName" onchange="trim(this)"
 									placeholder="University Name" id="uniName"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Name
 									of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniDept"
+								</label> <input type="text" class="form-control" name="uniDept" onchange="trim(this)"
 									placeholder="Name of Department" id="uniDept"> 
 									</div>
 									
 									<div class="col-12 col-sm-12 col-lg-6">	
 									<label>Designation
 									<span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniDes"
+								</label> <input type="text" class="form-control" name="uniDes" onchange="trim(this)"
 									placeholder="Designation of Person" id="uniDes">
 									</div>
 									
@@ -316,7 +308,7 @@
 									<div class="col-12 col-sm-12 col-lg-6">	
 									
 									 <label>Authorized Person Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniAuthour"
+								</label> <input type="text" class="form-control" name="uniAuthour" onchange="trim(this)"
 									placeholder="Name of Authorized" id="uniAuthour">
 								</div>
 							
