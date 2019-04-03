@@ -142,11 +142,7 @@ public class ImageController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "ContactUs");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -310,10 +306,7 @@ public class ImageController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "newsList");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
+				
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
 				NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map1,
@@ -321,7 +314,6 @@ public class ImageController {
 				List<NewsDetails> newsBlogsList = new ArrayList<NewsDetails>(Arrays.asList(getPagesModule));
 
 				model.addObject("newsBlogsList", newsBlogsList);
-				model.addObject("pageMetaData", pageMetaData);
 				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
@@ -352,10 +344,7 @@ public class ImageController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "eventfrontList");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
+			
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
 				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL", map1,
@@ -367,7 +356,6 @@ public class ImageController {
 				}
 				// model.addObject("event", event);
 				model.addObject("event", event);
-				model.addObject("pageMetaData", pageMetaData);
 				model.addObject("siteKey", Constant.siteKey);
 				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 
@@ -477,10 +465,7 @@ public class ImageController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "eventDetailfront");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
+				
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
@@ -494,7 +479,7 @@ public class ImageController {
 				String dateEvent = DateConvertor.convertToDMY(eventList.getEventDateFrom());
 				model.addObject("event", eventList);
 				model.addObject("dateEvent", dateEvent);
-				model.addObject("pageMetaData", pageMetaData);
+			
 				model.addObject("siteKey", Constant.siteKey);
 				//model.addObject("typeId", typeId);
 

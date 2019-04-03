@@ -66,11 +66,7 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "myProfile");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -105,11 +101,7 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
-				map3.add("slugName", "editProfile");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -294,11 +286,7 @@ public class loginController {
 				mav = new ModelAndView("maintainance");
 				mav.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
-				map3.add("slugName", "changePassword");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
-						PageMetaData.class);
-				mav.addObject("pageMetaData", pageMetaData);
+				
 				mav.addObject("siteKey", Constant.siteKey);
 				mav.addObject("flag", flag);
 				flag = 0;
@@ -490,10 +478,7 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "eventList");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
+				
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
 				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL", map1,
@@ -512,7 +497,7 @@ public class loginController {
 				model.addObject("editReg", editReg);
 				model.addObject("dobDate", dobDate);
 				model.addObject("event", event);
-				model.addObject("pageMetaData", pageMetaData);
+			
 				model.addObject("siteKey", Constant.siteKey);
 				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 
@@ -542,10 +527,7 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "eventList");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
+			
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
@@ -565,7 +547,7 @@ public class loginController {
 				String dateEvent = DateConvertor.convertToDMY(eventList.getEventDateFrom());
 				model.addObject("event", eventList);
 				model.addObject("dateEvent", dateEvent);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("typeId", typeId);
 
@@ -741,11 +723,7 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "firstChangePass");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -774,11 +752,7 @@ public class loginController {
 				mav = new ModelAndView("maintainance");
 				mav.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "firstChangePassword");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
-				mav.addObject("pageMetaData", pageMetaData);
+				
 				mav.addObject("siteKey", Constant.siteKey);
 				mav.addObject("flag", flag);
 				flag = 0;

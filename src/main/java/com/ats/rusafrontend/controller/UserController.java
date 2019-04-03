@@ -62,11 +62,7 @@ public class UserController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "login");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -95,11 +91,7 @@ public class UserController {
 				mav = new ModelAndView("maintainance");
 				mav.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
-				map3.add("slugName", "loginResponse");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
-						PageMetaData.class);
-				mav.addObject("pageMetaData", pageMetaData);
+			
 				mav.addObject("siteKey", Constant.siteKey);
 				mav.addObject("flag", flag);
 				flag = 0;
@@ -167,11 +159,7 @@ public class UserController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
-				map3.add("slugName", "dashboard");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -212,11 +200,7 @@ public class UserController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", "registration");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				 
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -422,11 +406,7 @@ public class UserController {
 				mav = new ModelAndView("maintainance");
 				mav.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
-				map3.add("slugName", "resendOtpProcess");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
-						PageMetaData.class);
-				mav.addObject("pageMetaData", pageMetaData);
+			
 				mav.addObject("siteKey", Constant.siteKey);
 				mav.addObject("flag", flag);
 				flag = 0;
@@ -573,11 +553,7 @@ public class UserController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
-				map3.add("slugName", "upcomingEvents");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -624,11 +600,7 @@ public class UserController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
-				map3.add("slugName", "previousEvents");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -675,11 +647,7 @@ public class UserController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
-				map3.add("slugName", "changePass");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -751,11 +719,7 @@ public class UserController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				MultiValueMap<String, Object> map3 = new LinkedMultiValueMap<String, Object>();
-				map3.add("slugName", "forgetPass");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map3,
-						PageMetaData.class);
-				model.addObject("pageMetaData", pageMetaData);
+				
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
