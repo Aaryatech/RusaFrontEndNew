@@ -554,7 +554,7 @@ public class ImageController {
 			CalenderList m = rest.getForObject(Constant.url + "/getEventListforCalender", CalenderList.class);
 
 			for (int i = 0; i < m.getResult().size(); i++) {
-				m.getResult().get(i).setUrl(Constant.siteFrontEndUrl + "eventDetail/" + m.getResult().get(i).getId());
+				m.getResult().get(i).setUrl(Constant.siteFrontEndUrl + "eventDetailfront/" + m.getResult().get(i).getId());
 			}
 
 			ObjectMapper mapper = new ObjectMapper();

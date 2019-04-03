@@ -141,8 +141,8 @@
 						<p>${string2}</p>
 						<div class="more" style="clear: both">
 							<a
-								href="${pageContext.request.contextPath}/info/${getCMSDesc.pageSlug}">Read More
-							</a>
+								href="${pageContext.request.contextPath}/info/${getCMSDesc.pageSlug}">Read
+								More </a>
 						</div>
 					</div>
 
@@ -159,27 +159,32 @@
 				<div class="border-box">
 					<div class="tab-content">
 						<div id="update" class="tab-pane active">
-							<div class="tab-content-section">
-								<c:forEach items="${sessionScope.event}" var="eventList"
-									varStatus="count">
+
+							<c:forEach items="${sessionScope.event}" var="eventList"
+								varStatus="count">
+
+								<div class="tab-content-section">
+								
+								<c:set var="string3" value="${fn:substring(eventList.heading, 0,70)}" />
 									<h5>
 										<a
 											href="${pageContext.request.contextPath}/eventDetailfront/${eventList.newsblogsId}">
-											${eventList.heading}</a>
+											${string3} </a>
 									</h5>
-
-									<%-- <c:set var="string4" value="${eventList.descriptions}"/>
-							<c:set var="string3" value="${fn:substring(string4, 0,130)}" /> --%>
+ 
 									<p>
 										<span><i class="icon-calendar"></i> <strong>Date:</strong>
 											${eventList.eventDateFrom}</span>
 									</p>
-									<br>
-								</c:forEach>
-							</div>
+								</div>
+							</c:forEach>
+
+
+
 						</div>
 					</div>
-					<a href="${pageContext.request.contextPath}/eventfrontList">Read More</a>
+					<a href="${pageContext.request.contextPath}/eventfrontList">Read
+						More</a>
 				</div>
 			</div>
 
@@ -314,7 +319,7 @@
 											width="250" height="228" alt="${newsBlogsList.heading}"></a>
 									</c:when>
 									<c:otherwise>
-									<a href="#"><img
+										<a href="#"><img
 											src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
 											width="250" height="228" alt="${newsBlogsList.heading}"></a>
 									</c:otherwise>
@@ -322,7 +327,7 @@
 
 
 							</div>
-							<h4>${fn:substring(newsBlogsList.heading, 0, 80)}</h4> 
+							<h4>${fn:substring(newsBlogsList.heading, 0, 80)}</h4>
 							<p>${fn:substring(newsBlogsList.descriptions, 0, 80)}
 								<a
 									href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.newsblogsId}">Read
@@ -390,7 +395,7 @@
 											<strong>${testImonial.fromName}</strong>
 										</p>
 
-									<%-- 	<c:set var="string4" value="${testImonial.message}" />
+										<%-- 	<c:set var="string4" value="${testImonial.message}" />
 										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
 										<p>${testImonial.message}</p>
 										<c:set var="imgfind" value="1"></c:set>
@@ -404,7 +409,7 @@
 											<strong>${testImonial.fromName}</strong>
 										</p>
 
-									<%-- 	<c:set var="string4" value="${testImonial.message}" />
+										<%-- 	<c:set var="string4" value="${testImonial.message}" />
 										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
 										<p>${testImonial.message}</p>
 									</c:if>
@@ -437,7 +442,7 @@
 										<p>
 											<strong>${testImonial.fromName}</strong>
 										</p>
-<%-- 
+										<%-- 
 										<c:set var="string4" value="${testImonial.message}" />
 										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
 										<p>${testImonial.message}</p>
