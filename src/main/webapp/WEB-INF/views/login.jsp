@@ -67,7 +67,7 @@
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 		<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>LOGIN</h1>
+			<h1>Login</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">

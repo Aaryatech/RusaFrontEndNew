@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib
-	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	//allow access only if session exists
@@ -69,31 +67,20 @@
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>REGISTRATION</h1>
+			<h1>Registration</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/registration">Login</a> >
+				href="${pageContext.request.contextPath}/registration">Registration</a> >
 		</div>
 	</div>
 
 
 	<div class="login">
 		<div class="container" id="main-content">
-	<c:if test="${sessionScope.success != null}">
-			<div class="col-12 col-sm-12 col-lg-12 ">
-    		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong>Success : </strong> ${success}</div>
-       </div></c:if>   <% session.removeAttribute("success"); %>
-		<c:if test="${sessionScope.errorMsg != null}">
-			<div class="col-12 col-sm-12 col-lg-12 ">
-    		          <div class="alert alert-danger ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong>Error : </strong> ${errorMsg}</div>
-       </div></c:if>  <% session.removeAttribute("errorMsg"); %> 
+
 			<div class="login-box register-box">
 				<div class="login-header">
 					<h5>Register</h5>
@@ -104,232 +91,213 @@
 					onsubmit="return confirm('Do you really want to submit the form?');"
 					method="post" name="login_form">
 					<div class="row row-eq-height">
-					<div class="col-12 col-sm-12 col-lg-3"></div>
-					                                
-					<div class="col-12 col-sm-12 col-lg-3"></div>
-					
-                          
-                          
-                          
-                                <div class="col-12 col-sm-12 col-lg-3"></div>      
+						<div class="col-12 col-sm-12 col-lg-3"></div>
+
+
+						<div class="col-12 col-sm-12 col-lg-3"></div>
+
+
+
+
+						<div class="col-12 col-sm-12 col-lg-3"></div>
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label >Select Type</label> 
-							<select id="userType" name="userType" class="form-control" onchange="showForm()"
-								required>
-							
+							<label>Select Type</label> <select id="userType" name="userType"
+								class="form-control" onchange="showForm()" required>
+
 								<option value="1">Individual</option>
 								<option value="2">Colleges</option>
 								<option value="3">University</option>
 							</select>
-							</div>
-							</div>
-					
-                                <div class="col-12 col-sm-12 col-lg-3"></div>
-					
-							<div class="form-group row row-eq-height" style="display: visible" id="individual">
-					<div class="col-12 col-sm-12 col-lg-6">
-								<label>Email-ID <span class="text-danger">*</span></label> 
-								<input
-									type="email" class="form-control" name="email" onchange="trim(this)"
-									placeholder="Email" id="email" required> 
-					</div>
-					
-							<div class="col-12 col-sm-12 col-lg-6">		
-									<label>Alternate
-									Email-ID</label> <input type="email" class="form-control" onchange="trim(this)"
-									name="altEmail" placeholder="Alternate Email" id="altEmail" >
-					</div>
-					
-					<div class="col-12 col-sm-12 col-lg-6">
-
-								<label>Full Name <span class="text-danger">*</span></label> 
-								
-								<input
-									type="text" class="form-control" name="name" placeholder="Name" onchange="trim(this)"
-									id="fullname" required> 
-							</div>		
-									
-									<div class="col-12 col-sm-12 col-lg-6">
-									<label>Mobile No.<span
-									class="text-danger">*</span></label> 
-									
-									<input type="text"
-									class="form-control" name="mobile" pattern="[7-9]{1}[0-9]{9}" onchange="trim(this)"
-									maxlength="10" placeholder="Mobile No." id="mobile" oninput="checkUnique(this.value,1)"
-									 required> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">
-									<label>College Name <span
-									class="text-danger">*</span></label> <input type="text"
-									class="form-control" name="collegeName" onchange="trim(this)"
-									placeholder="College Name" id="collegeName" required> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">
-									<label>University
-									Affiliated <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="university" onchange="trim(this)"
-									placeholder="University Affiliated" id="uniAff" required> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">
-									
-									<label>Name
-									of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dept" onchange="trim(this)"
-									placeholder="Name of Department" id="depatment" required> 
-									</div>
-										
-									
-								<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Designation of Person <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="authour" onchange="trim(this)"
-									placeholder="Designation of Person" id="authour" required>
-							</div>
-							</div>
-				
-						
-							<div class="form-group row row-eq-height" style="display: none" id="college">
-								<div class="col-12 col-sm-12 col-lg-6">	
-								<label>Email-ID <span class="text-danger">*</span></label> 
-								
-								<input
-									type="email" class="form-control" name="collegeEmail" onchange="trim(this)"
-									placeholder="Email" id="collegeEmail" > 
-									</div>
-									
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Alternate
-									Email-ID</label> <input type="email" class="form-control" onchange="trim(this)"
-									name="altEmail" placeholder="Alternate Email" id="altEmail" >
-							</div>
-							
-							
-							<div class="col-12 col-sm-12 col-lg-6">	
-								<label>Mobile No.<span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="collegeMobile"
-									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="collegeNo" onchange="trim(this)">
-							</div>
-					
-					<div class="col-12 col-sm-12 col-lg-6">	
-								<label>Institute Name <span class="text-danger">*</span></label>
-								<input type="text" class="form-control" name="institute" onchange="trim(this)"
-									placeholder="Institute Name" id="instituteName"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>AISHE
-									Code</label> <input type="text" class="form-control" name="aisheName" onchange="trim(this)"
-									placeholder="AISHE Code" id="aisheName"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>University
-									Affiliated <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="univ" onchange="trim(this)"
-									placeholder="University Affiliated" id="univ"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Name
-									of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dept" onchange="trim(this)"
-									placeholder="Name of Department" id="collegeDept"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Designation
-									<span class="text-danger">*</span>
-								</label> <input type="text" class="form-control"
-									name="designationCollege" placeholder="Designation of Person" onchange="trim(this)"
-									id="designationCollege"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Authorized Person Name
-									<span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="collegeAuthour" onchange="trim(this)"
-									placeholder="Name of Authorized" id="cAuthour">
-									</div>
-							</div>
-						
-					
-							<div class="form-group row row-eq-height" style="display: none" id="university">
-								<div class="col-12 col-sm-12 col-lg-6">	
-								<label>Email-ID <span class="text-danger">*</span></label> <input 
-									type="email" class="form-control" name="uniEmail" onchange="trim(this)"
-									placeholder="Email" id="uniEmail"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Alternate
-									Email-ID</label> <input type="email" class="form-control" onchange="trim(this)"
-									name="altEmail" placeholder="Alternate Email" id="altEmail">
-							</div>
-
-								<div class="col-12 col-sm-12 col-lg-6">	
-								<label>Mobile No.<span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="uniMobile" onchange="trim(this)"
-									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="uniNo" maxlength="10"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>AISHE
-									Code</label> <input type="text" class="form-control" name="aisheName" onchange="trim(this)"
-									placeholder="AISHE Code" id="aisheName"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>University
-									Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniName" onchange="trim(this)"
-									placeholder="University Name" id="uniName"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Name
-									of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniDept" onchange="trim(this)"
-									placeholder="Name of Department" id="uniDept"> 
-									</div>
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									<label>Designation
-									<span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniDes" onchange="trim(this)"
-									placeholder="Designation of Person" id="uniDes">
-									</div>
-									
-									
-									<div class="col-12 col-sm-12 col-lg-6">	
-									
-									 <label>Authorized Person Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniAuthour" onchange="trim(this)"
-									placeholder="Name of Authorized" id="uniAuthour">
-								</div>
-							
 						</div>
-						<div class="clearfix"></div>
+					</div>
 
-						<div class="col-12 col-sm-12 col-lg-12">
-							<p>
-								<button type="submit" id="log-btn" class="button login-btn">Register</button>
-							</p>
+					<div class="col-12 col-sm-12 col-lg-3"></div>
+
+					<div class="form-group row row-eq-height" style="display: visible"
+						id="individual">
+
+
+						<div class="col-12 col-sm-12 col-lg-6">
+
+							<label>Full Name <span class="text-danger">*</span></label> <input
+								type="text" class="form-control" name="name" placeholder="Name"
+								id="fullname">
 						</div>
 
-					
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>College Name <span class="text-danger">*</span></label> <input
+								type="text" class="form-control" name="collegeName"
+								placeholder="College Name" id="collegeName">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>University Affiliated <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="university"
+								placeholder="University Affiliated" id="uniAff">
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Designation of Person <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="authour"
+								placeholder="Designation of Person" id="authour">
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+
+							<label>Name of Department <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="dept"
+								placeholder="Name of Department" id="depatment">
+						</div>
+
+
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Mobile No.<span class="text-danger">*</span></label> <input
+								type="text" class="form-control" name="mobile"
+								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
+								placeholder="Mobile No." id="mobile" maxlength="10">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Email-ID <span class="text-danger">*</span></label> <input
+								type="email" class="form-control" name="email"
+								placeholder="Email" id="email">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Alternate Email-ID</label> <input type="email"
+								class="form-control" name="altEmail"
+								placeholder="Alternate Email" id="altEmail">
+						</div>
+					</div>
+
+
+					<div class="form-group row row-eq-height" style="display: none"
+						id="college">
+
+
+
+
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>College Name <span class="text-danger">*</span></label> <input
+								type="text" class="form-control" name="institute"
+								placeholder="College Name" id="instituteName">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>AISHE Code</label> <input type="text" class="form-control"
+								name="aisheName" placeholder="AISHE Code" id="aisheName">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>University Affiliated <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="univ"
+								placeholder="University Affiliated" id="univ">
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Authorized Person Name <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="collegeAuthour"
+								placeholder="Authorized Person Name" id="cAuthour">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Designation of Person<span class="text-danger">*</span>
+							</label> <input type="text" class="form-control"
+								name="designationCollege" placeholder="Designation of Person"
+								id="designationCollege">
+						</div>
+<div class="col-12 col-sm-12 col-lg-6">
+							<label>Name of Department <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="dept"
+								placeholder="Name of Department" id="collegeDept">
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Mobile No.<span class="text-danger">*</span></label> <input
+								type="text" class="form-control" name="collegeMobile"
+								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
+								placeholder="Mobile No." id="collegeNo" maxlength="10">
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Email-ID <span class="text-danger">*</span></label> <input
+								type="email" class="form-control" name="collegeEmail"
+								placeholder="Email" id="collegeEmail">
+						</div>
+
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Alternate Email-ID</label> <input type="email"
+								class="form-control" name="altEmail"
+								placeholder="Alternate Email" id="altEmail">
+						</div>
+					</div>
+
+
+					<div class="form-group row row-eq-height" style="display: none"
+						id="university">
+
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>University Name <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="uniName"
+								placeholder="University Name" id="uniName">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>AISHE Code</label> <input type="text" class="form-control"
+								name="aisheName" placeholder="AISHE Code" id="aisheName">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+
+							<label>Authorized Person Name <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="uniAuthour"
+								placeholder="Authorized Person Name" id="uniAuthour">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Designation of Person<span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="uniDes"
+								placeholder="Designation of Person" id="uniDes">
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Name of Department <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control" name="uniDept"
+								placeholder="Name of Department" id="uniDept">
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Mobile No.<span class="text-danger">*</span></label> <input
+								type="text" class="form-control" name="uniMobile"
+								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
+								placeholder="Mobile No." id="uniNo" maxlength="10">
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Email-ID <span class="text-danger">*</span></label> <input
+								type="email" class="form-control" name="uniEmail"
+								placeholder="Email" id="uniEmail">
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Alternate Email-ID</label> <input type="email"
+								class="form-control" name="altEmail"
+								placeholder="Alternate Email" id="altEmail">
+						</div>
+					</div>
+					<div class="clearfix"></div>
+
+					<div class="col-12 col-sm-12 col-lg-12">
+						<p>
+							<button type="submit" id="log-btn" class="button login-btn">Register</button>
+						</p>
+					</div>
+					<p>
+						Already Member <a href="${pageContext.request.contextPath}/login">Login</a>
+					</p>
+
 				</form>
-				<p>
-					Already Member <a href="${pageContext.request.contextPath}/login">Login</a>
-				</p>
-				</div>				
 			</div>
 		</div>
-	
+	</div>
+
 	<div class="col-12 col-sm-12 col-lg-3"></div>
 
 
@@ -375,7 +343,7 @@ function showForm() {
 		 	document.getElementById("collegeName").setAttribute("required","true");
 		 	document.getElementById("uniAff").setAttribute("required","true");
 			document.getElementById("depatment").setAttribute("required","true");
-			document.getElementById("dob").setAttribute("required","true"); 
+			
 			document.getElementById("mobile").setAttribute("required","true");
 			document.getElementById("authour").setAttribute("required","true");
 			
@@ -387,7 +355,7 @@ function showForm() {
 			document.getElementById("collegeName").removeAttribute("required");
 			document.getElementById("uniAff").removeAttribute("required");
 			document.getElementById("depatment").removeAttribute("required");
-			document.getElementById("dob").removeAttribute("required");
+		
 			document.getElementById("mobile").removeAttribute("required");
 			document.getElementById("authour").removeAttribute("required");
 			
