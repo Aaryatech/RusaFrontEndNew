@@ -345,7 +345,8 @@
 
 					<c:forEach items="${sessionScope.menuList.sectionlist}"
 						var="menuList">
-						<li><c:choose>
+						<li>
+							<%-- <c:choose>
 								<c:when test="${not empty menuList.externalUrl}">
 
 									<c:set value="${menuList.externalUrl}" var="string"></c:set>
@@ -405,8 +406,8 @@
 										title="${menuList.sectionName}">${menuList.sectionName} <span
 										class="caret"></span></a>
 								</c:otherwise>
-							</c:choose> <c:forEach items="${sessionScope.menuList.categoryList}"
-								var="catList">
+							</c:choose> --%>${menuList.sectionName} <c:forEach
+								items="${sessionScope.menuList.categoryList}" var="catList">
 
 								<c:if test="${catList.sectionId==menuList.sectionId}">
 									<ul>
@@ -543,8 +544,9 @@
 										</ul>
 									</ul>
 								</c:if>
-							</c:forEach></li>
-					</c:forEach> 
+							</c:forEach>
+						</li>
+					</c:forEach>
 				</ul>
 
 			</div>

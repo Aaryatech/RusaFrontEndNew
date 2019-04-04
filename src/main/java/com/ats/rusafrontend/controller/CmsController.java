@@ -32,6 +32,7 @@ public class CmsController {
 			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("content/cmsContent");
+		List<NewsSectionList> newsSectionList = new ArrayList<>();
 		try {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "info-" + slugName);
@@ -61,10 +62,24 @@ public class CmsController {
 				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
 						PageMetaData.class);
 				model.addObject("pageMetaData", pageMetaData);
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("sectionId", pageContent.getSectioinId());
+				map.add("langId", langId);
+				NewsSectionList[] news = rest.postForObject(Constant.url + "/getNewsSectionBySectionId", map,
+						NewsSectionList[].class);
+				newsSectionList=new ArrayList<>(Arrays.asList(news));
+				model.addObject("newsSectionList", newsSectionList);
+				model.addObject("langId", langId);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+			PageContent pageContent= new PageContent();
+			pageContent.setSlugName(slugName);
+			model.addObject("pageContent", pageContent);
+			newsSectionList = new ArrayList<>();
 		}
 
 		return model;
