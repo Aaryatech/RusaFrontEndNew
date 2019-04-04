@@ -10,6 +10,7 @@ public class EventRecord {
 	private String featuredImage; 
 	private String downloadPdf; 
 	private int apply; 
+	private int isFeedback;
 	private String date;
 	public int getNewsblogsId() {
 		return newsblogsId;
@@ -59,11 +60,17 @@ public class EventRecord {
 	public void setDate(String date) {
 		this.date = date;
 	}
+	public int getIsFeedback() {
+		return isFeedback;
+	}
+	public void setIsFeedback(int isFeedback) {
+		this.isFeedback = isFeedback;
+	}
 	@Override
 	public String toString() {
 		return "EventRecord [newsblogsId=" + newsblogsId + ", heading=" + heading + ", descriptions=" + descriptions
 				+ ", languageId=" + languageId + ", featuredImage=" + featuredImage + ", downloadPdf=" + downloadPdf
-				+ ", apply=" + apply + ", date=" + date + "]";
+				+ ", apply=" + apply + ", isFeedback=" + isFeedback + ", date=" + date + "]";
 	}
 	
 	

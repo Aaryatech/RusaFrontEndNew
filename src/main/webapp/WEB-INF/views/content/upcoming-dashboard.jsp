@@ -60,6 +60,12 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 </script>
+<style type="text/css">
+.nav-tabs .nav-item:last-child .nav-link {
+       border-right: 2px solid #21316c!important;   
+}
+
+</style>
 </head>
 <body onload="upcomingEvents">
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
@@ -154,7 +160,7 @@
                                 <a class="nav-link"  href="${pageContext.request.contextPath}/previousEvents"><span class="icon-calendar icon"></span> Previous Events </a>
                                 </li>
                             </ul>
-
+                             
                             <div class="tab-content">
                                 <div id="upcoming" class="tab-pane active"> 
                                     <table align="center" cellpadding="0" cellspacing="0"  class="table">
