@@ -627,7 +627,7 @@ public class UserController {
 				map.add("regId", userDetail); 
 				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 				model.addObject("editReg", editReg);
-				System.out.println("list_new: " + previous.toString());
+				//System.out.println("list_new: " + previous.toString());
 				model.addObject("previous", previous);
 				model.addObject("typeId", 1);
 				model.addObject("documentUrl", Constant.getCmsPdf);
@@ -773,6 +773,56 @@ public class UserController {
 		}
 
 		return "redirect:/login";
+	}
+	
+	@RequestMapping(value = "/fillFeeback", method = RequestMethod.GET)
+	public ModelAndView fillFeedback(HttpServletRequest request, HttpServletResponse response) {
+ 
+		ModelAndView model = new ModelAndView("eventfeedback");
+		
+		try {
+			HttpSession session = request.getSession();
+			int userDetail = (int) session.getAttribute("UserDetail");
+			int eventId = Integer.parseInt(request.getParameter("eventId"));
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("regId", userDetail); 
+			Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+			model.addObject("editReg", editReg);
+			model.addObject("eventId", eventId);
+			 
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/submitFeedbackForm", method = RequestMethod.POST)
+	public String submitFeedbackForm(HttpServletRequest request, HttpServletResponse response) {
+  
+	
+		try {
+			
+			HttpSession session = request.getSession();
+			int userDetail = (int) session.getAttribute("UserDetail");
+			int eventId = Integer.parseInt(request.getParameter("eventId"));
+			int value = Integer.parseInt(request.getParameter("formType"));
+			String msg =  request.getParameter("message") ;
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("userId", userDetail);
+			map.add("eventId", eventId);
+			map.add("value", value);
+			map.add("messge", msg); 
+			Info update = rest.postForObject(Constant.url + "/updateEventFeedback", map, Info.class);
+			
+			
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		return "redirect:/upcomingEvents";
 	}
 
 }
