@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
     <%@ taglib
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -84,13 +84,13 @@
 			<c:if test="${sessionScope.success != null}">
 			<div class="col-12 col-sm-12 col-lg-12 ">
     		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">Ã—</span></button>
                 <strong>Success : </strong> ${success}</div>
        </div></c:if>   <% session.removeAttribute("success"); %>
 		<c:if test="${sessionScope.errorMsg != null}">
 			<div class="col-12 col-sm-12 col-lg-12 ">
     		          <div class="alert alert-danger ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">Ã—</span></button>
                 <strong>Error : </strong> ${errorMsg}</div>
        </div></c:if>  <% session.removeAttribute("errorMsg"); %>
 

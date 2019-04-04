@@ -1,5 +1,5 @@
- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
@@ -64,8 +64,8 @@
 </head>
 <body onload="hideText()">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-	<%-- <jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include> --%>
-	<jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include>
+	  <jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>  
+	<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
 	
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">

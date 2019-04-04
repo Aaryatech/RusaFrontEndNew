@@ -83,7 +83,7 @@ public class UserController {
 		String password = request.getParameter("password");
 		ModelAndView mav = new ModelAndView("login");
 		try {
-			session.setAttribute("mapping", "loginResponse");
+			session.setAttribute("mapping", "dashboard");
 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
@@ -106,12 +106,18 @@ public class UserController {
 					{
 						mav = new ModelAndView("changePass");
 						session.setAttribute("UserDetail", verify.getRegId());
+						
+						session.setAttribute("userInfo", verify);
+						
 					}
 					else
 					{
 					mav = new ModelAndView("content/upcoming-dashboard");
 					System.out.println("Login :" + verify.getRegId());
 					session.setAttribute("UserDetail", verify.getRegId());
+					
+					session.setAttribute("userInfo", verify);
+					
 					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 					map1.add("langId", 1);
@@ -127,7 +133,7 @@ public class UserController {
 					// model.addObject("pageMetaData", pageMetaData);
 					mav.addObject("typeId", 2);
 					session.setAttribute("successMsg", "Login Successful !");			
-					session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+					session.setAttribute("profileUrl", Constant.getUserProfileURL);
 					}
 				} else {
 					mav = new ModelAndView("login");
@@ -177,7 +183,7 @@ public class UserController {
 			System.out.println("list_new: " + upcoming.toString());
 			model.addObject("upcoming", upcoming);
 			model.addObject("typeId", 2);
-			session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+			 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -474,6 +480,8 @@ public class UserController {
 		// Registration userDetail=null;
 		int userDetail = 0;
 		Info info=null;
+		String ss = new String();
+		
 		ModelAndView mav = null;
 		try {
 
@@ -527,17 +535,19 @@ public class UserController {
 				//	session.setAttribute("msg", "Event Already Registered");
 				}
 
-			} else {
-				session.setAttribute("errorMsg", "Please Login !");
+				ss = "redirect:/eventDetailfront/" + newsblogsId;
 				
+			} else {
+				session.setAttribute("errorMsg", "Please Login !"); 
+				ss = "redirect:/login";
 			
 			}
-			session.setAttribute("errorMsg", "Please Login !");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return "redirect:/login";
+		return ss;
 	}
 
 	@RequestMapping(value = "/upcomingEvents", method = RequestMethod.GET)
@@ -575,7 +585,7 @@ public class UserController {
 			//	model.addObject("value", 0);
 				
 				// model.addObject("pageMetaData", pageMetaData);
-				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+				 
 
 			}
 
@@ -620,7 +630,7 @@ public class UserController {
 				model.addObject("previous", previous);
 				model.addObject("typeId", 1);
 				// model.addObject("pageMetaData", pageMetaData);
-				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+				 
 
 			}
 
@@ -702,6 +712,7 @@ public class UserController {
 		System.out.println("User Logout");
 		//int userDetail = (int) session.getAttribute("UserDetail");
 		session.removeAttribute("userDetail");
+		session.removeAttribute("userInfo");
 		session.invalidate();
 		return "redirect:/";
 	}

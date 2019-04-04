@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -81,7 +81,7 @@
 <body onload="show()">
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
-	<jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 		<div class="inner-slider" id="slider">
@@ -107,7 +107,7 @@
                         <div class="upload-photo">
                        <c:if test="${not empty editReg.imageName}">
                             <div class="dashboard-profile-img">
-  	                          <img id="blah" src="${sessionScope.gallryImageURL}${editReg.imageName}" alt="" />
+  	                          <img id="blah" src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
                             </div>	
                             </c:if>
                         
@@ -161,14 +161,14 @@
     		         
 			<div class="col-12 col-sm-12 col-lg-12 ">
     		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">Ã—</span></button>
                 <strong>Success : </strong> ${success}</div>
        </div></c:if>
      <% session.removeAttribute("success"); %> 
        <c:if test="${sessionScope.errorMsg != null}">
      	<div class="col-12 col-sm-12 col-lg-12 ">
     		          <div class="alert alert-danger ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">Ã—</span></button>
                 <strong>Error : </strong> ${errorMsg}</div>
        </div>
        </c:if>    <% session.removeAttribute("errorMsg"); %> 

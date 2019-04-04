@@ -128,6 +128,8 @@ public class loginController {
 		String redirect = null;
 		String uuid = editReg.getUserUuid();
 		try {
+			HttpSession session = request.getSession();
+			
 			Date date = new Date(); // your date
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal = Calendar.getInstance();
@@ -261,8 +263,12 @@ public class loginController {
 			}
 			System.out.println("Data: " + editReg.toString());
 
+			session.setAttribute("success", "Successfully Updated Information !");
+			
 		} catch (Exception e1) {
 			e1.printStackTrace();
+			HttpSession session = request.getSession();
+			session.setAttribute("errorMsg", "Invalid Password !");
 		}
 
 		return redirect;
@@ -444,7 +450,7 @@ public class loginController {
 				// Constant.otherDocURL,imageName,Constant.values,0,0,0,0,0);
 				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 
-				upload.saveUploadedImge(file.get(0), Constant.getUserProfileURL, imageName, Constant.values, 0, 0, 0, 0,
+				upload.saveUploadedImge(file.get(0), Constant.userProfileURL, imageName, Constant.values, 0, 0, 0, 0,
 						0);
 				editReg.setImageName(imageName);
 				System.out.println("Data :" + editReg.toString());
@@ -499,7 +505,7 @@ public class loginController {
 				model.addObject("event", event);
 			
 				model.addObject("siteKey", Constant.siteKey);
-				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+			 
 
 			}
 
@@ -552,7 +558,7 @@ public class loginController {
 				model.addObject("typeId", typeId);
 
 				System.out.println("typeId :" + typeId);
-				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+				 
 			}
 
 		} catch (Exception e) {

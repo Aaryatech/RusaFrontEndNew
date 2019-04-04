@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
     <%@ taglib
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -63,9 +63,9 @@
 </head>
 <body onload="upcomingEvents">
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-<jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
 	
-	<%-- <jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include> --%>
+  <jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include> 
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 		
 	  <div class="inner-slider" id="slider">
@@ -76,7 +76,6 @@
 	<div class="bridcrumb">
     	<div class="container">
         	<a href="${pageContext.request.contextPath}/">Home</a> > <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
-               <a href="${pageContext.request.contextPath}/logout" class="last-update" style="margin:left=100px;">Logout <span class="glyphicon glyphicon-log-out"></span></a>
     <!-- 
             <p class="last-update">Last Updated on 25 Feb 2019</p>  -->
         </div>
@@ -84,7 +83,7 @@
    <%--     <c:if test="${sessionScope.successMsg!=null}">
             <div class="col-lg-12">
     		          <div class="alert alert-success alert-dismissible fade in">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">Ã—</span></button>
                 <strong>Success : </strong> ${sessionScope.successMsg}</div>
         	                                       </div> 
             </c:if> --%>
@@ -98,7 +97,7 @@
                         <div class="upload-photo">
                        <c:if test="${not empty editReg.imageName}">
                             <div class="dashboard-profile-img">
-  	                          <img id="blah" src="${sessionScope.gallryImageURL}${editReg.imageName}" alt="" />
+  	                          <img id="blah" src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
                             </div>	
                             </c:if>
                         

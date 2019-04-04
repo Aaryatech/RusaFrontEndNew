@@ -580,17 +580,17 @@ public class ImageController {
 		ModelAndView mav = new ModelAndView("event-detail-front");
 		mav.addObject("newsblogsId", newsblogsId);
 		System.out.println("newsblogsId :" + newsblogsId);
-		int userDetail = 0;
+		Registration userDetail = null; 
 
 		try {
-			userDetail = (int) session.getAttribute("UserDetail");
+			userDetail = (Registration) session.getAttribute("userInfo");
 			System.out.println("userDetail: " + userDetail);
 		} catch (Exception e) {
-			userDetail = 0;
+			 
 			e.printStackTrace();
 		}
 		try {
-		if (userDetail > 0) {
+		if (userDetail!=null) {
 
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
@@ -615,7 +615,7 @@ public class ImageController {
 				eventReg.setIsActive(1);
 				eventReg.setNewsblogsId(newsblogsId);
 				eventReg.setRegDate(sf.format(date));
-				eventReg.setUserId(userDetail);
+				eventReg.setUserId(userDetail.getRegId());
 				eventReg.setDoc1(pdfName);
 
 				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
@@ -649,7 +649,7 @@ public class ImageController {
 							// eventReg.setIsActive(1);
 							eventReg.setNewsblogsId(newsblogsId);
 							eventReg.setRegDate(sf.format(date));
-							eventReg.setUserId(userDetail);
+							eventReg.setUserId(userDetail.getRegId());
 							eventReg.setDoc1(pdfName);
 							EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
 									EventRegistration.class);
@@ -672,7 +672,7 @@ public class ImageController {
 			
 		}
 		} catch (Exception e) {
-			userDetail = 0;
+			 
 			e.printStackTrace();
 		}
 
