@@ -488,6 +488,16 @@ public class ImageController {
 				model.addObject("flag", flag);
 				flag = 0;
 
+				String[] ids = null;
+				try {
+					
+					
+					 ids = eventList.getExVar2().split(",");
+				}catch(Exception e) {
+					
+				}
+				session.setAttribute("allowedType",ids);
+				
 			}
 
 		} catch (Exception e) {
@@ -602,7 +612,7 @@ public class ImageController {
 			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 			map1.add("newsblogsId", newsblogsId);
-			map1.add("userId", userDetail);
+			map1.add("userId", userDetail.getRegId());
 			info = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
 					Info.class);
 
@@ -622,47 +632,12 @@ public class ImageController {
 						EventRegistration.class);
 
 				session.setAttribute("success", "Successfully Registed Event !");
-				upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
+				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, pdfName);
 			
 
 			} else {
 				
-
-					try {
-
-						MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-						map.add("regId", userDetail);
-						map.add("newsblogsId", newsblogsId);
-						map.add("pdfName", pdfName);
-
-						info = rest.postForObject(Constant.url + "/uploadEventDocument", map, Info.class);
-
-						System.out.println(info.toString());
-						if (info.isError() == true) {
-							EventRegistration eventReg = new EventRegistration();
-
-							Calendar cal = Calendar.getInstance();
-							cal.setTime(date);
-							eventReg.setDelStatus(1);
-							eventReg.setIsActive(1);
-							// eventReg.setEventRegId();
-							// eventReg.setIsActive(1);
-							eventReg.setNewsblogsId(newsblogsId);
-							eventReg.setRegDate(sf.format(date));
-							eventReg.setUserId(userDetail.getRegId());
-							eventReg.setDoc1(pdfName);
-							EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
-									EventRegistration.class);
-							session.setAttribute("success", "Successfully Registed Event !");
-							
-						}
-
-						upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
-					} catch (Exception e) {
-						// TODO: handle exception
-						e.printStackTrace();
-				
-				}
+				session.setAttribute("errorMsg", "Already Register ");
 			}
 			ss = "redirect:/eventDetailfront/" + newsblogsId;
 		} else {

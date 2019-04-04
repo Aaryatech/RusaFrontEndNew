@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-    
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="today" class="java.util.Date" />
 <fmt:formatDate var="todayString" value="${today}" pattern="dd/MM/yyyy" />
-<fmt:formatDate var="dateString" value="${bean.date}" pattern="dd/MM/yyyy" />
+<fmt:formatDate var="dateString" value="${bean.date}"
+	pattern="dd/MM/yyyy" />
 
 <%@ page session="true"%>
 <%
@@ -20,7 +21,6 @@
 		contextPath = contextPath + "/retriveSession/" + mapping;
 		response.sendRedirect(contextPath);
 	}
-	 
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +38,9 @@
 	content="${sessionScope.homePageMetaData.metaAuthor}">
 <link rel="icon" href="../../favicon.ico">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
- <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
@@ -70,104 +72,193 @@
 </script>
 <style>
 .other-gov-site-home {
-    margin-top: 43px;
+	margin-top: 43px;
 }
 </style>
 </head>
 <body>
-<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
- 
+	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
- 
+
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
-		<div class="inner-slider" id="slider">
+	<div class="inner-slider" id="slider">
 		<div class="container">
-				<h1>Event Detail</h1>
+			<h1>Event Detail</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/eventList">Event</a>
-			>
+				href="${pageContext.request.contextPath}/eventList">Event</a> >
 		</div>
 	</div>
 
-            <div class="container" id="main-content">
-        <div class="row row-eq-height">
-        <c:set var="today_date" value="<%=new java.util.Date()%>"/>
-  
-  
- 
-         	<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
-         	    <c:if test="${sessionScope.success != null}">
-    		         
-			<div class="col-12 col-sm-12 col-lg-12 ">
-    		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong>Success : </strong> ${success}</div>
-       </div></c:if>
-     <% session.removeAttribute("success"); %> 
-       <c:if test="${sessionScope.errorMsg != null}">
-     	<div class="col-12 col-sm-12 col-lg-12 ">
-    		          <div class="alert alert-danger ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong>Error : </strong> ${errorMsg}</div>
-       </div>
-       </c:if>    <% session.removeAttribute("errorMsg"); %> 
-           
-                    <div class="row">
-                    	<c:if test="${not empty event.featuredImage}">
-                    <div class="col-12 col-sm-6 col-lg-6">  
-                      <img src="${sessionScope.gallryImageURL}${event.featuredImage}" alt="${event.heading}" title="${event.heading}" class="img-responsive thumbnail">	                                   
-                      </div>
-                    </c:if>
-                    <div class="col-12 col-sm-12 col-lg-12">
-                    		
-                    <strong>${event.heading}</strong><br>
-					<p>${event.descriptions}</p>                    
-					<p><span><i class="icon-location"></i> <strong>Venue:</strong>  ${event.eventLocation}</span> 
-					<span><i class="icon-calendar"></i> <strong>Date:</strong>  ${dateEvent} </span>
-					<span><i class="icon-man-user"></i> <strong>Contact Person:</strong>  ${event.eventContactPerson}</span>
-                    <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong> +91  ${event.eventContactNumber}</span><br> </p>
-                     
-                    
-                 	<c:if test="${dateEvent >= todayString}">
-                    	<c:if test="${event.exInt2==1}">
-                    		<form class="form-horizontal"
-										action="${pageContext.request.contextPath}/submtFrontEventAppliedForm"
-										method="post" enctype="multipart/form-data"
-										name="form_sample_2" id="form_sample_2"
-										onsubmit="return confirm('Do you really want to submit the form?');">
-										<div class="form-group row">
-																		<label class="control-label col-sm-2" for="page_pdf">Upload Document :</label>
-																		<div class="col-sm-7">
-																			<input type="file" name="pagePdf" id="pagePdf"
-																				class="form-control" data-parsley-minlength="2" required
-																				accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-																	<p>Please upload .doc, .docx, .pptx,.pdf and .xlsx only</p>
-																		</div>
-																			<input type="hidden" name="newsblogsId" value="${event.newsblogsId}">
-																			
-																			<button type="submit" class="btn button apply">Apply</button>
-																	</div>
-								
-               <!--      <span><i class="icon-download-2"></i> <strong>Download Attachment:</strong> <a href="#">Event Detail</a></span> -->
-                      </form></c:if>
-                  
-                    
-                 
-                      	<c:if test="${event.exInt2==0}">
-                    <a href="${pageContext.request.contextPath}/applyEventFront/${event.newsblogsId}" class="btn button apply">Apply</a>
-                  </c:if>  
-                    </c:if>
-                    </div>
-                    </div>
-       	  </div>
-          </div>
-    </div>
- 
-	
+	<div class="container" id="main-content">
+		<div class="row row-eq-height">
+			<c:set var="today_date" value="<%=new java.util.Date()%>" />
+
+
+
+			<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
+				<c:if test="${sessionScope.success != null}">
+
+					<div class="col-12 col-sm-12 col-lg-12 ">
+						<div class="alert alert-success ">
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+							<strong>Success : </strong> ${success}
+						</div>
+					</div>
+				</c:if>
+				<%
+					session.removeAttribute("success");
+				%>
+				<c:if test="${sessionScope.errorMsg != null}">
+					<div class="col-12 col-sm-12 col-lg-12 ">
+						<div class="alert alert-danger ">
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+							<strong>Error : </strong> ${errorMsg}
+						</div>
+					</div>
+				</c:if>
+				<%
+					session.removeAttribute("errorMsg");
+				%>
+
+				<div class="row">
+					<c:if test="${not empty event.featuredImage}">
+						<div class="col-12 col-sm-6 col-lg-6">
+							<img src="${sessionScope.gallryImageURL}${event.featuredImage}"
+								alt="${event.heading}" title="${event.heading}"
+								class="img-responsive thumbnail">
+						</div>
+					</c:if>
+					<div class="col-12 col-sm-12 col-lg-12">
+
+						<strong>${event.heading}</strong><br>
+						<p>${event.descriptions}</p>
+						<p>
+							<span><i class="icon-location"></i> <strong>Venue:</strong>
+								${event.eventLocation}</span> <span><i class="icon-calendar"></i>
+								<strong>Date:</strong> ${dateEvent} </span> <span><i
+								class="icon-man-user"></i> <strong>Contact Person:</strong>
+								${event.eventContactPerson}</span> <span><i
+								class="icon-smartphone-call"></i> <strong>Contact:</strong> +91
+								${event.eventContactNumber}</span><br>
+						</p>
+
+
+						<c:if test="${dateEvent >= todayString}">
+							<c:if test="${event.exInt2==1}">
+
+								<%
+									if (session.getAttribute("userInfo") == null) {
+								%>
+								<form class="form-horizontal"
+									action="${pageContext.request.contextPath}/submtFrontEventAppliedForm"
+									method="post" enctype="multipart/form-data"
+									name="form_sample_2" id="form_sample_2"
+									onsubmit="return confirm('Do you really want to submit the form?');">
+									<div class="form-group row">
+										<label class="control-label col-sm-2" for="page_pdf">Upload
+											Document :</label>
+										<div class="col-sm-7">
+											<input type="file" name="pagePdf" id="pagePdf"
+												class="form-control" data-parsley-minlength="2" required
+												accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
+											<p>Please upload .doc, .docx, .pptx,.pdf and .xlsx only</p>
+										</div>
+										<input type="hidden" name="newsblogsId"
+											value="${event.newsblogsId}">
+
+										<button type="submit" class="btn button apply">Apply</button>
+									</div>
+
+								</form>
+								<%
+									} else {
+
+												int userType = (Integer) session.getAttribute("userType");
+
+												String[] ids = (String[]) session.getAttribute("allowedType");
+
+												for (int i = 0; i < ids.length; i++) {
+
+													if (userType == Integer.parseInt(ids[i])) {
+								%>
+								<form class="form-horizontal"
+									action="${pageContext.request.contextPath}/submtFrontEventAppliedForm"
+									method="post" enctype="multipart/form-data"
+									name="form_sample_2" id="form_sample_2"
+									onsubmit="return confirm('Do you really want to submit the form?');">
+									<div class="form-group row">
+										<label class="control-label col-sm-2" for="page_pdf">Upload
+											Document :</label>
+										<div class="col-sm-7">
+											<input type="file" name="pagePdf" id="pagePdf"
+												class="form-control" data-parsley-minlength="2" required
+												accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
+											<p>Please upload .doc, .docx, .pptx,.pdf and .xlsx only</p>
+										</div>
+										<input type="hidden" name="newsblogsId"
+											value="${event.newsblogsId}">
+
+										<button type="submit" class="btn button apply">Apply</button>
+									</div>
+
+								</form>
+								<%
+									}
+												}
+											}
+								%>
+
+							</c:if>
+
+
+
+							<c:if test="${event.exInt2==0}">
+
+								<%
+									if (session.getAttribute("userInfo") == null) {
+								%>
+								<a
+									href="${pageContext.request.contextPath}/applyEventFront/${event.newsblogsId}"
+									class="btn button apply">Apply</a>
+								<%
+									} else {
+
+												int userType = (Integer) session.getAttribute("userType");
+
+												String[] ids = (String[]) session.getAttribute("allowedType");
+
+												for (int i = 0; i < ids.length; i++) {
+
+													if (userType == Integer.parseInt(ids[i])) {
+								%>
+								<a
+									href="${pageContext.request.contextPath}/applyEventFront/${event.newsblogsId}"
+									class="btn button apply">Apply</a>
+								<%
+									}
+												}
+											}
+								%>
+							</c:if>
+						</c:if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

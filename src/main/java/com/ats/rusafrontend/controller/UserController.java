@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.Info;
+import com.ats.rusafrontend.model.EventRecord;
 import com.ats.rusafrontend.model.EventRegistration;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
@@ -117,6 +118,7 @@ public class UserController {
 					session.setAttribute("UserDetail", verify.getRegId());
 					
 					session.setAttribute("userInfo", verify);
+					session.setAttribute("userType", (Integer) verify.getUserType());
 					
 					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
@@ -611,15 +613,14 @@ public class UserController {
 				model.addObject("maintainance", maintainance);
 			} else {
 				
-				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("flag", flag);
-				flag = 0;
+				 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
-				NewsDetails[] previousList = rest.postForObject(Constant.url + "/getAllPreviousEvents", map1,
-						NewsDetails[].class);
-				List<NewsDetails> previous = new ArrayList<NewsDetails>(Arrays.asList(previousList));
+				map1.add("userId", userDetail);
+				EventRecord[] previousList = rest.postForObject(Constant.url + "/allPreviousEventWithApllied", map1,
+						EventRecord[].class);
+				List<EventRecord> previous = new ArrayList<EventRecord>(Arrays.asList(previousList));
 				
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -629,6 +630,7 @@ public class UserController {
 				System.out.println("list_new: " + previous.toString());
 				model.addObject("previous", previous);
 				model.addObject("typeId", 1);
+				model.addObject("documentUrl", Constant.getCmsPdf);
 				// model.addObject("pageMetaData", pageMetaData);
 				 
 

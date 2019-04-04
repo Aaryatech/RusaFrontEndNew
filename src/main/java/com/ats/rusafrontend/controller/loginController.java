@@ -558,7 +558,9 @@ public class loginController {
 				model.addObject("typeId", typeId);
 
 				System.out.println("typeId :" + typeId);
-				 
+				
+				String[] Ids = eventList.getExVar2().split(",");
+				model.addObject("ids", Ids);
 			}
 
 		} catch (Exception e) {
@@ -681,7 +683,7 @@ public class loginController {
 				System.out.println("res Id: " + res.toString());
 								
 				session.setAttribute("success", "Successfully Registed Event !");
-				upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
+				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, pdfName);
 			}
 			else
 			{

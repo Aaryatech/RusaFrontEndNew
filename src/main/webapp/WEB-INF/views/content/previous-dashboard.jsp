@@ -204,7 +204,7 @@
                                             <td>${previous.heading}</td>
                                             <c:choose>
                                             <c:when test="${not empty previous.downloadPdf}">
-                                              <td><a href="${sessionScope.getUploadDocURL}${previous.downloadPdf}"><span class="icon-download-2"></span> Download</a></td>
+                                              <td><a href="${documentUrl}${previous.downloadPdf}"><span class="icon-download-2"></span> Download</a></td>
                                          
                                             </c:when>
                                             <c:otherwise>
@@ -213,7 +213,7 @@
                                             </c:otherwise>
                                             </c:choose>
                                               <c:choose>
-                                            <c:when test="${previous.exInt1==1}">
+                                            <c:when test="${previous.apply==1}">
                                               <td>YES</td>                                         
                                             </c:when>
                                             <c:otherwise>
