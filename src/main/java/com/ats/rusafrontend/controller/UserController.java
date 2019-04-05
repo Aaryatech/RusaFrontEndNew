@@ -310,7 +310,7 @@ public class UserController {
 			registration.setIsActive(0);
 			registration.setDelStatus(1);
 			registration.setRegisterVia("web");
-
+  
 			
 			Registration res = rest.postForObject(Constant.url + "/saveReg", registration, Registration.class);
 
