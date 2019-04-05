@@ -218,8 +218,16 @@
 				</div>
 			</div>
 
+			<%-- <c:choose>
 
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm">
+				<c:when test="${newsSectionList.size()>0}">
+					<div class="col-12 col-sm-12 col-lg-6 right-Colm">
+				</c:when>
+				<c:otherwise>
+					<div class="col-12 col-sm-12 col-lg-9 right-Colm">
+				</c:otherwise>
+			</c:choose> --%>
+			  <div class="col-12 col-sm-12 col-lg-9 right-Colm"> 
 				<c:set var="find" value="0"></c:set>
 
 				<c:if test="${pageContent.cmsContentList.size()>0}">
@@ -242,13 +250,7 @@
 								</a>
 							</div>
 						</c:if>
-						<%-- <h6 style="text-align: right;">
-							Last Updated on
-							<c:choose>
-								<c:when test="${not empty cmsContentList.editDate}">${cmsContentList.editDate}</c:when>
-								<c:otherwise>${cmsContentList.addDate}</c:otherwise>
-							</c:choose>
-						</h6> --%>
+
 					</c:forEach>
 					<c:set var="find" value="1"></c:set>
 				</c:if>
@@ -280,16 +282,6 @@
 						</c:forEach>
 
 					</div>
-					<%-- <c:if test="${loop.last}">
-						<h6 style="text-align: right;">
-							Last Updated on
-							<c:choose>
-								<c:when test="${not empty faqContentList.editDate}">${faqContentList.editDate}</c:when>
-								<c:otherwise>${faqContentList.addDate}</c:otherwise>
-							</c:choose>
-						</h6>
-					</c:if> --%>
-
 					<c:set var="find" value="1"></c:set>
 				</c:if>
 
@@ -314,15 +306,6 @@
 						<c:forEach items="${pageContent.testImonialList}"
 							var="testImonialList">
 							<c:if test="${testImonialList.sectionId==6}">
-								<%-- <div class="col-12 col-sm-6 col-lg-6">
-									<div class="success-stories">
-										${testImonialList.message}
-										<p>
-											<i><strong>${testImonialList.fromName}</strong></i>
-										</p>
-									</div>
-								</div> --%>
-
 								<div class="col-12 col-sm-12 col-lg-12">
 									<div class="success-stories testimonials-detail">
 										<div class="testimonials-user-photo">
@@ -348,7 +331,7 @@
 										</p>
 										<p>
 											<strong>${testImonialList.fromName}</strong> <span
-													class="sup-text">${testImonialList.designation},${testImonialList.location}</span>
+												class="sup-text">${testImonialList.designation},${testImonialList.location}</span>
 										</p>
 									</div>
 								</div>
@@ -374,7 +357,8 @@
 									title="${gallaryDetailList.title}" class="img-responsive"></a>
 							</div>
 						</c:forEach>
-					</div><br>
+					</div>
+					<br>
 
 					<c:set var="find" value="1"></c:set>
 				</c:if>
@@ -405,13 +389,7 @@
 								</a>
 							</div>
 						</div>
-						<%-- <h6 style="text-align: right;">
-							Last Updated on
-							<c:choose>
-								<c:when test="${not empty detailNewsList.editDate}">${detailNewsList.editDate}</c:when>
-								<c:otherwise>${detailNewsList.addDate}</c:otherwise>
-							</c:choose>
-						</h6> --%>
+
 					</c:forEach>
 
 					<c:set var="find" value="1"></c:set>
@@ -499,6 +477,21 @@
 					<h2 style="text-align: center;">No Record Found</h2>
 				</c:if>
 			</div>
+
+
+			<%-- <c:if test="${newsSectionList.size()>0}">
+			   <div class="col-12 col-sm-12 col-lg-3 last-Colm">
+            	 
+                <h3 class="margin-top30">News</h3>
+                
+                <c:forEach items="${newsSectionList}"
+						var="newsSectionList">
+						<p><a href="${pageContext.request.contextPath}/NewsDetails/${langId}/${newsSectionList.newsblogsId}"> ${newsSectionList.heading}</a></p>
+						</c:forEach>
+                
+                
+            </div>    
+            </c:if> --%>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>

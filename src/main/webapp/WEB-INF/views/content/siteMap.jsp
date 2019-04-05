@@ -24,7 +24,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon" />
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
@@ -35,7 +37,7 @@
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 <style>
 .other-gov-site-home {
-    margin-top: 43px;
+	margin-top: 43px;
 }
 </style>
 </head>
@@ -58,7 +60,7 @@
 	</div>
 	<div class="container main-content" id="main-content">
 		<div class="row row-eq-height">
-			<div class="col-12 col-sm-3 col-lg-3">
+			<%-- <div class="col-12 col-sm-3 col-lg-3">
 				<div class="leftColm">
 					<h3>Site Map</h3>
 					<ul class="menu">
@@ -124,8 +126,8 @@
 						</c:forEach>
 					</ul>
 				</div>
-			</div>
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm">
+			</div> --%>
+			<%-- <div class="col-12 col-sm-12 col-lg-12 right-Colm">
 				<div id="site-map">
 					<div class="site-map-menus">
 
@@ -332,6 +334,221 @@
 
 					</div>
 				</div>
+			</div>  --%>
+
+			<div class="col-12 col-sm-12 col-lg-12 right-Colm">
+				<h2>Site Map</h2>
+
+
+				<ul class="sitemap">
+					<li><a href="${pageContext.request.contextPath}/">Home</a></li>
+
+					<c:forEach items="${sessionScope.menuList.sectionlist}"
+						var="menuList">
+						<li>
+							<%-- <c:choose>
+								<c:when test="${not empty menuList.externalUrl}">
+
+									<c:set value="${menuList.externalUrl}" var="string"></c:set>
+
+									<c:choose>
+										<c:when test="${fn:contains(string, 'http')}">
+											<c:choose>
+												<c:when test="${menuList.externalUrlTarget==1}">
+
+													<a onclick="checkMaintainance()"
+														href="${menuList.externalUrl}"
+														title="${menuList.sectionName}" target="_blank">${menuList.sectionName}
+														<span class="caret"></span>
+													</a>
+
+												</c:when>
+												<c:otherwise>
+													<a onclick="checkMaintainance()"
+														href="${menuList.externalUrl}"
+														title="${menuList.sectionName}">${menuList.sectionName}
+														<span class="caret"></span>
+													</a>
+
+												</c:otherwise>
+
+											</c:choose>
+
+										</c:when>
+										<c:otherwise>
+											<c:choose>
+												<c:when test="${menuList.externalUrlTarget==1}">
+
+													<a onclick="checkMaintainance()"
+														href="${pageContext.request.contextPath}/${menuList.externalUrl}"
+														title="${menuList.sectionName}" target="_blank">${menuList.sectionName}
+														<span class="caret"></span>
+													</a>
+
+												</c:when>
+												<c:otherwise>
+													<a onclick="checkMaintainance()"
+														href="${pageContext.request.contextPath}/${menuList.externalUrl}"
+														title="${menuList.sectionName}">${menuList.sectionName}
+														<span class="caret"></span>
+													</a>
+
+												</c:otherwise>
+
+											</c:choose>
+										</c:otherwise>
+									</c:choose>
+
+								</c:when>
+								<c:otherwise>
+									<a onclick="checkMaintainance()"
+										href="${pageContext.request.contextPath}/info/${menuList.sectionSlugname}"
+										title="${menuList.sectionName}">${menuList.sectionName} <span
+										class="caret"></span></a>
+								</c:otherwise>
+							</c:choose> --%>${menuList.sectionName} <c:forEach
+								items="${sessionScope.menuList.categoryList}" var="catList">
+
+								<c:if test="${catList.sectionId==menuList.sectionId}">
+									<ul>
+
+										<c:choose>
+											<c:when test="${not empty catList.externalUrl}">
+
+												<c:set value="${catList.externalUrl}" var="string"></c:set>
+
+												<c:choose>
+													<c:when test="${fn:contains(string, 'http')}">
+														<c:choose>
+															<c:when test="${catList.externalUrlTarget==1}">
+
+
+																<li><a onclick="checkMaintainance()"
+																	href="${catList.externalUrl}"
+																	title="${catList.catName}" target="_blank">${catList.catName}
+																		<span class="caret"></span>
+																</a></li>
+
+															</c:when>
+															<c:otherwise>
+
+
+																<li><a onclick="checkMaintainance()"
+																	href="${catList.externalUrl}"
+																	title="${catList.catName}">${catList.catName} <span
+																		class="caret"></span>
+																</a></li>
+
+															</c:otherwise>
+
+														</c:choose>
+
+													</c:when>
+													<c:otherwise>
+														<c:choose>
+															<c:when test="${catList.externalUrlTarget==1}">
+
+
+																<li><a onclick="checkMaintainance()"
+																	href="${pageContext.request.contextPath}/${catList.externalUrl}"
+																	title="${catList.catName}" target="_blank">${catList.catName}
+																		<span class="caret"></span>
+																</a></li>
+
+															</c:when>
+															<c:otherwise>
+
+																<li><a onclick="checkMaintainance()"
+																	href="${pageContext.request.contextPath}/${catList.externalUrl}"
+																	title="${catList.catName}">${catList.catName} <span
+																		class="caret"></span></a></li>
+
+															</c:otherwise>
+
+														</c:choose>
+													</c:otherwise>
+												</c:choose>
+											</c:when>
+											<c:otherwise>
+												<li><a onclick="checkMaintainance()"
+													href="${pageContext.request.contextPath}/info/${catList.slugName}"
+													title="${catList.catName}">${catList.catName} <span
+														class="caret"></span></a></li>
+											</c:otherwise>
+										</c:choose>
+										<ul>
+											<c:forEach items="${sessionScope.menuList.subCatList}"
+												var="subCatList">
+												<c:if test="${subCatList.parentId==catList.catId}">
+
+													<c:choose>
+														<c:when test="${not empty subCatList.externalUrl}">
+
+															<c:set value="${subCatList.externalUrl}" var="string"></c:set>
+
+															<c:choose>
+																<c:when test="${fn:contains(string, 'http')}">
+																	<c:choose>
+																		<c:when test="${subCatList.externalUrlTarget==1}">
+
+																			<li><a onclick="checkMaintainance()"
+																				href="${subCatList.externalUrl}"
+																				title="${subCatList.subCatName}">${subCatList.subCatName}
+																			</a></li>
+
+																		</c:when>
+																		<c:otherwise>
+
+																			<li><a onclick="checkMaintainance()"
+																				href="${subCatList.externalUrl}"
+																				title="${subCatList.subCatName}">${subCatList.subCatName}
+																			</a></li>
+
+																		</c:otherwise>
+
+																	</c:choose>
+
+																</c:when>
+																<c:otherwise>
+																	<c:choose>
+																		<c:when test="${catList.externalUrlTarget==1}">
+																			<li><a onclick="checkMaintainance()"
+																				href="${pageContext.request.contextPath}/${subCatList.externalUrl}"
+																				title="${subCatList.subCatName}" target="_blank">${subCatList.subCatName}
+																			</a></li>
+																		</c:when>
+																		<c:otherwise>
+
+																			<li><a onclick="checkMaintainance()"
+																				href="${pageContext.request.contextPath}/${subCatList.externalUrl}"
+																				title="${subCatList.subCatName}">${subCatList.subCatName}
+																			</a></li>
+
+																		</c:otherwise>
+																	</c:choose>
+																</c:otherwise>
+															</c:choose>
+
+														</c:when>
+														<c:otherwise>
+															<li><a onclick="checkMaintainance()"
+																href="${pageContext.request.contextPath}/info/${subCatList.subSlugName}"
+																title="${subCatList.subCatName}">${subCatList.subCatName}
+															</a></li>
+														</c:otherwise>
+													</c:choose>
+
+
+												</c:if>
+											</c:forEach>
+										</ul>
+									</ul>
+								</c:if>
+							</c:forEach>
+						</li>
+					</c:forEach>
+				</ul>
+
 			</div>
 
 		</div>

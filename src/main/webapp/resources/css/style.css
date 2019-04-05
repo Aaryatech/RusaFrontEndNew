@@ -317,7 +317,7 @@ p {
 }
 .top-section .dropdown-arrow span::before {
 	font-family: 'icomoon' !important;
-	content: "\e92a";
+	content:"\e91f";
 	font-size: 10px;
 	color: #FFF;
 	margin: 0px 10px;
@@ -460,6 +460,10 @@ p {
     border: 0px solid #CCC;
     padding: 0px;
 }
+
+.gallery .carousel-item{
+	height: 233px;
+}
 .news-section {
 	margin: 50px 0px 70px 0px;
     background-color: #FFF;
@@ -507,8 +511,11 @@ p {
 overflow: hidden;
 }
 
-.new-img img{
-	width: 100%;
+.new-img img {
+    width: 100%;
+    height: 180px;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 .bottom-section {
@@ -776,7 +783,7 @@ margin-bottom:0px;
 }
 .right-Colm li::before {
 	font-family: 'icomoon' !important;
-	content: "\e90b";
+	content:"\e915";
 	font-size: 10px;
 	color: #000;
 	margin: 6px 15px 0px 0px;
@@ -794,7 +801,7 @@ margin-bottom:0px;
 	font-size: 23px;
 	color: #2d2d2d;
 	font-weight: 600;
-	margin: 0px 0px 10px 0px;
+	margin: 0px 0px 30px 0px;
 	border-bottom: 1px dashed #ccc;
     padding-bottom: 10px;
 }
@@ -1069,19 +1076,17 @@ textarea {
 
 .send{
 	background-color:#fe9500;
-	margin:0px 0px 0px 0px;
-	
 }
 .send:hover{
 	background-color:#f18d00;
 }
-/* .send span::after {
+.send span::after {
     font-family: 'icomoon' !important;
     content: "\e90f";
     font-size: 15px;
     color: #21316c;
     margin: 0px 0px 0px 24px;
-}*/
+}
 .nav-item.dropdown:hover .dropdown-menu {
 	display: block;
 }
@@ -1478,8 +1483,8 @@ select {
 }
 
 .login-btn{
-	background-color:#fe9500 !important;
-	border:0px !important;
+	background-color:#fe9500;
+	border:0px;
 	margin:30px auto 0;
 	display: block;
 }
@@ -1926,7 +1931,6 @@ box-shadow: 0 .10rem .20rem rgba(189, 195, 199, 0.9);
 	background-color: #21316c;
 	color: #FFF !important;
 	margin: 0 !important;
-	height: 50px;
 }
 .border-box-search{
     background-color: #FFF;
@@ -2011,4 +2015,41 @@ margin-bottom:20px;
 	color: #54a7dc !important;
 font-size: 14px !important;
 margin:0px 0px 0px 0px !important;
+}
+.sitemap{
+	margin:0px;
+	padding:0px;
+}
+
+.sitemap li ul{
+	margin:0px 0px 0px 30px;
+	padding:0px;
+}
+
+@media screen and (max-width:1400px) {
+.navbar-nav .nav-link {
+    padding-right: 5px;
+}	
+}
+
+@media screen and (max-width:1024px) {
+.justify-content-md-center {
+    -ms-flex-pack: left!important;
+    justify-content: left!important;
+}
+.navbar-toggler {
+    position: absolute;
+    right: 15px;
+    top: -78px;
+}
+.search-section {
+    margin-right: 72px;
+}
+.navbar-nav .nav-link {
+border-right: 0px dotted #919abc;
+}
+.sub-link h2 {
+    margin: 15px 0px 0px 10px;
+}
+
 }
