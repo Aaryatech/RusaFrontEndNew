@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	//allow access only if session exists
@@ -11,10 +12,10 @@
 		contextPath = contextPath + "/retriveSession/" + mapping;
 		response.sendRedirect(contextPath);
 	}
-%>  
+%>
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,14 +74,42 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/registration">Registration</a> >
+				href="${pageContext.request.contextPath}/registration">Registration</a>
+			>
 		</div>
 	</div>
 
 
 	<div class="login">
 		<div class="container" id="main-content">
-
+			<c:if test="${sessionScope.success != null}">
+				<div class="col-12 col-sm-12 col-lg-12 ">
+					<div class="alert alert-success ">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<strong>Success : </strong> ${success}
+					</div>
+				</div>
+			</c:if>
+			<%
+				session.removeAttribute("success");
+			%>
+			<c:if test="${sessionScope.errorMsg != null}">
+				<div class="col-12 col-sm-12 col-lg-12 ">
+					<div class="alert alert-danger ">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<strong>Error : </strong> ${errorMsg}
+					</div>
+				</div>
+			</c:if>
+			<%
+				session.removeAttribute("errorMsg");
+			%>
 			<div class="login-box register-box">
 				<div class="login-header">
 					<h5>Register</h5>
@@ -206,7 +235,7 @@
 								name="designationCollege" placeholder="Designation of Person"
 								id="designationCollege">
 						</div>
-<div class="col-12 col-sm-12 col-lg-6">
+						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Name of Department <span class="text-danger">*</span>
 							</label> <input type="text" class="form-control" name="dept"
 								placeholder="Name of Department" id="collegeDept">
@@ -329,92 +358,116 @@
 		});
 	</script> -->
 	<script type="text/javascript">
-function showForm() {
-	//document.getElementById("abc").style = "display:none"
-		var userType=document.getElementById("userType").value
-		//alert("qualType::"+qualType);
-		
-		if (userType == 1) {
+		function showForm() {
+			//document.getElementById("abc").style = "display:none"
+			var userType = document.getElementById("userType").value
+			//alert("qualType::"+qualType);
 
-			document.getElementById("individual").style = "visible"
-			
-			document.getElementById("email").setAttribute("required","true");
-			document.getElementById("fullname").setAttribute("required","true");
-		 	document.getElementById("collegeName").setAttribute("required","true");
-		 	document.getElementById("uniAff").setAttribute("required","true");
-			document.getElementById("depatment").setAttribute("required","true");
-			
-			document.getElementById("mobile").setAttribute("required","true");
-			document.getElementById("authour").setAttribute("required","true");
-			
-		} 
-		else{
-			
-			document.getElementById("email").removeAttribute("required");
-			document.getElementById("fullname").removeAttribute("required");
-			document.getElementById("collegeName").removeAttribute("required");
-			document.getElementById("uniAff").removeAttribute("required");
-			document.getElementById("depatment").removeAttribute("required");
-		
-			document.getElementById("mobile").removeAttribute("required");
-			document.getElementById("authour").removeAttribute("required");
-			
-			document.getElementById("individual").style = "display:none"
+			if (userType == 1) {
+
+				document.getElementById("individual").style = "visible"
+
+				document.getElementById("email").setAttribute("required",
+						"true");
+				document.getElementById("fullname").setAttribute("required",
+						"true");
+				document.getElementById("collegeName").setAttribute("required",
+						"true");
+				document.getElementById("uniAff").setAttribute("required",
+						"true");
+				document.getElementById("depatment").setAttribute("required",
+						"true");
+
+				document.getElementById("mobile").setAttribute("required",
+						"true");
+				document.getElementById("authour").setAttribute("required",
+						"true");
+
+			} else {
+
+				document.getElementById("email").removeAttribute("required");
+				document.getElementById("fullname").removeAttribute("required");
+				document.getElementById("collegeName").removeAttribute(
+						"required");
+				document.getElementById("uniAff").removeAttribute("required");
+				document.getElementById("depatment")
+						.removeAttribute("required");
+
+				document.getElementById("mobile").removeAttribute("required");
+				document.getElementById("authour").removeAttribute("required");
+
+				document.getElementById("individual").style = "display:none"
+			}
+			if (userType == 2) {
+
+				document.getElementById("college").style = "visible"
+
+				document.getElementById("collegeEmail").setAttribute(
+						"required", "true");
+				document.getElementById("instituteName").setAttribute(
+						"required", "true");
+				document.getElementById("univ")
+						.setAttribute("required", "true");
+				document.getElementById("collegeDept").setAttribute("required",
+						"true");
+				document.getElementById("designationCollege").setAttribute(
+						"required", "true");
+				document.getElementById("collegeNo").setAttribute("required",
+						"true");
+				document.getElementById("cAuthour").setAttribute("required",
+						"true");
+
+			} else {
+				document.getElementById("collegeEmail").removeAttribute(
+						"required");
+				document.getElementById("instituteName").removeAttribute(
+						"required");
+				document.getElementById("univ").removeAttribute("required");
+				document.getElementById("collegeDept").removeAttribute(
+						"required");
+				document.getElementById("designationCollege").removeAttribute(
+						"required");
+				document.getElementById("collegeNo")
+						.removeAttribute("required");
+				document.getElementById("cAuthour").removeAttribute("required");
+
+				document.getElementById("college").style = "display:none"
+			}
+			if (userType == 3) {
+
+				document.getElementById("university").style = "visible"
+
+				document.getElementById("uniEmail").setAttribute("required",
+						"true");
+				document.getElementById("uniName").setAttribute("required",
+						"true");
+				document.getElementById("uniDept").setAttribute("required",
+						"true");
+				document.getElementById("uniDes").setAttribute("required",
+						"true");
+				document.getElementById("uniNo").setAttribute("required",
+						"true");
+				document.getElementById("uniAuthour").setAttribute("required",
+						"true");
+
+			} else {
+				document.getElementById("uniEmail").removeAttribute("required");
+				document.getElementById("uniName").removeAttribute("required");
+				document.getElementById("uniDept").removeAttribute("required");
+				document.getElementById("uniDes").removeAttribute("required");
+				document.getElementById("uniNo").removeAttribute("required");
+				document.getElementById("uniAuthour").removeAttribute(
+						"required");
+
+				document.getElementById("university").style = "display:none"
+			}
+
 		}
-		if (userType == 2) {
 
-			document.getElementById("college").style = "visible"
-			
-			document.getElementById("collegeEmail").setAttribute("required","true");
-			document.getElementById("instituteName").setAttribute("required","true");		 
-		 	document.getElementById("univ").setAttribute("required","true");
-			document.getElementById("collegeDept").setAttribute("required","true");
-			document.getElementById("designationCollege").setAttribute("required","true");
-			document.getElementById("collegeNo").setAttribute("required","true");
-			document.getElementById("cAuthour").setAttribute("required","true");			
-			
-		} 
-		else{
-			document.getElementById("collegeEmail").removeAttribute("required");
-			document.getElementById("instituteName").removeAttribute("required");		
-			document.getElementById("univ").removeAttribute("required");
-			document.getElementById("collegeDept").removeAttribute("required");		
-			document.getElementById("designationCollege").removeAttribute("required");
-			document.getElementById("collegeNo").removeAttribute("required");
-			document.getElementById("cAuthour").removeAttribute("required");
-			
+		function hideText() {
+			//alert("hii");
 			document.getElementById("college").style = "display:none"
 		}
-		if (userType == 3) {
-
-			document.getElementById("university").style = "visible"
-			
-			document.getElementById("uniEmail").setAttribute("required","true");			 	
-			document.getElementById("uniName").setAttribute("required","true");		
-			document.getElementById("uniDept").setAttribute("required","true");
-			document.getElementById("uniDes").setAttribute("required","true");
-			document.getElementById("uniNo").setAttribute("required","true");
-			document.getElementById("uniAuthour").setAttribute("required","true");
-			
-			
-		} 
-		else{
-			document.getElementById("uniEmail").removeAttribute("required");			
-		 	document.getElementById("uniName").removeAttribute("required");			
-			document.getElementById("uniDept").removeAttribute("required");
-			document.getElementById("uniDes").removeAttribute("required");
-			document.getElementById("uniNo").removeAttribute("required");
-			document.getElementById("uniAuthour").removeAttribute("required");
-			
-			document.getElementById("university").style = "display:none"
-		}
-	
-	}
-	
-function hideText() {
-	//alert("hii");
-	document.getElementById("college").style = "display:none"		
-	}
 	</script>
 
 
