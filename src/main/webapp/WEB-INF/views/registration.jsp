@@ -11,7 +11,7 @@
 		contextPath = contextPath + "/retriveSession/" + mapping;
 		response.sendRedirect(contextPath);
 	}
-%>
+%>  
 <!DOCTYPE html>
 <html lang="en">
 <head> 
