@@ -174,6 +174,7 @@
 						
 					
                                 <div class="col-12 col-sm-12 col-lg-3"></div>
+                             
 					
 							<div class="form-group row row-eq-height" style="display: visible" id="individual">
 					<div class="col-12 col-sm-12 col-lg-6">
@@ -235,9 +236,8 @@
 									placeholder="Name of Authorized" id="authour">
 							</div>
 							</div>
-				
-						
-							<div class="form-group row row-eq-height" style="display: none" id="college">
+		
+							<div class="form-group row row-eq-height" style="display: visible" id="college">
 								<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Email-ID <span class="text-danger">*</span></label> 
 								
@@ -303,8 +303,8 @@
 									</div>
 							</div>
 						
-					
-							<div class="form-group row row-eq-height" style="display: none" id="university">
+				
+							<div class="form-group row row-eq-height" style="display: visible" id="university">
 								<div class="col-12 col-sm-12 col-lg-6">	
 								<label>Email-ID <span class="text-danger">*</span></label> <input
 									type="email" class="form-control" name="uniEmail" onchange="trim(this)" value="${editReg.emails}"
@@ -388,8 +388,7 @@ function showForm() {
 			document.getElementById("fullname").setAttribute("required","true");
 		 	document.getElementById("collegeName").setAttribute("required","true");
 		 	document.getElementById("uniAff").setAttribute("required","true");
-			document.getElementById("depatment").setAttribute("required","true");
-			document.getElementById("dob").setAttribute("required","true"); 
+			document.getElementById("depatment").setAttribute("required","true");		
 			document.getElementById("mobile").setAttribute("required","true");
 			document.getElementById("authour").setAttribute("required","true");
 			
@@ -400,8 +399,7 @@ function showForm() {
 			document.getElementById("fullname").removeAttribute("required");
 			document.getElementById("collegeName").removeAttribute("required");
 			document.getElementById("uniAff").removeAttribute("required");
-			document.getElementById("depatment").removeAttribute("required");
-			document.getElementById("dob").removeAttribute("required");
+			document.getElementById("depatment").removeAttribute("required");		
 			document.getElementById("mobile").removeAttribute("required");
 			document.getElementById("authour").removeAttribute("required");
 			

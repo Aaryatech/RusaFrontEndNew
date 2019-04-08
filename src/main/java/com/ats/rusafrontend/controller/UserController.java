@@ -824,5 +824,38 @@ public class UserController {
 
 		return "redirect:/upcomingEvents";
 	}
+	@RequestMapping(value = "/checkUniqueField", method = RequestMethod.GET)
+    public @ResponseBody Info checkUniqueField(HttpServletRequest request, HttpServletResponse response) {
+
+        Info info = new Info();
+
+        try {
+
+            MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+            String inputValue = request.getParameter("inputValue");
+            int valueType = Integer.parseInt(request.getParameter("valueType"));
+            int primaryKey = Integer.parseInt(request.getParameter("primaryKey"));
+         System.out.println("values are   "+inputValue+valueType+primaryKey);
+          
+            map.add("inputValue", inputValue);
+            map.add("valueType", valueType);
+            map.add("primaryKey", primaryKey);
+            
+            
+            
+            
+
+            info = rest.postForObject(Constant.url + "checkUniqueField", map, Info.class);
+            System.err.println("Info Response  " + info.toString());
+
+        } catch (Exception e) {
+            System.err.println("Exce in checkUniqueField  " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return info;
+
+    }
 
 }

@@ -63,6 +63,7 @@
 </script>
 </head>
 <body onload="hideText()">
+	<c:url value="/checkUniqueField" var="checkUniqueField"></c:url>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
@@ -149,31 +150,31 @@
 						<div class="col-12 col-sm-12 col-lg-6">
 
 							<label>Full Name <span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="name" placeholder="Name"
+								type="text" class="form-control" name="name" placeholder="Name" onchange="trim(this)"
 								id="fullname">
 						</div>
 
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>College Name <span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="collegeName"
+								type="text" class="form-control" name="collegeName" onchange="trim(this)"
 								placeholder="College Name" id="collegeName">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>University Affiliated <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="university"
+							</label> <input type="text" class="form-control" name="university" onchange="trim(this)"
 								placeholder="University Affiliated" id="uniAff">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Designation of Person <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="authour"
+							</label> <input type="text" class="form-control" name="authour" onchange="trim(this)"
 								placeholder="Designation of Person" id="authour">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 
 							<label>Name of Department <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="dept"
+							</label> <input type="text" class="form-control" name="dept" onchange="trim(this)"
 								placeholder="Name of Department" id="depatment">
 						</div>
 
@@ -181,19 +182,19 @@
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="mobile"
+								type="text" class="form-control" name="mobile" onchange="checkUnique(this.value,1,1)" 
 								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 								placeholder="Mobile No." id="mobile" maxlength="10">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
-								type="email" class="form-control" name="email"
+								type="email" class="form-control" name="email"  onchange="checkUnique(this.value,2,1)"
 								placeholder="Email" id="email">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>Alternate Email-ID</label> <input type="email"
+							<label>Alternate Email-ID</label> <input type="email" onchange="trim(this)"
 								class="form-control" name="altEmail"
 								placeholder="Alternate Email" id="altEmail">
 						</div>
@@ -214,48 +215,48 @@
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>AISHE Code</label> <input type="text" class="form-control"
+							<label>AISHE Code</label> <input type="text" class="form-control" onchange="trim(this)"
 								name="aisheName" placeholder="AISHE Code" id="aisheName">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>University Affiliated <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="univ"
+							</label> <input type="text" class="form-control" name="univ" onchange="trim(this)"
 								placeholder="University Affiliated" id="univ">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Authorized Person Name <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="collegeAuthour"
+							</label> <input type="text" class="form-control" name="collegeAuthour" onchange="trim(this)"
 								placeholder="Authorized Person Name" id="cAuthour">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Designation of Person<span class="text-danger">*</span>
 							</label> <input type="text" class="form-control"
-								name="designationCollege" placeholder="Designation of Person"
+								name="designationCollege" placeholder="Designation of Person" onchange="trim(this)"
 								id="designationCollege">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Name of Department <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="dept"
+							</label> <input type="text" class="form-control" name="dept" onchange="trim(this)"
 								placeholder="Name of Department" id="collegeDept">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="collegeMobile"
+								type="text" class="form-control" name="collegeMobile"  onchange="checkUnique(this.value,1,2)" 
 								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 								placeholder="Mobile No." id="collegeNo" maxlength="10">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
-								type="email" class="form-control" name="collegeEmail"
+								type="email" class="form-control" name="collegeEmail"  onchange="checkUnique(this.value,2,2)"
 								placeholder="Email" id="collegeEmail">
 						</div>
 
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Alternate Email-ID</label> <input type="email"
-								class="form-control" name="altEmail"
+								class="form-control" name="altEmail" onchange="trim(this)"
 								placeholder="Alternate Email" id="altEmail">
 						</div>
 					</div>
@@ -267,47 +268,47 @@
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>University Name <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="uniName"
+							</label> <input type="text" class="form-control" name="uniName" onchange="trim(this)"
 								placeholder="University Name" id="uniName">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>AISHE Code</label> <input type="text" class="form-control"
+							<label>AISHE Code</label> <input type="text" class="form-control" onchange="trim(this)"
 								name="aisheName" placeholder="AISHE Code" id="aisheName">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 
 							<label>Authorized Person Name <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="uniAuthour"
+							</label> <input type="text" class="form-control" name="uniAuthour" onchange="trim(this)"
 								placeholder="Authorized Person Name" id="uniAuthour">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Designation of Person<span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="uniDes"
+							</label> <input type="text" class="form-control" name="uniDes" onchange="trim(this)"
 								placeholder="Designation of Person" id="uniDes">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Name of Department <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="uniDept"
+							</label> <input type="text" class="form-control" name="uniDept" onchange="trim(this)"
 								placeholder="Name of Department" id="uniDept">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="uniMobile"
+								type="text" class="form-control" name="uniMobile"  onchange="checkUnique(this.value,1,3)" 
 								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 								placeholder="Mobile No." id="uniNo" maxlength="10">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
-								type="email" class="form-control" name="uniEmail"
+								type="email" class="form-control" name="uniEmail"  onchange="checkUnique(this.value,2,3)"
 								placeholder="Email" id="uniEmail">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Alternate Email-ID</label> <input type="email"
-								class="form-control" name="altEmail"
+								class="form-control" name="altEmail" onchange="trim(this)"
 								placeholder="Alternate Email" id="altEmail">
 						</div>
 					</div>
@@ -336,6 +337,103 @@
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		
+		<script type="text/javascript">
+	function checkUnique(inputValue, valueType,seqId) {
+		//alert("inputValue"+inputValue);
+		///alert("valueType "+valueType);
+		//alert("seqId "+seqId);
+		
+	
+		
+		
+		var primaryKey=0;
+		//alert("Is Edit " +isEdit);
+		var valid = true;
+		if (valueType == 1) {
+			//alert("Its Mob no");
+			if (inputValue.length == 10) {
+				valid = true;
+				//alert("Len 10")
+			} else {
+				valid = false;
+			}
+		} else if (valueType == 2) {
+			//alert("Its Email " );
+
+			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+			if (inputValue.match(mailformat)) {
+				valid = true;
+				//alert("Valid Email Id");
+			} else {
+				valid = false;
+				//alert("InValid Email Id");
+			}
+		}
+		if (valid == true)
+			$
+					.getJSON(
+							'${checkUniqueField}',
+							{
+
+								inputValue : inputValue,
+								valueType : valueType,
+								primaryKey : primaryKey,
+								ajax : 'true',
+
+							},
+							function(data) {
+
+								//alert("Data  " +JSON.stringify(data));
+								if (data.error == true) {
+									
+
+									if (valueType == 2) {
+										alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
+
+										if(seqId==1){
+											document.getElementById("email").value = "";
+											
+											
+										}
+										else if(seqId==2){
+											document.getElementById("collegeEmail").value = "";
+										}
+										else{
+										document.getElementById("uniEmail").value = "";
+										}		
+
+									
+									} else {
+										
+										alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
+										
+										
+										if(seqId==1){
+											document.getElementById("mobile").value = "";
+											
+											
+										}
+										else if(seqId==2){
+											document.getElementById("collegeNo").value = "";
+										}
+										else{
+										document.getElementById("uniNo").value = "";
+										}	
+										
+									
+									}
+								}
+							});
+	}
+	
+	function trim(el) {
+		el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+		replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+		replace(/\n +/, "\n"); // Removes spaces after newlines
+		return;
+	}
+</script>
 	<!--     <script >
 
     $(function() 
