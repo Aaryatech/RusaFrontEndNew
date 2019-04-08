@@ -77,7 +77,7 @@ public class ImageController {
 				map1.add("langId", langId);
 				NewsDetails image = rest.postForObject(Constant.url + "/getNewsListByNewsId", map1, NewsDetails.class);
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
-				System.out.println("list_new: " + image.toString());
+				//System.out.println("list_new: " + image.toString());
 				model.addObject("image", image);
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 

@@ -218,7 +218,7 @@
 				</div>
 			</div>
 
-			<%-- <c:choose>
+			  <c:choose>
 
 				<c:when test="${newsSectionList.size()>0}">
 					<div class="col-12 col-sm-12 col-lg-6 right-Colm">
@@ -226,8 +226,8 @@
 				<c:otherwise>
 					<div class="col-12 col-sm-12 col-lg-9 right-Colm">
 				</c:otherwise>
-			</c:choose> --%>
-			  <div class="col-12 col-sm-12 col-lg-9 right-Colm"> 
+			</c:choose> 
+			 <!--  <div class="col-12 col-sm-12 col-lg-9 right-Colm">  -->
 				<c:set var="find" value="0"></c:set>
 
 				<c:if test="${pageContent.cmsContentList.size()>0}">
@@ -479,7 +479,7 @@
 			</div>
 
 
-			<%-- <c:if test="${newsSectionList.size()>0}">
+			  <c:if test="${newsSectionList.size()>0}">
 			   <div class="col-12 col-sm-12 col-lg-3 last-Colm">
             	 
                 <h3 class="margin-top30">News</h3>
@@ -491,7 +491,7 @@
                 
                 
             </div>    
-            </c:if> --%>
+            </c:if> 
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>

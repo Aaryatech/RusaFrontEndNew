@@ -74,9 +74,15 @@ public class loginController {
 			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 			map1.add("regId", userDetail);
 			editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
-			String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+			
 			model.addObject("editReg", editReg);
+			
+			try {
+			String dobDate = DateConvertor.convertToDMY(editReg.getDob());
 			model.addObject("dobDate", dobDate);
+			}catch(Exception e) {
+				 
+			}
 			model.addObject("isEdit", 1);
 			// model.addObject("url", Constant.bannerImageURL);
 			}
@@ -109,9 +115,14 @@ public class loginController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("regId", userDetail);
 			editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
-			String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+			
 			model.addObject("editReg", editReg);
+			try {
+			String dobDate = DateConvertor.convertToDMY(editReg.getDob());
 			model.addObject("dobDate", dobDate);
+			}catch(Exception e) {
+				
+			}
 			model.addObject("isEdit", 1);
 			// model.addObject("url", Constant.bannerImageURL);
 			}
