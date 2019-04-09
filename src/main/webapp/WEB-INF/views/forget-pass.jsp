@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -117,18 +118,41 @@
  
 	<div class="login">
 		<div class="container" id="main-content">
-
+<c:if test="${sessionScope.success != null}">
+				<div class="col-12 col-sm-12 col-lg-12 ">
+					<div class="alert alert-success ">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<strong>Success : </strong> ${success}
+					</div>
+				</div>
+			</c:if>
+			<%
+				session.removeAttribute("success");
+			%>
+			<c:if test="${sessionScope.errorMsg != null}">
+				<div class="col-12 col-sm-12 col-lg-12 ">
+					<div class="alert alert-danger ">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<strong>Error : </strong> ${errorMsg}
+					</div>
+				</div>
+			</c:if>
+			<%
+				session.removeAttribute("errorMsg");
+			%>
 			<div class="row row-eq-height login-box">
 				<div class="col-12 col-sm-12 col-lg-12 login-header">
 					<h5>Forget Password</h5>
 					<p></p>
 				</div>
 				<div class="col-12 col-sm-12 col-lg-3"></div>
-    <div class="col-lg-12">
-    		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                <strong>Success : </strong> abc</div>
-        	                                       </div>
+  
 				<div class="col-12 col-sm-12 col-lg-6">
 
                             <form method="post" action="${pageContext.request.contextPath}/forgetPassword" name="login_form">  

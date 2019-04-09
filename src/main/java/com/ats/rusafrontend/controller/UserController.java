@@ -759,12 +759,13 @@ public class UserController {
 			map.add("mobileNumber", mobileNumber);
 
 			Registration verify = rest.postForObject(Constant.url + "/forgetPassword", map, Registration.class);
-			if (verify.isError() == false) {			
+			if (verify.isError() == false) {	
+				session.setAttribute("success", "Please Check mail !");
 			//	System.out.println("Login :" + verify.getRegId());
 				//session.setAttribute("UserDetail", verify.getRegId());
 				
 			} else {
-				
+				session.setAttribute("errorMsg", "Invalid credentials !");
 				System.out.println("Invalid credentials");
 				
 			}
