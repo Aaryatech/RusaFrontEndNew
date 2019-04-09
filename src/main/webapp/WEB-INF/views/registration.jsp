@@ -182,14 +182,14 @@
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="mobile" onchange="checkUnique(this.value,1,1)" 
+								type="text" class="form-control" name="mobile" oninput="checkUnique(this.value,1,1)" 
 								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 								placeholder="Mobile No." id="mobile" maxlength="10" required>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
-								type="email" class="form-control" name="email"  onchange="checkUnique(this.value,2,1)"
+								type="email" class="form-control" name="email"  oninput="checkUnique(this.value,2,1)"
 								placeholder="Email" id="email" required>
 						</div>
 
@@ -238,13 +238,13 @@
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="collegeMobile"  onchange="checkUnique(this.value,1,2)" 
+								type="text" class="form-control" name="collegeMobile"  oninput="checkUnique(this.value,1,2)" 
 								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 								placeholder="Mobile No." id="collegeNo" maxlength="10">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
-								type="email" class="form-control" name="collegeEmail"  onchange="checkUnique(this.value,2,2)"
+								type="email" class="form-control" name="collegeEmail"  oninput="checkUnique(this.value,2,2)"
 								placeholder="Email" id="collegeEmail">
 						</div>
 
@@ -291,13 +291,13 @@
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="uniMobile"  onchange="checkUnique(this.value,1,3)" 
+								type="text" class="form-control" name="uniMobile" oninput="checkUnique(this.value,1,3)" 
 								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 								placeholder="Mobile No." id="uniNo" maxlength="10">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
-								type="email" class="form-control" name="uniEmail"  onchange="checkUnique(this.value,2,3)"
+								type="email" class="form-control" name="uniEmail"  oninput="checkUnique(this.value,2,3)"
 								placeholder="Email" id="uniEmail">
 						</div>
 
