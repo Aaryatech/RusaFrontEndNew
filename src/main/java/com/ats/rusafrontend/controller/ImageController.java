@@ -77,7 +77,7 @@ public class ImageController {
 				map1.add("langId", langId);
 				NewsDetails image = rest.postForObject(Constant.url + "/getNewsListByNewsId", map1, NewsDetails.class);
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
-				//System.out.println("list_new: " + image.toString());
+				// System.out.println("list_new: " + image.toString());
 				model.addObject("image", image);
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 
@@ -142,7 +142,7 @@ public class ImageController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				
+
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -306,7 +306,7 @@ public class ImageController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				
+
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
 				NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map1,
@@ -327,8 +327,6 @@ public class ImageController {
 		return model;
 	}
 
-	
-
 	@RequestMapping(value = "/eventfrontList", method = RequestMethod.GET)
 	public ModelAndView eventfrontList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -344,7 +342,7 @@ public class ImageController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-			
+
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
 				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL", map1,
@@ -450,8 +448,8 @@ public class ImageController {
 	 */
 
 	@RequestMapping(value = "/eventDetailfront/{newsblogsId}", method = RequestMethod.GET)
-	public ModelAndView eventDetailfront(@PathVariable int newsblogsId,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView eventDetailfront(@PathVariable int newsblogsId, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("event-detail-front");
 		try {
@@ -465,7 +463,6 @@ public class ImageController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
@@ -479,9 +476,9 @@ public class ImageController {
 				String dateEvent = DateConvertor.convertToDMY(eventList.getEventDateFrom());
 				model.addObject("event", eventList);
 				model.addObject("dateEvent", dateEvent);
-			
+
 				model.addObject("siteKey", Constant.siteKey);
-				//model.addObject("typeId", typeId);
+				// model.addObject("typeId", typeId);
 
 				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 
@@ -490,14 +487,13 @@ public class ImageController {
 
 				String[] ids = null;
 				try {
-					
-					
-					 ids = eventList.getExVar2().split(",");
-				}catch(Exception e) {
-					
+
+					ids = eventList.getExVar2().split(",");
+				} catch (Exception e) {
+
 				}
-				session.setAttribute("allowedType",ids);
-				
+				session.setAttribute("allowedType", ids);
+
 			}
 
 		} catch (Exception e) {
@@ -564,7 +560,8 @@ public class ImageController {
 			CalenderList m = rest.getForObject(Constant.url + "/getEventListforCalender", CalenderList.class);
 
 			for (int i = 0; i < m.getResult().size(); i++) {
-				m.getResult().get(i).setUrl(Constant.siteFrontEndUrl + "eventDetailfront/" + m.getResult().get(i).getId());
+				m.getResult().get(i)
+						.setUrl(Constant.siteFrontEndUrl + "eventDetailfront/" + m.getResult().get(i).getId());
 			}
 
 			ObjectMapper mapper = new ObjectMapper();
@@ -590,69 +587,145 @@ public class ImageController {
 		ModelAndView mav = new ModelAndView("event-detail-front");
 		mav.addObject("newsblogsId", newsblogsId);
 		System.out.println("newsblogsId :" + newsblogsId);
-		Registration userDetail = null; 
+		Registration userDetail = null;
 
 		try {
 			userDetail = (Registration) session.getAttribute("userInfo");
 			System.out.println("userDetail: " + userDetail);
 		} catch (Exception e) {
-			 
+
 			e.printStackTrace();
 		}
 		try {
-		if (userDetail!=null) {
+			if (userDetail != null) {
 
-			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+				Date date = new Date();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
-			VpsImageUpload upload = new VpsImageUpload();
-			pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
+				VpsImageUpload upload = new VpsImageUpload();
+				pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
 
-			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
-			map1.add("newsblogsId", newsblogsId);
-			map1.add("userId", userDetail.getRegId());
-			info = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
-					Info.class);
+				map1.add("newsblogsId", newsblogsId);
+				map1.add("userId", userDetail.getRegId());
+				info = rest.postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
 
-			if (info.isError() == true) {
-				EventRegistration eventReg = new EventRegistration();
+				if (info.isError() == true) {
+					EventRegistration eventReg = new EventRegistration();
 
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				eventReg.setDelStatus(1);
-				eventReg.setIsActive(1);
-				eventReg.setNewsblogsId(newsblogsId);
-				eventReg.setRegDate(sf.format(date));
-				eventReg.setUserId(userDetail.getRegId());
-				eventReg.setDoc1(pdfName);
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					eventReg.setDelStatus(1);
+					eventReg.setIsActive(1);
+					eventReg.setNewsblogsId(newsblogsId);
+					eventReg.setRegDate(sf.format(date));
+					eventReg.setUserId(userDetail.getRegId());
+					eventReg.setDoc1(pdfName);
 
-				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
-						EventRegistration.class);
+					EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+							EventRegistration.class);
 
-				session.setAttribute("success", "Successfully Registed Event !");
-				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, pdfName);
-			
+					session.setAttribute("success", "Successfully Registed Event !");
+					upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, pdfName);
 
+				} else {
+
+					session.setAttribute("errorMsg", "Already Register ");
+				}
+				ss = "redirect:/eventDetailfront/" + newsblogsId;
 			} else {
-				
-				session.setAttribute("errorMsg", "Already Register ");
+				System.out.println("User Id: " + userDetail);
+				session.setAttribute("errorMsg", "Please Login !");
+				ss = "redirect:/login";
+
 			}
-			ss = "redirect:/eventDetailfront/" + newsblogsId;
-		} else {
-			System.out.println("User Id: " + userDetail);
-			session.setAttribute("errorMsg", "Please Login !");
-			ss = "redirect:/login";
-			
-		}
 		} catch (Exception e) {
-			 
+
 			e.printStackTrace();
 		}
 
 		return ss;
 	}
 
-	
+	@RequestMapping(value = "/testimonialsImageList", method = RequestMethod.GET)
+	public ModelAndView testimonialsImageList( HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("testimonialList");
+		
+		try {
+
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "testimonialsList");
+			int langId = 1;
+			int valueType=1;
+
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("valueType", valueType);
+
+				TestImonial[] testImonialList = rest.postForObject(Constant.url + "/getAllTestImonialsList", map1,
+						TestImonial[].class);
+				List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
+				System.out.println("testImonial :"+testImonial.toString());
+				model.addObject("testImonial", testImonial);
+				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				model.addObject("valueType", valueType);
+				flag = 0;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	@RequestMapping(value = "/testimonialsVideoList", method = RequestMethod.GET)
+	public ModelAndView testimonialsVideoList( HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("testimonialList");
+		
+		try {
+
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "testimonialsList");
+			int langId = 1;
+			int valueType=2;
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("valueType", valueType);
+
+				TestImonial[] testImonialList = rest.postForObject(Constant.url + "/getAllTestImonialsList", map1,
+						TestImonial[].class);
+				List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
+				System.out.println("testImonial :"+testImonial.toString());
+				model.addObject("testImonial", testImonial);
+				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
+				model.addObject("siteKey", Constant.siteKey);
+				model.addObject("flag", flag);
+				model.addObject("valueType", valueType);
+				flag = 0;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
 }
