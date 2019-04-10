@@ -31,7 +31,10 @@ import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
 import com.ats.rusafrontend.model.OtpResponse;
 import com.ats.rusafrontend.model.PageMetaData;
+import com.ats.rusafrontend.model.PreviousRegRecord;
 import com.ats.rusafrontend.model.Registration;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @Scope("session")
@@ -57,7 +60,7 @@ public class loginController {
 		HttpSession session = request.getSession();
 		ModelAndView model = new ModelAndView("edit-profile");
 		try {
-		
+
 			session.setAttribute("mapping", "myProfile");
 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
@@ -66,25 +69,25 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				
+
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
-			int userDetail = (int) session.getAttribute("UserDetail");
-			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-			map1.add("regId", userDetail);
-			editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
-			
-			model.addObject("editReg", editReg);
-			
-			try {
-			String dobDate = DateConvertor.convertToDMY(editReg.getDob());
-			model.addObject("dobDate", dobDate);
-			}catch(Exception e) {
-				 
-			}
-			model.addObject("isEdit", 1);
-			// model.addObject("url", Constant.bannerImageURL);
+				int userDetail = (int) session.getAttribute("UserDetail");
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				map1.add("regId", userDetail);
+				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
+
+				model.addObject("editReg", editReg);
+
+				try {
+					String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+					model.addObject("dobDate", dobDate);
+				} catch (Exception e) {
+
+				}
+				model.addObject("isEdit", 1);
+				// model.addObject("url", Constant.bannerImageURL);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,24 +110,24 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				
+
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
-			int userDetail = (int) session.getAttribute("UserDetail");
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("regId", userDetail);
-			editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
-			
-			model.addObject("editReg", editReg);
-			try {
-			String dobDate = DateConvertor.convertToDMY(editReg.getDob());
-			model.addObject("dobDate", dobDate);
-			}catch(Exception e) {
-				
-			}
-			model.addObject("isEdit", 1);
-			// model.addObject("url", Constant.bannerImageURL);
+				int userDetail = (int) session.getAttribute("UserDetail");
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("regId", userDetail);
+				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+
+				model.addObject("editReg", editReg);
+				try {
+					String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+					model.addObject("dobDate", dobDate);
+				} catch (Exception e) {
+
+				}
+				model.addObject("isEdit", 1);
+				// model.addObject("url", Constant.bannerImageURL);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,6 +136,9 @@ public class loginController {
 		return model;
 	}
 
+	PreviousRegRecord prevrecrod = new PreviousRegRecord();
+	Registration jsonRecord = new Registration();
+	
 	@RequestMapping(value = "/editUserRegistration", method = RequestMethod.POST)
 	public String editUserRegistration(HttpServletRequest request, HttpServletResponse response) {
 
@@ -140,13 +146,30 @@ public class loginController {
 		String uuid = editReg.getUserUuid();
 		try {
 			HttpSession session = request.getSession();
-			
+
 			Date date = new Date(); // your date
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
 			int type = Integer.parseInt(request.getParameter("userType"));
-			System.out.println("Type: " + uuid);
+
+			SimpleDateFormat dttime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+			map.add("regId", editReg.getRegId());
+			prevrecrod = rest.postForObject(Constant.url + "/getPrevRecordByRegId", map,
+					PreviousRegRecord.class);
+
+			jsonRecord = new Registration();
+
+			if (prevrecrod.isError() == false) {
+
+				ObjectMapper mapper = new ObjectMapper();
+				jsonRecord = mapper.readValue(prevrecrod.getRecord(), Registration.class);
+
+			}
+
 			if (type == 1) {
 				String email = request.getParameter("email");
 				String altEmail1 = request.getParameter("altEmail");
@@ -154,9 +177,38 @@ public class loginController {
 				String collegeName = request.getParameter("collegeName");
 				String university = request.getParameter("university");
 				String dept = request.getParameter("dept");
-			//	String dob = request.getParameter("dob");
+				// String dob = request.getParameter("dob");
 				String mobile = request.getParameter("mobile");
 				String designation = request.getParameter("authour");
+
+				if (prevrecrod.isError() == false) {
+					
+					if (!editReg.getAlternateEmail().equals(altEmail1)) {
+
+						jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getCollegeName().equals(collegeName)) {
+
+						jsonRecord.setCollegeName(editReg.getCollegeName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getUnversityName().equals(university)) {
+
+						jsonRecord.setUnversityName(editReg.getUnversityName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getDepartmentName().equals(dept)) {
+
+						jsonRecord.setDepartmentName(editReg.getDepartmentName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getDesignationName().equals(designation)) {
+
+						jsonRecord.setDesignationName(editReg.getDesignationName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+				}
 
 				editReg.setAlternateEmail(altEmail1);
 				editReg.setName(name);
@@ -165,30 +217,40 @@ public class loginController {
 				editReg.setDepartmentName(dept);
 				editReg.setUserType(1);
 				editReg.setDesignationName(designation);
-				//editReg.setDob(DateConvertor.convertToYMD(dob));
+				// editReg.setDob(DateConvertor.convertToYMD(dob));
+				editReg.setEditDate(sf.format(date));
 
-				if (editReg.getEmails().equals(email)) {
-					editReg.setEmails(email);
-				} else {
-					System.out.println("Email new");
-					editReg.setExVar1(email);
+				if (prevrecrod.isError() == true) {
+					
+					jsonRecord=editReg;
+					prevrecrod.setLastUpdate(dttime.format(date));
+					prevrecrod.setRegId(editReg.getRegId());
 				}
+				
 				if (editReg.getMobileNumber().equals(mobile)) {
-					editReg.setMobileNumber(mobile);
-					editReg.setEditDate(sf.format(date));
+
 					Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
+					
+					ObjectMapper mapper = new ObjectMapper(); 
+					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
+					
+					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
+							PreviousRegRecord.class);
+					
 					redirect = "redirect:/editProfile";
 				} else {
-					System.out.println("1. mobile number");
+					/*
+					 * System.out.println("1. mobile number");
+					 * 
+					 * editReg.setEditDate(sf.format(date)); Registration res =
+					 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
+					 */
 					editReg.setExVar2(mobile);
-					editReg.setEditDate(sf.format(date));
-					Registration res = rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
-					redirect = "redirect:/ editVerifyOtp /" + uuid + "";
+					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
 				}
 
-			}
-			if (type == 2) {
+			} else if (type == 2) {
 				String collegeEmail = request.getParameter("collegeEmail");
 				String altEmail2 = request.getParameter("altEmail");
 				String institute = request.getParameter("institute");
@@ -198,39 +260,83 @@ public class loginController {
 				String collegeMobile = request.getParameter("collegeMobile");
 				String designation = request.getParameter("designationCollege");
 				String cAuthour = request.getParameter("collegeAuthour");
+				String dept = request.getParameter("dept");
+
+				if (prevrecrod.isError() == false) {
+					
+					if (!editReg.getAlternateEmail().equals(altEmail2)) {
+
+						jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getAuthorizedPerson().equals(cAuthour)) {
+
+						jsonRecord.setAuthorizedPerson(editReg.getAuthorizedPerson());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getAisheCode().equals(aisheName1)) {
+
+						jsonRecord.setAisheCode(editReg.getAisheCode());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getDepartmentName().equals(dept)) {
+
+						jsonRecord.setDepartmentName(editReg.getDepartmentName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getDesignationName().equals(designation)) {
+
+						jsonRecord.setDesignationName(editReg.getDesignationName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getUnversityName().equals(univ)) {
+
+						jsonRecord.setUnversityName(editReg.getUnversityName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+				}
 
 				editReg.setAlternateEmail(altEmail2);
 				editReg.setName(institute);
 				editReg.setAuthorizedPerson(cAuthour);
 				editReg.setAisheCode(aisheName1);
-				editReg.setUnversityName(univ);
-				editReg.setDepartmentName(collegeDept);
+				editReg.setUnversityName(univ); 
 				editReg.setDesignationName(designation);
 				editReg.setUserType(2);
-
-				if (editReg.getEmails().equals(collegeEmail)) {
-					editReg.setEmails(collegeEmail);
-				} else {
-					System.out.println("Email new");
-					editReg.setExVar1(collegeEmail);
+				editReg.setDepartmentName(dept);
+				editReg.setEditDate(sf.format(date));
+				
+				if (prevrecrod.isError() == true) {
+					
+					jsonRecord=editReg;
+					prevrecrod.setLastUpdate(dttime.format(date));
+					prevrecrod.setRegId(editReg.getRegId());
 				}
 
 				if (editReg.getMobileNumber().equals(collegeMobile)) {
-					editReg.setMobileNumber(collegeMobile);
-					editReg.setEditDate(sf.format(date));
+
 					Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
+					
+					ObjectMapper mapper = new ObjectMapper(); 
+					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
+					
+					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
+							PreviousRegRecord.class);
+					 
 					redirect = "redirect:/editProfile";
 				} else {
-					System.out.println("Email new");
+					/*
+					 * System.out.println("Email new");
+					 * 
+					 * editReg.setEditDate(sf.format(date)); Registration res =
+					 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
+					 */
 					editReg.setExVar2(collegeMobile);
-					editReg.setEditDate(sf.format(date));
-					Registration res = rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
-					redirect = "redirect:/ editVerifyOtp /" + uuid + "";
+					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
 				}
 
-			}
-			if (type == 3) {
+			} else if (type == 3) {
 				String uniEmail = request.getParameter("uniEmail");
 				String altEmail3 = request.getParameter("altEmail");
 				String uniName = request.getParameter("uniName");
@@ -240,8 +346,36 @@ public class loginController {
 				String uniDes = request.getParameter("uniDes");
 				String uniAuthour = request.getParameter("uniAuthour");
 
-				editReg.setExVar2(uniMobile);
-				editReg.setExVar1(uniEmail);
+				if (prevrecrod.isError() == false) {
+					
+					if (!editReg.getAlternateEmail().equals(altEmail3)) {
+
+						jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getAuthorizedPerson().equals(uniAuthour)) {
+
+						jsonRecord.setAuthorizedPerson(editReg.getAuthorizedPerson());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getAisheCode().equals(aisheName2)) {
+
+						jsonRecord.setAisheCode(editReg.getAisheCode());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getDepartmentName().equals(uniDept)) {
+
+						jsonRecord.setDepartmentName(editReg.getDepartmentName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getDesignationName().equals(uniDes)) {
+
+						jsonRecord.setDesignationName(editReg.getDesignationName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					 
+				}
+ 
 				editReg.setAlternateEmail(altEmail3);
 				editReg.setAisheCode(aisheName2);
 				editReg.setName(uniName);
@@ -249,33 +383,43 @@ public class loginController {
 				editReg.setDepartmentName(uniDept);
 				editReg.setDesignationName(uniDes);
 				editReg.setUserType(3);
-
-				if (editReg.getEmails().equals(uniEmail)) {
-					editReg.setEmails(uniEmail);
-				} else {
-					System.out.println("Email new");
-					editReg.setExVar1(uniEmail);
+				editReg.setEditDate(sf.format(date));
+				
+				if (prevrecrod.isError() == true) {
+					
+					jsonRecord=editReg;
+					prevrecrod.setLastUpdate(dttime.format(date));
+					prevrecrod.setRegId(editReg.getRegId());
 				}
 
 				if (editReg.getMobileNumber().equals(uniMobile)) {
-					editReg.setMobileNumber(uniMobile);
-					editReg.setEditDate(sf.format(date));
+
 					Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
+					
+					ObjectMapper mapper = new ObjectMapper(); 
+					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
+					
+					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
+							PreviousRegRecord.class);
+					
 					redirect = "redirect:/editProfile";
 				} else {
-					System.out.println("Email new");
+					/*
+					 * System.out.println("Email new");
+					 * 
+					 * editReg.setEditDate(sf.format(date)); Registration res =
+					 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
+					 */
 					editReg.setExVar2(uniMobile);
-					editReg.setEditDate(sf.format(date));
-					Registration res = rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
-					redirect = "redirect:/ editVerifyOtp /" + uuid + "";
+					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
 				}
 
 			}
 			System.out.println("Data: " + editReg.toString());
 
 			session.setAttribute("success", "Successfully Updated Information !");
-			
+
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			HttpSession session = request.getSession();
@@ -283,6 +427,92 @@ public class loginController {
 		}
 
 		return redirect;
+	}
+
+	Info resWithOtp = new Info();
+
+	@RequestMapping(value = "/editVerifyOtp/{uuid}/{resend}", method = RequestMethod.GET)
+	public ModelAndView editVerifyOtp(@PathVariable("uuid") String uuid, @PathVariable("resend") int resend,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("editRegOtp");
+		try {
+
+			HttpSession session = request.getSession();
+			model.addObject("editReg", editReg);
+
+			if (uuid.equals(editReg.getUserUuid())) {
+
+				if (resend == 1) {
+
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+					map.add("uuid", uuid);
+					map.add("mobileNo", editReg.getExVar2());
+					resWithOtp = rest.postForObject(Constant.url + "/sendOtp", map, Info.class);
+					if (resWithOtp.isError() == false) {
+
+						session.setAttribute("success", "Opt Send Successfylly");
+					} else {
+						session.setAttribute("errorMsg", "Failed to Send Opt");
+					}
+				} else {
+
+					session.setAttribute("errorMsg", "Opt Not Matched");
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/verifyEditOtpProcess", method = RequestMethod.POST)
+	public String verifyEditOtpProcess(HttpServletRequest request, HttpServletResponse res) throws IOException {
+
+		String ret = new String();
+		HttpSession session = request.getSession();
+
+		try {
+			String userOtp = request.getParameter("userOtp");
+			SimpleDateFormat dttime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date = new Date();
+			
+			if (userOtp.equalsIgnoreCase("") || userOtp == null) {
+				ret = "redirect:/editVerifyOtp/" + editReg.getUserUuid() + "/0";
+				session.setAttribute("errorMsg", "Opt Not Matched");
+			} else {
+
+				if (userOtp.equals(resWithOtp.getMsg())) {
+
+					jsonRecord.setMobileNumber(editReg.getMobileNumber());
+					editReg.setMobileNumber(editReg.getExVar2());
+					
+					Registration a = rest.postForObject(Constant.url + "/saveRegistration", editReg,
+							Registration.class);
+					
+					ObjectMapper mapper = new ObjectMapper(); 
+					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
+					prevrecrod.setLastUpdate(dttime.format(date));
+					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
+							PreviousRegRecord.class);
+
+					ret = "redirect:/editProfile";
+					session.setAttribute("success", "Successfully Updated Information !");
+
+				} else {
+					ret = "redirect:/editVerifyOtp/" + editReg.getUserUuid() + "/0";
+					session.setAttribute("errorMsg", "Opt Not Matched");
+				}
+
+			}
+		} catch (Exception e) {
+
+		}
+
+		return ret;
 	}
 
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
@@ -303,110 +533,40 @@ public class loginController {
 				mav = new ModelAndView("maintainance");
 				mav.addObject("maintainance", maintainance);
 			} else {
-				
+
 				mav.addObject("siteKey", Constant.siteKey);
 				mav.addObject("flag", flag);
 				flag = 0;
-			int userDetail = (int) session.getAttribute("UserDetail");
-			if (newPass.equalsIgnoreCase(" ") || newPass == null) {
-				mav = new ModelAndView("change-pass");
-				session.setAttribute("errorMsg", "Invalid Password !");
-				
-			} else {
+				int userDetail = (int) session.getAttribute("UserDetail");
+				if (newPass.equalsIgnoreCase(" ") || newPass == null) {
+					mav = new ModelAndView("change-pass");
+					session.setAttribute("errorMsg", "Invalid Password !");
 
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("regId", userDetail);
-				map.add("password", newPass);
+				} else {
 
-				info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
-				mav = new ModelAndView("change-pass");
-				System.out.println(info.toString());
-			
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-				map1.add("regId", userDetail);
-				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1,
-						Registration.class);
-				String dobDate = DateConvertor.convertToDMY(editReg.getDob());
-				mav.addObject("editReg", editReg);
-				mav.addObject("dobDate", dobDate);
-				session.setAttribute("success", "Successfully Updated Password !");
-			}
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					map.add("regId", userDetail);
+					map.add("password", newPass);
+
+					info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
+					mav = new ModelAndView("change-pass");
+					System.out.println(info.toString());
+
+					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+					map1.add("regId", userDetail);
+					Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1,
+							Registration.class);
+					String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+					mav.addObject("editReg", editReg);
+					mav.addObject("dobDate", dobDate);
+					session.setAttribute("success", "Successfully Updated Password !");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return "redirect:/changePass";
-	}
-
-	@RequestMapping(value = "/editVerifyOtp/{uuid}", method = RequestMethod.GET)
-	public ModelAndView editVerifyOtp(@PathVariable("uuid") String uuid, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("editRegOtp");
-		try {
-			
-			/*
-			 * HttpSession session = request.getSession(); session.setAttribute("suuid",
-			 * suuid);
-			 */
-			model.addObject("uuid", uuid);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return model;
-	}
-
-	@RequestMapping(value = "/verifyEditOtpProcess", method = RequestMethod.POST)
-	public ModelAndView verifyEditOtpProcess(HttpServletRequest request, HttpServletResponse res) throws IOException {
-
-		String userOtp = request.getParameter("userOtp");
-		String uuid = request.getParameter("uuid");
-		HttpSession session = request.getSession();
-		// int type = Integer.parseInt(request.getParameter("type"));
-		// int userDetail = (int) session.getAttribute("UserDetail");
-		System.out.println("UUID :" + uuid + ", UserOTP :" + userOtp);
-
-		ModelAndView mav = new ModelAndView("editRegOtp");
-		mav.addObject("uuid", uuid);
-		RestTemplate rest = new RestTemplate();
-		res.setContentType("text/html");
-
-		try {
-
-			if (userOtp.equalsIgnoreCase(" ") || userOtp == null) {
-				mav = new ModelAndView("editRegOtp");
-				mav.addObject("uuid", uuid);
-				mav.addObject("msg", "Invalid Otp");
-			} else {
-
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("userOtp", userOtp);
-				map.add("uuid", uuid);
-
-				OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyOtpResponse", map, OtpResponse.class);
-
-				if (verifyOtp.isError() == false) {
-					mav = new ModelAndView("edit-my-profile");
-
-					// mav.addObject("userDetail",userDetail);
-				} else {
-					mav = new ModelAndView("editRegOtp");
-					mav.addObject("uuid", uuid);
-
-					System.out.println("Invalid login credentials");
-					mav.addObject("msg", "Invalid login");
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("HomeController Login API Excep:  " + e.getMessage());
-			e.printStackTrace();
-			mav.addObject("msg", "Invalid login");
-		}
-
-		return mav;
 	}
 
 	@RequestMapping(value = "/resendEditOtpProcess", method = RequestMethod.POST)
@@ -495,7 +655,7 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				
+
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
 				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL", map1,
@@ -514,9 +674,8 @@ public class loginController {
 				model.addObject("editReg", editReg);
 				model.addObject("dobDate", dobDate);
 				model.addObject("event", event);
-			
+
 				model.addObject("siteKey", Constant.siteKey);
-			 
 
 			}
 
@@ -544,7 +703,6 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-			
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
@@ -564,12 +722,12 @@ public class loginController {
 				String dateEvent = DateConvertor.convertToDMY(eventList.getEventDateFrom());
 				model.addObject("event", eventList);
 				model.addObject("dateEvent", dateEvent);
-				
+
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("typeId", typeId);
 
 				System.out.println("typeId :" + typeId);
-				
+
 				String[] Ids = eventList.getExVar2().split(",");
 				model.addObject("ids", Ids);
 			}
@@ -582,67 +740,63 @@ public class loginController {
 	}
 
 	@RequestMapping(value = "/applyEvent/{newsblogsId}", method = RequestMethod.GET)
-	public String applyEvent(@PathVariable int newsblogsId, HttpServletRequest request,
-			HttpServletResponse response) {
+	public String applyEvent(@PathVariable int newsblogsId, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		// Registration userDetail=null;
 		int userDetail = 0;
-		Info info=null;
-	//	String redirect=null;
+		Info info = null;
+		// String redirect=null;
 		ModelAndView mav = null;
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			// userDetail =(Registration) session.getAttribute("UserDetail");
-			
-				userDetail = (int) session.getAttribute("UserDetail");
 
+			userDetail = (int) session.getAttribute("UserDetail");
 
 			// System.out.println("userDetail "+userDetail.getRegId());
-		
 
+			System.out.println("User Id: " + userDetail);
+
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+			map1.add("newsblogsId", newsblogsId);
+			map1.add("userId", userDetail);
+			info = rest.postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+			if (info.isError() == true) {
+				EventRegistration eventReg = new EventRegistration();
+
+				Date date = new Date(); // your date
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				eventReg.setDelStatus(1);
+				// eventReg.setEventRegId();
+				eventReg.setIsActive(1);
+				eventReg.setNewsblogsId(newsblogsId);
+				eventReg.setRegDate(sf.format(date));
+				eventReg.setUserId(userDetail);
+
+				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+						EventRegistration.class);
+
+				System.out.println("res Id: " + res.toString());
+
+				if (res != null) {
+					session.setAttribute("success", "Successfully Registed Event !");
+				}
+			} else {
 				System.out.println("User Id: " + userDetail);
 
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-
-				map1.add("newsblogsId", newsblogsId);
-				map1.add("userId", userDetail);
-				info  = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
-						Info.class);
-				if (info.isError() == true) {
-					EventRegistration eventReg = new EventRegistration();
-
-					Date date = new Date(); // your date
-					SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(date);
-					eventReg.setDelStatus(1);
-					// eventReg.setEventRegId();
-					eventReg.setIsActive(1);
-					eventReg.setNewsblogsId(newsblogsId);
-					eventReg.setRegDate(sf.format(date));
-					eventReg.setUserId(userDetail);
-
-					EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
-							EventRegistration.class);
-
-					System.out.println("res Id: " + res.toString());
-
-					if (res != null) {
-						session.setAttribute("success", "Successfully Registed Event !");
-					}
-				} else {
-					System.out.println("User Id: " + userDetail);
-							
-					session.setAttribute("errorMsg", "Event Already Registered !");
-				}	
+				session.setAttribute("errorMsg", "Event Already Registered !");
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return "redirect:/eventDetail"+"/" +newsblogsId +"/2";
+		return "redirect:/eventDetail" + "/" + newsblogsId + "/2";
 	}
 
 	@RequestMapping(value = "/submtEventAppliedForm", method = RequestMethod.POST)
@@ -652,7 +806,7 @@ public class loginController {
 		// ModelAndView model = new ModelAndView("masters/addEmployee");
 		Info info = new Info();
 		String pdfName = new String();
-		
+
 		HttpSession session = request.getSession();
 		int newsblogsId = Integer.parseInt(request.getParameter("newsblogsId"));
 		System.out.println("newsblogsId :" + newsblogsId);
@@ -673,8 +827,7 @@ public class loginController {
 
 			map1.add("newsblogsId", newsblogsId);
 			map1.add("userId", userDetail);
-			info  = rest.postForObject(Constant.url + "/getAppliedEvents", map1,
-					Info.class);
+			info = rest.postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
 
 			if (info.isError() == true) {
 				EventRegistration eventReg = new EventRegistration();
@@ -692,12 +845,10 @@ public class loginController {
 						EventRegistration.class);
 
 				System.out.println("res Id: " + res.toString());
-								
+
 				session.setAttribute("success", "Successfully Registed Event !");
 				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, pdfName);
-			}
-			else
-			{
+			} else {
 				try {
 					/*
 					 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
@@ -711,29 +862,30 @@ public class loginController {
 					 * 
 					 * upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
 					 */
-				
+
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
 				}
-			
+
 				session.setAttribute("errorMsg", "Event Already Registered !");
 
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return "redirect:/eventDetail"+"/" +newsblogsId +"/2";
+
+		return "redirect:/eventDetail" + "/" + newsblogsId + "/2";
 	}
+
 	@RequestMapping(value = "/firstChangePass", method = RequestMethod.GET)
 	public ModelAndView firstChangePass(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("changePass");
-		HttpSession session = request.getSession();	
+		HttpSession session = request.getSession();
 		try {
-				
+
 			session.setAttribute("mapping", "firstChangePass");
 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
@@ -742,7 +894,7 @@ public class loginController {
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				
+
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
@@ -753,6 +905,7 @@ public class loginController {
 
 		return model;
 	}
+
 	@RequestMapping(value = "/firstChangePassword", method = RequestMethod.POST)
 	public ModelAndView FirstChangePassword(HttpServletRequest request, HttpServletResponse response) {
 
@@ -771,29 +924,28 @@ public class loginController {
 				mav = new ModelAndView("maintainance");
 				mav.addObject("maintainance", maintainance);
 			} else {
-				
+
 				mav.addObject("siteKey", Constant.siteKey);
 				mav.addObject("flag", flag);
 				flag = 0;
-			int userDetail = (int) session.getAttribute("UserDetail");
-			if (newPass.equalsIgnoreCase(" ") || newPass == null) {
-				
-				mav = new ModelAndView("changePass");	
-				session.setAttribute("errorMsg", "Invalid Password !");	
-			} else {
+				int userDetail = (int) session.getAttribute("UserDetail");
+				if (newPass.equalsIgnoreCase(" ") || newPass == null) {
 
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-				map1.add("regId", userDetail);
-				map1.add("password", newPass);
+					mav = new ModelAndView("changePass");
+					session.setAttribute("errorMsg", "Invalid Password !");
+				} else {
 
-				info = rest.postForObject(Constant.url + "/changePassword", map1, Info.class);
-				if(info.isError() == false)
-				{
-					mav = new ModelAndView("login");
-					System.out.println(info.toString());
-					session.setAttribute("success", "Successfully Updated Password !");					
+					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+					map1.add("regId", userDetail);
+					map1.add("password", newPass);
+
+					info = rest.postForObject(Constant.url + "/changePassword", map1, Info.class);
+					if (info.isError() == false) {
+						mav = new ModelAndView("login");
+						System.out.println(info.toString());
+						session.setAttribute("success", "Successfully Updated Password !");
+					}
 				}
-			}		
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

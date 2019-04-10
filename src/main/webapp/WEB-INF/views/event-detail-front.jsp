@@ -165,7 +165,7 @@
 									method="post" enctype="multipart/form-data"
 									name="form_sample_2" id="form_sample_2"
 									onsubmit="return confirm('Do you really want to submit the form?');">
-									<div class="form-group row">
+									 
 										<label class="control-label col-sm-2" for="page_pdf">Upload
 											Document :</label>
 										<div class="col-sm-7">
@@ -177,8 +177,9 @@
 										<input type="hidden" name="newsblogsId"
 											value="${event.newsblogsId}">
 
-										<button type="submit" class="btn button apply">Apply</button>
-									</div>
+										
+									 
+									<button type="submit" class="btn button apply">Apply</button>
 
 								</form>
 								<%
@@ -197,7 +198,7 @@
 									method="post" enctype="multipart/form-data"
 									name="form_sample_2" id="form_sample_2"
 									onsubmit="return confirm('Do you really want to submit the form?');">
-									<div class="form-group row">
+								 
 										<label class="control-label col-sm-2" for="page_pdf">Upload
 											Document :</label>
 										<div class="col-sm-7">
@@ -210,7 +211,7 @@
 											value="${event.newsblogsId}">
 
 										<button type="submit" class="btn button apply">Apply</button>
-									</div>
+									 
 
 								</form>
 								<%

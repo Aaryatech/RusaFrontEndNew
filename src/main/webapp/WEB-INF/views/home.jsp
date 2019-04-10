@@ -164,14 +164,15 @@
 								varStatus="count">
 
 								<div class="tab-content-section">
-								
-								<c:set var="string3" value="${fn:substring(eventList.heading, 0,70)}" />
+
+									<c:set var="string3"
+										value="${fn:substring(eventList.heading, 0,70)}" />
 									<h5>
 										<a
 											href="${pageContext.request.contextPath}/eventDetailfront/${eventList.newsblogsId}">
 											${string3} </a>
 									</h5>
- 
+
 									<p>
 										<span><i class="icon-calendar"></i> <strong>Date:</strong>
 											${eventList.eventDateFrom}</span>
@@ -211,7 +212,7 @@
 													<div class="over-effect">
 														<span class="icon-search"></span>
 													</div> <img
-													src="${sessionScope.gallryImageURL}thumbnail${editPhotoDetail.fileName}"
+													src="${sessionScope.gallryImageURL}${editPhotoDetail.fileName}"
 													alt="${editPhotoDetail.title}" class="img-responsive">
 												</a>
 											</div>
@@ -225,7 +226,7 @@
 													<div class="over-effect">
 														<span class="icon-search"></span>
 													</div> <img
-													src="${sessionScope.gallryImageURL}thumbnail${editPhotoDetail.fileName}"
+													src="${sessionScope.gallryImageURL}${editPhotoDetail.fileName}"
 													alt="${editPhotoDetail.title}" class="img-responsive">
 												</a>
 											</div>
@@ -316,15 +317,15 @@
 									<c:when test="${not empty newsBlogsList.featuredImage}">
 										<a href="${newsBlogsList.newsSourceUrlName}"><img
 											src="${sessionScope.gallryImageURL}${newsBlogsList.featuredImage}"
-											width="250" height="228" alt="${newsBlogsList.heading}"></a>
+											alt="${newsBlogsList.heading}"></a>
 									</c:when>
 									<c:otherwise>
 										<a href="#"><img
 											src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
-											width="250" height="228" alt="${newsBlogsList.heading}"></a>
+											alt="${newsBlogsList.heading}"></a>
 									</c:otherwise>
 								</c:choose>
-
+								<!-- width="250" height="228" -->
 
 							</div>
 							<h4>${fn:substring(newsBlogsList.heading, 0, 80)}</h4>

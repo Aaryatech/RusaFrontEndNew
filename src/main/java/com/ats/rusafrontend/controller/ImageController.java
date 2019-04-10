@@ -473,9 +473,9 @@ public class ImageController {
 
 				// List<NewsDetails> event = new
 				// ArrayList<NewsDetails>(Arrays.asList(eventList));
-				String dateEvent = DateConvertor.convertToDMY(eventList.getEventDateFrom());
+				 
 				model.addObject("event", eventList);
-				model.addObject("dateEvent", dateEvent);
+				model.addObject("dateEvent", eventList.getEventDateFrom());
 
 				model.addObject("siteKey", Constant.siteKey);
 				// model.addObject("typeId", typeId);

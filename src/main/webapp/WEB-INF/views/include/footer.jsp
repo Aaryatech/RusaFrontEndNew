@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+ 
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
@@ -72,6 +71,6 @@
       <!--   Go to www.addthis.com/dashboard to customize your tools -->
 <!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c812bc21e70ebf7"></script>
  -->
-  <c:if test="${setting[4].isActive==1}">
+  <%-- <c:if test="${setting[4].isActive==1}">
     ${setting[4].keyValues}+1
-  </c:if>
+  </c:if> --%>
