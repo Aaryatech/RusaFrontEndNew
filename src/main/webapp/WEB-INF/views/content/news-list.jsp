@@ -84,19 +84,20 @@
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 
-   <div class="inner-slider" id="slider">
-    	 <div class="container">
+	<div class="inner-slider" id="slider">
+		<div class="container">
 			<h1>News</h1>
-         </div>
-    </div>
+		</div>
+	</div>
 	<div class="bridcrumb">
-    	<div class="container">
-        	<a href="/">Home</a> > <a href="${pageContext.request.contextPath}/newsList">News</a> >
-        </div>
-    </div> 
- <div class="container" id="main-content">
-        <div class="row row-eq-height">
-        	<!-- <div class="col-12 col-sm-3 col-lg-3">
+		<div class="container">
+			<a href="/">Home</a> > <a
+				href="${pageContext.request.contextPath}/newsList">News</a> >
+		</div>
+	</div>
+	<div class="container" id="main-content">
+		<div class="row row-eq-height">
+			<!-- <div class="col-12 col-sm-3 col-lg-3">
 				<div class="leftColm">
                 	<h3>Gallery</h3>
                     <ul class="menu">
@@ -110,36 +111,52 @@
                 	</ul>
                 </div>
             </div> -->
- 					<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
- 					<c:forEach items="${newsBlogsList}" var="newsBlogsList"
+			<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
+				<c:forEach items="${newsBlogsList}" var="newsBlogsList"
 					varStatus="count">
-						
-                    <div class="row">
-                    			<c:if test="${not empty newsBlogsList.featuredImage}">
-                    		
-                    <div class="col-12 col-sm-3 col-lg-3">
-                    <img src="${sessionScope.gallryImageURL}${newsBlogsList.featuredImage}" alt="${newsBlogsList.heading}" title="${newsBlogsList.heading}" class="img-responsive thumbnail">	
-                    </div>
-                    </c:if>
-                    <div class="col-12 col-sm-9 col-lg-9">
-                    <strong> ${newsBlogsList.heading}</strong><br>
-                    <p> ${newsBlogsList.descriptions}</p>
-              <%--       <p><span><i class="icon-location"></i> <strong>Venue:</strong> ${eventList.eventLocation}</span> 
+
+					<div class="row">
+						<c:choose>
+							<c:when test="${not empty newsBlogsList.featuredImage}">
+
+								<div class="col-12 col-sm-3 col-lg-3">
+									<img
+										src="${sessionScope.gallryImageURL}${newsBlogsList.featuredImage}"
+										alt="${newsBlogsList.heading}"
+										title="${newsBlogsList.heading}"
+										class="img-responsive thumbnail">
+								</div>
+							</c:when>
+							<c:otherwise> 
+							<div class="col-12 col-sm-3 col-lg-3">
+								<img
+									src="${pageContext.request.contextPath}/resources/images/noimage.png"
+									alt="${newsBlogsList.heading}" title="${newsBlogsList.heading}"
+									class="img-responsive thumbnail" width="263" height="199">
+									</div>
+							</c:otherwise>
+						</c:choose>
+						<div class="col-12 col-sm-9 col-lg-9">
+							<strong> ${newsBlogsList.heading}</strong><br>
+							<p>${fn:substring(newsBlogsList.descriptions, 0, 500)}</p>
+							<%--       <p><span><i class="icon-location"></i> <strong>Venue:</strong> ${eventList.eventLocation}</span> 
 					<span><i class="icon-calendar"></i> <strong>Date:</strong> ${eventList.eventDateFrom}</span>
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong>+91 ${eventList.eventContactNumber}</span>
                     </p> --%>
-                    <a href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.newsblogsId}" target="_blank">Read More</a>
-                    </div>
-                    </div>
-                   </c:forEach>
-                    
-                 
-            </div>
-            
-            
-        </div>
-    </div>
-	
+							<a
+								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.newsblogsId}"
+								target="_blank">Read More</a>
+						</div>
+					</div>
+				</c:forEach>
+
+
+			</div>
+
+
+		</div>
+	</div>
+
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
@@ -76,13 +75,13 @@
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>${image.heading}</h1>
+			<h1>News Detail</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/newsList">News</a>>${image.heading}
+				href="${pageContext.request.contextPath}/newsList">News</a>>News Detail
 
 		</div>
 	</div>
@@ -102,11 +101,8 @@
 
 						<strong>${image.heading}</strong><br>
 						<p>${image.descriptions}</p>
-
-
-
-
-						Source: ${image.newsSourceUrlName}
+ 
+						<a href="${image.newsSourceUrlName}" target="_blank">Source Link</a> 
 
 					</div>
 				</div>

@@ -451,13 +451,13 @@ public class loginController {
 					resWithOtp = rest.postForObject(Constant.url + "/sendOtp", map, Info.class);
 					if (resWithOtp.isError() == false) {
 
-						session.setAttribute("success", "Opt Send Successfylly");
+						session.setAttribute("success", "Opt Send Successfully");
 					} else {
-						session.setAttribute("errorMsg", "Failed to Send Opt");
+						session.setAttribute("errorMsg", "Failed to Send OTP");
 					}
 				} else {
 
-					session.setAttribute("errorMsg", "Opt Not Matched");
+					session.setAttribute("errorMsg", "OTP Not Matched");
 				}
 
 			}
@@ -482,7 +482,7 @@ public class loginController {
 			
 			if (userOtp.equalsIgnoreCase("") || userOtp == null) {
 				ret = "redirect:/editVerifyOtp/" + editReg.getUserUuid() + "/0";
-				session.setAttribute("errorMsg", "Opt Not Matched");
+				session.setAttribute("errorMsg", "OTP Not Matched");
 			} else {
 
 				if (userOtp.equals(resWithOtp.getMsg())) {
@@ -504,7 +504,7 @@ public class loginController {
 
 				} else {
 					ret = "redirect:/editVerifyOtp/" + editReg.getUserUuid() + "/0";
-					session.setAttribute("errorMsg", "Opt Not Matched");
+					session.setAttribute("errorMsg", "OTP Not Matched");
 				}
 
 			}

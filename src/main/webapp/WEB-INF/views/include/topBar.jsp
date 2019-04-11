@@ -48,8 +48,8 @@
 				href="${pageContext.request.contextPath}/login">Login</a> <a
 				href="${pageContext.request.contextPath}/registration">Register</a></li> --%>
 			<li><a
-				href="${pageContext.request.contextPath}/changeLangage/1-/">English</a>
-				<a href="${pageContext.request.contextPath}/changeLangage/2-/">मराठी</a></li>
+				href="${pageContext.request.contextPath}/changeLangage/1-<%out.print(session.getAttribute("mapping"));%>">English</a>
+				<a href="${pageContext.request.contextPath}/changeLangage/2-<%out.print(session.getAttribute("mapping"));%>">मराठी</a></li>
 		</ul>
 
 

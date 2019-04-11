@@ -114,15 +114,15 @@
  					<c:forEach items="${event}" var="eventList"	varStatus="count">
 						
                     <div class="row">
-                    			<c:if test="${not empty eventList.featuredImage}">
+                    			<%-- <c:if test="${not empty eventList.featuredImage}">
                     		
                     <div class="col-12 col-sm-3 col-lg-3">
                     <img src="${sessionScope.gallryImageURL}${eventList.featuredImage}" alt="${eventList.heading}" title="${eventList.heading}" class="img-responsive thumbnail">	
                     </div>
-                    </c:if>
+                    </c:if> --%>
                     <div class="col-12 col-sm-9 col-lg-9">
                     <strong> ${eventList.heading}</strong><br>
-                    <p> ${eventList.descriptions}</p>
+                    <%-- <p> ${eventList.descriptions}</p> --%>
                     <p><span><i class="icon-location"></i> <strong>Venue:</strong> ${eventList.eventLocation}</span> 
 					<span><i class="icon-calendar"></i> <strong>Date:</strong> ${eventList.eventDateFrom}</span>
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong>+91 ${eventList.eventContactNumber}</span>

@@ -246,6 +246,21 @@ public class HomeController {
 
 					}
 
+				}else if(url.contains("/")) {
+					
+					 arry = url.split("/");
+					 
+					 for (int i = 1; i < arry.length; i++) {
+
+							if (i == 1) {
+
+								ret = ret + arry[i];
+							} else {
+								ret = ret + "/" + arry[i];
+							}
+
+						}
+					
 				} else {
 					for (int i = 0; i < arry.length; i++) {
 
@@ -305,9 +320,52 @@ public class HomeController {
 
 			try {
 
-				 
+				String ret = new String();
 
-				return "redirect:/" + session.getAttribute("mapping");
+				 if (ArrayUtils.contains(arry, "info")) {
+					ret = "info" + "/";
+					for (int i = 2; i < arry.length; i++) {
+
+						if (i == 2) {
+
+							ret = ret + arry[i];
+						} else {
+							ret = ret + "-" + arry[i];
+						}
+
+					}
+
+				}else if(url.contains("/")) {
+					
+					 arry = url.split("/");
+					 
+					 for (int i = 1; i < arry.length; i++) {
+
+							if (i == 1) {
+
+								ret = ret + arry[i];
+							} else {
+								ret = ret + "/" + arry[i];
+							}
+
+						}
+					
+				}else {
+					for (int i = 1; i < arry.length; i++) {
+
+						if (i == 1) {
+
+							ret = ret + arry[i];
+						} else {
+							ret = ret + "-" + arry[i];
+						}
+
+					}
+				}
+				System.out.println("ret" + ret); 
+
+				return "redirect:/" + ret;
+ 
 			} catch (Exception e) {
 				return "redirect:/";
 			}

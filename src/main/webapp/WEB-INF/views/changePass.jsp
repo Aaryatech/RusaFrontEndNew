@@ -134,8 +134,8 @@
 
 
 						<div class="col-12 col-sm-12 col-lg-12">
-							<input type="submit" id="log_btn" value="Submit"
-								class="button login-btn"  />
+						<p>
+							 <button type="submit" id="log-btn" class="button login-btn">Submit</button></p>
 							  <!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
 						</div>
@@ -165,6 +165,10 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+
+	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
  <script type="text/javascript">
  function viewPassword() {
 		var pass1 = document.getElementById("newPass");
@@ -207,9 +211,6 @@ function checkPassword(form) {
 } 
 </script>
 	
-	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-
-	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+	
 </body>
 </html>

@@ -61,8 +61,18 @@ public class ImageController {
 	public ModelAndView getImageLink(@PathVariable int langId, @PathVariable int newsblogsId,
 			HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
+		
+		
+		
 		ModelAndView model = new ModelAndView("content/news-detail");
 		try {
+			
+			try {
+			langId = (Integer) session.getAttribute("langId");
+			}catch(Exception e) {
+				langId=1;
+			}
+			session.setAttribute("mapping", "NewsDetails-"+langId+"-"+newsblogsId);
 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
@@ -348,10 +358,10 @@ public class ImageController {
 				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL", map1,
 						NewsDetails[].class);
 				List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
-				for (int i = 0; i < event.size(); i++) {
+				/*for (int i = 0; i < event.size(); i++) {
 					event.get(i).setEventDateFrom(DateConvertor.convertToDMY(event.get(i).getEventDateFrom()));
 
-				}
+				}*/
 				// model.addObject("event", event);
 				model.addObject("event", event);
 				model.addObject("siteKey", Constant.siteKey);

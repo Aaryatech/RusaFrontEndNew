@@ -241,8 +241,8 @@ function checkPassword(form) {
 
 
 						<div class="col-12 col-sm-12 col-lg-12">
-							<input type="submit" id="log_btn" value="Submit"
-								class="button login-btn"  />
+							 
+								 <button type="submit" id="log-btn" class="button login-btn">Submit</button>
 							  <!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
 						</div>

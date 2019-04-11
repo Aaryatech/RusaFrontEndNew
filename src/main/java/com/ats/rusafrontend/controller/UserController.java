@@ -258,7 +258,7 @@ public class UserController {
 				String institute = request.getParameter("institute");
 				String aisheName1 = request.getParameter("aisheName");
 				String univ = request.getParameter("univ");
-				String collegeDept = request.getParameter("collegeDept");
+				String collegeDept = request.getParameter("dept");
 				String collegeMobile = request.getParameter("collegeMobile");
 				String designation = request.getParameter("designationCollege");
 				String cAuthour = request.getParameter("collegeAuthour");

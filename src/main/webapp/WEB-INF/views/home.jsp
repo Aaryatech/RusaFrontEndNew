@@ -158,8 +158,10 @@
 				<h3>News and Notification</h3>
 				<div class="border-box">
 					<div class="tab-content">
+					
+					<c:set var="cnt" value="0"></c:set>
 						<div id="update" class="tab-pane active">
-
+						 
 							<c:forEach items="${sessionScope.event}" var="eventList"
 								varStatus="count">
 
@@ -184,8 +186,13 @@
 
 						</div>
 					</div>
+					
+					 <c:if test="${cnt>10}">
+					 
+					 </c:if>
 					<a href="${pageContext.request.contextPath}/eventfrontList">Read
 						More</a>
+					 
 				</div>
 			</div>
 
@@ -321,7 +328,7 @@
 									</c:when>
 									<c:otherwise>
 										<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+											src="${pageContext.request.contextPath}/resources/images/noimage.png"
 											alt="${newsBlogsList.heading}"></a>
 									</c:otherwise>
 								</c:choose>
