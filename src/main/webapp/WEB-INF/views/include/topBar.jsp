@@ -3,6 +3,7 @@
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"
 	import="java.text.SimpleDateFormat"%>
 
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
 
 <div class="top-section">
 	<%

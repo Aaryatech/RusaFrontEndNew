@@ -31,8 +31,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}">
-<link rel="icon" href="../../favicon.ico">
+	content="${sessionScope.homePageMetaData.metaAuthor}"> 
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 <style>

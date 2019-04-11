@@ -26,8 +26,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}">
-<link rel="icon" href="../../favicon.ico">
+	content="${sessionScope.homePageMetaData.metaAuthor}"> 
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
@@ -71,7 +70,7 @@
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
-
+<c:url value="/checkUniqueField" var="checkUniqueField"></c:url>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
@@ -238,7 +237,7 @@
 									type="text" class="form-control" name="mobile"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 									placeholder="Mobile No." id="mobile" onchange="trim(this)"
-									value="${editReg.mobileNumber}" required>
+									value="${editReg.mobileNumber}" oninput="checkUnique(this.value,1,1)" required>
 							</div>
 
 
@@ -312,7 +311,7 @@
 									type="text" class="form-control" name="collegeMobile"
 									onchange="trim(this)" value="${editReg.mobileNumber}"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="collegeNo" maxlength="10" required>
+									placeholder="Mobile No." id="collegeMobile" oninput="checkUnique(this.value,1,2)" maxlength="10" required>
 							</div>
 							<div class="col-12 col-sm-12 col-lg-6">
 								<label>Email-ID <span class="text-danger">*</span></label> <input
@@ -373,7 +372,7 @@
 									type="text" class="form-control" name="uniMobile"
 									onchange="trim(this)" value="${editReg.mobileNumber}"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="uniNo" maxlength="10" required>
+									placeholder="Mobile No." id="uniMobile" maxlength="10" oninput="checkUnique(this.value,1,2)" required>
 							</div>
 							<div class="col-12 col-sm-12 col-lg-6">
 								<label>Email-ID <span class="text-danger">*</span></label> <input
@@ -413,114 +412,93 @@
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 	<script type="text/javascript">
-		function showForm() {
-			//document.getElementById("abc").style = "display:none"
-			var userType = document.getElementById("userType").value
-			//alert("qualType::"+qualType);
-
-			if (userType == 1) {
-
-				document.getElementById("individual").style = "visible"
-
-				document.getElementById("email").setAttribute("required",
-						"true");
-				document.getElementById("fullname").setAttribute("required",
-						"true");
-				document.getElementById("collegeName").setAttribute("required",
-						"true");
-				document.getElementById("uniAff").setAttribute("required",
-						"true");
-				document.getElementById("depatment").setAttribute("required",
-						"true");
-				document.getElementById("mobile").setAttribute("required",
-						"true");
-				document.getElementById("authour").setAttribute("required",
-						"true");
-
+	function checkUnique(inputValue, valueType,seqId) {
+		//alert("inputValue"+inputValue);
+		///alert("valueType "+valueType);
+		//alert("seqId "+seqId);
+		
+	
+		
+		
+		var primaryKey=0;
+		//alert("Is Edit " +isEdit);
+		var valid = true;
+		if (valueType == 1) {
+			//alert("Its Mob no");
+			if (inputValue.length == 10) {
+				valid = true;
+				//alert("Len 10")
 			} else {
-
-				document.getElementById("email").removeAttribute("required");
-				document.getElementById("fullname").removeAttribute("required");
-				document.getElementById("collegeName").removeAttribute(
-						"required");
-				document.getElementById("uniAff").removeAttribute("required");
-				document.getElementById("depatment")
-						.removeAttribute("required");
-				document.getElementById("mobile").removeAttribute("required");
-				document.getElementById("authour").removeAttribute("required");
-
-				document.getElementById("individual").style = "display:none"
+				valid = false;
 			}
-			if (userType == 2) {
+		} else if (valueType == 2) {
+			//alert("Its Email " );
 
-				document.getElementById("college").style = "visible"
-
-				document.getElementById("collegeEmail").setAttribute(
-						"required", "true");
-				document.getElementById("instituteName").setAttribute(
-						"required", "true");
-				document.getElementById("univ")
-						.setAttribute("required", "true");
-				document.getElementById("collegeDept").setAttribute("required",
-						"true");
-				document.getElementById("designationCollege").setAttribute(
-						"required", "true");
-				document.getElementById("collegeNo").setAttribute("required",
-						"true");
-				document.getElementById("cAuthour").setAttribute("required",
-						"true");
-
+			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+			if (inputValue.match(mailformat)) {
+				valid = true;
+				//alert("Valid Email Id");
 			} else {
-				document.getElementById("collegeEmail").removeAttribute(
-						"required");
-				document.getElementById("instituteName").removeAttribute(
-						"required");
-				document.getElementById("univ").removeAttribute("required");
-				document.getElementById("collegeDept").removeAttribute(
-						"required");
-				document.getElementById("designationCollege").removeAttribute(
-						"required");
-				document.getElementById("collegeNo")
-						.removeAttribute("required");
-				document.getElementById("cAuthour").removeAttribute("required");
-
-				document.getElementById("college").style = "display:none"
+				valid = false;
+				//alert("InValid Email Id");
 			}
-			if (userType == 3) {
-
-				document.getElementById("university").style = "visible"
-
-				document.getElementById("uniEmail").setAttribute("required",
-						"true");
-				document.getElementById("uniName").setAttribute("required",
-						"true");
-				document.getElementById("uniDept").setAttribute("required",
-						"true");
-				document.getElementById("uniDes").setAttribute("required",
-						"true");
-				document.getElementById("uniNo").setAttribute("required",
-						"true");
-				document.getElementById("uniAuthour").setAttribute("required",
-						"true");
-
-			} else {
-				document.getElementById("uniEmail").removeAttribute("required");
-				document.getElementById("uniName").removeAttribute("required");
-				document.getElementById("uniDept").removeAttribute("required");
-				document.getElementById("uniDes").removeAttribute("required");
-				document.getElementById("uniNo").removeAttribute("required");
-				document.getElementById("uniAuthour").removeAttribute(
-						"required");
-
-				document.getElementById("university").style = "display:none"
-			}
-
 		}
+		if (valid == true)
+			$
+					.getJSON(
+							'${checkUniqueField}',
+							{
 
-		function hideText() {
-			//alert("hii");
-			document.getElementById("college").style = "display:none"
-		}
+								inputValue : inputValue,
+								valueType : valueType,
+								primaryKey : primaryKey,
+								ajax : 'true',
+
+							},
+							function(data) {
+
+								//alert("Data  " +JSON.stringify(data));
+								if (data.error == true) {
+									
+
+									if (valueType == 2) {
+										alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
+
+										if(seqId==1){
+											document.getElementById("email").value = "";
+											
+											
+										}
+										else if(seqId==2){
+											document.getElementById("collegeEmail").value = "";
+										}
+										else{
+										document.getElementById("uniEmail").value = "";
+										}		
+
+									
+									} else {
+										
+										alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
+										
+										
+										if(seqId==1){
+											document.getElementById("mobile").value = "";
+											
+											
+										}
+										else if(seqId==2){
+											document.getElementById("collegeMobile").value = "";
+										}
+										else{
+										document.getElementById("uniMobile").value = "";
+										}	
+										
+									
+									}
+								}
+							});
+	}
 	</script>
 	<script>
 		function upImage() {

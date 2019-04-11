@@ -26,8 +26,7 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <c:choose>
 	<c:when test="${not empty pageMetaData.pageMetaTitle}">
-		<meta name="description" content="${pageMetaData.pageMetaDescription}">
-		<link rel="icon" href="../../favicon.ico">
+		<meta name="description" content="${pageMetaData.pageMetaDescription}"> 
 		<title>${pageMetaData.pageMetaTitle}</title>
 	</c:when>
 	<c:otherwise>

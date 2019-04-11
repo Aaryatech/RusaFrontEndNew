@@ -25,8 +25,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}">
-<link rel="icon" href="../../favicon.ico">
+	content="${sessionScope.homePageMetaData.metaAuthor}"> 
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
  <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
 <!-- Bootstrap core CSS -->

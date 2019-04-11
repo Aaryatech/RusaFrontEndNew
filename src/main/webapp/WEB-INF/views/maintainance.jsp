@@ -17,7 +17,7 @@ if(session.getAttribute("menuList") == null){
 <html lang="en">
     <head>
           <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
-         
+         <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
     </head>
     <body>
          <div class="top-menu" id="top-menu">

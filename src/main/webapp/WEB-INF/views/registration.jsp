@@ -26,8 +26,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}">
-<link rel="icon" href="../../favicon.ico">
+	content="${sessionScope.homePageMetaData.metaAuthor}"> 
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
@@ -332,7 +331,10 @@
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-		
+	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+
+	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 		<script type="text/javascript">
 	function checkUnique(inputValue, valueType,seqId) {
 		//alert("inputValue"+inputValue);
@@ -564,9 +566,6 @@
 	</script>
 
 
-	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-
-	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+	
 </body>
 </html>
