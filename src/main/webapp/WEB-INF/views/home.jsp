@@ -94,7 +94,7 @@
 		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<img class="first-slide"
-					src="${sessionScope.gallryImageURL}${editbanner.sliderImage}"
+					src="${pageContext.request.contextPath}/resources/images/slider2.jpg"
 					alt="First slide">
 				<div class="container">
 					<div class="carousel-caption">
@@ -337,7 +337,7 @@
 							<h4>${fn:substring(newsBlogsList.heading, 0, 80)}</h4>
 							<p>${fn:substring(newsBlogsList.descriptions, 0, 80)}
 								<a
-									href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.newsblogsId}">Read
+									href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.newsblogsId}">Read
 									More</a>
 							</p>
 						</div>

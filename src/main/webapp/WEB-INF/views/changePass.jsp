@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-    <%@ taglib
-	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	//allow access only if session exists
@@ -27,9 +26,11 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
- <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
@@ -61,103 +62,126 @@
 </script>
 </head>
 <body>
-<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
-		<div class="inner-slider" id="slider">
+	<div class="inner-slider" id="slider">
 		<div class="container">
 			<h1>Change Password</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> >
-			>
+			<a href="${pageContext.request.contextPath}/">Home</a> > >
 		</div>
 	</div>
 
- 
- 
+
+
 	<div class="login">
 		<div class="container" id="main-content">
 			<c:if test="${sessionScope.success != null}">
-			<div class="col-12 col-sm-12 col-lg-12 ">
-    		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong>Success : </strong> ${success}</div>
-       </div></c:if>   <% session.removeAttribute("success"); %>
-		<c:if test="${sessionScope.errorMsg != null}">
-			<div class="col-12 col-sm-12 col-lg-12 ">
-    		          <div class="alert alert-danger ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong>Error : </strong> ${errorMsg}</div>
-       </div></c:if>  <% session.removeAttribute("errorMsg"); %>
-
-	
-	  
-        	 			<div class="row row-eq-height login-box">
-			
-				<div class="col-12 col-sm-12 col-lg-12 login-header">
-				
-					<h5>Change Password</h5>
-					
+				<div class="col-12 col-sm-12 col-lg-12 ">
+					<div class="alert alert-success ">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<strong>Success : </strong> ${success}
+					</div>
 				</div>
-				   	<div class="col-12 col-sm-12 col-lg-3"></div>
-				
-			
-   				
-        	                                       
+			</c:if>
+			<%
+				session.removeAttribute("success");
+			%>
+			<c:if test="${sessionScope.errorMsg != null}">
+				<div class="col-12 col-sm-12 col-lg-12 ">
+					<div class="alert alert-danger ">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<strong>Error : </strong> ${errorMsg}
+					</div>
+				</div>
+			</c:if>
+			<%
+				session.removeAttribute("errorMsg");
+			%>
+
+
+
+			<div class="row row-eq-height login-box">
+
+				<div class="col-12 col-sm-12 col-lg-12 login-header">
+
+					<h5>Change Password</h5>
+
+				</div>
+				<div class="col-12 col-sm-12 col-lg-3"></div>
+
+
+
+
 				<div class="col-12 col-sm-12 col-lg-6">
 
-                        <form method="post"
-					action="${pageContext.request.contextPath}/firstChangePassword" onSubmit = "return checkPassword(this)"
-					name="login_form">
-					<div class="row row-eq-height">
+					<form method="post"
+						action="${pageContext.request.contextPath}/firstChangePassword"
+						name="changePassform" id="changePassform">
+						<div class="row row-eq-height">
+
+							<div class="col-12 col-sm-12 col-lg-12" style="color: green;">
+								Note : Input Password and Submit [Minimum 6 Character Password]</div>
+
+							<div class="col-12 col-sm-12 col-lg-12">
+								<div class="error_msg" id="error_msg" style="display: none">
+
+									<div class="alert alert-warning" id="alertDiv"></div>
+
+								</div>
+							</div>
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>New Password</label> <input type="password"
+									class="form-control" name="newPass" id="newPass"
+									placeholder="Enter New Password" onchange="trim(this)">
+							</div>
 
 
-						
-
-						<div class="col-12 col-sm-12 col-lg-12">
-							<label>New Password</label> <input type="password"
-								class="form-control" name="newPass" id="newPass"
-								placeholder="Enter New Password" required>
-						</div>
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Confirm password</label> <input type="password"
+									class="form-control" name="confirmPass" id="confirmPass"
+									placeholder="Enter Confirm password" onchange="trim(this)">
+							</div>
 
 
-						<div class="col-12 col-sm-12 col-lg-12">
-							<label>Confirm password</label> <input type="password"
-								class="form-control" name="confirmPass" id="confirmPass"
-								placeholder="Enter Confirm password"  required>
-						</div>
-
-
-
-						<div class="col-12 col-sm-12 col-lg-12">
-						<p>
-							 <button type="submit" id="log-btn" class="button login-btn">Submit</button></p>
-							  <!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
+						 
+								
+						 
+							<div class="col-12 col-sm-12 col-lg-12">
+								<p><input id="checkbox1" type="checkbox" onclick="viewPassword()">
+								<label for="apcat_price_rng[]-5">Show Password</label>
+									<button type="submit" id="log-btn" class="button login-btn">Submit</button>
+								</p>
+								<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
-						</div>
+							</div>
 
-					
-					     <div class="col-12 col-sm-12 col-lg-12 check">
-                                	<input id="checkbox1" type="checkbox"  onclick="viewPassword()" >
-                                    <label for="apcat_price_rng[]-5">Show Password</label>
-                                </div> 
-					</div>
-				</form>
-<!-- 
+
+
+						</div>
+					</form>
+					<!-- 
                          <div class="form-group">
 														<div class="col-sm-2">
 															<input type="checkbox" onclick="viewPassword()">Show
 															Password
 														</div>
 													</div> -->
-                         
-                             
+
+
 				</div>
 
-				
+
 
 
 
@@ -168,48 +192,99 @@
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
- <script type="text/javascript">
- function viewPassword() {
-		var pass1 = document.getElementById("newPass");
-		var pass2 = document.getElementById("confirmPass");
 
-		if (pass1.type == "password" && pass2.type == "password") {
-			pass1.type = "text";
-			pass2.type = "text";
-		} else {
-			pass1.type = "password";
-			pass2.type = "password";
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function($) {
+
+							$("#changePassform")
+									.submit(
+											function(e) {
+												var isError = false;
+												var errMsg = "";
+
+												var pass1 = $("#newPass").val();
+												var pass2 = $("#confirmPass")
+														.val();
+
+												 
+
+												if (!pass1 || pass1.length < 6) {
+
+													document
+															.getElementById("alertDiv").innerHTML = "Insert Correct Password Minimum 6 Character";
+													$("#error_msg").show();
+													return false;
+												}
+												if (!pass2 || pass2.length < 6) {
+
+													document
+															.getElementById("alertDiv").innerHTML = "Insert Confirm Password Minimum 6 Character";
+													$("#error_msg").show();
+													return false;
+												}
+
+												if (pass1 != pass2) {
+
+													document
+															.getElementById("alertDiv").innerHTML = "Password Not Match";
+													$("#error_msg").show();
+													return false;
+												}
+
+												return true;
+											});
+						});
+	</script>
+
+	<script type="text/javascript">
+		function viewPassword() {
+			var pass1 = document.getElementById("newPass");
+			var pass2 = document.getElementById("confirmPass");
+
+			if (pass1.type == "password" && pass2.type == "password") {
+				pass1.type = "text";
+				pass2.type = "text";
+			} else {
+				pass1.type = "password";
+				pass2.type = "password";
+			}
 		}
-	}
+	</script>
+	<script type="text/javascript">
+		function checkPassword(form) {
+			password1 = form.newPass.value;
+			password2 = form.confirmPass.value;
 
- </script>
- <script type="text/javascript">
-function checkPassword(form) { 
-    password1 = form.newPass.value; 
-    password2 = form.confirmPass.value; 
+			// If password not entered 
+			if (password1 == '')
+				alert("Please enter Password");
 
-    // If password not entered 
-    if (password1 == '') 
-        alert ("Please enter Password"); 
-          
-    // If confirm password not entered 
-    else if (password2 == '') 
-        alert ("Please enter confirm password"); 
-          
-    // If Not same return False.     
-    else if (password1 != password2) { 
-        alert ("\nPassword did not match: Please try again...") 
-        return false; 
-    } 
+			// If confirm password not entered 
+			else if (password2 == '')
+				alert("Please enter confirm password");
 
-    // If same return True. 
-    else{ 
-       // alert("Password Match") 
-        return true; 
-    } 
-} 
-</script>
-	
-	
+			// If Not same return False.     
+			else if (password1 != password2) {
+				alert("\nPassword did not match: Please try again...")
+				return false;
+			}
+
+			// If same return True. 
+			else {
+				// alert("Password Match") 
+				//return true;
+			}
+		}
+		function trim(el) {
+			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+			replace(/\n +/, "\n"); // Removes spaces after newlines
+			return;
+		}
+	</script>
+
+
 </body>
 </html>

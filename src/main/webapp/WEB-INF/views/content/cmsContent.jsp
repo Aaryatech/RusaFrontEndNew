@@ -383,7 +383,7 @@
 									href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.languageId}/${detailNewsList.pageId}/${detailNewsList.newsblogsId}">more
 								</a> --%>
 								<a
-									href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.languageId}/${detailNewsList.newsblogsId}">more
+									href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.newsblogsId}">more
 								</a>
 							</div>
 						</div>

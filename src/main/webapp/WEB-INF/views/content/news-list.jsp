@@ -90,7 +90,7 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+			<a href="/">Home</a> > <a
 				href="${pageContext.request.contextPath}/newsList">News</a> >
 		</div>
 	</div>
@@ -143,7 +143,7 @@
                     <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong>+91 ${eventList.eventContactNumber}</span>
                     </p> --%>
 							<a
-								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.languageId}/${newsBlogsList.newsblogsId}"
+								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.newsblogsId}"
 								target="_blank">Read More</a>
 						</div>
 					</div>

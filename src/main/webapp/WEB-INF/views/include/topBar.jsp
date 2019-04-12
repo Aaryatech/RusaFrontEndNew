@@ -8,8 +8,10 @@
 <div class="top-section">
 	<%
    Date date = new Date();
-	SimpleDateFormat sf = new SimpleDateFormat("dd MMM, yyyy | hh:mm a z", Locale.ENGLISH);	
+	SimpleDateFormat sf = new SimpleDateFormat("dd MMM,yyyy | hh:mm a z ", Locale.ENGLISH);
+	sf.setTimeZone(TimeZone.getTimeZone("IST"));
    out.print( "<div class=\"date\">" +sf.format(date)+"</div>");
+    
     
 %>
 	<div class="top-right-menu">

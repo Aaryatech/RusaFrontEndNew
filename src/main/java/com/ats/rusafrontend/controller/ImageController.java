@@ -57,14 +57,16 @@ public class ImageController {
 	ContactUs contactUs = new ContactUs();
 	int flag = 0;
 
-	@RequestMapping(value = "/NewsDetails/{langId}/{newsblogsId}", method = RequestMethod.GET)
-	public ModelAndView getImageLink(@PathVariable int langId, @PathVariable int newsblogsId,
+	@RequestMapping(value = "/NewsDetails/{newsblogsId}", method = RequestMethod.GET)
+	public ModelAndView getImageLink(@PathVariable int newsblogsId,
 			HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		
 		
 		
 		ModelAndView model = new ModelAndView("content/news-detail");
+		
+		int langId=1;
 		try {
 			
 			try {
@@ -72,7 +74,7 @@ public class ImageController {
 			}catch(Exception e) {
 				langId=1;
 			}
-			session.setAttribute("mapping", "NewsDetails-"+langId+"-"+newsblogsId);
+			session.setAttribute("mapping", "NewsDetails-"+newsblogsId);
 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 

@@ -28,10 +28,17 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon" />
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
+<style>
+.other-gov-site-home {
+	margin-top: 43px;
+}
+</style>
 </head>
 <body onload="clearWordSession()">
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
@@ -49,137 +56,166 @@
 	<div class="container main-content" id="main-content">
 		<div class="row row-eq-height">
 
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm">
+			<div class="col-12 col-sm-12 col-lg-12 right-Colm search-result">
+
+
 				<c:set var="find" value="0"></c:set>
 
 				<c:if test="${searchData.cmsSerchList.size()>0}">
 
 					<c:forEach items="${searchData.cmsSerchList}" var="cmsSerchList">
 
-						<h2>
-							<a
-								href="${pageContext.request.contextPath}/info/${cmsSerchList.pageSlug}">${cmsSerchList.heading}</a>
-						</h2>
-						<c:set var="string2" value="${cmsSerchList.pageDesc}" />
-						<%-- <c:set var="string2" value="${fn:substring(string1, 0, 256)}" /> --%>
-
-						<%
-							String resp = (String) pageContext.getAttribute("string2"); //No exception.
-									int stringlength = resp.length();
-
-									String finalDesc = ".....";
-						%>
-
-						<c:forEach items="${searchData.searchWorld}" var="searchWorldList">
 
 
-
-							<c:set var="searchWorld" value="${searchWorldList}" />
-
-							<%
-								String searchWorld = (String) pageContext.getAttribute("searchWorld");
-
-											/* resp = resp.replaceAll("(?i)" + searchWorld, "<strong>" + searchWorld + "</strong>");
-											finalDesc = finalDesc+resp.substring(idx, idx+100)+"....."; */
-											try {
-												int idx = resp.toLowerCase().indexOf(searchWorld.toLowerCase());
-												if (finalDesc.toLowerCase().contains(searchWorld.toLowerCase())) {
-													finalDesc = finalDesc.replaceAll("(?i)" + searchWorld,
-															"<strong>" + searchWorld + "</strong>");
-												} else {
-													resp = resp.replaceAll("(?i)" + searchWorld, "<strong>" + searchWorld + "</strong>");
-													finalDesc = finalDesc + resp.substring(idx, idx + 100) + ".....";
-												}
-
-												 
-											} catch (Exception e) {
-
-											}
-							%>
+						<div class="row">
+							<div class="col-12 col-sm-9 col-lg-9">
+								<h2>
+									<a
+										href="${pageContext.request.contextPath}/info/${cmsSerchList.pageSlug}">${cmsSerchList.heading}</a>
+								</h2>
 
 
-						</c:forEach>
-						<%
-							out.println(finalDesc);
-						%>
+								<c:set var="string2" value="${cmsSerchList.pageDesc}" />
+
+
+								<%
+									String resp = (String) pageContext.getAttribute("string2"); //No exception.
+											int stringlength = resp.length();
+
+											String finalDesc = ".....";
+								%>
+
+								<c:forEach items="${searchData.searchWorld}"
+									var="searchWorldList">
+
+
+
+									<c:set var="searchWorld" value="${searchWorldList}" />
+
+									<%
+										String searchWorld = (String) pageContext.getAttribute("searchWorld");
+
+													/* resp = resp.replaceAll("(?i)" + searchWorld, "<strong>" + searchWorld + "</strong>");
+													finalDesc = finalDesc+resp.substring(idx, idx+100)+"....."; */
+													try {
+														int idx = resp.toLowerCase().indexOf(searchWorld.toLowerCase());
+														if (finalDesc.toLowerCase().contains(searchWorld.toLowerCase())) {
+															finalDesc = finalDesc.replaceAll("(?i)" + searchWorld,
+																	"<strong>" + searchWorld + "</strong>");
+														} else {
+															resp = resp.replaceAll("(?i)" + searchWorld, "<strong>" + searchWorld + "</strong>");
+															finalDesc = finalDesc + resp.substring(idx, idx + 100) + ".....";
+														}
+
+													} catch (Exception e) {
+
+													}
+									%>
+
+
+								</c:forEach>
+
+								<p>
+									<%
+										out.println(finalDesc);
+									%>
+								</p>
+							</div>
+
+						</div>
+
+
 					</c:forEach>
-					<hr>
 
 					<c:set var="find" value="1"></c:set>
 				</c:if>
 
-				<c:if test="${searchData.faqSerchList.size()>0}">
-					<h2>FAQ's</h2>
-
+			  <c:if test="${searchData.faqSerchList.size()>0}">
+					FAQ's
+ 
 					<c:forEach items="${searchData.faqSerchList}" var="faqSerchList">
 
-						<h2>
-							<a
-								href="${pageContext.request.contextPath}/info/${faqSerchList.pageSlug}">${faqSerchList.faqQue}</a>
-						</h2>
-						 <c:set var="string1" value="${faqSerchList.faqAns}" />
-						<%--<c:set var="string2" value="${fn:substring(string1, 0, 256)}" />
-                    ${string2}..... --%>
 
-						<%
-							String finalDesc = (String) pageContext.getAttribute("string1"); //No exception.
-									 
-						%>
-						
-						<c:forEach items="${searchData.searchWorld}" var="searchWorldList">
+						<div class="row">
+							<div class="col-12 col-sm-9 col-lg-9">
+								<h2>
+									<a
+										href="${pageContext.request.contextPath}/info/${faqSerchList.pageSlug}">${faqSerchList.faqQue}</a>
+								</h2>
+								<c:set var="string1" value="${faqSerchList.faqAns}" />
 
+								<%
+									String finalDesc = (String) pageContext.getAttribute("string1"); //No exception.
+								%>
 
-
-							<c:set var="searchWorld" value="${searchWorldList}" />
-
-							<%
-								String searchWorld = (String) pageContext.getAttribute("searchWorld");
-
-											/* resp = resp.replaceAll("(?i)" + searchWorld, "<strong>" + searchWorld + "</strong>");
-											finalDesc = finalDesc+resp.substring(idx, idx+100)+"....."; */
-											try {
-												 
-												finalDesc = finalDesc.replaceAll("(?i)" + searchWorld, "<strong>" + searchWorld + "</strong>"); 
-												System.out.println(finalDesc);
-											} catch (Exception e) {
-
-											}
-							%>
+								<c:forEach items="${searchData.searchWorld}"
+									var="searchWorldList">
 
 
-						</c:forEach>
-						
-						<%
-							out.println(finalDesc);
-						%>
 
-						<br>
-						<br>
-					</c:forEach>
-					<hr>
+									<c:set var="searchWorld" value="${searchWorldList}" />
+
+									<%
+										String searchWorld = (String) pageContext.getAttribute("searchWorld");
+
+													/* resp = resp.replaceAll("(?i)" + searchWorld, "<strong>" + searchWorld + "</strong>");
+													finalDesc = finalDesc+resp.substring(idx, idx+100)+"....."; */
+													try {
+
+														finalDesc = finalDesc.replaceAll("(?i)" + searchWorld,
+																"<strong>" + searchWorld + "</strong>");
+														System.out.println(finalDesc);
+													} catch (Exception e) {
+
+													}
+									%>
+
+
+								</c:forEach>
+
+								<p>
+									<%
+										out.println(finalDesc);
+									%>
+								</p>
+							</div>
+
+						</div>
+					</c:forEach> 
 					<c:set var="find" value="1"></c:set>
-				</c:if>
+				</c:if>  
 
-				<c:if test="${searchData.newsSerchList.size()>0}">
-					<h2>News</h2>
+				<%--  <c:if test="${searchData.newsSerchList.size()>0}">
+					News
 
 					<c:forEach items="${searchData.newsSerchList}" var="newsSerchList">
 
-						<h2>
-							<a
-								href="${pageContext.request.contextPath}/info/${newsSerchList.pageSlug}">${newsSerchList.heading}</a>
-						</h2>
-						<c:set var="string1" value="${newsSerchList.descriptions}" />
-						<c:set var="string2" value="${fn:substring(string1, 0, 256)}" />
-                    	${string2}.....
-                    
-                    <br>
-					</c:forEach>
-					<hr>
-					<c:set var="find" value="1"></c:set>
-				</c:if>
+						<div class="row">
+							<div class="col-12 col-sm-3 col-lg-2 search-image">
+								<img
+									src="http://tomcat.aaryatechindia.in:6435/media/gallery/2019-03-01_18:45:45_2019-02-15_12_58_14_PFMS-Training-1-1.jpg"
+									alt="Digital-Launch" title="Digital-Launch"
+									class="img-responsive">
+							</div>
+							<div class="col-12 col-sm-6 col-lg-6">
+								<h2>
+									<a
+										href="${pageContext.request.contextPath}/NewsDetails/${newsSerchList.newsblogsId}">${newsSerchList.heading}</a>
+								</h2>
 
-				<c:if test="${searchData.gallerySerchList.size()>0}">
+								<c:set var="string1" value="${newsSerchList.descriptions}" />
+								<c:set var="string2" value="${fn:substring(string1, 0, 500)}" />
+								<p>${string2}.....</p>
+							</div>
+
+						</div>
+
+
+					</c:forEach>
+					<c:set var="find" value="1"></c:set>
+				</c:if>   --%>
+
+				<%-- <c:if test="${searchData.gallerySerchList.size()>0}">
 					<h2>Gallery</h2>
 					<c:forEach items="${searchData.gallerySerchList}"
 						var="gallerySerchList">
@@ -193,32 +229,32 @@
 					</c:forEach>
 					<hr>
 					<c:set var="find" value="1"></c:set>
-				</c:if>
+				</c:if> --%>
 
 				<c:if test="${searchData.documentSerchList.size()>0}">
 					<h2>Document</h2>
 					<c:forEach items="${searchData.documentSerchList}"
 						var="documentSerchList">
 
-						<h2>
-							<a
-								href="${pageContext.request.contextPath}/info/${documentSerchList.pageSlug}">${documentSerchList.fileName}</a>
-						</h2>
+						<div class="row">
+							<div class="col-12 col-sm-9 col-lg-9">
+								<h2>
+									<a
+										href="${pageContext.request.contextPath}/info/${documentSerchList.pageSlug}">${documentSerchList.fileName}</a>
+								</h2>
 
-						<br>
+							</div>
+
+						</div>
+
 					</c:forEach>
-					<hr>
 					<c:set var="find" value="1"></c:set>
 				</c:if>
 
 				<c:if test="${find==0}">
 					<h2 style="text-align: center;">No Record Found</h2>
 				</c:if>
-			</div>
-
-
-
-
+			</div> 
 		</div>
 	</div>
 
@@ -228,13 +264,11 @@
 	<!-- JavaScript-->
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 
-<script>
-			function clearWordSession() {
-				
-				<% session.removeAttribute("seachSentence"); %>
- 
-			}
-		</script>
+	<script>
+		function clearWordSession() {
+	<%session.removeAttribute("seachSentence");%>
+		}
+	</script>
 
 
 

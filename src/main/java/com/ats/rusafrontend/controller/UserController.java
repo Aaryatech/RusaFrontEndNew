@@ -103,6 +103,8 @@ public class UserController {
 
 				Registration verify = rest.postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
 				if (verify.isError() == false) {
+					
+					System.out.println("verify.getExInt1() " + verify.getExInt1());
 					if(verify.getExInt1()==0)
 					{
 						mav = new ModelAndView("changePass");
@@ -114,7 +116,7 @@ public class UserController {
 					else
 					{
 					mav = new ModelAndView("content/upcoming-dashboard");
-					System.out.println("Login :" + verify.getRegId());
+					//System.out.println("Login :" + verify.getRegId());
 					session.setAttribute("UserDetail", verify.getRegId());
 					
 					session.setAttribute("userInfo", verify);
@@ -126,7 +128,7 @@ public class UserController {
 					List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
 							List.class);
 					// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
-					System.out.println("list_new: " + upcoming.toString());
+					//System.out.println("list_new: " + upcoming.toString());
 					MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 					map2.add("regId",  verify.getRegId()); 
 					Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
@@ -139,7 +141,7 @@ public class UserController {
 					}
 				} else {
 					mav = new ModelAndView("login");
-					System.out.println("Invalid login credentials");				
+					//System.out.println("Invalid login credentials");				
 					session.setAttribute("errorMsg", true);
 					session.setAttribute("errorMsg", "Invalid login credentials !");
 				}
