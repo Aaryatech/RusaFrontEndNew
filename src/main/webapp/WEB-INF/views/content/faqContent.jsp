@@ -20,7 +20,7 @@
     </div>
 	<div class="bridcrumb">
     	<div class="container">
-        	<a href="index.html">Home</a> > <a href="#">Downloads</a>
+        	<a href="${pageContext.request.contextPath}/">Home</a> > 
         </div>
     </div>    
     

@@ -69,7 +69,7 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="/">Home</a> > <a
+			<a href="${pageContext.request.contextPath}/">Home</a> > <a
 				href="${pageContext.request.contextPath}/login">Login</a>
 			>
 		</div>
