@@ -29,26 +29,6 @@ import com.ats.rusafrontend.model.Registration;
 public class PagingController {
 
 	RestTemplate rest = new RestTemplate();
-	@RequestMapping(value = "/firstPageList", method = RequestMethod.GET)
-	public ModelAndView firstPageList(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = new ModelAndView("firstPage");
-		try {
-			/*
-			 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
-			 * Object>(); // map.add("delStatus", 1); List<Registration> getUser =
-			 * rest.getForObject(Constant.url + "/getAllRegUserList", List.class); //
-			 * List<Registration> userList = new //
-			 * ArrayList<Registration>(Arrays.asList(getUser)); model.addObject("regList",
-			 * getUser);
-			 */
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return model;
-	}
 	
 	@RequestMapping(value = "/listOFEvent/{page}", method = RequestMethod.GET)
 	public ModelAndView listOFEvent(@PathVariable("page") String page, HttpServletRequest request,
