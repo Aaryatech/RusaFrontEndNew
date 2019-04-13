@@ -101,7 +101,7 @@
 						<strong>${image.heading}</strong><br>
 						<p>${image.descriptions}</p>
  
-						<a href="${image.newsSourceUrlName}" target="_blank">Source Link</a> 
+						<p>Source Link :${image.newsSourceUrlName}</p>
 
 					</div>
 				</div>

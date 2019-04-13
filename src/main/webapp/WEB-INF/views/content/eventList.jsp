@@ -136,6 +136,19 @@
             
             
         </div>
+             <div class="pagination inner-page-pagination">
+                        <a href="" class="inactive left"><img src="images/pagination-left.png" alt=""></a>
+                        <a href="javascript:void(0)" class="activelink">1</a>
+                        <a href="#" class="inactive">2</a>
+                        <a href="#" class="inactive">3</a>
+                         <a href="#" class="inactive">4</a>
+                          <a href="#" class="inactive">5</a>
+                        <a href="" class="right"><img src="images/pagination-right.png" alt=""></a>
+                    </div>
+   		 <a href="${pageContext.request.contextPath}/viewemp/1">1</a>     
+  		 <a href="${pageContext.request.contextPath}/viewemp/2">2</a>     
+  		 <a href="${pageContext.request.contextPath}/viewemp/3">3</a>  
+        
     </div>
 	
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>

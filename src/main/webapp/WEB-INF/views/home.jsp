@@ -94,7 +94,7 @@
 		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<img class="first-slide"
-					src="${pageContext.request.contextPath}/resources/images/slider2.jpg"
+					src="${sessionScope.gallryImageURL}${editbanner.sliderImage}"
 					alt="First slide">
 				<div class="container">
 					<div class="carousel-caption">
@@ -104,8 +104,6 @@
 						<a href="${editbanner.urlLink}" class="btn button "><span>${editbanner.linkName}</span></a>
 					</div>
 				</div>
-
-
 				<div>
 					<div class="container"></div>
 				</div>
