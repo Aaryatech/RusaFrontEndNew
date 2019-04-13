@@ -90,36 +90,18 @@
     </div>
 	<div class="bridcrumb">
     	<div class="container">
-        	<a href="${pageContext.request.contextPath}/">Home</a> > <a href="${pageContext.request.contextPath}/eventList">Events</a> >
+        	<a href="${pageContext.request.contextPath}/">Home</a> > <a href="${pageContext.request.contextPath}/listOFEvent/1">Events</a> >
         </div>
     </div> 
  <div class="container" id="main-content">
         <div class="row row-eq-height">
-        	<!-- <div class="col-12 col-sm-3 col-lg-3">
-				<div class="leftColm">
-                	<h3>Gallery</h3>
-                    <ul class="menu">
-                    	<li><a href="about.html">About RUSA</a></li>
-                        <li><a href="rusa-structure.html" class="active">RUSA Structure</a></li>
-                        <li><a href="message-education-minister.html">Message from Education Minister</a></li>
-                        <li><a href="message-state-project-director.html">Message from State Project Director</a></li>
-                        <li><a href="rusa-achievements.html">RUSA Achievements</a></li>
-                        <li><a href="rusa-photo-gallery.html">RUSA Photo Gallery</a></li>
-
-                	</ul>
-                </div>
-            </div> -->
- 					<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
+        
+ 					<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page"> 
+ 					<div class="row">
+ 					 <c:set var="find" value="0"></c:set>
  					<c:forEach items="${event}" var="eventList"	varStatus="count">
-						
-                    <div class="row">
-                    			<%-- <c:if test="${not empty eventList.featuredImage}">
-                    		
-                    <div class="col-12 col-sm-3 col-lg-3">
-                    <img src="${sessionScope.gallryImageURL}${eventList.featuredImage}" alt="${eventList.heading}" title="${eventList.heading}" class="img-responsive thumbnail">	
-                    </div>
-                    </c:if> --%>
-                    <div class="col-12 col-sm-9 col-lg-9">
+					
+					<div class="col-12 col-sm-9 col-lg-9">
                     <strong> ${eventList.heading}</strong><br>
                     <%-- <p> ${eventList.descriptions}</p> --%>
                     <p><span><i class="icon-location"></i> <strong>Venue:</strong> ${eventList.eventLocation}</span> 
@@ -128,26 +110,24 @@
                     </p>
                     <a href="${pageContext.request.contextPath}/eventDetailfront/${eventList.newsblogsId}" target="_blank">Read More</a>
                     </div>
-                    </div>
+                   <c:set var="find" value="1"></c:set>
                    </c:forEach>
-                    
+                   
+                   	<c:if test="${find==0}">
+
+					<h2 style="text-align: center;">No Record Found</h2>
+				</c:if>
+                 </div>   
                  
-            </div>
-            
-            
+           	<c:if test="${find==1}">
+    <div class="row">        
+            <c:forEach  var="i"	begin="1" end="${totalPage}" >
+  <div class="col-sm-1" style="max-width: 0.433333%;" >  <a href="${pageContext.request.contextPath}/listOFEvent/${i}">${i}</a>     </div> 
+        </c:forEach></div> 
+        </c:if>
         </div>
-             <div class="pagination inner-page-pagination">
-                        <a href="" class="inactive left"><img src="images/pagination-left.png" alt=""></a>
-                        <a href="javascript:void(0)" class="activelink">1</a>
-                        <a href="#" class="inactive">2</a>
-                        <a href="#" class="inactive">3</a>
-                         <a href="#" class="inactive">4</a>
-                          <a href="#" class="inactive">5</a>
-                        <a href="" class="right"><img src="images/pagination-right.png" alt=""></a>
-                    </div>
-   		 <a href="${pageContext.request.contextPath}/viewemp/1">1</a>     
-  		 <a href="${pageContext.request.contextPath}/viewemp/2">2</a>     
-  		 <a href="${pageContext.request.contextPath}/viewemp/3">3</a>  
+        </div>
+         
         
     </div>
 	

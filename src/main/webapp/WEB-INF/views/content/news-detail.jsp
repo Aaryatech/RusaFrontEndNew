@@ -80,7 +80,7 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/newsList">News</a>>News Detail
+				href="${pageContext.request.contextPath}/listOFNews/1">News</a>>News Detail
 
 		</div>
 	</div>

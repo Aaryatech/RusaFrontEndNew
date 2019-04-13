@@ -91,25 +91,12 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/newsList">News</a> >
+				href="${pageContext.request.contextPath}/listOFNews/1">News</a> >
 		</div>
 	</div>
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
-			<!-- <div class="col-12 col-sm-3 col-lg-3">
-				<div class="leftColm">
-                	<h3>Gallery</h3>
-                    <ul class="menu">
-                    	<li><a href="about.html">About RUSA</a></li>
-                        <li><a href="rusa-structure.html" class="active">RUSA Structure</a></li>
-                        <li><a href="message-education-minister.html">Message from Education Minister</a></li>
-                        <li><a href="message-state-project-director.html">Message from State Project Director</a></li>
-                        <li><a href="rusa-achievements.html">RUSA Achievements</a></li>
-                        <li><a href="rusa-photo-gallery.html">RUSA Photo Gallery</a></li>
-
-                	</ul>
-                </div>
-            </div> -->
+			
 			<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
 				<c:forEach items="${newsBlogsList}" var="newsBlogsList"
 					varStatus="count">
@@ -138,23 +125,29 @@
 						<div class="col-12 col-sm-9 col-lg-9">
 							<strong> ${newsBlogsList.heading}</strong><br>
 							<p>${fn:substring(newsBlogsList.descriptions, 0, 500)}</p>
-							<%--       <p><span><i class="icon-location"></i> <strong>Venue:</strong> ${eventList.eventLocation}</span> 
-					<span><i class="icon-calendar"></i> <strong>Date:</strong> ${eventList.eventDateFrom}</span>
-                    <span><i class="icon-smartphone-call"></i> <strong>Contact:</strong>+91 ${eventList.eventContactNumber}</span>
-                    </p> --%>
+						
 							<a
 								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.newsblogsId}"
 								target="_blank">Read More</a>
 						</div>
 					</div>
+					 <c:set var="find" value="1"></c:set>
 				</c:forEach>
+				 <c:set var="find" value="0"></c:set>
+                <c:if test="${find==0}">
 
-
-			</div>
+					<h2 style="text-align: center;">No Record Found</h2>
+				</c:if>
+				 	<c:if test="${find==1}">
+   <div class="row">        
+            <c:forEach  var="i"	begin="1" end="${totalPage}" >
+  <div class="col-sm-1" style="max-width: 0.433333%;" >  <a href="${pageContext.request.contextPath}/listOFNews/${i}">${i}</a>     </div> 
+        </c:forEach></div> </c:if></div>
+        </div>
 
 
 		</div>
-	</div>
+
 
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
