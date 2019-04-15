@@ -484,7 +484,7 @@
                 
                 <c:forEach items="${newsSectionList}"
 						var="newsSectionList">
-						<p><a href="${pageContext.request.contextPath}/NewsDetails/${langId}/${newsSectionList.newsblogsId}"> ${newsSectionList.heading}</a></p>
+						<p><a href="${pageContext.request.contextPath}/NewsDetails/${newsSectionList.newsblogsId}"> ${newsSectionList.heading}</a></p>
 						</c:forEach>
                 
                 
