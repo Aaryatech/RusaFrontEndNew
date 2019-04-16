@@ -29,7 +29,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
@@ -90,14 +90,15 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/listOFNews/1">News</a> >
+			<a href="${pageContext.request.contextPath}/">Home</a> >> <a
+				href="${pageContext.request.contextPath}/listOFNews/1">News List</a> >
 		</div>
 	</div>
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
-			
+
 			<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
+				<c:set var="find" value="0"></c:set>
 				<c:forEach items="${newsBlogsList}" var="newsBlogsList"
 					varStatus="count">
 
@@ -113,40 +114,50 @@
 										class="img-responsive thumbnail">
 								</div>
 							</c:when>
-							<c:otherwise> 
-							<div class="col-12 col-sm-3 col-lg-3">
-								<img
-									src="${pageContext.request.contextPath}/resources/images/noimage.png"
-									alt="${newsBlogsList.heading}" title="${newsBlogsList.heading}"
-									class="img-responsive thumbnail" width="263" height="199">
-									</div>
+							<c:otherwise>
+								<div class="col-12 col-sm-3 col-lg-3">
+									<img
+										src="${pageContext.request.contextPath}/resources/images/noimage.png"
+										alt="${newsBlogsList.heading}"
+										title="${newsBlogsList.heading}"
+										class="img-responsive thumbnail" width="263" height="199">
+								</div>
 							</c:otherwise>
 						</c:choose>
 						<div class="col-12 col-sm-9 col-lg-9">
 							<strong> ${newsBlogsList.heading}</strong><br>
 							<p>${fn:substring(newsBlogsList.descriptions, 0, 500)}</p>
-						
+
 							<a
 								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.newsblogsId}"
 								target="_blank">Read More</a>
 						</div>
 					</div>
-					 <c:set var="find" value="1"></c:set>
+					<c:set var="find" value="1"></c:set>
 				</c:forEach>
-				 <c:set var="find" value="0"></c:set>
-                <c:if test="${find==0}">
+			
+				<c:if test="${find==0}">
 
 					<h2 style="text-align: center;">No Record Found</h2>
 				</c:if>
-				 	<c:if test="${find==1}">
-   <div class="row">        
-            <c:forEach  var="i"	begin="1" end="${totalPage}" >
-  <div class="col-sm-1" style="max-width: 0.433333%;" >  <a href="${pageContext.request.contextPath}/listOFNews/${i}">${i}</a>     </div> 
-        </c:forEach></div> </c:if></div>
-        </div>
-
-
+				<c:if test="${find==1}">
+					<c:if test="${totalPage>1}">
+					<div class="row">
+						<c:forEach var="i" begin="1" end="${totalPage}">
+							<div class="col-sm-1" style="max-width: 0.433333%;">
+								<a href="${pageContext.request.contextPath}/listOFNews/${i}">${i}</a>
+							</div>
+						</c:forEach>
+					</div>
+					</c:if>
+				</c:if>
+				
+				 
+			</div>
 		</div>
+
+
+	</div>
 
 
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>

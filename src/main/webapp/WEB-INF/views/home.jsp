@@ -187,7 +187,7 @@
 					 <c:if test="${cnt>10}">
 					 
 					 </c:if>
-					<a href="${pageContext.request.contextPath}/eventfrontList">Read
+					<a href="${pageContext.request.contextPath}/listOFEvent/1">Read
 						More</a>
 					 
 				</div>

@@ -88,8 +88,8 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/listOFEvent/1">Event</a> >
+			<a href="${pageContext.request.contextPath}/">Home</a> >> <a
+				href="${pageContext.request.contextPath}/listOFEvent/1">Event List</a> >
 		</div>
 	</div>
 
