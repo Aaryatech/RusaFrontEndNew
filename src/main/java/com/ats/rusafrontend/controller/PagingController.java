@@ -62,7 +62,7 @@ public class PagingController {
 			}		
 				System.out.println("totalPage 3:"+totalPage);
 			
-			
+				int pageidnew=Integer.parseInt(page);  
 			//String spageid=request.getParameter("page");  
 			int pageid=Integer.parseInt(page);  
 			int total=Constant.totalEventCount;  
@@ -84,10 +84,12 @@ public class PagingController {
 				event.get(i).setEventDateFrom(DateConvertor.convertToDMY(event.get(i).getEventDateFrom()));
 
 			}
+			//pageid=pageid-1;
+			
 			session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 			model.addObject("event", event);
 			model.addObject("total", total);
-			model.addObject("pageid", pageid);
+			model.addObject("pageid", pageidnew);
 			model.addObject("totalPage", totalPage);
 			
 			//model.addObject("page", page);
@@ -128,7 +130,7 @@ public class PagingController {
 				{
 					totalPage=1;				
 				}		
-								
+				int pageidnew=Integer.parseInt(page); 			
 				int pageid=Integer.parseInt(page);  
 				int total=Constant.totalEventCount;  
 				if(pageid==1)
@@ -154,7 +156,7 @@ public class PagingController {
 			model.addObject("siteKey", Constant.siteKey);
 			model.addObject("event", newsAllList);
 			model.addObject("total", total);
-			model.addObject("pageid", pageid);
+			model.addObject("pageid", pageidnew);
 			model.addObject("totalPage", totalPage);
 			
 			//model.addObject("page", page);

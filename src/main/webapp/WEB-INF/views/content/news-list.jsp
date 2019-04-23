@@ -142,13 +142,26 @@
 				</c:if>
 				<c:if test="${find==1}">
 					<c:if test="${totalPage>1}">
-					<div class="row">
+					  <div class="pagination inner-page-pagination">
+					 <c:forEach var="i" begin="1" end="${totalPage}">
+					  <c:choose>
+                        <c:when test="${pageid==i}">
+                         <a href="${pageContext.request.contextPath}/listOFNews/${i}" class="activelink">${i}</a>
+                        </c:when>
+                        <c:otherwise>
+                         <a href="${pageContext.request.contextPath}/listOFNews/${i}" class="inactive">${i}</a>
+                        </c:otherwise>
+                        </c:choose> 
+                        </c:forEach>
+					
+					
+					<%-- <div class="row">
 						<c:forEach var="i" begin="1" end="${totalPage}">
 							<div class="col-sm-1" style="max-width: 0.433333%;">
 								<a href="${pageContext.request.contextPath}/listOFNews/${i}">${i}</a>
 							</div>
-						</c:forEach>
-					</div>
+						</c:forEach>--%>
+					</div> 
 					</c:if>
 				</c:if>
 				

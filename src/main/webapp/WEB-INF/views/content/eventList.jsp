@@ -125,20 +125,25 @@
 
 						<h2 style="text-align: center;">No Record Found</h2>
 					</c:if>
-					
+			
 				<c:if test="${find==1}">
 				<c:if test="${totalPage>1}">
-				 <div class="col-12 col-sm-12 col-lg-12 right-Colm1 news-listing-page1">
-				 
-					<div class="row">
-						<c:forEach var="i" begin="1" end="${totalPage}">
-							<div class="col-sm-1" style="max-width: 0.433333%;">
-								<a href="${pageContext.request.contextPath}/listOFEvent/${i}">${i}</a>
-							</div>
-						</c:forEach>
-					</div>
-					</div>
-					</c:if>
+				  <div class="pagination inner-page-pagination">
+                   
+                        <c:forEach var="i" begin="1" end="${totalPage}">
+                                          
+                    <c:choose>
+                        <c:when test="${pageid==i}">
+                         <a href="${pageContext.request.contextPath}/listOFEvent/${i}" class="activelink">${i}</a>
+                        </c:when>
+                        <c:otherwise>
+                         <a href="${pageContext.request.contextPath}/listOFEvent/${i}" class="inactive">${i}</a>
+                        </c:otherwise>
+                        </c:choose> 
+                        </c:forEach>
+                          
+                    </div> 
+                    </c:if>
 				</c:if>
 				
 				</div>
@@ -149,8 +154,7 @@
 		</div>
 
 
-	</div>
-
+	
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
