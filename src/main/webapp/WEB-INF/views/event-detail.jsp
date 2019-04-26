@@ -190,12 +190,12 @@
 							<strong>${event.heading}</strong><br>
 							<p>${event.descriptions}</p>
 							<p>
-								<span><i class="icon-location"></i> <strong>Venue:</strong>
+								<span><i class="icon-location"></i> <strong>Venue :</strong>
 									${event.eventLocation}</span> <span><i class="icon-calendar"></i>
 									<strong>Date:</strong> ${event.eventDateFrom}</span> <span><i
-									class="icon-man-user"></i> <strong>Contact Person:</strong>
+									class="icon-man-user"></i> <strong>Contact Person :</strong>
 									${event.eventContactPerson}</span> <span><i
-									class="icon-smartphone-call"></i> <strong>Contact:</strong> +91
+									class="icon-smartphone-call"></i> <strong>Contact :</strong> +91
 									${event.eventContactNumber}</span><br>
 							</p>
 							<c:if test="${typeId==2}">
@@ -210,14 +210,17 @@
 												name="form_sample_2" id="form_sample_2"
 												onsubmit="return confirm('Do you really want to submit the form?');">
 												 
-													<label class="control-label col-sm-2" for="page_pdf">Upload
-														Document :</label>
+													 <p>	 <strong>Upload	Document : </strong></p>
+								
 													<div class="col-sm-7">
 														<input type="file" name="pagePdf" id="pagePdf"
 															class="form-control" data-parsley-minlength="2" required
 															accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-														<p>Please upload .doc, .docx, .pptx,.pdf and .xlsx
-															only</p>
+															
+											<p>	 <span> <strong>Please upload :</strong>
+								.doc, .docx, .pptx,.pdf and .xlsx only </span></p>
+										<p>	<span> <strong>Document Name :</strong>
+								${event.exVar1}</span></p>
 													</div>
 													<input type="hidden" name="newsblogsId"
 														value="${event.newsblogsId}">

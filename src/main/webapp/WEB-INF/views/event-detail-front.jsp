@@ -171,7 +171,11 @@
 											<input type="file" name="pagePdf" id="pagePdf"
 												class="form-control" data-parsley-minlength="2" required
 												accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-											<p>Please upload .doc, .docx, .pptx,.pdf and .xlsx only</p>
+											<p>	 <span> <strong>Please upload :</strong>
+								.doc, .docx, .pptx,.pdf and .xlsx only </span></p>
+										<p>	<span> <strong>Document Name :</strong>
+								${event.exVar1}</span></p>
+										
 										</div>
 										<input type="hidden" name="newsblogsId"
 											value="${event.newsblogsId}">
@@ -181,6 +185,7 @@
 									<button type="submit" class="btn button apply">Apply</button>
 
 								</form>
+								
 								<%
 									} else {
 
@@ -197,14 +202,17 @@
 									method="post" enctype="multipart/form-data"
 									name="form_sample_2" id="form_sample_2"
 									onsubmit="return confirm('Do you really want to submit the form?');">
-								 
+							<p>	 <strong>Upload	Document : </strong></p>
 										<label class="control-label col-sm-2" for="page_pdf">Upload
 											Document :</label>
 										<div class="col-sm-7">
 											<input type="file" name="pagePdf" id="pagePdf"
 												class="form-control" data-parsley-minlength="2" required
 												accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-											<p>Please upload .doc, .docx, .pptx,.pdf and .xlsx only</p>
+										<p>	 <span> <strong>Please upload : </strong>
+								.doc, .docx, .pptx,.pdf and .xlsx only </span></p>
+										<p>	<span> <strong>Document Name : </strong>
+								${event.exVar1}</span></p>
 										</div>
 										<input type="hidden" name="newsblogsId"
 											value="${event.newsblogsId}">
@@ -213,6 +221,7 @@
 									 
 
 								</form>
+							
 								<%
 									}
 												}
