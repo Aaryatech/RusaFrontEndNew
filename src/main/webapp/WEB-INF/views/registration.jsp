@@ -230,7 +230,7 @@
 								name="designationCollege" placeholder="Designation of Person" onchange="trim(this)"
 								id="designationCollege">
 						</div>
-						<div class="col-12 col-sm-12 col-lg-6">
+						<div class="col-12 col-sm-12 col-lg-6"> 
 							<label>Name of Department <span class="text-danger">*</span>
 							</label> <input type="text" class="form-control" name="dept" onchange="trim(this)"
 								placeholder="Name of Department" id="collegeDept">

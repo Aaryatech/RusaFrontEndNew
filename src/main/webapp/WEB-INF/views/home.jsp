@@ -30,7 +30,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
@@ -94,7 +94,7 @@
 		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<img class="first-slide"
-					src="${sessionScope.gallryImageURL}${editbanner.sliderImage}"
+					src="${sessionScope.url}${editbanner.sliderImage}"
 					alt="First slide">
 				<div class="container">
 					<div class="carousel-caption">
@@ -126,14 +126,14 @@
 
 				<c:forEach items="${getCMSDesc}" var="getCMSDesc" varStatus="count">
 
-					<div class="col-12 col-sm-3 col-lg-3">
+					<div class="col-12 col-sm-6 col-lg-3">
 						<div class="sub-link-icon">
 							<img
 								src="${pageContext.request.contextPath}/resources/images/icon.png"
 								alt="">
 						</div>
 						<c:set var="string1" value="${getCMSDesc.pageDesc}" />
-						<c:set var="string2" value="${fn:substring(string1, 0, 256)}" />
+						<c:set var="string2" value="${fn:substring(string1, 0, 250)}" />
 						<h2>${getCMSDesc.heading}</h2>
 						<p>${string2}</p>
 						<div class="more" style="clear: both">
@@ -151,14 +151,14 @@
 	<div class="container main-content" id="main-content">
 
 		<div class="row">
-			<div class="col-12 col-sm-4 col-lg-4 news-notifications">
+			<div class="col-12 col-sm-12 col-lg-4 news-notifications">
 				<h3>News and Notification</h3>
 				<div class="border-box">
 					<div class="tab-content">
-					
-					<c:set var="cnt" value="0"></c:set>
+
+						<c:set var="cnt" value="0"></c:set>
 						<div id="update" class="tab-pane active">
-						 
+
 							<c:forEach items="${sessionScope.event}" var="eventList"
 								varStatus="count">
 
@@ -183,19 +183,19 @@
 
 						</div>
 					</div>
-					
-					 <c:if test="${cnt>10}">
-					 
-					 </c:if>
+
+					<c:if test="${cnt>10}">
+
+					</c:if>
 					<a href="${pageContext.request.contextPath}/listOFEvent/1">Read
 						More</a>
-					 
+
 				</div>
 			</div>
 
 
 
-			<div class="col-12 col-sm-4 col-lg-4 gallery">
+			<div class="col-12 col-sm-12 col-lg-4 gallery">
 				<h3>Recent Gallery</h3>
 				<c:if test="${photoList.size()>0}">
 					<div class="border-box">
@@ -257,7 +257,7 @@
 			</div>
 
 
-			<div class="col-12 col-sm-4 col-lg-4 gallery">
+			<div class="col-12 col-sm-12 col-lg-4 gallery">
 				<h3>Video</h3>
 
 				<div class="border-box">
@@ -313,8 +313,8 @@
 				</h2>
 				<c:forEach items="${newsBlogsList}" var="newsBlogsList"
 					varStatus="count">
-					<div class="col-12 col-sm-3 col-lg-3">
-						<div class="news-box">
+					<div class="col-12 col-sm-6 col-lg-3">
+						<div class="news-box" style="height: 347px;">
 							<div class="new-img">
 
 								<c:choose>
@@ -333,11 +333,10 @@
 
 							</div>
 							<h4>${fn:substring(newsBlogsList.heading, 0, 80)}</h4>
-							<p>${fn:substring(newsBlogsList.descriptions, 0, 80)}
-								<a
-									href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.newsblogsId}">Read
-									More</a>
-							</p>
+							<p>${fn:substring(newsBlogsList.descriptions, 0, 80)}</p>
+							<a
+								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.newsblogsId}">Read
+								More</a>
 						</div>
 					</div>
 				</c:forEach>
@@ -349,16 +348,31 @@
 	<div class="container main-content">
 		<div class="row bottom-section">
 			<c:if test="${setting[2].isActive==1}">
-				<div class="col-12 col-sm-4 col-lg-4">
+				<div class="col-12 col-sm-6 col-lg-3">
 					<div class="twitter border-box bootom-box">${setting[2].keyValues}</div>
 				</div>
 			</c:if>
 			<c:if test="${setting[3].isActive==1}">
-				<div class="col-12 col-sm-4 col-lg-4">
-					<div class="twitter border-box bootom-box">${setting[3].keyValues}</div>
+				<div class="col-12 col-sm-6 col-lg-3">
+					<div class="twitter border-box bootom-box">
+						<div class="fb-page" data-adapt-container-width="false"
+							data-height="405" data-hide-cover="false"
+							data-href="https://www.facebook.com/RUSAMaharashtra/"
+							data-show-facepile="false" data-small-header="true"
+							data-tabs="timeline" data-width="100%">
+							<div class="fb-xfbml-parse-ignore">
+								<blockquote cite="https://www.facebook.com/RUSAMaharashtra/">
+									<p>
+										<a href="https://www.facebook.com/RUSAMaharashtra/">Ministry
+											of Human Resource Development, Government of India</a>
+									</p>
+								</blockquote>
+							</div>
+						</div>
+					</div>
 				</div>
 			</c:if>
-			<div class="col-12 col-sm-4 col-lg-4">
+			<div class="col-12 col-sm-12 col-lg-6">
 				<div class="border-box bootom-box">
 					<div class="btn-group">
 						<!--  <button class="btn btn-primary button btn-calendar prev" data-calendar-nav="prev">< Prev </button> -->

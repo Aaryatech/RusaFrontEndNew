@@ -1,11 +1,11 @@
 (function($) {
 
 	"use strict";
-//alert(st_url);
+
 	var options = {
-		events_source: st_url+'eventJson',
+		events_source: 'events.json.php',
 		view: 'month',
-		tmpl_path: '/home/ubuntu/rusa/html/tmpls/',
+		tmpl_path: 'tmpls/',
 		tmpl_cache: false,
 		day: '2013-03-12',
 		onAfterEventsLoad: function(events) {

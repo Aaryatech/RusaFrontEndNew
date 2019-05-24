@@ -16,17 +16,17 @@
 %>
 	<div class="top-right-menu">
 		<ul>
-			<li><a href="#main-content" class="dropdown-arrow"><span>Skip
+			<li class="hide-mobile"><a href="#main-content" class="dropdown-arrow"><span>Skip
 						to main content</span></a></li>
-			<li><a href="#slider" class="dropdown-arrow"><span>Skip
+			<li class="hide-mobile"><a href="#slider" class="dropdown-arrow"><span>Skip
 						to navigation</span></a></li>
-			<li><a href="${pageContext.request.contextPath}/screenReader"
+			<li class="hide-mobile"><a href="${pageContext.request.contextPath}/screenReader"
 				class="dropdown-arrow"><span>Screen Reader Access</span></a></li>
-			<li><a href="javascript:void(0);" class="black"
+			<li class="hide-mobile"><a href="javascript:void(0);" class="black"
 				data-rel="High Contrast" title="High Contrast">A</a> <a
 				href="javascript:void(0);" class="white" data-rel="Low Contrast"
 				title="Low Contrast">A</a></li>
-			<li><a href="avascript:void(0);"><strong>Text Size</strong></a>
+			<li class="hide-mobile"><a href="avascript:void(0);"><strong>Text Size</strong></a>
 				<a href="javascript:void(0);" title="Text Size: Decrease"
 				id="btn-decrease" class="decrease">A-</a> <a
 				href="javascript:void(0);" title="Text Size: Normal" id="btn-orig"

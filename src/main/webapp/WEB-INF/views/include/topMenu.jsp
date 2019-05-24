@@ -12,16 +12,11 @@ max-width: 369px; overflow: hidden;
 </Style>
 <c:url var="checkMaintainance" value="/checkMaintainance" />
 <div class="top-menu" id="top-menu">
-	<div>
 		<div class="navbar navbar-expand-md menusats"><%--  --%>
 			<div class="container headerlogo">
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><img
 					src="${logoUrl}${logo.logoMain}" alt="" class="websitelogo"></a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarsExample01" aria-controls="navbarsExample01"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+				
 				  <div class="collapse navbar-collapse justify-content-md-end">
 				<form class="form-inline my-2 my-md-0 search-section"
 					action="${pageContext.request.contextPath}/searchData" method="get">
@@ -35,9 +30,13 @@ max-width: 369px; overflow: hidden;
 	
 			</div>
 		</div>
-	<nav class="navbar navbar-expand-md bg-dark_new justify-content-md-center">
-			<div>
-				<div class="collapse navbar-collapse" id="navbarsExample01">
+	<nav class="navbar navbar-expand-xl bg-dark_new ">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarsExample01" aria-controls="navbarsExample01"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample01">
 					<ul class="navbar-nav mr-end">
 						
 						
@@ -322,11 +321,5 @@ max-width: 369px; overflow: hidden;
 						</c:forEach>
 					</ul>
 				</div>
-				
-			</div>
-		
 		</nav>
-
-	</div>
 </div>
- 

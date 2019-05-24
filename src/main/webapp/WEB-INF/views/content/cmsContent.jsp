@@ -30,12 +30,12 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <c:choose>
 	<c:when test="${not empty pageMetaData.pageMetaTitle}">
-		<meta name="description" content="${pageMetaData.pageMetaDescription}"> 
+		<meta name="description" content="${pageMetaData.pageMetaDescription}">
 		<title>${pageMetaData.pageMetaTitle}</title>
 	</c:when>
 	<c:otherwise>
 		<meta name="description"
-			content="${sessionScope.homePageMetaData.metaDescription}"> 
+			content="${sessionScope.homePageMetaData.metaDescription}">
 		<title>${sessionScope.homePageMetaData.siteTitle}</title>
 	</c:otherwise>
 </c:choose>
@@ -144,7 +144,7 @@
 										<c:forEach items="${sessionScope.menuList.subCatList}"
 											var="subCatList">
 											<c:if test="${subCatList.parentId==catList.catId}">
-												<li><c:choose>
+												<li class="sub-menuleft"><c:choose>
 														<c:when test="${not empty subCatList.externalUrl}">
 
 															<c:set value="${subCatList.externalUrl}" var="string"></c:set>
@@ -216,114 +216,248 @@
 				</div>
 			</div>
 
-			  <c:choose>
+			<c:choose>
 
 				<c:when test="${newsSectionList.size()>0}">
-					<div class="col-12 col-sm-12 col-lg-6 right-Colm">
+					<div class="col-12 col-sm-12 col-lg-6 right-Colm news-listing-page">
 				</c:when>
 				<c:otherwise>
-					<div class="col-12 col-sm-12 col-lg-9 right-Colm">
+					<div class="col-12 col-sm-12 col-lg-9 right-Colm news-listing-page">
 				</c:otherwise>
-			</c:choose> 
-			 <!--  <div class="col-12 col-sm-12 col-lg-9 right-Colm">  -->
-				<c:set var="find" value="0"></c:set>
+			</c:choose>
+			<!--  <div class="col-12 col-sm-12 col-lg-9 right-Colm">  -->
+			<c:set var="find" value="0"></c:set>
 
-				<c:if test="${pageContent.cmsContentList.size()>0}">
-					<c:forEach items="${pageContent.cmsContentList}"
-						var="cmsContentList">
-						<c:if test="${not empty cmsContentList.featuredImage}">
+			<c:if test="${pageContent.cmsContentList.size()>0}">
+				<c:forEach items="${pageContent.cmsContentList}"
+					var="cmsContentList">
+					
+
+					<h2>${cmsContentList.heading}</h2>
+					<c:if test="${not empty cmsContentList.featuredImage}">
+						<div>
+
 							<img src="${gallryImageURL}${cmsContentList.featuredImage}"
 								alt=""
-								style="float:${cmsContentList.featuredImageAlignment}; padding-left:20px; padding-right:20px; padding-bottom:20px;"
-								height="" width="">
-						</c:if>
-
-						<h2>${cmsContentList.heading}</h2>
+								style="float:${cmsContentList.featuredImageAlignment};
+								height="
+								" width="">
+						</div>
+					</c:if>
                     ${cmsContentList.pageDesc}
                     <c:if test="${not empty cmsContentList.downloadPdf}">
 
-							<div class="pdfIcon">
-								<a href="${url}${cmsContentList.downloadPdf}" target="_blank">${cmsContentList.downloadPdf}
-									<%-- - ${documentUploadList.fileSize} --%>
+						<div class="pdfIcon">
+							<a href="${url}${cmsContentList.downloadPdf}" target="_blank">${cmsContentList.downloadPdf}
+								<%-- - ${documentUploadList.fileSize} --%>
+							</a>
+						</div>
+					</c:if>
+
+				</c:forEach>
+				<c:set var="find" value="1"></c:set>
+			</c:if>
+
+			<c:if test="${pageContent.faqContentList.size()>0}">
+				<h2>FAQ's</h2>
+
+
+
+
+				<div id="accordion" class="accordion">
+
+					<c:forEach items="${pageContent.faqContentList}"
+						var="faqContentList" varStatus="loop">
+						<div class="faq-section">
+
+							<div class="card-header " data-toggle="collapse"
+								href="#collapseOne${loop.index}">
+								<a class="card-title"> <span>${faqContentList.faqQue}</span>
 								</a>
 							</div>
-						</c:if>
 
+							<div id="collapseOne${loop.index}" class="card-body collapse  "
+								data-parent="#accordion">
+								<div class="clearfix"></div>
+								${faqContentList.faqAns}
+							</div>
+						</div>
 					</c:forEach>
-					<c:set var="find" value="1"></c:set>
-				</c:if>
 
-				<c:if test="${pageContent.faqContentList.size()>0}">
-					<h2>FAQ's</h2>
+				</div>
+				<c:set var="find" value="1"></c:set>
+			</c:if>
+
+			<c:if test="${pageContent.documentUploadList.size()>0}">
+				<h5>Downloads</h5>
+
+				<c:forEach items="${pageContent.documentUploadList}"
+					var="documentUploadList">
+
+					<div class="pdfIcon">
+						<a href="${url}${documentUploadList.fileName}" target="_blank">${documentUploadList.exVar1}
+							- ${documentUploadList.fileSize}</a>
+					</div>
+
+				</c:forEach>
+				<c:set var="find" value="1"></c:set>
+			</c:if>
+
+			<c:if test="${pageContent.testImonialList.size()>0}">
+				<h2>Testimonials</h2>
+				<div class="row">
+					<c:forEach items="${pageContent.testImonialList}"
+						var="testImonialList">
+						<c:if test="${testImonialList.sectionId==6}">
+							<div class="col-12 col-sm-12 col-lg-12">
+								<div class="success-stories testimonials-detail">
+									<div class="testimonials-user-photo">
+
+										<c:choose>
+											<c:when test="${not empty testImonialList.imageName}">
+												<img src="${gallryImageURL}${testImonialList.imageName}"
+													alt="" style="height: 100px; width: 100px;">
+											</c:when>
+											<c:otherwise>
+												<img
+													src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+													alt="" style="height: 100px; width: 100px;">
+
+											</c:otherwise>
+										</c:choose>
 
 
 
-
-					<div id="accordion" class="accordion">
-
-						<c:forEach items="${pageContent.faqContentList}"
-							var="faqContentList" varStatus="loop">
-							<div class="faq-section">
-
-								<div class="card-header " data-toggle="collapse"
-									href="#collapseOne${loop.index}">
-									<a class="card-title"> <span>${faqContentList.faqQue}</span>
-									</a>
-								</div>
-
-								<div id="collapseOne${loop.index}" class="card-body collapse  "
-									data-parent="#accordion">
-									<div class="clearfix"></div>
-									${faqContentList.faqAns}
+									</div>
+									<p>
+										<span class="icon-quote-left quote"></span>${testImonialList.message}
+									</p>
+									<p>
+										<strong>${testImonialList.fromName}</strong> <span
+											class="sup-text">${testImonialList.designation},${testImonialList.location}</span>
+									</p>
 								</div>
 							</div>
-						</c:forEach>
 
+						</c:if>
+					</c:forEach>
+				</div>
+
+				<c:set var="find" value="1"></c:set>
+			</c:if>
+
+			<c:if test="${pageContent.gallaryDetailList.size()>0}">
+
+				<div class="row">
+					<c:forEach items="${pageContent.gallaryDetailList}"
+						var="gallaryDetailList">
+						<div class="col-12 col-sm-3 col-lg-3">
+							<a href="${gallryImageURL}${gallaryDetailList.fileName}"
+								data-toggle="lightbox" data-gallery="plan" data-title=""
+								class="thumbnail"> <img
+								src="${gallryImageURL}thumbnail${gallaryDetailList.fileName}"
+								alt="${gallaryDetailList.title}"
+								title="${gallaryDetailList.title}" class="img-responsive"></a>
+						</div>
+					</c:forEach>
+				</div>
+				<br>
+
+				<c:set var="find" value="1"></c:set>
+			</c:if>
+
+			<c:if test="${pageContent.detailNewsList.size()>0}">
+
+
+				<c:forEach items="${pageContent.detailNewsList}"
+					var="detailNewsList">
+					<div class="row row-eq-height">
+						<div class="col-12">
+							<c:if test="${not empty detailNewsList.featuredImage}">
+								<img src="${gallryImageURL}${detailNewsList.featuredImage}"
+									alt=""
+									style="float:${detailNewsList.featuredImageAlignment}; padding-left:20px; padding-right:20px; padding-bottom:20px;"
+									height="317px" width="555px">
+							</c:if>
+							<%-- 	<img src="${gallryImageURL}${detailNewsList.featuredImage}"> --%>
+							<c:set var="string1" value="${detailNewsList.descriptions}" />
+							<c:set var="string2" value="${fn:substring(string1, 0, 256)}" />
+							<h2>${detailNewsList.heading}</h2>
+							<p>${string2}</p>
+							<%-- <a
+									href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.languageId}/${detailNewsList.pageId}/${detailNewsList.newsblogsId}">more
+								</a> --%>
+							<a
+								href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.newsblogsId}">more
+							</a>
+						</div>
 					</div>
-					<c:set var="find" value="1"></c:set>
-				</c:if>
 
-				<c:if test="${pageContent.documentUploadList.size()>0}">
-					<h5>Downloads</h5>
+				</c:forEach>
 
-					<c:forEach items="${pageContent.documentUploadList}"
-						var="documentUploadList">
+				<c:set var="find" value="1"></c:set>
+			</c:if>
 
-						<div class="pdfIcon">
-							<a href="${url}${documentUploadList.fileName}" target="_blank">${documentUploadList.exVar1}
-								- ${documentUploadList.fileSize}</a>
+			<c:if test="${pageContent.teamList.size()>0}">
+				<div class="row">
+					<c:forEach items="${pageContent.teamList}" var="testImonialList">
+
+						<div class="col-6 col-sm-4 col-lg-4">
+							<div class="team-wrap">
+								<span class="team-candidates-status"></span>
+								<figure>
+									<c:choose>
+										<c:when test="${not empty testImonialList.imageName}">
+											<a href="#"><img
+												src="${gallryImageURL}${testImonialList.imageName}" alt=""
+												style="height: 200px; width: 200px;"></a>
+										</c:when>
+										<c:otherwise>
+											<a href="#"><img
+												src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+												alt=""></a>
+
+										</c:otherwise>
+									</c:choose>
+								</figure>
+								<div class="team-candidates-text ">
+									<h2>
+
+										<a href="#">${testImonialList.fromName}</a>
+									</h2>
+									<span>${testImonialList.designation}</span>
+								</div>
+							</div>
 						</div>
 
 					</c:forEach>
-					<c:set var="find" value="1"></c:set>
-				</c:if>
+				</div>
+				<c:set var="find" value="1"></c:set>
+			</c:if>
 
-				<c:if test="${pageContent.testImonialList.size()>0}">
-					<h2>Testimonials</h2>
-					<div class="row">
-						<c:forEach items="${pageContent.testImonialList}"
-							var="testImonialList">
-							<c:if test="${testImonialList.sectionId==6}">
-								<div class="col-12 col-sm-12 col-lg-12">
-									<div class="success-stories testimonials-detail">
-										<div class="testimonials-user-photo">
+			<c:if test="${pageContent.successList.size()>0}">
+				<div class="row" id="successstory">
+					<c:forEach items="${pageContent.successList}" var="testImonialList">
 
-											<c:choose>
-												<c:when test="${not empty testImonialList.imageName}">
-													<img src="${gallryImageURL}${testImonialList.imageName}"
-														alt="" style="height: 100px; width: 100px;">
-												</c:when>
-												<c:otherwise>
-													<img
-														src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
-														alt="" style="height: 100px; width: 100px;">
+						<div class="col-12 col-sm-12 col-lg-12">
+							<div class="success-stories">
+								<div class="row">
+									<div class="col-12 col-sm-3 col-lg-3">
+										<c:choose>
+											<c:when test="${not empty testImonialList.imageName}">
+												<a href="#"><img
+													src="${gallryImageURL}${testImonialList.imageName}" alt=""
+													width="184" height="134"></a>
+											</c:when>
+											<c:otherwise>
+												<a href="#"><img
+													src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+													alt="" width="184" height="134"></a>
 
-												</c:otherwise>
-											</c:choose>
-
-
-
-										</div>
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<div class="col-12 col-sm-9 col-lg-9">
 										<p>
 											<span class="icon-quote-left quote"></span>${testImonialList.message}
 										</p>
@@ -333,164 +467,37 @@
 										</p>
 									</div>
 								</div>
-
-							</c:if>
-						</c:forEach>
-					</div>
-
-					<c:set var="find" value="1"></c:set>
-				</c:if>
-
-				<c:if test="${pageContent.gallaryDetailList.size()>0}">
-
-					<div class="row">
-						<c:forEach items="${pageContent.gallaryDetailList}"
-							var="gallaryDetailList">
-							<div class="col-12 col-sm-3 col-lg-3">
-								<a href="${gallryImageURL}${gallaryDetailList.fileName}"
-									data-toggle="lightbox" data-gallery="plan" data-title=""
-									class="thumbnail"> <img
-									src="${gallryImageURL}thumbnail${gallaryDetailList.fileName}"
-									alt="${gallaryDetailList.title}"
-									title="${gallaryDetailList.title}" class="img-responsive"></a>
-							</div>
-						</c:forEach>
-					</div>
-					<br>
-
-					<c:set var="find" value="1"></c:set>
-				</c:if>
-
-				<c:if test="${pageContent.detailNewsList.size()>0}">
-
-
-					<c:forEach items="${pageContent.detailNewsList}"
-						var="detailNewsList">
-						<div class="row row-eq-height">
-							<div class="col-12">
-								<c:if test="${not empty detailNewsList.featuredImage}">
-									<img src="${gallryImageURL}${detailNewsList.featuredImage}"
-										alt=""
-										style="float:${detailNewsList.featuredImageAlignment}; padding-left:20px; padding-right:20px; padding-bottom:20px;"
-										height="317px" width="555px">
-								</c:if>
-								<%-- 	<img src="${gallryImageURL}${detailNewsList.featuredImage}"> --%>
-								<c:set var="string1" value="${detailNewsList.descriptions}" />
-								<c:set var="string2" value="${fn:substring(string1, 0, 256)}" />
-								<h2>${detailNewsList.heading}</h2>
-								<p>${string2}</p>
-								<%-- <a
-									href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.languageId}/${detailNewsList.pageId}/${detailNewsList.newsblogsId}">more
-								</a> --%>
-								<a
-									href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.newsblogsId}">more
-								</a>
 							</div>
 						</div>
 
 					</c:forEach>
+				</div>
+				<c:set var="find" value="1"></c:set>
+			</c:if>
+			<c:if test="${find==0}">
 
-					<c:set var="find" value="1"></c:set>
-				</c:if>
-
-				<c:if test="${pageContent.teamList.size()>0}">
-					<div class="row">
-						<c:forEach items="${pageContent.teamList}" var="testImonialList">
-
-							<div class="col-6 col-sm-4 col-lg-4">
-								<div class="team-wrap">
-									<span class="team-candidates-status"></span>
-									<figure>
-										<c:choose>
-											<c:when test="${not empty testImonialList.imageName}">
-												<a href="#"><img
-													src="${gallryImageURL}${testImonialList.imageName}" alt=""
-													style="height: 200px; width: 200px;"></a>
-											</c:when>
-											<c:otherwise>
-												<a href="#"><img
-													src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
-													alt=""></a>
-
-											</c:otherwise>
-										</c:choose>
-									</figure>
-									<div class="team-candidates-text ">
-										<h2>
-
-											<a href="#">${testImonialList.fromName}</a>
-										</h2>
-										<span>${testImonialList.designation}</span>
-									</div>
-								</div>
-							</div>
-
-						</c:forEach>
-					</div>
-					<c:set var="find" value="1"></c:set>
-				</c:if>
-
-				<c:if test="${pageContent.successList.size()>0}">
-					<div class="row" id="successstory">
-						<c:forEach items="${pageContent.successList}"
-							var="testImonialList">
-
-							<div class="col-12 col-sm-12 col-lg-12">
-								<div class="success-stories">
-									<div class="row">
-										<div class="col-12 col-sm-3 col-lg-3">
-											<c:choose>
-												<c:when test="${not empty testImonialList.imageName}">
-													<a href="#"><img
-														src="${gallryImageURL}${testImonialList.imageName}" alt=""
-														width="184" height="134"></a>
-												</c:when>
-												<c:otherwise>
-													<a href="#"><img
-														src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
-														alt="" width="184" height="134"></a>
-
-												</c:otherwise>
-											</c:choose>
-										</div>
-										<div class="col-12 col-sm-9 col-lg-9">
-											<p>
-												<span class="icon-quote-left quote"></span>${testImonialList.message}
-											</p>
-											<p>
-												<strong>${testImonialList.fromName}</strong> <span
-													class="sup-text">${testImonialList.designation},${testImonialList.location}</span>
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</c:forEach>
-					</div>
-					<c:set var="find" value="1"></c:set>
-				</c:if>
-				<c:if test="${find==0}">
-
-					<h2 style="text-align: center;">No Record Found</h2>
-				</c:if>
-			</div>
-
-
-			  <c:if test="${newsSectionList.size()>0}">
-			   <div class="col-12 col-sm-12 col-lg-3 last-Colm">
-            	 
-                <h3 class="margin-top30">News</h3>
-                
-                <c:forEach items="${newsSectionList}"
-						var="newsSectionList">
-						<p><a href="${pageContext.request.contextPath}/NewsDetails/${newsSectionList.newsblogsId}"> ${newsSectionList.heading}</a></p>
-						</c:forEach>
-                
-                
-            </div>    
-            </c:if> 
+				<h2 style="text-align: center;">No Record Found</h2>
+			</c:if>
 		</div>
+
+
+		<c:if test="${newsSectionList.size()>0}">
+			<div class="col-12 col-sm-12 col-lg-3 last-Colm">
+				<div class="leftColm">
+					<h3 class="margin-top30">News</h3>
+
+					<c:forEach items="${newsSectionList}" var="newsSectionList">
+						<p>
+							<a
+								href="${pageContext.request.contextPath}/NewsDetails/${newsSectionList.newsblogsId}">
+								${newsSectionList.heading}</a>
+						</p>
+					</c:forEach>
+
+				</div>
+			</div>
+		</c:if>
+	</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 

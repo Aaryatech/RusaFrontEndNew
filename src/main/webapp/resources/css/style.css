@@ -767,6 +767,11 @@ margin-bottom:0px;
 	font-weight: 600;
 	color: #e1341a;
 }
+
+.leftColm .menu li.sub-menuleft{
+margin: 0px 0px 0px 20px;
+	
+} 
 .right-Colm {
 		padding:30px;
 		background-color: #FFF;
@@ -830,10 +835,7 @@ margin-bottom:0px;
 	height: 20px;
 }
 .last-Colm h3 {
-	font-size: 18px;
-	font-weight: 700;
-	color: #000;
-	font-family: 'Playfair Display', serif;
+
 }
 .last-Colm p {
 	font-size: 14px;
@@ -1957,7 +1959,9 @@ box-shadow: 0 .10rem .20rem rgba(189, 195, 199, 0.9);
 	border-radius: 50px 0px 0px 50px !important;
 }
 .btn-calendar.today{
-	border-radius:0px !important;
+	background-color:#21316c;
+	color:#FFF !important;
+	border-radius:50px !important;
 }
 .btn-calendar.next{
 	border-left:0px;
@@ -2034,6 +2038,20 @@ margin:0px 0px 0px 0px !important;
 .navbar-nav .nav-link {
     padding-right: 5px;
 }	
+.navbar-expand-xl .navbar-nav .nav-link {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.carousel-caption {
+    right: 1%;
+    left: 1%;
+}
+}
+@media screen and (max-width:1300px) {
+.navbar-expand-xl .navbar-nav .nav-link {
+    padding-right: 5px;
+    padding-left: 5px;
+}
 }
 
 @media screen and (max-width:1024px) {
@@ -2044,7 +2062,7 @@ margin:0px 0px 0px 0px !important;
 .navbar-toggler {
     position: absolute;
     right: 15px;
-    top: -78px;
+    top: -62px;
 }
 .search-section {
     margin-right: 72px;
@@ -2055,8 +2073,24 @@ border-bottom:1px dotted #919abc;
 }
 .sub-link h2 {
     margin: 15px 0px 0px 10px;
+	font-size: 14px;
 }
-
+.slider h1{
+	font-size:30px;
+	line-height:30px;
+}
+.slider p{
+font-size:14px;
+}
+.button{
+	margin:0px 0px 0px 0px;
+}
+.social-link a{
+	margin:0px 5px 10px 0px;
+}
+.nav-item.dropdown:hover .dropdown-menu.show {
+	display: block;
+}
 }
 
 @media screen and (max-width:768px) {
@@ -2067,7 +2101,7 @@ border-bottom:1px dotted #919abc;
     display: none;
 }
 .navbar-toggler {
-    top: -78px;
+    top:-61px;
 }
 .search-section input {
     width: 208px !important;
@@ -2108,26 +2142,37 @@ border-bottom:1px dotted #919abc;
 .testimonials {
     margin: 0px 0px 0px 0px;
 }
+.date {
+    display:none
+}
+.hide-mobile{
+    display:none !important
+}
+.leftColm {
+    display: none;
+}
 }
 
-
+@media screen and (max-width:736px) {
+.right-Colm img {
+width: 100% !important;
+    height: auto !important;
+}
+}
 
 @media screen and (max-width:414px) {
 .navbar-brand img{
 	width:100%;
 }
 .navbar-toggler {
-    top:-139px;
+    top:-124px;
 }
 .top-right-menu ul li {
-    margin: 0px 10px 10px 0px;
+    margin:11px 10px 10px 0px;
 }
 .top-right-menu {
     text-align: left;
     float: left;
-}
-.date {
-    display:none
 }
 .top-section a.dropdown-arrow{
 	display:none
@@ -2137,5 +2182,14 @@ border-bottom:1px dotted #919abc;
 }
 .jcarousel-control-next {
     right: 0px !important;
+}
+.slider h1 {
+	display:none;
+}
+}
+
+@media screen and (max-width:375px) {
+.navbar-toggler {
+    top: -118px;
 }
 }

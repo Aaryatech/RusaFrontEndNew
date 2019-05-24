@@ -6,13 +6,13 @@
 <footer>
 	<div class="container">
 		<div class="row">
-			<div class="col-12 col-sm-4 col-lg-3">
+			 <div class="col-12 col-sm-4 col-lg-3">
 				<h6>Contact Us</h6>
 				<c:if test="${setting[8].isActive==1}">
           				 ${setting[8].keyValues}
        			 		  </c:if>
 			</div>
-			<div class="col-12 col-sm-5 col-lg-5">
+			 <div class="col-12 col-sm-8 col-lg-5">
 				<h6>Important Links</h6>
 				<c:if test="${setting[7].isActive==1}">
           				 ${setting[7].keyValues}
@@ -28,7 +28,7 @@
                           <li><a href="${pageContext.request.contextPath}/siteMap">Site Map</a></li>
                         </ul> --%>
 			</div>
-			<div class="col-12 col-sm-4 col-lg-4 social-link">
+			<div class="col-12 col-sm-12 col-lg-4 social-link">
 				<h6>Follow us on:</h6>
 				<%--  <c:forEach items="${socialChannelData}" var="socialChannel"
 								varStatus="count">
@@ -49,13 +49,11 @@
 				</c:if>
 				<c:if test="${socialChannelData[3].isActive==1}">
 
-					<a href="${socialChannelData[3].urllinks}" class="skype"><span><img
-							src="${pageContext.request.contextPath}/resources/images/skype.png"></span></a>
+					<a href="${socialChannelData[3].urllinks}" target="_blank"><span class="icon-youtube-logo"> </span></a>
 
 				</c:if>
 				<c:if test="${socialChannelData[4].isActive==1}">
-					<a href="${socialChannelData[4].urllinks}" target="_blank"><span
-						class="icon-google-plus-logo"></span></a>
+					<a href="${socialChannelData[4].urllinks}" target="_blank"> <span class="icon-instagram-social-network-logo-of-photo-camera"></span></a>
 				</c:if>
 				
 				<c:if test="${setting[5].isActive==1}">

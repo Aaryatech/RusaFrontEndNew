@@ -399,7 +399,7 @@ margin-bottom: -1px;
   background-color: #fafafa;
 }
 .cal-month-day {
-  height:30px;
+/*  height:30px;*/
 }
 [class*="cal-cell"]:hover {
   background-color: #ededed;
@@ -463,7 +463,8 @@ span[data-cal-date]:hover {
   color: darkgreen;
 }
 .cal-month-box .cal-day-today span[data-cal-date] {
-  font-size: 1.9em;
+/*  font-size: 1.9em;*/
+font-weight:600;
 }
 .cal-day-holiday span[data-cal-date] {
   color: #800080;

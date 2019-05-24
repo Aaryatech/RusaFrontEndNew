@@ -2448,7 +2448,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	float: left;
 	min-width: 10rem;
 	padding:0rem 0 0 -1px;
-	margin:-0.1rem 0 0;
+	margin:.125rem 0 0;
 	font-size: 13px;
 	    font-weight: 600;
 	color: #212529;
@@ -3104,7 +3104,7 @@ padding:.5rem 1rem
 .nav-item:hover .nav-link{
 	text-decoration: none;
 	color:#FFF;
-	
+	font-weight:600;
 }
 .nav-item:hover .dropdown-toggle:after {
     border-left-color:#FFF;
@@ -3209,6 +3209,8 @@ border-radius:.25rem
 	line-height: inherit;
 	white-space: nowrap
 }
+
+
 .navbar-brand:focus, .navbar-brand:hover {
 	text-decoration: none
 }
@@ -3246,12 +3248,13 @@ padding-bottom:.5rem
 	align-items: center
 }
 .navbar-toggler {
-padding:.25rem .75rem;
+	padding:.25rem .75rem;
 	font-size: 1.25rem;
 	line-height: 1;
 	background-color: transparent;
-	border: 1px solid transparent;
-border-radius:.25rem
+    border: 2px solid #FFF;
+	background-color: #02263c;
+	border-radius:.25rem
 }
 .navbar-toggler:focus, .navbar-toggler:hover {
 	text-decoration: none
@@ -3265,8 +3268,8 @@ border-radius:.25rem
 	height: 1.5em;
 	vertical-align: middle;
 	content: "";
-	background: no-repeat center center;
-	background-size: 100% 100%
+	background-size:90% 60%;
+    background: url(../images/navbar-toggler-icon.png) center center no-repeat;
 }
 @media (max-width:575.98px) {
 .navbar-expand-sm>.container, .navbar-expand-sm>.container-fluid {
@@ -3329,6 +3332,12 @@ padding-left:.5rem
 
 .navbar-expand-md .navbar-nav .nav-item:first-child .nav-link{
 border-left: 1px dotted #919abc;
+}
+
+.navbar-nav .nav-link {
+padding-right:20px;
+padding-left:20px;
+border-right: 1px dotted #919abc;
 }
 
 .navbar-expand-md .navbar-nav .nav-link {
@@ -3410,8 +3419,8 @@ padding-left:.5rem
 	position: absolute
 }
 .navbar-expand-xl .navbar-nav .nav-link {
-padding-right:.5rem;
-padding-left:.5rem
+padding-right:20px;
+padding-left:20px;
 }
 .navbar-expand-xl>.container, .navbar-expand-xl>.container-fluid {
 	-ms-flex-wrap: nowrap;
