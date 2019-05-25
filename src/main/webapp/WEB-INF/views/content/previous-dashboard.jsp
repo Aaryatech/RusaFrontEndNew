@@ -26,23 +26,13 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style1.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
-	rel="stylesheet">
+
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -96,13 +86,22 @@
 				<div class="leftColm">
 					<div class="profile-section">
 						<div class="upload-photo">
-							<c:if test="${not empty editReg.imageName}">
-								<div class="dashboard-profile-img">
-									<img id="blah"
-										src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
-								</div>
-							</c:if>
 
+							<c:choose>
+								<c:when test="${not empty editReg.imageName}">
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
+											alt="" />
+									</div>
+								</c:otherwise>
+							</c:choose>
 							<div class="fileUpload btn">
 								<div class="user-name">${editReg.name}</div>
 								<%--  	<form class="dropzone" id="myForm"
@@ -189,9 +188,10 @@
 									<c:choose>
 										<c:when test="${previous.apply==1}">
 											<td>YES <c:if test="${previous.isFeedback==0}">
-												 <br>
-											<a
-												href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.newsblogsId}">Feedback</a></c:if></td>
+													<br>
+													<a
+														href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.newsblogsId}">Feedback</a>
+												</c:if></td>
 										</c:when>
 										<c:otherwise>
 											<td>NO</td>

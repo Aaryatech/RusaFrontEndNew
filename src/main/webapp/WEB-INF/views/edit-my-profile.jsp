@@ -26,23 +26,13 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style1.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
-	rel="stylesheet">
+ 
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -70,7 +60,7 @@
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
-<c:url value="/checkUniqueField" var="checkUniqueField"></c:url>
+	<c:url value="/checkUniqueField" var="checkUniqueField"></c:url>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
@@ -93,12 +83,21 @@
 				<div class="leftColm">
 					<div class="profile-section">
 						<div class="upload-photo">
-							<c:if test="${not empty editReg.imageName}">
-								<div class="dashboard-profile-img">
-									<img id="blah"
-										src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
-								</div>
-							</c:if>
+							<c:choose>
+								<c:when test="${not empty editReg.imageName}">
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
+											alt="" />
+									</div>
+								</c:otherwise>
+							</c:choose>
 
 							<div class="fileUpload btn">
 								<div class="user-name">${editReg.name}</div>
@@ -237,21 +236,23 @@
 									type="text" class="form-control" name="mobile"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
 									placeholder="Mobile No." id="mobile" onchange="trim(this)"
-									value="${editReg.mobileNumber}" oninput="checkUnique(this.value,1,1)" required>
+									value="${editReg.mobileNumber}"
+									oninput="checkUnique(this.value,1,1)" required>
 							</div>
 
 
 							<div class="col-12 col-sm-12 col-lg-6">
 								<label>Email-ID <span class="text-danger">*</span></label> <input
 									type="email" class="form-control" name="email"
-									value="${editReg.emails}" placeholder="Email" id="email" readonly>
+									value="${editReg.emails}" placeholder="Email" id="email"
+									readonly>
 							</div>
 
 							<div class="col-12 col-sm-12 col-lg-6">
 								<label>Alternate Email-ID</label> <input type="email"
 									class="form-control" value="${editReg.alternateEmail}"
 									name="altEmail" placeholder="Alternate Email" id="altEmail"
-									onchange="trim(this)"  >
+									onchange="trim(this)">
 							</div>
 
 
@@ -311,7 +312,8 @@
 									type="text" class="form-control" name="collegeMobile"
 									onchange="trim(this)" value="${editReg.mobileNumber}"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="collegeMobile" oninput="checkUnique(this.value,1,2)" maxlength="10" required>
+									placeholder="Mobile No." id="collegeMobile"
+									oninput="checkUnique(this.value,1,2)" maxlength="10" required>
 							</div>
 							<div class="col-12 col-sm-12 col-lg-6">
 								<label>Email-ID <span class="text-danger">*</span></label> <input
@@ -324,7 +326,7 @@
 								<label>Alternate Email-ID</label> <input type="email"
 									class="form-control" onchange="trim(this)"
 									value="${editReg.alternateEmail}" name="altEmail"
-									placeholder="Alternate Email" id="altEmail" >
+									placeholder="Alternate Email" id="altEmail">
 							</div>
 
 						</div>
@@ -372,7 +374,8 @@
 									type="text" class="form-control" name="uniMobile"
 									onchange="trim(this)" value="${editReg.mobileNumber}"
 									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="uniMobile" maxlength="10" oninput="checkUnique(this.value,1,2)" required>
+									placeholder="Mobile No." id="uniMobile" maxlength="10"
+									oninput="checkUnique(this.value,1,2)" required>
 							</div>
 							<div class="col-12 col-sm-12 col-lg-6">
 								<label>Email-ID <span class="text-danger">*</span></label> <input
@@ -407,98 +410,91 @@
 			</div>
 		</div>
 	</div>
-		<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 	<script type="text/javascript">
-	function checkUnique(inputValue, valueType,seqId) {
-		//alert("inputValue"+inputValue);
-		///alert("valueType "+valueType);
-		//alert("seqId "+seqId);
-		
-	
-		
-		
-		var primaryKey=0;
-		//alert("Is Edit " +isEdit);
-		var valid = true;
-		if (valueType == 1) {
-			//alert("Its Mob no");
-			if (inputValue.length == 10) {
-				valid = true;
-				//alert("Len 10")
-			} else {
-				valid = false;
+		function checkUnique(inputValue, valueType, seqId) {
+			//alert("inputValue"+inputValue);
+			///alert("valueType "+valueType);
+			//alert("seqId "+seqId);
+
+			var primaryKey = 0;
+			//alert("Is Edit " +isEdit);
+			var valid = true;
+			if (valueType == 1) {
+				//alert("Its Mob no");
+				if (inputValue.length == 10) {
+					valid = true;
+					//alert("Len 10")
+				} else {
+					valid = false;
+				}
+			} else if (valueType == 2) {
+				//alert("Its Email " );
+
+				var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+				if (inputValue.match(mailformat)) {
+					valid = true;
+					//alert("Valid Email Id");
+				} else {
+					valid = false;
+					//alert("InValid Email Id");
+				}
 			}
-		} else if (valueType == 2) {
-			//alert("Its Email " );
+			if (valid == true)
+				$
+						.getJSON(
+								'${checkUniqueField}',
+								{
 
-			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-			if (inputValue.match(mailformat)) {
-				valid = true;
-				//alert("Valid Email Id");
-			} else {
-				valid = false;
-				//alert("InValid Email Id");
-			}
-		}
-		if (valid == true)
-			$
-					.getJSON(
-							'${checkUniqueField}',
-							{
+									inputValue : inputValue,
+									valueType : valueType,
+									primaryKey : primaryKey,
+									ajax : 'true',
 
-								inputValue : inputValue,
-								valueType : valueType,
-								primaryKey : primaryKey,
-								ajax : 'true',
+								},
+								function(data) {
 
-							},
-							function(data) {
+									//alert("Data  " +JSON.stringify(data));
+									if (data.error == true) {
 
-								//alert("Data  " +JSON.stringify(data));
-								if (data.error == true) {
-									
+										if (valueType == 2) {
+											alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
 
-									if (valueType == 2) {
-										alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
+											if (seqId == 1) {
+												document
+														.getElementById("email").value = "";
 
-										if(seqId==1){
-											document.getElementById("email").value = "";
-											
-											
+											} else if (seqId == 2) {
+												document
+														.getElementById("collegeEmail").value = "";
+											} else {
+												document
+														.getElementById("uniEmail").value = "";
+											}
+
+										} else {
+
+											alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
+
+											if (seqId == 1) {
+												document
+														.getElementById("mobile").value = "";
+
+											} else if (seqId == 2) {
+												document
+														.getElementById("collegeMobile").value = "";
+											} else {
+												document
+														.getElementById("uniMobile").value = "";
+											}
+
 										}
-										else if(seqId==2){
-											document.getElementById("collegeEmail").value = "";
-										}
-										else{
-										document.getElementById("uniEmail").value = "";
-										}		
-
-									
-									} else {
-										
-										alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
-										
-										
-										if(seqId==1){
-											document.getElementById("mobile").value = "";
-											
-											
-										}
-										else if(seqId==2){
-											document.getElementById("collegeMobile").value = "";
-										}
-										else{
-										document.getElementById("uniMobile").value = "";
-										}	
-										
-									
 									}
-								}
-							});
-	}
+								});
+		}
 	</script>
 	<script>
 		function upImage() {
@@ -513,6 +509,6 @@
 			replace(/\n +/, "\n"); // Removes spaces after newlines
 			return;
 		}
-	</script> 
+	</script>
 </body>
 </html>

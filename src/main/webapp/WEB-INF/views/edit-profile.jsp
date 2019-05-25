@@ -83,23 +83,25 @@
 				<div class="leftColm">
 					<div class="profile-section">
 						<div class="upload-photo">
-							<c:if test="${not empty editReg.imageName}">
-								<div class="dashboard-profile-img">
-									<img id="blah"
-										src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
-								</div>
-							</c:if>
+							<c:choose>
+								<c:when test="${not empty editReg.imageName}">
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
+											alt="" />
+									</div>
+								</c:otherwise>
+							</c:choose>
 
 							<div class="fileUpload btn">
 								<div class="user-name">${editReg.name}</div>
-								<%--  	<form class="dropzone" id="myForm"
-										action="${pageContext.request.contextPath}/uploadProfilePhoto"
-										method="post" enctype="multipart/form-data">
-										<input name="isImage" value="1" type="hidden" />
-									
-											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
-								   </form>   <span>Update Picture</span>--%>
-								<!--  <input type="file" class="upload" id="imgInp" /> -->
+								 
 
 							</div>
 						</div>
@@ -137,7 +139,7 @@
             	(Individual)
 							</c:if>
 					<c:if test="${editReg.userType==2}">
-									(Colleges)
+									(Institute)
 								</c:if>
 					<c:if test="${editReg.userType==3}">
 									(University)

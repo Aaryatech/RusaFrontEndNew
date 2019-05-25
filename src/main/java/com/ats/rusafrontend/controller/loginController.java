@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,85 +56,89 @@ public class loginController {
 	 */
 
 	@RequestMapping(value = "/myProfile", method = RequestMethod.GET)
-	public ModelAndView myProfile(HttpServletRequest request, HttpServletResponse response) {
+	public String myProfile(HttpServletRequest request, HttpServletResponse response,Model model) {
 
 		HttpSession session = request.getSession();
-		ModelAndView model = new ModelAndView("edit-profile");
+		String mav = new String();
 		try {
 
 			session.setAttribute("mapping", "myProfile");
-
+			 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
-				model = new ModelAndView("maintainance");
-				model.addObject("maintainance", maintainance);
+				mav = "maintainance" ;
+				model.addAttribute("maintainance", maintainance);
 			} else {
-
-				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("flag", flag);
+				mav = "edit-profile" ;
+				model.addAttribute("siteKey", Constant.siteKey);
+				model.addAttribute("flag", flag);
 				flag = 0;
 				int userDetail = (int) session.getAttribute("UserDetail");
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("regId", userDetail);
 				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
 
-				model.addObject("editReg", editReg);
+				model.addAttribute("editReg", editReg);
 
 				try {
 					String dobDate = DateConvertor.convertToDMY(editReg.getDob());
-					model.addObject("dobDate", dobDate);
+					model.addAttribute("dobDate", dobDate);
 				} catch (Exception e) {
 
 				}
-				model.addObject("isEdit", 1);
+				model.addAttribute("isEdit", 1);
 				// model.addObject("url", Constant.bannerImageURL);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			mav = "login";
 		}
 
-		return model;
+		return mav;
 	}
 
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
-	public ModelAndView editProfile(HttpServletRequest request, HttpServletResponse response) {
+	public String editProfile(HttpServletRequest request, HttpServletResponse response,Model model) {
 
 		HttpSession session = request.getSession();
-		ModelAndView model = new ModelAndView("edit-my-profile");
+		String mav = new String();
+		
 		try {
 			session.setAttribute("mapping", "editProfile");
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
-				model = new ModelAndView("maintainance");
-				model.addObject("maintainance", maintainance);
+				mav = "maintainance" ;
+				model.addAttribute("maintainance", maintainance);
 			} else {
 
-				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("flag", flag);
+				mav = "edit-my-profile" ;
+				model.addAttribute("siteKey", Constant.siteKey);
+				model.addAttribute("flag", flag);
 				flag = 0;
 				int userDetail = (int) session.getAttribute("UserDetail");
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
 				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 
-				model.addObject("editReg", editReg);
+				model.addAttribute("editReg", editReg);
 				try {
 					String dobDate = DateConvertor.convertToDMY(editReg.getDob());
-					model.addObject("dobDate", dobDate);
+					model.addAttribute("dobDate", dobDate);
 				} catch (Exception e) {
 
 				}
-				model.addObject("isEdit", 1);
+				model.addAttribute("isEdit", 1);
 				// model.addObject("url", Constant.bannerImageURL);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			mav = "login";
 		}
-
-		return model;
+		
+		return mav;
 	}
 
 	PreviousRegRecord prevrecrod = new PreviousRegRecord();
