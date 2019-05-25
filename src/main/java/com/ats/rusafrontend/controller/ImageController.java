@@ -225,6 +225,8 @@ public class ImageController {
 	@RequestMapping(value = "/insertContactUs", method = RequestMethod.POST)
 	public String insertContactUs(HttpServletRequest request, HttpServletResponse response) {
 
+		HttpSession session = request.getSession();
+		
 		try {
 			final long serialVersionUID = -6506682026701304964L;
 
@@ -235,8 +237,9 @@ public class ImageController {
 			String formType = request.getParameter("formType");
 
 			String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-			boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-
+			boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse); 
+			//boolean verify = true;
+			
 			Date date = new Date(); // your date
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal = Calendar.getInstance();
@@ -261,13 +264,21 @@ public class ImageController {
 				// contactUs.setRemark(null);
 
 				ContactUs res = rest.postForObject(Constant.url + "/saveContactUs", contactUs, ContactUs.class);
-
+				
+				if(res==null) {
+					session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
+				}else {
+					session.setAttribute("success", "Your Message Successfully Sent ! ");
+				}
+				
 			} else {
 
 				flag = 1;
+				session.setAttribute("errorMsg", "Please Verify ReCaptcha !");
 			}
 
 		} catch (Exception e) {
+			session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
 			e.printStackTrace();
 		}
 

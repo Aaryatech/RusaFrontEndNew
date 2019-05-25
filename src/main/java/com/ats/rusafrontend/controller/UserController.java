@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -555,21 +556,26 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/upcomingEvents", method = RequestMethod.GET)
-	public ModelAndView upcomingEvents(HttpServletRequest request, HttpServletResponse response) {
+	public String upcomingEvents(HttpServletRequest request, HttpServletResponse response,Model model) {
 		HttpSession session = request.getSession();
-		ModelAndView model = new ModelAndView("content/upcoming-dashboard");
+		
+		
+		//ModelAndView model = new ModelAndView("content/upcoming-dashboard");
+		String ret = new String();
+		
 		try {
 			session.setAttribute("mapping", "upcomingEvents");
 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
-				model = new ModelAndView("maintainance");
-				model.addObject("maintainance", maintainance);
+				//model = new ModelAndView("maintainance");
+				model.addAttribute("maintainance", maintainance);
+				ret = "maintainance";
 			} else {
 				
-				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("flag", flag);
+				model.addAttribute("siteKey", Constant.siteKey);
+				model.addAttribute("flag", flag);
 				flag = 0;
 			int userDetail = (int) session.getAttribute("UserDetail");
 							
@@ -582,22 +588,25 @@ public class UserController {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail); 
 				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
-				model.addObject("editReg", editReg);
+				model.addAttribute("editReg", editReg);
 				System.out.println("list_new: " + upcoming.toString());
-				model.addObject("upcoming", upcoming);
-				model.addObject("typeId", 2);
+				model.addAttribute("upcoming", upcoming);
+				model.addAttribute("typeId", 2);
 			//	model.addObject("value", 0);
 				
 				// model.addObject("pageMetaData", pageMetaData);
 				 
-
+				
+				ret = "content/upcoming-dashboard";
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			ret = "login";
+			 
 		}
 
-		return model;
+		return ret;
 	}
 
 	@RequestMapping(value = "/previousEvents", method = RequestMethod.GET)

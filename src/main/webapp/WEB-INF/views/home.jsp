@@ -126,7 +126,7 @@
 
 				<c:forEach items="${getCMSDesc}" var="getCMSDesc" varStatus="count">
 
-					<div class="col-12 col-sm-6 col-lg-3">
+					<div class="col-12 col-sm-6 col-lg-3" style="text-align: justify;">
 						<div class="sub-link-icon">
 							<img
 								src="${pageContext.request.contextPath}/resources/images/icon.png"
@@ -314,7 +314,7 @@
 				<c:forEach items="${newsBlogsList}" var="newsBlogsList"
 					varStatus="count">
 					<div class="col-12 col-sm-6 col-lg-3">
-						<div class="news-box" style="height: 347px;">
+						<div class="news-box">
 							<div class="new-img">
 
 								<c:choose>

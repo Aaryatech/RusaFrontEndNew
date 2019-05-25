@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -82,6 +83,10 @@ public class HomeController {
 					CmsSearchData[].class);
 			List<CmsSearchData> getCMSDesc = new ArrayList<CmsSearchData>(Arrays.asList(getCMSDescList));
 
+			for(int i=0;i<getCMSDesc.size() ; i++) {
+				getCMSDesc.get(i).setPageDesc(Jsoup.parse(getCMSDesc.get(i).getPageDesc()).text());
+			}
+			
 			TestImonial[] testImonialList = rest.getForObject(Constant.url + "/getLastFiveTestImonials",
 					TestImonial[].class);
 			List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
@@ -90,6 +95,10 @@ public class HomeController {
 			NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map,
 					NewsDetails[].class);
 			List<NewsDetails> newsBlogsList = new ArrayList<NewsDetails>(Arrays.asList(getPagesModule));
+			
+			for(int i=0;i<newsBlogsList.size() ; i++) {
+				newsBlogsList.get(i).setDescriptions((Jsoup.parse(newsBlogsList.get(i).getDescriptions()).text()));
+			}
 			
 			SocialChannels[] socialList = rest.getForObject(Constant.url + "/getAllSocialList",
 					SocialChannels[].class);

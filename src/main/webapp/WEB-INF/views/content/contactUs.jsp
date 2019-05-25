@@ -28,7 +28,7 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <c:choose>
 	<c:when test="${not empty pageMetaData.pageMetaTitle}">
-		<meta name="description" content="${pageMetaData.pageMetaDescription}"> 
+		<meta name="description" content="${pageMetaData.pageMetaDescription}">
 		<title>${pageMetaData.pageMetaTitle}</title>
 	</c:when>
 	<c:otherwise>
@@ -70,7 +70,8 @@ msg-error {
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			 <a href="${pageContext.request.contextPath}/">Home</a> >  <a href="${pageContext.request.contextPath}/ContactUs">Contact Us</a>
+			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+				href="${pageContext.request.contextPath}/ContactUs">Contact Us</a>
 		</div>
 	</div>
 
@@ -79,7 +80,7 @@ msg-error {
 		<div class="row row-eq-height">
 
 
-	
+
 			<div class="col-12 col-sm-12 col-lg-12 right-Colm">
 
 
@@ -93,52 +94,80 @@ msg-error {
 							Parade,<br> Colaba, Mumbai-400005.<br> Phone: 011 -
 							49725600
 						</p>
-						<iframe class="map"
+						<!-- <iframe class="map"
 							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.577356534086!2d72.89611441799786!3d19.149897683543813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86e528cb077%3A0xbeb39574202b3e0e!2sRusa+International!5e0!3m2!1sen!2sin!4v1549861576012"
 							style="border: 0" allowfullscreen="" width="100%" height="540"
-							frameborder="0"></iframe>
+							frameborder="0"></iframe> -->
+						 
+							<iframe class="map" width="100%" height="540"
+								src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=IDBI%20TOWERS%2C%20Cuffe%20Parade%2C%20Mumbai%2C%20Maharashtra%20400005+(My%20Business%20Namsse)&amp;ie=UTF8&amp;t=p&amp;z=18&amp;iwloc=B&amp;output=embed"
+								frameborder="0" style="border: 0" allowfullscreen=""> 
+							</iframe>
+						 
 					</div>
 
 					<div class="col-12 col-sm-12 col-lg-6">
 
 
 
-						<c:if test="${flag=='1'}">
+						<%-- <c:if test="${flag=='1'}">
 							<div style="color: red;">Please Verify ReCaptcha</div>
-						</c:if>
-						<%-- 	<c:choose>
-								<c:when test="test="${flag=='0'}">
-												
-								</c:when>
-								<c:otherwise>
-								</c:otherwise>
-												
-							</c:choose> --%>
+						</c:if> --%>
 
+						<div class="container" id="main-content">
+							<c:if test="${sessionScope.success != null}">
+
+								<div class="alert alert-success ">
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+									<strong>Success : </strong> ${success}
+								</div>
+
+							</c:if>
+							<%
+								session.removeAttribute("success");
+							%>
+							<c:if test="${sessionScope.errorMsg != null}">
+
+								<div class="alert alert-danger ">
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+									<strong>Error : </strong> ${errorMsg}
+								</div>
+
+							</c:if>
+							<%
+								session.removeAttribute("errorMsg");
+							%>
+
+						</div>
 
 						<form action="${pageContext.request.contextPath}/insertContactUs"
-							onsubmit="return confirm('Do you really want to submit the form?');"
 							method="post">
 							<p>
 								<strong>Please send your message</strong>
 							</p>
 							<div class="row">
 								<div class="col-12 col-sm-6 col-lg-3">
-									<input type="radio" name="formType" value="all" checked=""
+									<input type="radio" name="formType" value="Query" checked
 										id="radio1"> <label for="radio1"></label> <span>Query</span>
 								</div>
 
 
 								<div class="col-12 col-sm-6 col-lg-3">
-									<input type="radio" name="formType" value="all" checked=""
+									<input type="radio" name="formType" value="Feedback"
 										id="radio2"> <label for="radio2"></label> <span>Feedback</span>
 								</div>
 
 
 
 								<div class="col-12 col-sm-6 col-lg-3">
-									<input type="radio" name="formType" value="all" checked=""
-										id="radio3"> <label for="radio3"></label> <span>Message</span>
+									<input type="radio" name="formType" value="Message" id="radio3">
+									<label for="radio3"></label> <span>Message</span>
 								</div>
 							</div>
 
@@ -154,7 +183,7 @@ msg-error {
 							<textarea name="message" id="message" class="form-control"
 								placeholder="Message"></textarea>
 							<br> <span class="msg-error error"></span>
-							<div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>
+							 <div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>  
 							</br>
 							<button class="btn button view-more send" id="btn-validate"
 								type="submit">
@@ -195,9 +224,9 @@ msg-error {
 				})
 	</script>
 	<script>
-			function checkMaintainance() {
- 
-			}
-		</script>
+		function checkMaintainance() {
+
+		}
+	</script>
 </body>
 </html>
