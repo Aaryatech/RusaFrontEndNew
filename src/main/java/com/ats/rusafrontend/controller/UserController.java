@@ -543,7 +543,7 @@ public class UserController {
 				//	session.setAttribute("msg", "Event Already Registered");
 				}
 
-				ss = "redirect:/eventDetailfront/" + newsblogsId;
+				ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
 				
 			} else {
 				session.setAttribute("errorMsg", "Please Login !"); 

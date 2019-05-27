@@ -90,71 +90,74 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> >> <a
-				href="${pageContext.request.contextPath}/listOFEvent/1">Event List</a> >
+			<a href="${pageContext.request.contextPath}/">Home</a> >  <%-- <a
+				href="${pageContext.request.contextPath}/listOFEvent/1"> --%>Event
+				List<!-- </a>  --> >
 		</div>
 	</div>
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
 
 			<div class="col-12 col-sm-12 col-lg-12 right-Colm news-listing-page">
-				
-					<c:set var="find" value="0"></c:set>
-					<c:forEach items="${event}" var="eventList" varStatus="count">
-<div class="row">
+
+				<c:set var="find" value="0"></c:set>
+				<c:forEach items="${event}" var="eventList" varStatus="count">
+					<div class="row">
 						<div class="col-12 col-sm-9 col-lg-9">
 							<strong> ${eventList.heading}</strong><br>
 							<%-- <p> ${eventList.descriptions}</p> --%>
 							<p>
-								<span><i class="icon-location"></i> <strong>Venue: </strong>
-									${eventList.eventLocation}</span> <span><i
+								<span><i class="icon-location"></i> <strong>Venue:
+								</strong> ${eventList.eventLocation}</span> <span><i
 									class="icon-calendar"></i> <strong>Date: </strong>
 									${eventList.eventDateFrom}</span> <span><i
 									class="icon-smartphone-call"></i> <strong>Contact: </strong>+91
 									${eventList.eventContactNumber}</span>
 							</p>
 							<a
-								href="${pageContext.request.contextPath}/eventDetailfront/${eventList.newsblogsId}"
+								href="${pageContext.request.contextPath}/eventDetailfront/${eventList.exVar1}"
 								target="_blank">Read More</a>
 						</div>
-						</div>
-						<c:set var="find" value="1"></c:set>
-					</c:forEach>
+					</div>
+					<c:set var="find" value="1"></c:set>
+				</c:forEach>
 
-					<c:if test="${find==0}">
+				<c:if test="${find==0}">
 
-						<h2 style="text-align: center;">No Record Found</h2>
-					</c:if>
-			
-				<c:if test="${find==1}">
-				<c:if test="${totalPage>1}">
-				  <div class="pagination inner-page-pagination">
-                   
-                        <c:forEach var="i" begin="1" end="${totalPage}">
-                                          
-                    <c:choose>
-                        <c:when test="${pageid==i}">
-                         <a href="${pageContext.request.contextPath}/listOFEvent/${i}" class="activelink">${i}</a>
-                        </c:when>
-                        <c:otherwise>
-                         <a href="${pageContext.request.contextPath}/listOFEvent/${i}" class="inactive">${i}</a>
-                        </c:otherwise>
-                        </c:choose> 
-                        </c:forEach>
-                          
-                    </div> 
-                    </c:if>
+					<h2 style="text-align: center;">No Record Found</h2>
 				</c:if>
-				
-				</div>
-					
-				
+
+				<c:if test="${find==1}">
+					<c:if test="${totalPage>1}">
+						<div class="pagination inner-page-pagination">
+
+							<c:forEach var="i" begin="1" end="${totalPage}">
+
+								<c:choose>
+									<c:when test="${pageid==i}">
+										<a href="${pageContext.request.contextPath}/listOFEvent/${i}"
+											class="activelink">${i}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="${pageContext.request.contextPath}/listOFEvent/${i}"
+											class="inactive">${i}</a>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+
+						</div>
+					</c:if>
+				</c:if>
+
 			</div>
-			
+
+
 		</div>
 
+	</div>
 
-	
+
+
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

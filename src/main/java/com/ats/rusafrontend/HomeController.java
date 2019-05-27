@@ -25,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
  
 import com.ats.rusafrontend.commen.Constant;
+import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.model.*;
 
 /**
@@ -98,6 +99,7 @@ public class HomeController {
 			
 			for(int i=0;i<newsBlogsList.size() ; i++) {
 				newsBlogsList.get(i).setDescriptions((Jsoup.parse(newsBlogsList.get(i).getDescriptions()).text()));
+				newsBlogsList.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(newsBlogsList.get(i).getNewsblogsId())));
 			}
 			
 			SocialChannels[] socialList = rest.getForObject(Constant.url + "/getAllSocialList",
@@ -131,7 +133,12 @@ public class HomeController {
 			NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllUpcomingEvents",map,
 					NewsDetails[].class);
 			List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
-			session.setAttribute("event", eventList);
+			session.setAttribute("event", event);
+			
+			for(int i=0 ; i<event.size() ; i++) {
+				event.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(event.get(i).getNewsblogsId())));
+			}
+			
 			//System.out.println(metaData);
 
 		} catch (Exception e) {

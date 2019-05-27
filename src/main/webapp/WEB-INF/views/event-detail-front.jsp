@@ -6,7 +6,7 @@
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="today" class="java.util.Date" />
-<fmt:formatDate var="todayString" value="${today}" pattern="dd/MM/yyyy" />
+<fmt:formatDate var="todayString" value="${today}" pattern="dd-MM-yyyy" />
 <fmt:formatDate var="dateString" value="${bean.date}"
 	pattern="dd/MM/yyyy" />
 
@@ -40,18 +40,7 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
-<!-- Bootstrap core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style1.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
-	rel="stylesheet">
+ 
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -88,7 +77,7 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> >> <a
+			<a href="${pageContext.request.contextPath}/">Home</a> >  <a
 				href="${pageContext.request.contextPath}/listOFEvent/1">Event List</a> >
 		</div>
 	</div>
@@ -152,8 +141,8 @@
 								${event.eventContactNumber}</span><br>
 						</p>
 
-
-						<c:if test="${dateEvent >= todayString}">
+  
+						<c:if test="${isapply==1}">
 							<c:if test="${event.exInt2==1}">
 
 								<%
@@ -162,8 +151,7 @@
 								<form class="form-horizontal"
 									action="${pageContext.request.contextPath}/submtFrontEventAppliedForm"
 									method="post" enctype="multipart/form-data"
-									name="form_sample_2" id="form_sample_2"
-									onsubmit="return confirm('Do you really want to submit the form?');">
+									name="form_sample_2" id="form_sample_2" >
 									 
 										<label class="control-label col-sm-2" for="page_pdf">Upload
 											Document :</label>
@@ -200,8 +188,7 @@
 								<form class="form-horizontal"
 									action="${pageContext.request.contextPath}/submtFrontEventAppliedForm"
 									method="post" enctype="multipart/form-data"
-									name="form_sample_2" id="form_sample_2"
-									onsubmit="return confirm('Do you really want to submit the form?');">
+									name="form_sample_2" id="form_sample_2" >
 							<p>	 <strong>Upload	Document : </strong></p>
 										<label class="control-label col-sm-2" for="page_pdf">Upload
 											Document :</label>

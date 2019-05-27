@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
+import com.ats.rusafrontend.commen.EmailUtility;
+import com.ats.rusafrontend.commen.InitializeSession;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
 import com.ats.rusafrontend.model.Registration;
@@ -38,15 +41,21 @@ public class PagingController {
 		try {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "listOFEvent");
-			int langId = 1;
+			 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
+				
+				if(session.getAttribute("menuList") == null) {
+					InitializeSession.intializeSission(request);
+				}
+					 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("langId", 1);
+			int langId = (Integer) session.getAttribute("langId");
+			map.add("langId", langId);
 			NewsDetails[] eventConutList = rest.postForObject(Constant.url + "/getAllEventsL", map,
 					NewsDetails[].class);
 			List<NewsDetails> eventCount = new ArrayList<NewsDetails>(Arrays.asList(eventConutList));
@@ -74,14 +83,15 @@ public class PagingController {
 
 			
 			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-			map1.add("langId", 1);
+			map1.add("langId", langId);
 			map1.add("pageid", pageid);
 			map1.add("total", total);
 			NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsByLimit", map1,
 					NewsDetails[].class);
 			List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
 			for (int i = 0; i < event.size(); i++) {
-				event.get(i).setEventDateFrom(DateConvertor.convertToDMY(event.get(i).getEventDateFrom()));
+				//event.get(i).setEventDateFrom(DateConvertor.convertToDMY(event.get(i).getEventDateFrom()));
+				event.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(event.get(i).getNewsblogsId())));
 
 			}
 			//pageid=pageid-1;
@@ -109,15 +119,21 @@ public class PagingController {
 		try {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "listOFNews");
-			int langId = 1;
+			 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
+				
+				if(session.getAttribute("menuList") == null) {
+					InitializeSession.intializeSission(request);
+				}
+				
+				int langId = (Integer) session.getAttribute("langId");
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("langId", 1);
+				map.add("langId", langId);
 				NewsDetails[] newsConutList = rest.postForObject(Constant.url + "/getAllNewsByLangId", map,
 						NewsDetails[].class);
 				List<NewsDetails> newsCount = new ArrayList<NewsDetails>(Arrays.asList(newsConutList));
@@ -144,13 +160,18 @@ public class PagingController {
 				}  
 			
 			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-			map1.add("langId", 1);
+			map1.add("langId", langId);
 			map1.add("pageid", pageid);
 			map1.add("total", total);
 			NewsDetails[] newsList = rest.postForObject(Constant.url + "/getAllNewsByLimit", map1,
 					NewsDetails[].class);
 			List<NewsDetails> newsAllList = new ArrayList<NewsDetails>(Arrays.asList(newsList));
-				
+			
+			for(int i=0;i<newsAllList.size() ; i++) {
+				newsAllList.get(i).setDescriptions((Jsoup.parse(newsAllList.get(i).getDescriptions()).text()));
+				newsAllList.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(newsAllList.get(i).getNewsblogsId())));
+			}
+			
 			model.addObject("newsBlogsList", newsAllList);
 			session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 			model.addObject("siteKey", Constant.siteKey);

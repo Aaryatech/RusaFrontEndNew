@@ -170,7 +170,7 @@
 										value="${fn:substring(eventList.heading, 0,70)}" />
 									<h5>
 										<a
-											href="${pageContext.request.contextPath}/eventDetailfront/${eventList.newsblogsId}">
+											href="${pageContext.request.contextPath}/eventDetailfront/${eventList.exVar1}">
 											${string3} </a>
 									</h5>
 
@@ -337,7 +337,7 @@
 							<h4>${fn:substring(newsBlogsList.heading, 0, 80)}</h4>
 							<p>${fn:substring(newsBlogsList.descriptions, 0, 80)}</p>
 							<a
-								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.newsblogsId}">Read
+								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.exVar1}">Read
 								More</a>
 						</div>
 					</div>
