@@ -29,23 +29,13 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style1.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
-	rel="stylesheet">
+
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -82,8 +72,12 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/eventList">Event</a> >
+			<a href="${pageContext.request.contextPath}/">Home</a> >
+			<%-- <a
+				href="${pageContext.request.contextPath}/eventList"> --%>
+			Event
+			<!-- </a> -->
+			>
 		</div>
 	</div>
 
@@ -95,12 +89,21 @@
 				<div class="leftColm">
 					<div class="profile-section">
 						<div class="upload-photo">
-							<c:if test="${not empty editReg.imageName}">
-								<div class="dashboard-profile-img">
-									<img id="blah"
-										src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
-								</div>
-							</c:if>
+							<c:choose>
+								<c:when test="${not empty editReg.imageName}">
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
+											alt="" />
+									</div>
+								</c:otherwise>
+							</c:choose>
 
 							<div class="fileUpload btn">
 								<div class="user-name">${editReg.name}</div>
@@ -190,47 +193,54 @@
 							<strong>${event.heading}</strong><br>
 							<p>${event.descriptions}</p>
 							<p>
-								<span><i class="icon-location"></i> <strong>Venue :</strong>
-									${event.eventLocation}</span> <span><i class="icon-calendar"></i>
+								<span><i class="icon-location"></i> <strong>Venue
+										:</strong> ${event.eventLocation}</span> <span><i class="icon-calendar"></i>
 									<strong>Date:</strong> ${event.eventDateFrom}</span> <span><i
 									class="icon-man-user"></i> <strong>Contact Person :</strong>
 									${event.eventContactPerson}</span> <span><i
-									class="icon-smartphone-call"></i> <strong>Contact :</strong> +91
-									${event.eventContactNumber}</span><br>
+									class="icon-smartphone-call"></i> <strong>Contact :</strong>
+									+91 ${event.eventContactNumber}</span><br>
 							</p>
 							<c:if test="${typeId==2}">
 								<c:if test="${event.exInt2==1}">
 
-									 <c:forEach items="${ids}" var="id">
-									  <c:if test="${editReg.userType==id}">
+									<c:forEach items="${ids}" var="id">
+										<c:if test="${editReg.userType==id}">
 
 											<form class="form-horizontal"
 												action="${pageContext.request.contextPath}/submtEventAppliedForm"
 												method="post" enctype="multipart/form-data"
-												name="form_sample_2" id="form_sample_2"
-												onsubmit="return confirm('Do you really want to submit the form?');">
-												 
-													 <p>	 <strong>Upload	Document : </strong></p>
-								
-													<div class="col-sm-7">
-														<input type="file" name="pagePdf" id="pagePdf"
-															class="form-control" data-parsley-minlength="2" required
-															accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-															
-											<p>	 <span> <strong>Please upload :</strong>
-								.doc, .docx, .pptx,.pdf and .xlsx only </span></p>
-										<p>	<span> <strong>Document Name :</strong>
-								${event.exVar1}</span></p>
-													</div>
-													<input type="hidden" name="newsblogsId"
-														value="${event.newsblogsId}">
+												name="form_sample_2" id="form_sample_2">
 
-													<button type="submit" class="btn button apply">Apply</button>
-												 
+												<p>
+													<strong>Upload Document : </strong>
+												</p>
+
+												<div class="col-sm-7">
+													<input type="file" name="pagePdf" id="pagePdf"
+														class="form-control" data-parsley-minlength="2" required
+														accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
+
+													<p>
+														<span> <strong>Please upload :</strong> .doc,
+															.docx, .pptx,.pdf and .xlsx only
+														</span>
+													</p>
+													<p>
+														<span> <strong>Document Description :</strong>
+															${event.exVar1}
+														</span>
+													</p>
+												</div>
+												<input type="hidden" name="newsblogsId"
+													value="${event.newsblogsId}">
+
+												<button type="submit" class="btn button apply">Apply</button>
+
 											</form>
 
 										</c:if>
-									</c:forEach> 
+									</c:forEach>
 
 
 								</c:if>
@@ -238,14 +248,14 @@
 
 								<c:if test="${event.exInt2==0}">
 
-									 <c:forEach items="${ids}" var="id">
-									  <c:if test="${editReg.userType==id}">
+									<c:forEach items="${ids}" var="id">
+										<c:if test="${editReg.userType==id}">
 											<a
 												href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}"
 												class="btn button apply">Apply</a>
 
-										</c:if>  
-									</c:forEach>  
+										</c:if>
+									</c:forEach>
 								</c:if>
 
 							</c:if>

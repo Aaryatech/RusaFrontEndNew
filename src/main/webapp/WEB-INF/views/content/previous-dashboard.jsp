@@ -165,6 +165,7 @@
 								<th>Event Name</th>
 								<th>Download</th>
 								<th>Event Applied Status</th>
+								<th>Feedback</th>
 								<th>Detail</th>
 							</tr>
 						</thead>
@@ -190,7 +191,7 @@
 											<td>YES <c:if test="${previous.isFeedback==0}">
 													<br>
 													<a
-														href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.newsblogsId}">Feedback</a>
+														href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.exVar1}">Feedback</a>
 												</c:if></td>
 										</c:when>
 										<c:otherwise>
@@ -198,9 +199,9 @@
 
 										</c:otherwise>
 									</c:choose>
-
+									<td>${previous.feedback}</td>
 									<td><a
-										href="${pageContext.request.contextPath}/eventDetail/${previous.newsblogsId}/${typeId}">Detail</a></td>
+										href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${previous.exVar1}&typeId=${typeId}">Detail</a></td>
 
 								</tr>
 							</c:forEach>

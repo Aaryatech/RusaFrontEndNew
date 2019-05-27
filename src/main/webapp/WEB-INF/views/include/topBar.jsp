@@ -41,7 +41,7 @@
             	 out.print( "<li class='login-re'><a href='"+contextPath+"/login'>Login</a> <a href='"+contextPath+"/registration'>Register</a></li>");
             	 
          	}else{
-         		 out.print( "<li class='login-re'><a href='"+contextPath+"/dashboard'>My Account</a> <a href='"+contextPath+"/logout'>Logout</a></li>");
+         		 out.print( "<li class='login-re'><a href='"+contextPath+"/upcomingEvents'>My Account</a> <a href='"+contextPath+"/logout'>Logout</a></li>");
          	}
    
     

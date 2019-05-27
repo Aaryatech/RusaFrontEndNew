@@ -25,23 +25,13 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style1.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
-	rel="stylesheet">
+
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 <c:url var="getPasswordCheck" value="/getPasswordCheck" />
 
@@ -62,67 +52,41 @@
 </script>
 
 <script type="text/javascript">
-/* /* $('#log_btn').click(
-		function(e) {
-			var password = document.getElementById("newPass").value;
-			var confirmPassword = document.getElementById("confirmPass").value;
-			 alert(password);
-			//  alert(confirmPassword);
-			if (!password.match(confirmPassword)) {
-				alert("Passwords do not match.");
-				//e.preventDefault();
+	/* /* $('#log_btn').click(
+	 function(e) {
+	 var password = document.getElementById("newPass").value;
+	 var confirmPassword = document.getElementById("confirmPass").value;
+	 alert(password);
+	 //  alert(confirmPassword);
+	 if (!password.match(confirmPassword)) {
+	 alert("Passwords do not match.");
+	 //e.preventDefault();
 
-			}
-			
-		});
- */
+	 }
+	
+	 });
+	 */
 
 	function Validate() {
 		var password = document.getElementById("newPass").value;
 		var confirmPassword = document.getElementById("confirmPass").value;
 		/// alert(password);
 		//  alert(confirmPassword);
-		
+
 		if (password != confirmPassword) {
 			alert("Passwords do not match.");
-			$('#log_btn').attr('disabled','disabled');
+			$('#log_btn').attr('disabled', 'disabled');
 		}
 		$('#log_btn').removeAttr('disabled');
 	}
-</script>
-<script type="text/javascript">
-function checkPassword(form) { 
-    password1 = form.newPass.value; 
-    password2 = form.confirmPass.value; 
-
-    // If password not entered 
-    if (password1 == '') 
-        alert ("Please enter Password"); 
-          
-    // If confirm password not entered 
-    else if (password2 == '') 
-        alert ("Please enter confirm password"); 
-          
-    // If Not same return False.     
-    else if (password1 != password2) { 
-        alert ("\nPassword did not match: Please try again...") 
-        return false; 
-    } 
-
-    // If same return True. 
-    else{ 
-       // alert("Password Match") 
-        return true; 
-    } 
-} 
 </script>
 
 </head>
 <body>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
- 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>  
-<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
-	
+	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
+	<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
+
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
@@ -132,9 +96,10 @@ function checkPassword(form) {
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/changePass">Change Password</a> >
-				
-				 
+				href="${pageContext.request.contextPath}/changePass">Change
+				Password</a> >
+
+
 		</div>
 	</div>
 
@@ -142,110 +107,158 @@ function checkPassword(form) {
 		<div class="row row-eq-height">
 			<div class="col-12 col-sm-3 col-lg-3">
 
-					
+
 				<div class="leftColm">
-                     <div class="profile-section">
-                        <div class="upload-photo">
-                       <c:if test="${not empty editReg.imageName}">
-                            <div class="dashboard-profile-img">
-  	                          <img id="blah" src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
-                            </div>	
-                            </c:if>
-                        
-                            <div class="fileUpload btn">
-                                <div class="user-name">${editReg.name}</div>
-                               <%--  	<form class="dropzone" id="myForm"
+					<div class="profile-section">
+						<div class="upload-photo">
+							<c:choose>
+								<c:when test="${not empty editReg.imageName}">
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
+											alt="" />
+									</div>
+								</c:otherwise>
+							</c:choose>
+
+							<div class="fileUpload btn">
+								<div class="user-name">${editReg.name}</div>
+								<%--  	<form class="dropzone" id="myForm"
 										action="${pageContext.request.contextPath}/uploadProfilePhoto"
 										method="post" enctype="multipart/form-data">
 										<input name="isImage" value="1" type="hidden" />
 									
 											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
 								   </form>   <span>Update Picture</span>--%>
-                               <!--  <input type="file" class="upload" id="imgInp" /> -->
-                             
-                            </div>	
-                        </div>
-                        
-                        
-                        <div class="clearfix"></div>
-                    </div>
-                    
-                    
-                    <div class="clearfix"></div>
-                        <ul class="menu">
-                            <li>
-	                            <a onclick="checkMaintainance()" title="Dashboard" href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
-                            </li>
+								<!--  <input type="file" class="upload" id="imgInp" /> -->
 
-                            <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/myProfile">My Profile</a>
-                            </li>
- 
-                            <li>
-	                            <a onclick="checkMaintainance()" title="Change Password" href="${pageContext.request.contextPath}/changePass">Change Password</a>
-                            </li>
-                          <%--     <li>
+							</div>
+						</div>
+
+
+						<div class="clearfix"></div>
+					</div>
+
+
+					<div class="clearfix"></div>
+					<ul class="menu">
+						<li><a onclick="checkMaintainance()" title="Dashboard"
+							href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
+						</li>
+
+						<li><a onclick="checkMaintainance()" title="About RUSA"
+							href="${pageContext.request.contextPath}/myProfile">My
+								Profile</a></li>
+
+						<li><a onclick="checkMaintainance()" title="Change Password"
+							href="${pageContext.request.contextPath}/changePass">Change
+								Password</a></li>
+						<%--     <li>
 	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/eventList">Event List</a>
                             </li> --%>
-                              <li>
-	                            <a onclick="checkMaintainance()" title="Logout" href="${pageContext.request.contextPath}/logout">Logout</a>
-                            </li>
-                        </ul>
-                </div>
+						<li><a onclick="checkMaintainance()" title="Logout"
+							href="${pageContext.request.contextPath}/logout">Logout</a></li>
+					</ul>
+				</div>
 			</div>
-<!-- onchange="getCheck()"  -->
+			<!-- onchange="getCheck()"  -->
 			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
-			       <c:if test="${sessionScope.success != null}">
-    		         
-			<div class="col-12 col-sm-12 col-lg-12 ">
-    		          <div class="alert alert-success ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong>Success : </strong> ${success}</div>
-       </div></c:if>
-     <% session.removeAttribute("success"); %> 
-       <c:if test="${sessionScope.errorMsg != null}">
-     	<div class="col-12 col-sm-12 col-lg-12 ">
-    		          <div class="alert alert-danger ">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <strong>Error : </strong> ${errorMsg}</div>
-       </div>
-       </c:if>    <% session.removeAttribute("errorMsg"); %> 
+				<c:if test="${sessionScope.success != null}">
+
+					<div class="col-12 col-sm-12 col-lg-12 ">
+						<div class="alert alert-success ">
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+							<strong>Success : </strong> ${success}
+						</div>
+					</div>
+				</c:if>
+				<%
+					session.removeAttribute("success");
+				%>
+				<c:if test="${sessionScope.errorMsg != null}">
+					<div class="col-12 col-sm-12 col-lg-12 ">
+						<div class="alert alert-danger ">
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+							<strong>Error : </strong> ${errorMsg}
+						</div>
+					</div>
+				</c:if>
+				<%
+					session.removeAttribute("errorMsg");
+				%>
 				<h2>Change Password</h2>
 
 				<form method="post"
-					action="${pageContext.request.contextPath}/changePassword" onSubmit = "return checkPassword(this)"
-					name="login_form">
+					action="${pageContext.request.contextPath}/changePassword"
+					onSubmit="return checkPassword(this)" name="login_form">
 					<div class="row row-eq-height">
 
+						<div id="currentPassDiv" class="col-12 col-sm-12 col-lg-12">
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Current password</label> <input type="password"
+									class="form-control" name="pass" id="pass"
+									placeholder="Current password" required>
+							</div>
+							<div class="error_msg" id="error_msg" style="display: none">
+								<div class="alert alert-warning">Enter correct password.</div>
 
-						<div class="col-12 col-sm-12 col-lg-12">
-							<label>Current password</label> <input type="password"
-								class="form-control" name="pass" id="pass"
-								placeholder="Current password" onchange="getCheck()" required>
-						</div>
+							</div>
+							<div class="col-12 col-sm-12 col-lg-12">
 
-						<div class="col-12 col-sm-12 col-lg-12">
-							<label>New Password</label> <input type="password"
-								class="form-control" name="newPass" id="newPass"
-								placeholder="New Password" required>
-						</div>
-
-
-						<div class="col-12 col-sm-12 col-lg-12">
-							<label>Confirm password</label> <input type="password"
-								class="form-control" name="confirmPass" id="confirmPass"
-								placeholder="Confirm password"  required>
-						</div>
-
-
-
-						<div class="col-12 col-sm-12 col-lg-12">
-							 
-								 <button type="submit" id="log-btn" class="button login-btn">Submit</button>
-							  <!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
+								<button type="button" id="search" class="button login-btn"
+									onclick="getCheck()">Submit</button>
+								<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
+							</div>
 						</div>
 
+						<div id="newPassDiv" style="display: none"
+							class="col-12 col-sm-12 col-lg-12">
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>New Password</label> <input type="password"
+									class="form-control" name="newPass" id="newPass"
+									placeholder="New Password">
+							</div>
+							<div class="error_msg" id="error_newpass"
+								style="display: none">
+								<div class="alert alert-warning">Password Minimum 6 Character</div>
+
+							</div>
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Confirm password</label> <input type="password"
+									class="form-control" name="confirmPass" id="confirmPass"
+									placeholder="Confirm password">
+							</div>
+							<div class="error_msg" id="error_confirmpass"
+								style="display: none">
+								<div class="alert alert-warning">Confirm password.</div>
+
+							</div>
+							<div class="error_msg" id="error_matchpass" style="display: none">
+								<div class="alert alert-warning">Password not matched.</div>
+
+							</div>
+
+
+							<div class="col-12 col-sm-12 col-lg-12">
+
+								<button type="submit" id="log-btn" class="button login-btn">Submit</button>
+								<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
+                               -->
+							</div>
+						</div>
 					</div>
 				</form>
 
@@ -267,36 +280,72 @@ function checkPassword(form) {
 	<script type="text/javascript">
 		function getCheck() {
 
-		//	alert("hi");
+			//	alert("hi");
 			var pass = $("#pass").val();
 
+			$('#error_newpass').hide();
+			$('#error_confirmpass').hide();
+			$('#error_matchpass').hide();
+			
 			$.getJSON('${getPasswordCheck}', {
 
 				pass : pass,
 				ajax : 'true',
 
 			}, function(data) {
-				
+
 				if (data.error == true) {
-					alert(data.msg);
-					$('#log_btn').attr('disabled','disabled');
+
+					$('#error_msg').show();
 				} else {
-					alert(data.msg);
-					$('#log_btn').removeAttr('disabled');
+
+					$('#error_msg').hide();
+					$('#currentPassDiv').hide();
+					$('#newPassDiv').show();
 				}
 			}
 
 			);
 
 		}
-		
+
 		function upImage() {
 
-	alert("hi");
-	document.getElementById("myForm").submit();
+			alert("hi");
+			document.getElementById("myForm").submit();
 
 		}
 	</script>
+	<script type="text/javascript">
+		function checkPassword(form) {
+			password1 = form.newPass.value;
+			password2 = form.confirmPass.value;
+			$('#error_newpass').hide();
+			$('#error_confirmpass').hide();
+			$('#error_matchpass').hide();
 
+			// If password not entered 
+			if (password1 == '' || password1.length < 6) {
+				$('#error_newpass').show();
+				return false;
+			}
+			// If confirm password not entered 
+			else if (password2 == '') {
+				$('#error_confirmpass').show();
+				return false;
+			}
+			// If Not same return False.     
+			else if (password1 != password2) {
+				$('#error_matchpass').show();
+				return false;
+			}
+
+			// If same return True. 
+			else {
+				// alert("Password Match") 
+				return true;
+			}
+		}
+	</script>
 </body>
 </html>

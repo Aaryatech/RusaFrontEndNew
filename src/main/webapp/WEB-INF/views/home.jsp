@@ -67,7 +67,7 @@
 	var strMsgPdf = "PDF file that opens in a new window.";
 </script>
 <script>
-	(function(d, s, id) {
+  	(function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0];
 		if (d.getElementById(id))
 			return;
@@ -75,7 +75,7 @@
 		js.id = id;
 		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=809225772483402";
 		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
+	}(document, 'script', 'facebook-jssdk')); 
 </script>
 <style>
 .news-section h4 {
@@ -85,6 +85,8 @@
 
 </head>
 <body>
+<div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3&appId=2318373708408139&autoLogAppEvents=1"></script>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
@@ -348,31 +350,18 @@
 	<div class="container main-content">
 		<div class="row bottom-section">
 			<c:if test="${setting[2].isActive==1}">
-				<div class="col-12 col-sm-6 col-lg-3">
+				<div class="col-12 col-sm-6 col-lg-4">
 					<div class="twitter border-box bootom-box">${setting[2].keyValues}</div>
 				</div>
 			</c:if>
 			<c:if test="${setting[3].isActive==1}">
-				<div class="col-12 col-sm-6 col-lg-3">
+				<div class="col-12 col-sm-6 col-lg-4">
 					<div class="twitter border-box bootom-box">
-						<div class="fb-page" data-adapt-container-width="false"
-							data-height="405" data-hide-cover="false"
-							data-href="https://www.facebook.com/RUSAMaharashtra/"
-							data-show-facepile="false" data-small-header="true"
-							data-tabs="timeline" data-width="100%">
-							<div class="fb-xfbml-parse-ignore">
-								<blockquote cite="https://www.facebook.com/RUSAMaharashtra/">
-									<p>
-										<a href="https://www.facebook.com/RUSAMaharashtra/">Ministry
-											of Human Resource Development, Government of India</a>
-									</p>
-								</blockquote>
-							</div>
-						</div>
+						${setting[3].keyValues}
 					</div>
 				</div>
 			</c:if>
-			<div class="col-12 col-sm-12 col-lg-6">
+			<div class="col-12 col-sm-12 col-lg-4">
 				<div class="border-box bootom-box">
 					<div class="btn-group">
 						<!--  <button class="btn btn-primary button btn-calendar prev" data-calendar-nav="prev">< Prev </button> -->
@@ -494,8 +483,8 @@
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/calendar.js"></script>
 	<%--    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/app.js"></script> --%>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script>
+	<%-- <script
+		src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script> --%>
 	<script type="text/javascript">
 		(function($) {
 	<%Date date = new Date();

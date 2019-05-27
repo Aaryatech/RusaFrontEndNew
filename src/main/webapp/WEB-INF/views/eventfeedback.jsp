@@ -31,18 +31,7 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
-<!-- Bootstrap core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style1.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
-	rel="stylesheet">
+ 
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -60,6 +49,11 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 </script>
+<style>
+.other-gov-site-home {
+	margin-top: 43px;
+}
+</style>
 </head>
 <body onload="hideText()">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
@@ -88,12 +82,21 @@
 				<div class="leftColm">
 					<div class="profile-section">
 						<div class="upload-photo">
-							<c:if test="${not empty editReg.imageName}">
-								<div class="dashboard-profile-img">
-									<img id="blah"
-										src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
-								</div>
-							</c:if>
+							<c:choose>
+								<c:when test="${not empty editReg.imageName}">
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
+											alt="" />
+									</div>
+								</c:otherwise>
+							</c:choose>
 
 							<div class="fileUpload btn">
 								<div class="user-name">${editReg.name}</div>

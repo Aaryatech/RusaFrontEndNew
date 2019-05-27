@@ -25,9 +25,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
-
+ 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
+import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.model.EventRecord;
 import com.ats.rusafrontend.model.EventRegistration;
@@ -86,7 +87,7 @@ public class UserController {
 		 String mav = new String();
 		 
 		try {
-			session.setAttribute("mapping", "dashboard");
+			session.setAttribute("mapping", "upcomingEvents");
 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
@@ -117,7 +118,7 @@ public class UserController {
 					}
 					else
 					{
-					mav = "redirect:/dashboard" ;
+					mav = "redirect:/upcomingEvents" ;
 					//System.out.println("Login :" + verify.getRegId());
 					session.setAttribute("UserDetail", verify.getRegId());
 					
@@ -584,16 +585,21 @@ public class UserController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
-				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
-						List.class);
-				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
+				NewsDetails[] upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+						NewsDetails[].class);
+				 List<NewsDetails> upcomingList = new ArrayList<NewsDetails>(Arrays.asList(upcoming));
+				 
+				 for(int i = 0 ; i <upcomingList.size() ; i++) {
+					 upcomingList.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(upcomingList.get(i).getNewsblogsId())));
+				 }
+				 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail); 
 				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 				model.addAttribute("editReg", editReg);
-				System.out.println("list_new: " + upcoming.toString());
-				model.addAttribute("upcoming", upcoming);
-				model.addAttribute("typeId", 2);
+				//System.out.println("list_new: " + upcoming.toString());
+				model.addAttribute("upcoming", upcomingList);
+				model.addAttribute("typeId", EmailUtility.Encrypt(String.valueOf(2)));
 			//	model.addObject("value", 0);
 				
 				// model.addObject("pageMetaData", pageMetaData);
@@ -636,6 +642,10 @@ public class UserController {
 						EventRecord[].class);
 				List<EventRecord> previous = new ArrayList<EventRecord>(Arrays.asList(previousList));
 				
+				 for(int i = 0 ; i <previous.size() ; i++) {
+					 previous.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(previous.get(i).getNewsblogsId()))); 
+				 }
+				
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail); 
@@ -643,7 +653,7 @@ public class UserController {
 				model.addAttribute("editReg", editReg);
 				//System.out.println("list_new: " + previous.toString());
 				model.addAttribute("previous", previous);
-				model.addAttribute("typeId", 1);
+				model.addAttribute("typeId", EmailUtility.Encrypt(String.valueOf(1)));
 				model.addAttribute("documentUrl", Constant.getCmsPdf);
 				// model.addObject("pageMetaData", pageMetaData);
 				 
@@ -661,35 +671,39 @@ public class UserController {
 	
 
 	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
-	public ModelAndView changePass(HttpServletRequest request, HttpServletResponse response) {
+	public String changePass(HttpServletRequest request, HttpServletResponse response, Model model) {
 
-		ModelAndView model = new ModelAndView("change-pass");
+		String mav = new String();
+		
 		HttpSession session = request.getSession();
 		try {
 			session.setAttribute("mapping", "changePass");
+			
+			
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
-				model = new ModelAndView("maintainance");
-				model.addObject("maintainance", maintainance);
+				mav = "maintainance" ;
+				model.addAttribute("maintainance", maintainance);
 			} else {
-				
-				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("flag", flag);
+				mav = "change-pass" ;
+				model.addAttribute("siteKey", Constant.siteKey);
+				model.addAttribute("flag", flag);
 				flag = 0;
 			int userDetail = (int) session.getAttribute("UserDetail");
 			System.out.println("userDetail : "+userDetail);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("regId", userDetail); 
 			Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
-			model.addObject("editReg", editReg);
+			model.addAttribute("editReg", editReg);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			mav = "login";
 		}
 
-		return model;
+		return mav;
 	}
 
 	@RequestMapping(value = "/getPasswordCheck", method = RequestMethod.GET)
@@ -709,7 +723,7 @@ public class UserController {
 			map.add("userId", userDetail);
 			map.add("pass", pass);
 
-			info = rest.postForObject(Constant.url + "/getLastPassword", map, Info.class);
+			info = rest.postForObject(Constant.url + "/checkPasswordByUserId", map, Info.class);
 			/*
 			 * if (verify.isError() == false) { mav = new ModelAndView("changePass");
 			 * 
@@ -792,35 +806,50 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/fillFeeback", method = RequestMethod.GET)
-	public ModelAndView fillFeedback(HttpServletRequest request, HttpServletResponse response) {
+	public String fillFeedback(HttpServletRequest request, HttpServletResponse response,Model model) {
  
-		ModelAndView model = new ModelAndView("eventfeedback");
+		String mav = new String();
 		
 		try {
 			HttpSession session = request.getSession();
-			int userDetail = (int) session.getAttribute("UserDetail");
-			int eventId = Integer.parseInt(request.getParameter("eventId"));
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			session.setAttribute("mapping", "fillFeeback");
 			
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("regId", userDetail); 
-			Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
-			model.addObject("editReg", editReg);
-			model.addObject("eventId", eventId);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				mav = "maintainance" ;
+				model.addAttribute("maintainance", maintainance);
+			}else {
+				int userDetail = (int) session.getAttribute("UserDetail");
+				String id =  request.getParameter("eventId") ;
+				
+				int eventId = Integer.parseInt(EmailUtility.DecodeKey(String.valueOf(id)));
+				mav =  "eventfeedback" ;
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("regId", userDetail); 
+				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				model.addAttribute("editReg", editReg);
+				model.addAttribute("eventId", eventId);
+			}
+			
 			 
 		} catch (Exception e1) {
 			e1.printStackTrace();
+			mav = "login";
 		}
 
-		return model;
+		return mav;
 	}
 	
 	@RequestMapping(value = "/submitFeedbackForm", method = RequestMethod.POST)
 	public String submitFeedbackForm(HttpServletRequest request, HttpServletResponse response) {
   
 	
+		HttpSession session = request.getSession();
+		
 		try {
 			
-			HttpSession session = request.getSession();
+			
 			int userDetail = (int) session.getAttribute("UserDetail");
 			int eventId = Integer.parseInt(request.getParameter("eventId"));
 			int value = Integer.parseInt(request.getParameter("formType"));
@@ -833,8 +862,15 @@ public class UserController {
 			map.add("messge", msg); 
 			Info update = rest.postForObject(Constant.url + "/updateEventFeedback", map, Info.class);
 			
+			if(update.isError()==true) {
+				session.setAttribute("errorMsg", "Failed to submit feedback ");
+			}else {
+				session.setAttribute("success", "Feebback submited Successfully !");
+			}
+			
 			
 		} catch (Exception e1) {
+			session.setAttribute("errorMsg", "Failed to submit feedback ");
 			e1.printStackTrace();
 		}
 

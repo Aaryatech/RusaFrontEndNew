@@ -71,7 +71,7 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
+				href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
 
 			<!-- 
             <p class="last-update">Last Updated on 25 Feb 2019</p>  -->
@@ -110,14 +110,7 @@
 
 							<div class="fileUpload btn">
 								<div class="user-name">${editReg.name}</div>
-								<%-- <form class="dropzone" id="myForm"
-										action="${pageContext.request.contextPath}/uploadProfilePhoto"
-										method="post" enctype="multipart/form-data">
-										<input name="isImage" value="1" type="hidden" />
-									
-											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
-								   </form> --%>
-								<!--  <input type="file" class="upload" id="imgInp" /> -->
+
 
 							</div>
 						</div>
@@ -149,6 +142,35 @@
 			</div>
 
 			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
+				<c:if test="${sessionScope.success != null}">
+
+					<div class="col-12 col-sm-12 col-lg-12 ">
+						<div class="alert alert-success ">
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+							<strong>Success : </strong> ${success}
+						</div>
+					</div>
+				</c:if>
+				<%
+					session.removeAttribute("success");
+				%>
+				<c:if test="${sessionScope.errorMsg != null}">
+					<div class="col-12 col-sm-12 col-lg-12 ">
+						<div class="alert alert-danger ">
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+							<strong>Error : </strong> ${errorMsg}
+						</div>
+					</div>
+				</c:if>
+				<%
+					session.removeAttribute("errorMsg");
+				%>
 				<h2>Dashboard</h2>
 				<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
 					role="tablist">
@@ -184,7 +206,7 @@
 										<td>${upcoming.heading}</td>
 										<td>${upcoming.eventDateFrom}</td>
 										<td><a
-											href="${pageContext.request.contextPath}/eventDetail/${upcoming.newsblogsId}/${typeId}">Detail</a></td>
+											href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${upcoming.exVar1}&typeId=${typeId}">Detail</a></td>
 									</tr>
 								</c:forEach>
 

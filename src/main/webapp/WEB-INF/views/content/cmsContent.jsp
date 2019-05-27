@@ -215,11 +215,11 @@
 
 				</div>
 			</div>
-
+ 
 			<c:choose>
 
 				<c:when test="${newsSectionList.size()>0}">
-					<div class="col-12 col-sm-12 col-lg-6 right-Colm news-listing-page">
+					<div class="col-12 col-sm-12 col-lg-6 right-Colm">
 				</c:when>
 				<c:otherwise>
 					<div class="col-12 col-sm-12 col-lg-9 right-Colm news-listing-page">

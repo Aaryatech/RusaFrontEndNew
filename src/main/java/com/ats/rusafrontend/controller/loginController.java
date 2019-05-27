@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
+import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.VpsImageUpload;
 import com.ats.rusafrontend.model.EventRegistration;
@@ -56,21 +57,21 @@ public class loginController {
 	 */
 
 	@RequestMapping(value = "/myProfile", method = RequestMethod.GET)
-	public String myProfile(HttpServletRequest request, HttpServletResponse response,Model model) {
+	public String myProfile(HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		HttpSession session = request.getSession();
 		String mav = new String();
 		try {
 
 			session.setAttribute("mapping", "myProfile");
-			 
+
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
-				mav = "maintainance" ;
+				mav = "maintainance";
 				model.addAttribute("maintainance", maintainance);
 			} else {
-				mav = "edit-profile" ;
+				mav = "edit-profile";
 				model.addAttribute("siteKey", Constant.siteKey);
 				model.addAttribute("flag", flag);
 				flag = 0;
@@ -99,22 +100,22 @@ public class loginController {
 	}
 
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
-	public String editProfile(HttpServletRequest request, HttpServletResponse response,Model model) {
+	public String editProfile(HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		HttpSession session = request.getSession();
 		String mav = new String();
-		
+
 		try {
 			session.setAttribute("mapping", "editProfile");
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
-				mav = "maintainance" ;
+				mav = "maintainance";
 				model.addAttribute("maintainance", maintainance);
 			} else {
 
-				mav = "edit-my-profile" ;
+				mav = "edit-my-profile";
 				model.addAttribute("siteKey", Constant.siteKey);
 				model.addAttribute("flag", flag);
 				flag = 0;
@@ -137,13 +138,13 @@ public class loginController {
 			e.printStackTrace();
 			mav = "login";
 		}
-		
+
 		return mav;
 	}
 
 	PreviousRegRecord prevrecrod = new PreviousRegRecord();
 	Registration jsonRecord = new Registration();
-	
+
 	@RequestMapping(value = "/editUserRegistration", method = RequestMethod.POST)
 	public String editUserRegistration(HttpServletRequest request, HttpServletResponse response) {
 
@@ -159,12 +160,10 @@ public class loginController {
 			int type = Integer.parseInt(request.getParameter("userType"));
 
 			SimpleDateFormat dttime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("regId", editReg.getRegId());
-			prevrecrod = rest.postForObject(Constant.url + "/getPrevRecordByRegId", map,
-					PreviousRegRecord.class);
+			prevrecrod = rest.postForObject(Constant.url + "/getPrevRecordByRegId", map, PreviousRegRecord.class);
 
 			jsonRecord = new Registration();
 
@@ -187,7 +186,7 @@ public class loginController {
 				String designation = request.getParameter("authour");
 
 				if (prevrecrod.isError() == false) {
-					
+
 					if (!editReg.getAlternateEmail().equals(altEmail1)) {
 
 						jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
@@ -226,23 +225,23 @@ public class loginController {
 				editReg.setEditDate(sf.format(date));
 
 				if (prevrecrod.isError() == true) {
-					
-					jsonRecord=editReg;
+
+					jsonRecord = editReg;
 					prevrecrod.setLastUpdate(dttime.format(date));
 					prevrecrod.setRegId(editReg.getRegId());
 				}
-				
+
 				if (editReg.getMobileNumber().equals(mobile)) {
 
 					Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
-					
-					ObjectMapper mapper = new ObjectMapper(); 
+
+					ObjectMapper mapper = new ObjectMapper();
 					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
-					
+
 					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
 							PreviousRegRecord.class);
-					
+
 					redirect = "redirect:/editProfile";
 				} else {
 					/*
@@ -268,7 +267,7 @@ public class loginController {
 				String dept = request.getParameter("dept");
 
 				if (prevrecrod.isError() == false) {
-					
+
 					if (!editReg.getAlternateEmail().equals(altEmail2)) {
 
 						jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
@@ -305,15 +304,15 @@ public class loginController {
 				editReg.setName(institute);
 				editReg.setAuthorizedPerson(cAuthour);
 				editReg.setAisheCode(aisheName1);
-				editReg.setUnversityName(univ); 
+				editReg.setUnversityName(univ);
 				editReg.setDesignationName(designation);
 				editReg.setUserType(2);
 				editReg.setDepartmentName(dept);
 				editReg.setEditDate(sf.format(date));
-				
+
 				if (prevrecrod.isError() == true) {
-					
-					jsonRecord=editReg;
+
+					jsonRecord = editReg;
 					prevrecrod.setLastUpdate(dttime.format(date));
 					prevrecrod.setRegId(editReg.getRegId());
 				}
@@ -322,13 +321,13 @@ public class loginController {
 
 					Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
-					
-					ObjectMapper mapper = new ObjectMapper(); 
+
+					ObjectMapper mapper = new ObjectMapper();
 					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
-					
+
 					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
 							PreviousRegRecord.class);
-					 
+
 					redirect = "redirect:/editProfile";
 				} else {
 					/*
@@ -352,7 +351,7 @@ public class loginController {
 				String uniAuthour = request.getParameter("uniAuthour");
 
 				if (prevrecrod.isError() == false) {
-					
+
 					if (!editReg.getAlternateEmail().equals(altEmail3)) {
 
 						jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
@@ -378,9 +377,9 @@ public class loginController {
 						jsonRecord.setDesignationName(editReg.getDesignationName());
 						prevrecrod.setLastUpdate(dttime.format(date));
 					}
-					 
+
 				}
- 
+
 				editReg.setAlternateEmail(altEmail3);
 				editReg.setAisheCode(aisheName2);
 				editReg.setName(uniName);
@@ -389,10 +388,10 @@ public class loginController {
 				editReg.setDesignationName(uniDes);
 				editReg.setUserType(3);
 				editReg.setEditDate(sf.format(date));
-				
+
 				if (prevrecrod.isError() == true) {
-					
-					jsonRecord=editReg;
+
+					jsonRecord = editReg;
 					prevrecrod.setLastUpdate(dttime.format(date));
 					prevrecrod.setRegId(editReg.getRegId());
 				}
@@ -401,13 +400,13 @@ public class loginController {
 
 					Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
-					
-					ObjectMapper mapper = new ObjectMapper(); 
+
+					ObjectMapper mapper = new ObjectMapper();
 					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
-					
+
 					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
 							PreviousRegRecord.class);
-					
+
 					redirect = "redirect:/editProfile";
 				} else {
 					/*
@@ -484,7 +483,7 @@ public class loginController {
 			String userOtp = request.getParameter("userOtp");
 			SimpleDateFormat dttime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date = new Date();
-			
+
 			if (userOtp.equalsIgnoreCase("") || userOtp == null) {
 				ret = "redirect:/editVerifyOtp/" + editReg.getUserUuid() + "/0";
 				session.setAttribute("errorMsg", "OTP Not Matched");
@@ -494,11 +493,11 @@ public class loginController {
 
 					jsonRecord.setMobileNumber(editReg.getMobileNumber());
 					editReg.setMobileNumber(editReg.getExVar2());
-					
+
 					Registration a = rest.postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
-					
-					ObjectMapper mapper = new ObjectMapper(); 
+
+					ObjectMapper mapper = new ObjectMapper();
 					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
 					prevrecrod.setLastUpdate(dttime.format(date));
 					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
@@ -691,24 +690,30 @@ public class loginController {
 		return model;
 	}
 
-	@RequestMapping(value = "/eventDetail/{newsblogsId}/{typeId}", method = RequestMethod.GET)
-	public ModelAndView eventDetail(@PathVariable int newsblogsId, @PathVariable int typeId, HttpServletRequest request,
-			HttpServletResponse response) {
+	@RequestMapping(value = "/eventDetail", method = RequestMethod.GET)
+	public String eventDetail(HttpServletRequest request, HttpServletResponse response,Model model) {
 
-		ModelAndView model = new ModelAndView("event-detail");
+		String mav = new String();
+		
 		HttpSession session = request.getSession();
 		try {
+			session.setAttribute("mapping", "eventDetail");
 			int userDetail = (int) session.getAttribute("UserDetail");
+			String id = request.getParameter("newsblogsId");
+			String type = request.getParameter("typeId");
 
-			session.setAttribute("mapping", "eventList");
+			int newsblogsId = Integer.parseInt(EmailUtility.DecodeKey(String.valueOf(id)));
+			int typeId = Integer.parseInt( EmailUtility.DecodeKey(String.valueOf(type)));
+
 			int langId = 1;
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
-				model = new ModelAndView("maintainance");
-				model.addObject("maintainance", maintainance);
+				mav = "maintainance" ;
+				model.addAttribute("maintainance", maintainance);
 			} else {
 
+				mav = "event-detail" ;
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
 
@@ -722,26 +727,27 @@ public class loginController {
 				map2.add("regId", userDetail);
 				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
 
-				model.addObject("editReg", editReg);
+				model.addAttribute("editReg", editReg);
 
 				String dateEvent = DateConvertor.convertToDMY(eventList.getEventDateFrom());
-				model.addObject("event", eventList);
-				model.addObject("dateEvent", dateEvent);
+				model.addAttribute("event", eventList);
+				model.addAttribute("dateEvent", dateEvent);
 
-				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("typeId", typeId);
+				model.addAttribute("siteKey", Constant.siteKey);
+				model.addAttribute("typeId", typeId);
 
 				System.out.println("typeId :" + typeId);
 
 				String[] Ids = eventList.getExVar2().split(",");
-				model.addObject("ids", Ids);
+				model.addAttribute("ids", Ids);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			mav = "login";
 		}
 
-		return model;
+		return mav;
 	}
 
 	@RequestMapping(value = "/applyEvent/{newsblogsId}", method = RequestMethod.GET)
@@ -801,7 +807,7 @@ public class loginController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/eventDetail" + "/" + newsblogsId + "/2";
+		return "redirect:/eventDetail" + "?newsblogsId=" + EmailUtility.Encrypt(String.valueOf(newsblogsId)) + "&typeId=" + EmailUtility.Encrypt(String.valueOf(2));
 	}
 
 	@RequestMapping(value = "/submtEventAppliedForm", method = RequestMethod.POST)
@@ -881,7 +887,7 @@ public class loginController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/eventDetail" + "/" + newsblogsId + "/2";
+		return "redirect:/eventDetail" + "?newsblogsId=" + EmailUtility.Encrypt(String.valueOf(newsblogsId)) + "&typeId=" + EmailUtility.Encrypt(String.valueOf(2));
 	}
 
 	@RequestMapping(value = "/firstChangePass", method = RequestMethod.GET)

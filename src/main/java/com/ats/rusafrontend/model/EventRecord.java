@@ -12,6 +12,9 @@ public class EventRecord {
 	private int apply; 
 	private int isFeedback;
 	private String date;
+	private String exVar1;
+	private String feedback;
+	
 	public int getNewsblogsId() {
 		return newsblogsId;
 	}
@@ -66,11 +69,25 @@ public class EventRecord {
 	public void setIsFeedback(int isFeedback) {
 		this.isFeedback = isFeedback;
 	}
+	
+	public String getExVar1() {
+		return exVar1;
+	}
+	public void setExVar1(String exVar1) {
+		this.exVar1 = exVar1;
+	}
+	public String getFeedback() {
+		return feedback;
+	}
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
 	@Override
 	public String toString() {
 		return "EventRecord [newsblogsId=" + newsblogsId + ", heading=" + heading + ", descriptions=" + descriptions
 				+ ", languageId=" + languageId + ", featuredImage=" + featuredImage + ", downloadPdf=" + downloadPdf
-				+ ", apply=" + apply + ", isFeedback=" + isFeedback + ", date=" + date + "]";
+				+ ", apply=" + apply + ", isFeedback=" + isFeedback + ", date=" + date + ", exVar1=" + exVar1
+				+ ", feedback=" + feedback + "]";
 	}
 	
 	
