@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
+import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.InitializeSession;
 import com.ats.rusafrontend.model.*;
 
@@ -48,6 +49,10 @@ public class CmsController {
 				model.addObject("maintainance", maintainance);
 			} else {
 
+				if(session.getAttribute("menuList") == null) {
+					InitializeSession.intializeSission(request);
+				}
+				
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("slugName", slugName);
 				map.add("langId", langId);
@@ -70,6 +75,10 @@ public class CmsController {
 				NewsSectionList[] news = rest.postForObject(Constant.url + "/getNewsSectionBySectionId", map,
 						NewsSectionList[].class);
 				newsSectionList = new ArrayList<>(Arrays.asList(news));
+				
+				for(int i=0 ; i<newsSectionList.size() ;i++) {
+					newsSectionList.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(newsSectionList.get(i).getNewsblogsId())));
+				}
 				model.addObject("newsSectionList", newsSectionList);
 				model.addObject("langId", langId);
 			}

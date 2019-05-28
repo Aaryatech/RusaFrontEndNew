@@ -215,11 +215,11 @@
 
 				</div>
 			</div>
- 
+
 			<c:choose>
 
 				<c:when test="${newsSectionList.size()>0}">
-					<div class="col-12 col-sm-12 col-lg-6 right-Colm">
+					<div class="col-12 col-sm-12 col-lg-6 right-Colm news-listing-page">
 				</c:when>
 				<c:otherwise>
 					<div class="col-12 col-sm-12 col-lg-9 right-Colm news-listing-page">
@@ -231,7 +231,7 @@
 			<c:if test="${pageContent.cmsContentList.size()>0}">
 				<c:forEach items="${pageContent.cmsContentList}"
 					var="cmsContentList">
-					
+
 
 					<h2>${cmsContentList.heading}</h2>
 					<c:if test="${not empty cmsContentList.featuredImage}">
@@ -489,7 +489,7 @@
 					<c:forEach items="${newsSectionList}" var="newsSectionList">
 						<p>
 							<a
-								href="${pageContext.request.contextPath}/NewsDetails/${newsSectionList.newsblogsId}">
+								href="${pageContext.request.contextPath}/NewsDetails/${newsSectionList.exVar1}">
 								${newsSectionList.heading}</a>
 						</p>
 					</c:forEach>

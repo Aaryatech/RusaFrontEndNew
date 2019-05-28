@@ -198,7 +198,7 @@
 
 
 			<div class="col-12 col-sm-12 col-lg-4 gallery">
-				<h3>Recent Gallery</h3>
+				<h3><a href="${pageContext.request.contextPath}/imgGallary">Photos Gallery</a></h3>
 				<c:if test="${photoList.size()>0}">
 					<div class="border-box">
 						<div id="carouselExampleControls" class="carousel slide"
@@ -260,7 +260,7 @@
 
 
 			<div class="col-12 col-sm-12 col-lg-4 gallery">
-				<h3>Video</h3>
+				<h3>Videos Gallery</h3>
 
 				<div class="border-box">
 					<div id="videoslide" class="carousel " data-ride="carousel">
