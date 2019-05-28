@@ -24,6 +24,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon" />
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags --> 
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <c:choose>
@@ -98,12 +102,11 @@ msg-error {
 							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.577356534086!2d72.89611441799786!3d19.149897683543813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86e528cb077%3A0xbeb39574202b3e0e!2sRusa+International!5e0!3m2!1sen!2sin!4v1549861576012"
 							style="border: 0" allowfullscreen="" width="100%" height="540"
 							frameborder="0"></iframe> -->
-						 
-							<iframe class="map" width="100%" height="540"
-								src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=IDBI%20TOWERS%2C%20Cuffe%20Parade%2C%20Mumbai%2C%20Maharashtra%20400005+(My%20Business%20Namsse)&amp;ie=UTF8&amp;t=p&amp;z=18&amp;iwloc=B&amp;output=embed"
-								frameborder="0" style="border: 0" allowfullscreen=""> 
-							</iframe>
-						 
+
+						<iframe class="map" width="100%" height="540"
+							src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=IDBI%20TOWERS%2C%20Cuffe%20Parade%2C%20Mumbai%2C%20Maharashtra%20400005+(My%20Business%20Namsse)&amp;ie=UTF8&amp;t=p&amp;z=18&amp;iwloc=B&amp;output=embed"
+							frameborder="0" style="border: 0" allowfullscreen=""> </iframe>
+
 					</div>
 
 					<div class="col-12 col-sm-12 col-lg-6">
@@ -183,7 +186,7 @@ msg-error {
 							<textarea name="message" id="message" class="form-control"
 								placeholder="Message"></textarea>
 							<br> <span class="msg-error error"></span>
-							 <div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>  
+							<div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>
 							</br>
 							<button class="btn button view-more send" id="btn-validate"
 								type="submit">

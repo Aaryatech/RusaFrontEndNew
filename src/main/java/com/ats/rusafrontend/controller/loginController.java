@@ -556,14 +556,14 @@ public class loginController {
 					mav = new ModelAndView("change-pass");
 					System.out.println(info.toString());
 
+					session.setAttribute("success", "Successfully Updated Password !");
+					
 					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 					map1.add("regId", userDetail);
 					Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1,
-							Registration.class);
-					String dobDate = DateConvertor.convertToDMY(editReg.getDob());
-					mav.addObject("editReg", editReg);
-					mav.addObject("dobDate", dobDate);
-					session.setAttribute("success", "Successfully Updated Password !");
+							Registration.class); 
+					mav.addObject("editReg", editReg); 
+					
 				}
 			}
 		} catch (Exception e) {
@@ -674,9 +674,9 @@ public class loginController {
 				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 				map2.add("regId", userDetail);
 				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
-				String dobDate = DateConvertor.convertToDMY(editReg.getDob());
+				//String dobDate = DateConvertor.convertToDMY(editReg.getDob());
 				model.addObject("editReg", editReg);
-				model.addObject("dobDate", dobDate);
+				//model.addObject("dobDate", dobDate);
 				model.addObject("event", event);
 
 				model.addObject("siteKey", Constant.siteKey);
