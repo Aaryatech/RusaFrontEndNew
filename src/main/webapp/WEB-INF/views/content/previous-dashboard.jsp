@@ -177,7 +177,7 @@
 									<td>${previous.heading}</td>
 									<c:choose>
 										<c:when test="${not empty previous.downloadPdf}">
-											<td><a href="${documentUrl}${previous.downloadPdf}"><span
+											<td><a href="${documentUrl}${previous.downloadPdf}" target="_blank"><span
 													class="icon-download-2"></span> Download</a></td>
 
 										</c:when>

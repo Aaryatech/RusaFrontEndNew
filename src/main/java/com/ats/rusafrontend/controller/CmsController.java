@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
+import com.ats.rusafrontend.commen.InitializeSession;
 import com.ats.rusafrontend.model.*;
 
 @Controller
@@ -62,21 +63,21 @@ public class CmsController {
 				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
 						PageMetaData.class);
 				model.addObject("pageMetaData", pageMetaData);
-				
+
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("sectionId", pageContent.getSectioinId());
 				map.add("langId", langId);
 				NewsSectionList[] news = rest.postForObject(Constant.url + "/getNewsSectionBySectionId", map,
 						NewsSectionList[].class);
-				newsSectionList=new ArrayList<>(Arrays.asList(news));
+				newsSectionList = new ArrayList<>(Arrays.asList(news));
 				model.addObject("newsSectionList", newsSectionList);
 				model.addObject("langId", langId);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-			PageContent pageContent= new PageContent();
+
+			PageContent pageContent = new PageContent();
 			pageContent.setSlugName(slugName);
 			model.addObject("pageContent", pageContent);
 			newsSectionList = new ArrayList<>();
@@ -125,8 +126,6 @@ public class CmsController {
 		return model;
 	}
 
-	
-	
 	@RequestMapping(value = "/searchData", method = RequestMethod.GET)
 	public ModelAndView searchData(HttpServletRequest request, HttpServletResponse response) {
 
@@ -183,17 +182,6 @@ public class CmsController {
 
 			}
 
-			int langId =1;
-			try {
-
-				 langId = (Integer) session.getAttribute("langId");
-
-			} catch (Exception e) {
-
-				langId =1;
-
-			}
-			
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
@@ -202,15 +190,25 @@ public class CmsController {
 				model.addObject("maintainance", maintainance);
 			} else {
 
+				if (session.getAttribute("menuList") == null) {
+					InitializeSession.intializeSission(request);
+				}
+
+				int langId = (Integer) session.getAttribute("langId");
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("sectionId", 15);
+				map.add("key", "gallarySectionId");
+				Setting setting = rest.postForObject(Constant.url + "/getSettingRecordByKey", map, Setting.class);
+
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("sectionId", setting.getKeyValues());
 				GetCategory[] category = rest.postForObject(Constant.url + "/getAllCatIdBySectionIdOrderByDesc", map,
 						GetCategory[].class);
 				List<GetCategory> categoryList = new ArrayList<GetCategory>(Arrays.asList(category));
 				model.addObject("rusaList", categoryList);
 
 				if (slugname == null) {
-					slugname = "rusa-181";
+					slugname = categoryList.get(0).getSlugName();
 				}
 
 				map = new LinkedMultiValueMap<String, Object>();
@@ -239,18 +237,7 @@ public class CmsController {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "imgGallary");
-
-			int langId =1;
-			try {
-
-				 langId = (Integer) session.getAttribute("langId");
-
-			} catch (Exception e) {
-
-				langId =1;
-
-			}
-			
+ 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
@@ -259,8 +246,18 @@ public class CmsController {
 				model.addObject("maintainance", maintainance);
 			} else {
 
+				if (session.getAttribute("menuList") == null) {
+					InitializeSession.intializeSission(request);
+				}
+
+				int langId = (Integer) session.getAttribute("langId");
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("sectionId", 15);
+				map.add("key", "gallarySectionId");
+				Setting setting = rest.postForObject(Constant.url + "/getSettingRecordByKey", map, Setting.class);
+
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("sectionId", setting.getKeyValues());
 				GetCategory[] category = rest.postForObject(Constant.url + "/getAllCatIdBySectionId", map,
 						GetCategory[].class);
 				List<GetCategory> categoryList = new ArrayList<GetCategory>(Arrays.asList(category));
@@ -276,6 +273,7 @@ public class CmsController {
 				model.addObject("gallryImageURL", Constant.getGallryImageURL);
 				model.addObject("catId", catId);
 				model.addObject("cateName", cateName);
+				model.addObject("slugname", slugname);
 			}
 
 		} catch (Exception e) {

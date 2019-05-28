@@ -6,13 +6,13 @@
 <footer>
 	<div class="container">
 		<div class="row">
-			 <div class="col-12 col-sm-4 col-lg-3">
+			<div class="col-12 col-sm-4 col-lg-3">
 				<h6>Contact Us</h6>
 				<c:if test="${setting[8].isActive==1}">
           				 ${setting[8].keyValues}
        			 		  </c:if>
 			</div>
-			 <div class="col-12 col-sm-8 col-lg-5">
+			<div class="col-12 col-sm-8 col-lg-5">
 				<h6>Important Links</h6>
 				<c:if test="${setting[7].isActive==1}">
           				 ${setting[7].keyValues}
@@ -49,17 +49,20 @@
 				</c:if>
 				<c:if test="${socialChannelData[3].isActive==1}">
 
-					<a href="${socialChannelData[3].urllinks}" target="_blank"><span class="icon-youtube-logo"> </span></a>
+					<a href="${socialChannelData[3].urllinks}" target="_blank"><span
+						class="icon-youtube-logo"> </span></a>
 
 				</c:if>
 				<c:if test="${socialChannelData[4].isActive==1}">
-					<a href="${socialChannelData[4].urllinks}" target="_blank"> <span class="icon-instagram-social-network-logo-of-photo-camera"></span></a>
+					<a href="${socialChannelData[4].urllinks}" target="_blank"> <span
+						class="icon-instagram-social-network-logo-of-photo-camera"></span></a>
 				</c:if>
-				
+
 				<c:if test="${setting[5].isActive==1}">
-		<p style="text-align: right; margin-top: 50px">Last Update : ${setting[5].keyValues}</p>
-	</c:if>
- 
+					<p style="text-align: right; margin-top: 50px">Last Update :
+						${setting[5].keyValues}</p>
+				</c:if>
+
 			</div>
 		</div>
 	</div>
@@ -70,7 +73,7 @@
 	<p>
 		Design & Developed By: <a href="http://aaryatechindia.in/atsuc/"
 			target="_blank">Aaryatech Solutions</a>
-	</p> 
+	</p>
 </div>
 <c:if test="${setting[0].isActive==1}">
           ${setting[0].keyValues}

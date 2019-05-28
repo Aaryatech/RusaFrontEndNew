@@ -316,8 +316,8 @@
 				<c:forEach items="${newsBlogsList}" var="newsBlogsList"
 					varStatus="count">
 					<div class="col-12 col-sm-6 col-lg-3">
-						<div class="news-box">
-							<div class="new-img">
+						<div class="news-box" style="text-align: justify;">
+							<div class="new-img" >
 
 								<c:choose>
 									<c:when test="${not empty newsBlogsList.featuredImage}">

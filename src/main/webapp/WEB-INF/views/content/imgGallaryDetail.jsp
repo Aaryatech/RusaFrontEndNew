@@ -35,26 +35,7 @@
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
-
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/calendar.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/ekko-lightbox.css"
-	rel="stylesheet" type="text/css">
-
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
-	rel="stylesheet" type="text/css">
-
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
-	rel="stylesheet">
+ 
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -92,7 +73,7 @@
 		<div class="container">
 			<a href="${pageContext.request.contextPath}/">Home</a> >
 			  <a
-				href="${pageContext.request.contextPath}/imgGallary">Back</a>    
+				href="${pageContext.request.contextPath}/imgGallary?name=${slugname}">Back</a>    
 		</div>
 	</div>
 	<div class="container" id="main-content">
@@ -160,21 +141,9 @@
 					</div>
 
 				</div>
-
-
-
-
-
-
-
-
-
-
+ 
 			</div>
-
-
-
-
+ 
 		</div>
 	</div>
 
