@@ -498,6 +498,7 @@ p {
 	border: 1px solid #ccc;
 	padding: 15px;
 	border-radius: 5px;
+	    height: 346px;
 }
 .news-box:hover{
 	background-color:#fbfbfb
@@ -820,6 +821,7 @@ margin-bottom:0px;
 .right-Colm img{
 	border: 1px solid #ddd;
 	border-radius:5px;
+	width:100%;
 }
 .pdfIcon {
 	display: block;
@@ -1779,7 +1781,7 @@ color: #ff0!important;
     -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
     position: relative;
-	height: 350px;
+	height: 370px;
 }
 
 .team-candidates-status {
@@ -1800,6 +1802,9 @@ color: #ff0!important;
 }
 .team-wrap figure img {
     border-radius: 100%;
+        width: 200px;
+    height: 200px;
+   
 }
 .team-candidates-text {
     text-align: center;
