@@ -35,12 +35,12 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
- 
+
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -77,8 +77,9 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> >  <a
-				href="${pageContext.request.contextPath}/listOFEvent/1">Event List</a> >
+			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+				href="${pageContext.request.contextPath}/listOFEvent/1">Event
+				List</a> >
 		</div>
 	</div>
 
@@ -141,7 +142,7 @@
 								${event.eventContactNumber}</span><br>
 						</p>
 
-  
+
 						<c:if test="${isapply==1}">
 							<c:if test="${event.exInt2==1}">
 
@@ -151,36 +152,42 @@
 								<form class="form-horizontal"
 									action="${pageContext.request.contextPath}/submtFrontEventAppliedForm"
 									method="post" enctype="multipart/form-data"
-									name="form_sample_2" id="form_sample_2" >
-									 
-										<label class="control-label col-sm-2" for="page_pdf">Upload
-											Document :</label>
-										<div class="col-sm-7">
-											<input type="file" name="pagePdf" id="pagePdf"
-												class="form-control" data-parsley-minlength="2" required
-												accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-											<p>	 <span> <strong>Please upload :</strong>
-								.doc, .docx, .pptx,.pdf and .xlsx only </span></p>
-										<p>	<span> <strong>Document Name :</strong>
-								${event.exVar1}</span></p>
-										
-										</div>
-										<input type="hidden" name="newsblogsId"
-											value="${event.newsblogsId}">
+									name="form_sample_2" id="form_sample_2">
 
-										
-									 
+									<label class="control-label col-sm-2" for="page_pdf">Upload
+										Document :</label>
+									<div class="col-sm-7">
+										<input type="file" name="pagePdf" id="pagePdf"
+											class="form-control" data-parsley-minlength="2" required
+											accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
+										<p>
+											<span> <strong>Please upload :</strong> .doc, .docx,
+												.pptx,.pdf and .xlsx only
+											</span>
+										</p>
+										<p>
+											<span> <strong>Document Name :</strong>
+												${event.exVar1}
+											</span>
+										</p>
+
+									</div>
+									<input type="hidden" name="newsblogsId"
+										value="${event.newsblogsId}">
+
+
+
 									<button type="submit" class="btn button apply">Apply</button>
 
 								</form>
-								
+
 								<%
 									} else {
 
 												int userType = (Integer) session.getAttribute("userType");
 
 												String[] ids = (String[]) session.getAttribute("allowedType");
-
+												int flag = 0;
 												for (int i = 0; i < ids.length; i++) {
 
 													if (userType == Integer.parseInt(ids[i])) {
@@ -188,30 +195,46 @@
 								<form class="form-horizontal"
 									action="${pageContext.request.contextPath}/submtFrontEventAppliedForm"
 									method="post" enctype="multipart/form-data"
-									name="form_sample_2" id="form_sample_2" >
-							<p>	 <strong>Upload	Document : </strong></p>
-										<label class="control-label col-sm-2" for="page_pdf">Upload
-											Document :</label>
-										<div class="col-sm-7">
-											<input type="file" name="pagePdf" id="pagePdf"
-												class="form-control" data-parsley-minlength="2" required
-												accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-										<p>	 <span> <strong>Please upload : </strong>
-								.doc, .docx, .pptx,.pdf and .xlsx only </span></p>
-										<p>	<span> <strong>Document Name : </strong>
-								${event.exVar1}</span></p>
-										</div>
-										<input type="hidden" name="newsblogsId"
-											value="${event.newsblogsId}">
+									name="form_sample_2" id="form_sample_2">
+									<p>
+										<strong>Upload Document : </strong>
+									</p>
+									<label class="control-label col-sm-2" for="page_pdf">Upload
+										Document :</label>
+									<div class="col-sm-7">
+										<input type="file" name="pagePdf" id="pagePdf"
+											class="form-control" data-parsley-minlength="2" required
+											accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
+										<p>
+											<span> <strong>Please upload : </strong> .doc, .docx,
+												.pptx,.pdf and .xlsx only
+											</span>
+										</p>
+										<p>
+											<span> <strong>Document Name : </strong>
+												${event.exVar1}
+											</span>
+										</p>
+									</div>
+									<input type="hidden" name="newsblogsId"
+										value="${event.newsblogsId}">
 
-										<button type="submit" class="btn button apply">Apply</button>
-									 
+									<button type="submit" class="btn button apply">Apply</button>
+
 
 								</form>
-							
+
+								<%
+									flag = 1;
+													}
+												}
+
+												if (flag == 0) {
+								%>
+								
+								You are not applicable for this event
 								<%
 									}
-												}
 											}
 								%>
 
@@ -229,7 +252,7 @@
 									class="btn button apply">Apply</a>
 								<%
 									} else {
-
+												int flag = 0;
 												int userType = (Integer) session.getAttribute("userType");
 
 												String[] ids = (String[]) session.getAttribute("allowedType");
@@ -242,8 +265,16 @@
 									href="${pageContext.request.contextPath}/applyEventFront/${event.newsblogsId}"
 									class="btn button apply">Apply</a>
 								<%
-									}
+									flag = 1;
+													}
 												}
+												if (flag == 0) {
+								%>
+													
+													You are not applicable for this event
+													<%
+									}
+
 											}
 								%>
 							</c:if>

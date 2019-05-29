@@ -219,10 +219,10 @@
 			<c:choose>
 
 				<c:when test="${newsSectionList.size()>0}">
-					<div class="col-12 col-sm-12 col-lg-6 right-Colm news-listing-page">
+					<div class="col-12 col-sm-12 col-lg-6 right-Colm">
 				</c:when>
 				<c:otherwise>
-					<div class="col-12 col-sm-12 col-lg-9 right-Colm news-listing-page">
+					<div class="col-12 col-sm-12 col-lg-9 right-Colm">
 				</c:otherwise>
 			</c:choose>
 			<!--  <div class="col-12 col-sm-12 col-lg-9 right-Colm">  -->
@@ -399,10 +399,154 @@
 			</c:if>
 
 			<c:if test="${pageContent.teamList.size()>0}">
+
+				<c:forEach items="${pageContent.teamList}" var="testImonialList">
+					<c:if test="${testImonialList.exInt2==2}">
+
+						<div class="row">
+							<div class="col-12 col-sm-3 col-lg-3"></div>
+							<div class="col-12 col-sm-6 col-lg-6">
+								<div class="team-wrap">
+									<span class="team-candidates-status"></span>
+									<figure>
+										<c:choose>
+											<c:when test="${not empty testImonialList.imageName}">
+												<a href="#"><img
+													src="${gallryImageURL}${testImonialList.imageName}" alt=""></a>
+											</c:when>
+											<c:otherwise>
+												<a href="#"><img
+													src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+													alt=""></a>
+
+											</c:otherwise>
+										</c:choose>
+									</figure>
+									<div class="team-candidates-text ">
+										<h2>
+
+											<a href="#">${testImonialList.fromName}</a>
+										</h2>
+										<span>${testImonialList.designation}</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-3 col-lg-3"></div>
+						</div>
+
+					</c:if>
+				</c:forEach>
+
+				<div class="row">
+
+					<c:forEach items="${pageContent.teamList}" var="testImonialList">
+						<c:if test="${testImonialList.exInt2==1}">
+
+							<div class="col-12 col-sm-6 col-lg-6">
+								<div class="team-wrap">
+									<span class="team-candidates-status"></span>
+									<figure>
+										<c:choose>
+											<c:when test="${not empty testImonialList.imageName}">
+												<a href="#"><img
+													src="${gallryImageURL}${testImonialList.imageName}" alt=""></a>
+											</c:when>
+											<c:otherwise>
+												<a href="#"><img
+													src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+													alt=""></a>
+
+											</c:otherwise>
+										</c:choose>
+									</figure>
+									<div class="team-candidates-text ">
+										<h2>
+
+											<a href="#">${testImonialList.fromName}</a>
+										</h2>
+										<span>${testImonialList.designation}</span>
+									</div>
+								</div>
+							</div>
+						</c:if>
+					</c:forEach>
+
+				</div>
+
 				<div class="row">
 					<c:forEach items="${pageContent.teamList}" var="testImonialList">
 
-						<div class="col-6 col-sm-4 col-lg-4">
+						<c:if test="${testImonialList.exInt2==0}">
+
+
+							<c:choose>
+
+								<c:when test="${newsSectionList.size()>0}">
+
+									<div class="col-12 col-sm-6 col-lg-6">
+										<div class="team-wrap">
+											<span class="team-candidates-status"></span>
+											<figure>
+												<c:choose>
+													<c:when test="${not empty testImonialList.imageName}">
+														<a href="#"><img
+															src="${gallryImageURL}${testImonialList.imageName}"
+															alt=""></a>
+													</c:when>
+													<c:otherwise>
+														<a href="#"><img
+															src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+															alt=""></a>
+
+													</c:otherwise>
+												</c:choose>
+											</figure>
+											<div class="team-candidates-text ">
+												<h2>
+
+													<a href="#">${testImonialList.fromName}</a>
+												</h2>
+												<span>${testImonialList.designation}</span>
+											</div>
+										</div>
+									</div>
+
+								</c:when>
+								<c:otherwise>
+
+									<div class="col-6 col-sm-4 col-lg-4">
+										<div class="team-wrap">
+											<span class="team-candidates-status"></span>
+											<figure>
+												<c:choose>
+													<c:when test="${not empty testImonialList.imageName}">
+														<a href="#"><img
+															src="${gallryImageURL}${testImonialList.imageName}"
+															alt=""></a>
+													</c:when>
+													<c:otherwise>
+														<a href="#"><img
+															src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+															alt=""></a>
+
+													</c:otherwise>
+												</c:choose>
+											</figure>
+											<div class="team-candidates-text ">
+												<h2>
+
+													<a href="#">${testImonialList.fromName}</a>
+												</h2>
+												<span>${testImonialList.designation}</span>
+											</div>
+										</div>
+									</div>
+
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+
+						<%-- <div class="col-6 col-sm-4 col-lg-4">
 							<div class="team-wrap">
 								<span class="team-candidates-status"></span>
 								<figure>
@@ -428,10 +572,14 @@
 									<span>${testImonialList.designation}</span>
 								</div>
 							</div>
-						</div>
+						</div> --%>
 
 					</c:forEach>
+
+
+
 				</div>
+
 				<c:set var="find" value="1"></c:set>
 			</c:if>
 
