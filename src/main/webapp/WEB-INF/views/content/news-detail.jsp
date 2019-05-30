@@ -28,12 +28,12 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
- 
+
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -68,8 +68,9 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> >  <a
-				href="${pageContext.request.contextPath}/listOFNews/1">News List</a> >
+			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+				href="${pageContext.request.contextPath}/listOFNews/1">News List</a>
+			>
 
 		</div>
 	</div>
@@ -89,8 +90,11 @@
 
 						<strong>${image.heading}</strong><br>
 						<p>${image.descriptions}</p>
- 
-						<p>Source Link :${image.newsSourceUrlName}</p>
+
+						<div>
+							Source Link : <a href="${image.newsSourceUrlName}" target="_blank">
+							${image.newsSourceUrlName}</a>
+						</div>
 
 					</div>
 				</div>
