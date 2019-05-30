@@ -130,13 +130,22 @@ public class HomeController {
 			MetaData metaData = rest.postForObject(Constant.url + "/getHomePageMetaDataByLangId", map, MetaData.class);
 			session.setAttribute("homePageMetaData", metaData);
 
-			NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllUpcomingEvents",map,
+			NewsDetails[] eventList = rest.postForObject(Constant.url + "/newsListForHomePage",map,
 					NewsDetails[].class);
 			List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
 			session.setAttribute("event", event);
 			
 			for(int i=0 ; i<event.size() ; i++) {
 				event.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(event.get(i).getNewsblogsId())));
+			}
+			
+			NewsDetails[] expireEvent = rest.postForObject(Constant.url + "/newsExpiredListForHomePage",map,
+					NewsDetails[].class);
+			List<NewsDetails> expireEventList = new ArrayList<NewsDetails>(Arrays.asList(expireEvent));
+			session.setAttribute("expireEventList", expireEventList);
+			
+			for(int i=0 ; i<expireEventList.size() ; i++) {
+				expireEventList.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(expireEventList.get(i).getNewsblogsId())));
 			}
 			
 			//System.out.println(metaData);

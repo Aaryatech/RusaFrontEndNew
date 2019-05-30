@@ -416,7 +416,7 @@
 											</c:when>
 											<c:otherwise>
 												<a href="#"><img
-													src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+													src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
 													alt=""></a>
 
 											</c:otherwise>
@@ -453,7 +453,7 @@
 											</c:when>
 											<c:otherwise>
 												<a href="#"><img
-													src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+													src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
 													alt=""></a>
 
 											</c:otherwise>
@@ -495,7 +495,7 @@
 													</c:when>
 													<c:otherwise>
 														<a href="#"><img
-															src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+															src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
 															alt=""></a>
 
 													</c:otherwise>
@@ -526,7 +526,7 @@
 													</c:when>
 													<c:otherwise>
 														<a href="#"><img
-															src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
+															src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
 															alt=""></a>
 
 													</c:otherwise>

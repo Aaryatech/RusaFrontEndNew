@@ -67,7 +67,7 @@
 	var strMsgPdf = "PDF file that opens in a new window.";
 </script>
 <script>
-  	(function(d, s, id) {
+	(function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0];
 		if (d.getElementById(id))
 			return;
@@ -75,7 +75,7 @@
 		js.id = id;
 		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=809225772483402";
 		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk')); 
+	}(document, 'script', 'facebook-jssdk'));
 </script>
 <style>
 .news-section h4 {
@@ -85,8 +85,9 @@
 
 </head>
 <body>
-<div id="fb-root"></div>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3&appId=2318373708408139&autoLogAppEvents=1"></script>
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous"
+		src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3&appId=2318373708408139&autoLogAppEvents=1"></script>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
@@ -178,7 +179,31 @@
 										<span><i class="icon-calendar"></i> <strong>Date:</strong>
 											${eventList.eventDateFrom}</span>
 									</p>
+									<c:set var="cnt" value="${cnt+1}"></c:set>
 								</div>
+							</c:forEach>
+
+
+							<c:forEach items="${sessionScope.expireEventList}" var="expireEventList"
+								varStatus="count">
+								<c:if test="${cnt<10}">
+									<div class="tab-content-section">
+
+										<c:set var="string3"
+											value="${fn:substring(expireEventList.heading, 0,70)}" />
+										<h5>
+											<a
+												href="${pageContext.request.contextPath}/eventDetailfront/${expireEventList.exVar1}">
+												${string3} </a>
+										</h5>
+
+										<p>
+											<span><i class="icon-calendar"></i> <strong>Date:</strong>
+												${expireEventList.eventDateFrom}</span>
+										</p>
+										<c:set var="cnt" value="${cnt+1}"></c:set>
+									</div>
+								</c:if>
 							</c:forEach>
 
 
@@ -186,9 +211,6 @@
 						</div>
 					</div>
 
-					<c:if test="${cnt>10}">
-
-					</c:if>
 					<a href="${pageContext.request.contextPath}/listOFEvent/1">Read
 						More</a>
 
@@ -198,7 +220,10 @@
 
 
 			<div class="col-12 col-sm-12 col-lg-4 gallery">
-				<h3><a href="${pageContext.request.contextPath}/imgGallary">Photos Gallery</a></h3>
+				<h3>
+					<a href="${pageContext.request.contextPath}/imgGallary">Photos
+						Gallery</a>
+				</h3>
 				<c:if test="${photoList.size()>0}">
 					<div class="border-box">
 						<div id="carouselExampleControls" class="carousel slide"
@@ -317,7 +342,7 @@
 					varStatus="count">
 					<div class="col-12 col-sm-6 col-lg-3">
 						<div class="news-box" style="text-align: justify;">
-							<div class="new-img" >
+							<div class="new-img">
 
 								<c:choose>
 									<c:when test="${not empty newsBlogsList.featuredImage}">
@@ -357,8 +382,7 @@
 			<c:if test="${setting[3].isActive==1}">
 				<div class="col-12 col-sm-6 col-lg-4">
 					<div class="twitter border-box bootom-box">
-						${setting[3].keyValues}
-					</div>
+						${setting[3].keyValues}</div>
 				</div>
 			</c:if>
 			<div class="col-12 col-sm-12 col-lg-4">

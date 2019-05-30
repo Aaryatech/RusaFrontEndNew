@@ -198,7 +198,7 @@
 											
 											<a
 												href="${pageContext.request.contextPath}/imgGallaryDetail/${slugname}/${imageList.galleryCatId}/${imageList.cateName}"
-												class="thumbnail thumbnail-listing" target="_blank"> <img
+												class="thumbnail thumbnail-listing" > <img
 												src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
 												alt="Rusa 2" title="Rusa 2" class="img-responsive" width="261" height="190">
 												<p class="thumbnail-heading">
@@ -214,7 +214,7 @@
 										<c:otherwise>
 											<a
 												href="${pageContext.request.contextPath}/imgGallaryDetail/${slugname}/${imageList.galleryCatId}/${imageList.cateName}"
-												class="thumbnail thumbnail-listing" target="_blank"> <img
+												class="thumbnail thumbnail-listing"> <img
 												src="${gallryImageURL}thumbnail${imageList.fileName}"
 												alt="Rusa 2" title="Rusa 2" class="img-responsive">
 												<p class="thumbnail-heading">
