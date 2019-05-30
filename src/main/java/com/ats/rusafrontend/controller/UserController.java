@@ -167,8 +167,19 @@ public class UserController {
 					}
 
 				} else {
-					mav = "login";
-					// System.out.println("Invalid login credentials");
+					
+					
+					String eventId = request.getParameter("eventId");
+ 
+					if (!eventId.equals("0")) {
+						
+						String file = request.getParameter("file") ;
+						mav = "redirect:/login?file="+file+"&event=" + eventId;
+						
+					}else {
+						mav = "redirect:/login";
+					}
+					 
 					session.setAttribute("errorMsg", true);
 					session.setAttribute("errorMsg", "Invalid login credentials !");
 				}

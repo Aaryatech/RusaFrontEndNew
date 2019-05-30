@@ -188,7 +188,7 @@ msg-error {
 							<br> <span class="msg-error error"></span>
 							<div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>
 							</br>
-							<button class="btn button view-more send" id="btn-validate"
+							<button class="button login-btn" id="btn-validate"
 								type="submit">
 								<span>Send</span>
 							</button>

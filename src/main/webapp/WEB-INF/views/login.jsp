@@ -131,13 +131,13 @@
 						</p>
 						<c:choose>
 							<c:when test="${eventId!=null}">
-								<input type="text" name="eventId" id="eventId"
+								<input type="hidden" name="eventId" id="eventId"
 									value="${eventId}">
-									<input type="text" name="file" id="file" value="${file}">
+									<input type="hidden" name="file" id="file" value="${file}">
 							</c:when>
 							<c:otherwise>
-								<input type="text" name="eventId" id="eventId" value="0">
-								<input type="text" name="file" id="file" value="0">
+								<input type="hidden" name="eventId" id="eventId" value="0">
+								<input type="hidden" name="file" id="file" value="0">
 							</c:otherwise>
 						</c:choose>
 					</form>
