@@ -270,7 +270,7 @@
 						var="faqContentList" varStatus="loop">
 						<div class="faq-section">
 
-							<div class="card-header " data-toggle="collapse"
+							<div class="card-header collapsed" data-toggle="collapse"
 								href="#collapseOne${loop.index}">
 								<a class="card-title"> <span>${faqContentList.faqQue}</span>
 								</a>
@@ -388,7 +388,7 @@
 									href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.languageId}/${detailNewsList.pageId}/${detailNewsList.newsblogsId}">more
 								</a> --%>
 							<a
-								href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.newsblogsId}">more
+								href="${pageContext.request.contextPath}/NewsDetails/${detailNewsList.exVar1}">more
 							</a>
 						</div>
 					</div>

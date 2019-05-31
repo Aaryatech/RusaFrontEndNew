@@ -92,6 +92,13 @@ public class HomeController {
 					TestImonial[].class);
 			List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 
+			for(int i=0;i<testImonial.size() ; i++) {
+				
+				if(testImonial.get(i).getExInt1()==1) { 
+				 testImonial.get(i).setMessage(Jsoup.parse(testImonial.get(i).getMessage()).text()); 
+				}
+				 
+			}
 			 
 			NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map,
 					NewsDetails[].class);

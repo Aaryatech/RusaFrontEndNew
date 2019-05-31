@@ -49,10 +49,10 @@ public class CmsController {
 				model.addObject("maintainance", maintainance);
 			} else {
 
-				if(session.getAttribute("menuList") == null) {
+				if (session.getAttribute("menuList") == null) {
 					InitializeSession.intializeSission(request);
 				}
-				
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("slugName", slugName);
 				map.add("langId", langId);
@@ -67,6 +67,15 @@ public class CmsController {
 				map.add("slugName", slugName);
 				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
 						PageMetaData.class);
+
+				try {
+					for (int i = 0; i < pageContent.getDetailNewsList().size(); i++) {
+						pageContent.getDetailNewsList().get(i).setExVar1(EmailUtility
+								.Encrypt(String.valueOf(pageContent.getDetailNewsList().get(i).getNewsblogsId())));
+					}
+				} catch (Exception e) {
+
+				}
 				model.addObject("pageMetaData", pageMetaData);
 
 				map = new LinkedMultiValueMap<String, Object>();
@@ -75,9 +84,10 @@ public class CmsController {
 				NewsSectionList[] news = rest.postForObject(Constant.url + "/getNewsSectionBySectionId", map,
 						NewsSectionList[].class);
 				newsSectionList = new ArrayList<>(Arrays.asList(news));
-				
-				for(int i=0 ; i<newsSectionList.size() ;i++) {
-					newsSectionList.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(newsSectionList.get(i).getNewsblogsId())));
+
+				for (int i = 0; i < newsSectionList.size(); i++) {
+					newsSectionList.get(i)
+							.setExVar1(EmailUtility.Encrypt(String.valueOf(newsSectionList.get(i).getNewsblogsId())));
 				}
 				model.addObject("newsSectionList", newsSectionList);
 				model.addObject("langId", langId);
@@ -160,6 +170,18 @@ public class CmsController {
 				map.add("langId", langId);
 				SearchData searchData = rest.postForObject(Constant.url + "/serchWordFromTable", map, SearchData.class);
 				model.addObject("searchData", searchData);
+				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
+				
+				try {
+					
+					for (int i = 0; i < searchData.getNewsSerchList().size(); i++) {
+						searchData.getNewsSerchList().get(i).setExVar1(EmailUtility
+								.Encrypt(String.valueOf(searchData.getNewsSerchList().get(i).getNewsblogsId())));
+					}
+					
+				}catch (Exception e) {
+					// TODO: handle exception
+				}
 				// System.out.println(searchData);
 			}
 
@@ -246,7 +268,7 @@ public class CmsController {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "imgGallary");
- 
+
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {

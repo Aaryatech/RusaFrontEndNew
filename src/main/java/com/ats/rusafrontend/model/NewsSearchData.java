@@ -11,6 +11,9 @@ public class NewsSearchData {
 	private String editDate;
 	private String pageName;  
 	private String pageSlug;
+	private String exVar1;
+	private String featuredImage;
+	
 	public int getNewsblogsId() {
 		return newsblogsId;
 	}
@@ -59,11 +62,23 @@ public class NewsSearchData {
 	public void setPageSlug(String pageSlug) {
 		this.pageSlug = pageSlug;
 	}
+	public String getExVar1() {
+		return exVar1;
+	}
+	public void setExVar1(String exVar1) {
+		this.exVar1 = exVar1;
+	}
+	public String getFeaturedImage() {
+		return featuredImage;
+	}
+	public void setFeaturedImage(String featuredImage) {
+		this.featuredImage = featuredImage;
+	}
 	@Override
 	public String toString() {
 		return "NewsSearchData [newsblogsId=" + newsblogsId + ", moduleId=" + moduleId + ", heading=" + heading
 				+ ", descriptions=" + descriptions + ", addDate=" + addDate + ", editDate=" + editDate + ", pageName="
-				+ pageName + ", pageSlug=" + pageSlug + "]";
+				+ pageName + ", pageSlug=" + pageSlug + ", exVar1=" + exVar1 + ", featuredImage=" + featuredImage + "]";
 	}
 	
 	

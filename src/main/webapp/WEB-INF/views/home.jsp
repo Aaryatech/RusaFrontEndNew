@@ -184,8 +184,8 @@
 							</c:forEach>
 
 
-							<c:forEach items="${sessionScope.expireEventList}" var="expireEventList"
-								varStatus="count">
+							<c:forEach items="${sessionScope.expireEventList}"
+								var="expireEventList" varStatus="count">
 								<c:if test="${cnt<10}">
 									<div class="tab-content-section">
 
@@ -412,75 +412,85 @@
 					<c:forEach items="${sessionScope.testImonial}" var="testImonial"
 						varStatus="count">
 						<c:choose>
-							<c:when test="${count.last}">
 
-								<div class="carousel-item active">
-									<c:set var="imgfind" value="0"></c:set>
+							<c:when test="${testImonial.exInt1==1}">
+								<c:choose>
+									<c:when test="${count.last}">
 
-									<c:if test="${not empty testImonial.imageName}">
+										<div class="carousel-item active">
+											<c:set var="imgfind" value="0"></c:set>
 
-										<img
-											src="${sessionScope.gallryImageURL}${testImonial.imageName}"
-											width="100" height="100" alt="${testImonial.fromName}"
-											class="user">
-										<p>
-											<strong>${testImonial.fromName}</strong>
-										</p>
+											<c:if test="${not empty testImonial.imageName}">
 
-										<%-- 	<c:set var="string4" value="${testImonial.message}" />
-										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
-										<p>${testImonial.message}</p>
-										<c:set var="imgfind" value="1"></c:set>
+												<img
+													src="${sessionScope.gallryImageURL}${testImonial.imageName}"
+													width="100" height="100" alt="${testImonial.fromName}"
+													class="user">
+												<p>
+													<strong>${testImonial.fromName}</strong>
+												</p>
 
-									</c:if>
-									<c:if test="${imgfind==0}">
-										<img
-											src="${pageContext.request.contextPath}/resources/images/user.png"
-											class="user">
-										<p>
-											<strong>${testImonial.fromName}</strong>
-										</p>
+												<p>${testImonial.message}</p>
+												<c:set var="imgfind" value="1"></c:set>
 
-										<%-- 	<c:set var="string4" value="${testImonial.message}" />
-										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
-										<p>${testImonial.message}</p>
-									</c:if>
-								</div>
+											</c:if>
+											<c:if test="${imgfind==0}">
+												<img
+													src="${pageContext.request.contextPath}/resources/images/user.png"
+													class="user">
+												<p>
+													<strong>${testImonial.fromName}</strong>
+												</p>
+
+
+												<p>${testImonial.message}</p>
+											</c:if>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="carousel-item ">
+											<c:set var="imgfind" value="0"></c:set>
+
+											<c:if test="${not empty testImonial.imageName}">
+
+												<img
+													src="${sessionScope.gallryImageURL}${testImonial.imageName}"
+													width="100" height="100" alt="${testImonial.fromName}"
+													class="user">
+												<p>
+													<strong>${testImonial.fromName}</strong>
+												</p>
+
+												<p>${testImonial.message}</p>
+												<c:set var="imgfind" value="1"></c:set>
+
+											</c:if>
+											<c:if test="${imgfind==0}">
+												<img
+													src="${pageContext.request.contextPath}/resources/images/user.png"
+													class="user">
+												<p>
+													<strong>${testImonial.fromName}</strong>
+												</p>
+
+												<p>${testImonial.message}</p>
+											</c:if>
+										</div>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
-							<c:otherwise>
-								<div class="carousel-item ">
-									<c:set var="imgfind" value="0"></c:set>
+							<c:when test="${testImonial.exInt1==2}">
+								<c:choose>
+									<c:when test="${count.last}">
 
-									<c:if test="${not empty testImonial.imageName}">
-
-										<img
-											src="${sessionScope.gallryImageURL}${testImonial.imageName}"
-											width="100" height="100" alt="${testImonial.fromName}"
-											class="user">
-										<p>
-											<strong>${testImonial.fromName}</strong>
-										</p>
-
-										<%-- <c:set var="string4" value="${testImonial.message}" />
-										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
-										<p>${testImonial.message}</p>
-										<c:set var="imgfind" value="1"></c:set>
-
-									</c:if>
-									<c:if test="${imgfind==0}">
-										<img
-											src="${pageContext.request.contextPath}/resources/images/user.png"
-											class="user">
-										<p>
-											<strong>${testImonial.fromName}</strong>
-										</p>
-										<%-- 
-										<c:set var="string4" value="${testImonial.message}" />
-										<c:set var="string3" value="${fn:substring(string4, 0, 180)}" /> --%>
-										<p>${testImonial.message}</p>
-									</c:if>
-								</div>
-							</c:otherwise>
+										<div class="carousel-item active">
+											${testImonial.message}</div>
+									</c:when>
+									<c:otherwise>
+										<div class="carousel-item ">${testImonial.message}</div>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
 						</c:choose>
 					</c:forEach>
 				</div>
@@ -509,6 +519,7 @@
 	<%--    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/app.js"></script> --%>
 	<%-- <script
 		src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script> --%>
+		 
 	<script type="text/javascript">
 		(function($) {
 	<%Date date = new Date();
@@ -658,6 +669,75 @@
 
 						});
 	</script>
+ 
+<!-- <div id="player1"></div>
+<div id="player2"></div>
+<div id="player3"></div>
+<div id="player4"></div>
+<script>
+    var tag = document.createElement('script');
+    tag.src = "//www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    var vids = [];
+
+    function onYouTubeIframeAPIReady() {
+        player1 = new YT.Player('player1', {
+            height: '200',
+            width: '400',
+            videoId: 'gbug3zTm3Ws',
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+        vids.push(player1);
+        player2 = new YT.Player('player2', {
+            height: '200',
+            width: '400',
+            videoId: 'JFBUJ6kNl28',
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+         vids.push(player2);
+        
+        player3 = new YT.Player('player3', {
+            height: '200',
+            width: '400',
+            videoId: 'pUjE9H8QlA4',
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+        vids.push(player3);
+        
+        player4 = new YT.Player('player4', {
+            height: '200',
+            width: '400',
+            videoId: 'saz1vsk69KI',
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+        vids.push(player4);
+    }
+    
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            stopVideo(event.target.a.id);
+        }
+    }
+    
+    function stopVideo(player_id) {
+    
+      for(var i=0;i<vids.length;i++){
+        if (player_id !=vids[i].a.id)
+          vids[i].stopVideo();
+      }
+    }
+</script> -->
 </body>
 </html>
 

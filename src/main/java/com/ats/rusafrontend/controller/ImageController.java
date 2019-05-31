@@ -64,6 +64,7 @@ public class ImageController {
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
+		
 		ModelAndView model = new ModelAndView("content/news-detail");
 
 		try {

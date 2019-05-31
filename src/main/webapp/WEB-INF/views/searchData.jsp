@@ -130,7 +130,7 @@
 					<c:set var="find" value="1"></c:set>
 				</c:if>
 
-			  <c:if test="${searchData.faqSerchList.size()>0}">
+				<c:if test="${searchData.faqSerchList.size()>0}">
 					FAQ's
  
 					<c:forEach items="${searchData.faqSerchList}" var="faqSerchList">
@@ -181,26 +181,36 @@
 							</div>
 
 						</div>
-					</c:forEach> 
+					</c:forEach>
 					<c:set var="find" value="1"></c:set>
-				</c:if>  
+				</c:if>
 
-				<%--  <c:if test="${searchData.newsSerchList.size()>0}">
+				<c:if test="${searchData.newsSerchList.size()>0}">
 					News
 
 					<c:forEach items="${searchData.newsSerchList}" var="newsSerchList">
 
 						<div class="row">
 							<div class="col-12 col-sm-3 col-lg-2 search-image">
-								<img
-									src="http://tomcat.aaryatechindia.in:6435/media/gallery/2019-03-01_18:45:45_2019-02-15_12_58_14_PFMS-Training-1-1.jpg"
-									alt="Digital-Launch" title="Digital-Launch"
-									class="img-responsive">
+
+								<c:choose>
+									<c:when test="${not empty newsSerchList.heading}">
+										<img src="${getGallryImageURL}${newsSerchList.featuredImage}"
+											alt="${newsSerchList.heading}"
+											title="${newsSerchList.heading}" class="img-responsive">
+									</c:when>
+									<c:otherwise>
+										<img
+											src="${pageContext.request.contextPath}/resources/images/noimageteam.png" 
+											 class="img-responsive">
+									</c:otherwise>
+								</c:choose>
+
 							</div>
 							<div class="col-12 col-sm-6 col-lg-6">
 								<h2>
 									<a
-										href="${pageContext.request.contextPath}/NewsDetails/${newsSerchList.newsblogsId}">${newsSerchList.heading}</a>
+										href="${pageContext.request.contextPath}/NewsDetails/${newsSerchList.exVar1}">${newsSerchList.heading}</a>
 								</h2>
 
 								<c:set var="string1" value="${newsSerchList.descriptions}" />
@@ -213,7 +223,7 @@
 
 					</c:forEach>
 					<c:set var="find" value="1"></c:set>
-				</c:if>   --%>
+				</c:if>
 
 				<%-- <c:if test="${searchData.gallerySerchList.size()>0}">
 					<h2>Gallery</h2>
@@ -254,7 +264,7 @@
 				<c:if test="${find==0}">
 					<h2 style="text-align: center;">No Record Found</h2>
 				</c:if>
-			</div> 
+			</div>
 		</div>
 	</div>
 
