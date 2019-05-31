@@ -427,7 +427,7 @@ pre code {
 }
 @media (min-width:576px) {
 .container {
-	max-width: 540px
+	max-width: 700px
 }
 }
 @media (min-width:768px) {
@@ -1331,22 +1331,22 @@ padding-left:0
 	margin-bottom: 1rem;
 	background-color: transparent
 }
-.table td, .table th {
+table td, .table th {
 padding:.75rem;
 	vertical-align: top;
 	border-top: 1px solid #dee2e6
 }
-.table thead th {
+table thead th {
 	vertical-align: middle;
 	border-bottom: 2px solid #dee2e6
 }
-.table tbody+tbody {
+table tbody+tbody {
 	border-top: 2px solid #dee2e6
 }
-.table .table {
+table .table {
 	background-color: #fff
 }
-.table-sm td, .table-sm th {
+table-sm td, .table-sm th {
 padding:.3rem
 }
 .table-bordered {
@@ -2448,7 +2448,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	float: left;
 	min-width: 10rem;
 	padding:0rem 0 0 -1px;
-	margin:.125rem 0 0;
+	margin:0rem 0 0;
 	font-size: 13px;
 	    font-weight: 600;
 	color: #212529;
@@ -4828,7 +4828,7 @@ transform:translate3d(0, 0, 0)
 }
 .carousel-control-next, .carousel-control-prev {
 	position: absolute;
-	top: 0;
+	top: 40%;
 	bottom: 0;
 	display: -ms-flexbox;
 	display: flex;
@@ -4836,7 +4836,8 @@ transform:translate3d(0, 0, 0)
 	align-items: center;
 	-ms-flex-pack: center;
 	justify-content: center;
-	width: 15%;
+	    width: 50px;
+    height: 50px;
 	color: #fff;
 	text-align: center;
 }

@@ -557,6 +557,7 @@ overflow: hidden;
 	background:url(../images/watermark.jpg) repeat;
 	text-align: center;
 	margin:50px 0px 0px 0px;
+	
 }
 .testimonials h5 {
 	font-size:30px;
@@ -1081,16 +1082,19 @@ textarea {
 
 .send{
 	background-color:#fe9500;
+	border: 0px;
+	margin:0px;
 }
 .send:hover{
 	background-color:#f18d00;
 }
 .send span::after {
-    font-family: 'icomoon' !important;
-    content: "\e90f";
-    font-size: 15px;
-    color: #21316c;
-    margin: 0px 0px 0px 24px;
+  
+}
+.error-msg{
+color:#ff0000;
+margin-top: -15px;	
+	
 }
 .nav-item.dropdown:hover .dropdown-menu {
 	display: block;
@@ -2036,8 +2040,15 @@ margin:0px 0px 0px 0px !important;
 
 .sitemap li ul{
 	margin:0px 0px 0px 30px;
-	padding:0px;
+	#21316c
 }
+.important-link{
+ 	border-left: 1px dotted #919abc !important;
+ 	border-right:1px dotted #919abc !important;
+ 	
+ 	
+}
+
 
 @media screen and (max-width:1400px) {
 .navbar-nav .nav-link {
@@ -2156,12 +2167,31 @@ font-size:14px;
 .leftColm {
     display: none;
 }
+.dashboard-left-menu{
+	display: block;
+	    margin-bottom: 20px;
+    min-height: auto;
+}
 }
 
 @media screen and (max-width:736px) {
 .right-Colm img {
 width: 100% !important;
     height: auto !important;
+}
+.leftColm .menu li:last-child {
+    margin-bottom: 10px;
+}
+.rusa-gallery-sub-tab .nav-item {
+    width: 45%;
+}
+}
+
+@media screen and (max-width:500px) {
+.rusa-gallery-sub-tab .nav-item {
+    width: 100%;
+    margin: 0px;
+    padding: 0;
 }
 }
 
@@ -2191,10 +2221,12 @@ width: 100% !important;
 .slider h1 {
 	display:none;
 }
+
 }
 
 @media screen and (max-width:375px) {
 .navbar-toggler {
     top: -118px;
 }
+
 }
