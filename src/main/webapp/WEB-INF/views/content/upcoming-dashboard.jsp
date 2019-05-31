@@ -86,10 +86,10 @@
             </c:if> --%>
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
-			<div class="col-12 col-sm-3 col-lg-3">
+			<div class="col-12 col-sm-12 col-lg-3">
 
 
-				<div class="leftColm">
+				<div class="leftColm dashboard-left-menu">
 					<div class="profile-section">
 						<div class="upload-photo">
 							<c:choose>
@@ -141,7 +141,8 @@
 				</div>
 			</div>
 
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
+			<div class="col-12 col-sm-12 col-lg-9">
+			<div class="right-Colm news-listing-page">
 				<c:if test="${sessionScope.success != null}">
 
 					<div class="col-12 col-sm-12 col-lg-12 ">
@@ -246,7 +247,7 @@
 				</div>
 
 			</div>
-
+</div>
 
 
 

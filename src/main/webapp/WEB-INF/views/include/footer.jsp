@@ -12,7 +12,7 @@
           				 ${setting[8].keyValues}
        			 		  </c:if>
 			</div>
-			<div class="col-12 col-sm-8 col-lg-5">
+			<div class="col-12 col-sm-8 col-lg-5 important-link">
 				<h6>Important Links</h6>
 				<c:if test="${setting[7].isActive==1}">
           				 ${setting[7].keyValues}

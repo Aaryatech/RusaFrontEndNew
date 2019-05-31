@@ -83,7 +83,7 @@
 			<div class="col-12 col-sm-3 col-lg-3">
 
 
-				<div class="leftColm">
+				<div class="leftColm dashboard-left-menu">
 					<div class="profile-section">
 						<div class="upload-photo">
 
@@ -142,79 +142,81 @@
 				</div>
 			</div>
 
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
-				<h2>Dashboard</h2>
+			<div class="col-12 col-sm-9 col-lg-9">
+				<div class="right-Colm news-listing-page">
+					<h2>Dashboard</h2>
 
-				<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
-					role="tablist">
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/upcomingEvents"><span
-							class="icon-calendar-with-a-clock-time-tools icon"></span>
-							Upcoming Events</a></li>
+					<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
+						role="tablist">
+						<li class="nav-item"><a class="nav-link"
+							href="${pageContext.request.contextPath}/upcomingEvents"><span
+								class="icon-calendar-with-a-clock-time-tools icon"></span>
+								Upcoming Events</a></li>
 
-					<li class="nav-item "><a class="nav-link active"
-						href="${pageContext.request.contextPath}/previousEvents"><span
-							class="icon-calendar icon"></span> Previous Events </a></li>
-				</ul>
+						<li class="nav-item "><a class="nav-link active"
+							href="${pageContext.request.contextPath}/previousEvents"><span
+								class="icon-calendar icon"></span> Previous Events </a></li>
+					</ul>
 
-				<div id="previous" class="tab-pane active">
-					<table align="center" cellpadding="0" cellspacing="0" class="table">
-						<thead>
-							<tr>
-								<th>Sr. no</th>
-								<th>Event Name</th>
-								<th>Download</th>
-								<th>Event Applied Status</th>
-								<th>Feedback</th>
-								<th>Detail</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${previous}" var="previous" varStatus="count">
-								<tr class="odd">
-
-									<td>${count.index+1}</td>
-									<td>${previous.heading}</td>
-									<c:choose>
-										<c:when test="${not empty previous.downloadPdf}">
-											<td><a href="${documentUrl}${previous.downloadPdf}" target="_blank"><span
-													class="icon-download-2"></span> Download</a></td>
-
-										</c:when>
-										<c:otherwise>
-											<td>--</td>
-
-										</c:otherwise>
-									</c:choose>
-									<c:choose>
-										<c:when test="${previous.apply==1}">
-											<td>YES <c:if test="${previous.isFeedback==0}">
-													<br>
-													<a
-														href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.exVar1}">Feedback</a>
-												</c:if></td>
-										</c:when>
-										<c:otherwise>
-											<td>NO</td>
-
-										</c:otherwise>
-									</c:choose>
-									<td>${previous.feedback}</td>
-									<td><a
-										href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${previous.exVar1}&typeId=${typeId}">Detail</a></td>
-
+					<div id="previous" class="tab-pane active">
+						<table align="center" cellpadding="0" cellspacing="0"
+							class="table">
+							<thead>
+								<tr>
+									<th>Sr. no</th>
+									<th>Event Name</th>
+									<th>Download</th>
+									<th>Event Applied Status</th>
+									<th>Feedback</th>
+									<th>Detail</th>
 								</tr>
-							</c:forEach>
+							</thead>
+							<tbody>
+								<c:forEach items="${previous}" var="previous" varStatus="count">
+									<tr class="odd">
 
-						</tbody>
-					</table>
+										<td>${count.index+1}</td>
+										<td>${previous.heading}</td>
+										<c:choose>
+											<c:when test="${not empty previous.downloadPdf}">
+												<td><a href="${documentUrl}${previous.downloadPdf}"
+													target="_blank"><span class="icon-download-2"></span>
+														Download</a></td>
+
+											</c:when>
+											<c:otherwise>
+												<td>--</td>
+
+											</c:otherwise>
+										</c:choose>
+										<c:choose>
+											<c:when test="${previous.apply==1}">
+												<td>YES <c:if test="${previous.isFeedback==0}">
+														<br>
+														<a
+															href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.exVar1}">Feedback</a>
+													</c:if></td>
+											</c:when>
+											<c:otherwise>
+												<td>NO</td>
+
+											</c:otherwise>
+										</c:choose>
+										<td>${previous.feedback}</td>
+										<td><a
+											href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${previous.exVar1}&typeId=${typeId}">Detail</a></td>
+
+									</tr>
+								</c:forEach>
+
+							</tbody>
+						</table>
+					</div>
 				</div>
+
 			</div>
 
 		</div>
-
-
-	</div>
 	</div>
 	<br>
 

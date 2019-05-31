@@ -86,7 +86,7 @@
 
 			<div class="col-12 col-sm-3 col-lg-3">
 
-				<div class="leftColm">
+				<div class="leftColm dashboard-left-menu">
 					<div class="profile-section">
 						<div class="upload-photo">
 							<c:choose>
@@ -146,119 +146,120 @@
 			</div>
 
 
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
+			<div class="col-12 col-sm-9 col-lg-9">
+				<div class="right-Colm news-listing-page">
+					<div class="col-lg-12">
 
-				<div class="col-lg-12">
+						<c:if test="${sessionScope.success != null}">
 
-					<c:if test="${sessionScope.success != null}">
-
-						<div class="col-12 col-sm-12 col-lg-12 ">
-							<div class="alert alert-success ">
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<strong>Success : </strong> ${success}
-							</div>
-						</div>
-					</c:if>
-					<%
-						session.removeAttribute("success");
-					%>
-					<c:if test="${sessionScope.errorMsg != null}">
-						<div class="col-12 col-sm-12 col-lg-12 ">
-							<div class="alert alert-danger ">
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<strong>Error : </strong> ${errorMsg}
-							</div>
-						</div>
-					</c:if>
-					<%
-						session.removeAttribute("errorMsg");
-					%>
-
-					<div class="row">
-						<c:if test="${not empty event.featuredImage}">
-							<div class="col-12 col-sm-6 col-lg-6">
-								<img src="${sessionScope.gallryImageURL}${event.featuredImage}"
-									alt="${event.heading}" title="${event.heading}"
-									class="img-responsive thumbnail">
+							<div class="col-12 col-sm-12 col-lg-12 ">
+								<div class="alert alert-success ">
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+									<strong>Success : </strong> ${success}
+								</div>
 							</div>
 						</c:if>
-						<div class="col-12 col-sm-12 col-lg-12">
+						<%
+							session.removeAttribute("success");
+						%>
+						<c:if test="${sessionScope.errorMsg != null}">
+							<div class="col-12 col-sm-12 col-lg-12 ">
+								<div class="alert alert-danger ">
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+									<strong>Error : </strong> ${errorMsg}
+								</div>
+							</div>
+						</c:if>
+						<%
+							session.removeAttribute("errorMsg");
+						%>
 
-							<strong>${event.heading}</strong><br>
-							<p>${event.descriptions}</p>
-							<p>
-								<span><i class="icon-location"></i> <strong>Venue
-										:</strong> ${event.eventLocation}</span> <span><i class="icon-calendar"></i>
-									<strong>Date:</strong> ${event.eventDateFrom}</span> <span><i
-									class="icon-man-user"></i> <strong>Contact Person :</strong>
-									${event.eventContactPerson}</span> <span><i
-									class="icon-smartphone-call"></i> <strong>Contact :</strong>
-									+91 ${event.eventContactNumber}</span><br>
-							</p>
-							<c:if test="${typeId==2}">
-								<c:if test="${event.exInt2==1}">
-
-									<c:forEach items="${ids}" var="id">
-										<c:if test="${editReg.userType==id}">
-
-											<form class="form-horizontal"
-												action="${pageContext.request.contextPath}/submtEventAppliedForm"
-												method="post" enctype="multipart/form-data"
-												name="form_sample_2" id="form_sample_2">
-
-												<p>
-													<strong>Upload Document : </strong>
-												</p>
-
-												<div class="col-sm-7">
-													<input type="file" name="pagePdf" id="pagePdf"
-														class="form-control" data-parsley-minlength="2" required
-														accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
-
-													<p>
-														<span> <strong>Please upload :</strong> .doc,
-															.docx, .pptx,.pdf and .xlsx only
-														</span>
-													</p>
-													<p>
-														<span> <strong>Document Description :</strong>
-															${event.exVar1}
-														</span>
-													</p>
-												</div>
-												<input type="hidden" name="newsblogsId"
-													value="${event.newsblogsId}">
-
-												<button type="submit" class="btn button apply">Apply</button>
-
-											</form>
-
-										</c:if>
-									</c:forEach>
-
-
-								</c:if>
-
-
-								<c:if test="${event.exInt2==0}">
-
-									<c:forEach items="${ids}" var="id">
-										<c:if test="${editReg.userType==id}">
-											<a
-												href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}"
-												class="btn button apply">Apply</a>
-
-										</c:if>
-									</c:forEach>
-								</c:if>
-
+						<div class="row">
+							<c:if test="${not empty event.featuredImage}">
+								<div class="col-12 col-sm-6 col-lg-6">
+									<img src="${sessionScope.gallryImageURL}${event.featuredImage}"
+										alt="${event.heading}" title="${event.heading}"
+										class="img-responsive thumbnail">
+								</div>
 							</c:if>
+							<div class="col-12 col-sm-12 col-lg-12">
+
+								<strong>${event.heading}</strong><br>
+								<p>${event.descriptions}</p>
+								<p>
+									<span><i class="icon-location"></i> <strong>Venue
+											:</strong> ${event.eventLocation}</span> <span><i
+										class="icon-calendar"></i> <strong>Date:</strong>
+										${event.eventDateFrom}</span> <span><i class="icon-man-user"></i>
+										<strong>Contact Person :</strong> ${event.eventContactPerson}</span>
+									<span><i class="icon-smartphone-call"></i> <strong>Contact
+											:</strong> +91 ${event.eventContactNumber}</span><br>
+								</p>
+								<c:if test="${typeId==2}">
+									<c:if test="${event.exInt2==1}">
+
+										<c:forEach items="${ids}" var="id">
+											<c:if test="${editReg.userType==id}">
+
+												<form class="form-horizontal"
+													action="${pageContext.request.contextPath}/submtEventAppliedForm"
+													method="post" enctype="multipart/form-data"
+													name="form_sample_2" id="form_sample_2">
+
+													<p>
+														<strong>Upload Document : </strong>
+													</p>
+
+													<div class="col-sm-7">
+														<input type="file" name="pagePdf" id="pagePdf"
+															class="form-control" data-parsley-minlength="2" required
+															accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
+
+														<p>
+															<span> <strong>Please upload :</strong> .doc,
+																.docx, .pptx,.pdf and .xlsx only
+															</span>
+														</p>
+														<p>
+															<span> <strong>Document Description :</strong>
+																${event.exVar1}
+															</span>
+														</p>
+													</div>
+													<input type="hidden" name="newsblogsId"
+														value="${event.newsblogsId}">
+
+													<button type="submit" class="btn button apply">Apply</button>
+
+												</form>
+
+											</c:if>
+										</c:forEach>
+
+
+									</c:if>
+
+
+									<c:if test="${event.exInt2==0}">
+
+										<c:forEach items="${ids}" var="id">
+											<c:if test="${editReg.userType==id}">
+												<a
+													href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}"
+													class="btn button apply">Apply</a>
+
+											</c:if>
+										</c:forEach>
+									</c:if>
+
+								</c:if>
+							</div>
 						</div>
 					</div>
 				</div>

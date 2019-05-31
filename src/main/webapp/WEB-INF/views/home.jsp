@@ -92,9 +92,9 @@
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 
-	<div id="myCarousel" class="carousel slide  slider"
+	<div id="myCarousel " class="carousel slide slider"
 		data-ride="carousel">
-		<div class="carousel-inner">
+		<div class="carousel-inner" id="slider">
 			<div class="carousel-item active">
 				<img class="first-slide"
 					src="${sessionScope.url}${editbanner.sliderImage}"
@@ -122,9 +122,9 @@
 		</a>
 	</div>
 
-
+	<c:set var="videocount" value="0"></c:set>
 	<div class="card sub-link">
-		<div class="container">
+		<div class="container" id="main-content">
 			<div class="row">
 
 				<c:forEach items="${getCMSDesc}" var="getCMSDesc" varStatus="count">
@@ -151,7 +151,7 @@
 		</div>
 	</div>
 
-	<div class="container main-content" id="main-content">
+	<div class="container main-content">
 
 		<div class="row">
 			<div class="col-12 col-sm-12 col-lg-4 news-notifications">
@@ -296,15 +296,15 @@
 
 								<c:choose>
 									<c:when test="${count.last}">
-										<div class="carousel-item active">
+										<div class="carousel-item active" id="video${count.index+1}">
 											${videoGalleryDetail.fileName}</div>
 									</c:when>
 									<c:otherwise>
-										<div class="carousel-item">
+										<div class="carousel-item" id="video${count.index+1}">
 											${videoGalleryDetail.fileName}</div>
 									</c:otherwise>
 								</c:choose>
-
+								<c:set var="videocount" value="${videocount+1}"></c:set>
 							</c:forEach>
 
 
@@ -332,6 +332,7 @@
 
 		</div>
 	</div>
+	 
 	<div class="news-section">
 		<div class="container main-content">
 			<div class="row">
@@ -395,6 +396,8 @@
 					</div>
 					<h3></h3>
 					<div id="calendar"></div>
+					<a href="${pageContext.request.contextPath}/listOFEvent/1">See
+						All Events</a>
 				</div>
 			</div>
 
@@ -487,7 +490,15 @@
 											${testImonial.message}</div>
 									</c:when>
 									<c:otherwise>
-										<div class="carousel-item ">${testImonial.message}</div>
+										<div class="carousel-item ">
+											<div class="row">
+												<div class="col-12 col-sm-12 col-lg-3"></div>
+												<div class="col-12 col-sm-12 col-lg-6">
+
+													${testImonial.message}</div>
+												<div class="col-12 col-sm-12 col-lg-3"></div>
+											</div>
+										</div>
 									</c:otherwise>
 								</c:choose>
 							</c:when>
@@ -506,6 +517,7 @@
 			</div>
 		</div>
 	</div>
+	<input id="videoct" value="${videocount}" type="hidden">
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
@@ -519,7 +531,7 @@
 	<%--    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/app.js"></script> --%>
 	<%-- <script
 		src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script> --%>
-		 
+
 	<script type="text/javascript">
 		(function($) {
 	<%Date date = new Date();
@@ -669,75 +681,72 @@
 
 						});
 	</script>
- 
-<!-- <div id="player1"></div>
-<div id="player2"></div>
-<div id="player3"></div>
-<div id="player4"></div>
-<script>
-    var tag = document.createElement('script');
-    tag.src = "//www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    var player;
-    var vids = [];
+	<!-- <div id="player1"></div>
+	<div id="player2"></div>
+	<div id="player3"></div>
+	<div id="player4"></div>
+	<script>
+		var tag = document.createElement('script');
+		tag.src = "//www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    function onYouTubeIframeAPIReady() {
-        player1 = new YT.Player('player1', {
-            height: '200',
-            width: '400',
-            videoId: 'gbug3zTm3Ws',
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
-        });
-        vids.push(player1);
-        player2 = new YT.Player('player2', {
-            height: '200',
-            width: '400',
-            videoId: 'JFBUJ6kNl28',
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
-        });
-         vids.push(player2);
-        
-        player3 = new YT.Player('player3', {
-            height: '200',
-            width: '400',
-            videoId: 'pUjE9H8QlA4',
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
-        });
-        vids.push(player3);
-        
-        player4 = new YT.Player('player4', {
-            height: '200',
-            width: '400',
-            videoId: 'saz1vsk69KI',
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
-        });
-        vids.push(player4);
-    }
-    
-    function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-            stopVideo(event.target.a.id);
-        }
-    }
-    
-    function stopVideo(player_id) {
-    
-      for(var i=0;i<vids.length;i++){
-        if (player_id !=vids[i].a.id)
-          vids[i].stopVideo();
-      }
-    }
-</script> -->
+		var player;
+		var vids = [];
+
+		function onYouTubeIframeAPIReady() {
+			player1 = new YT.Player('player1', {
+				videoId : 'gbug3zTm3Ws',
+				events : {
+					'onStateChange' : onPlayerStateChange
+				}
+			});
+			vids.push(player1);
+			player2 = new YT.Player('player2', {
+				videoId : 'JFBUJ6kNl28',
+				events : {
+					'onStateChange' : onPlayerStateChange
+				}
+			});
+			vids.push(player2);
+
+			player3 = new YT.Player('player3', {
+				videoId : 'pUjE9H8QlA4',
+				events : {
+					'onStateChange' : onPlayerStateChange
+				}
+			});
+			vids.push(player3);
+
+			player4 = new YT.Player('player4', {
+				videoId : 'saz1vsk69KI',
+				events : {
+					'onStateChange' : onPlayerStateChange
+				}
+			});
+			vids.push(player4);
+		}
+
+		function onPlayerStateChange(event) {
+			if (event.data == YT.PlayerState.PLAYING) {
+				stopVideo(event.target.a.id);
+			}
+		}
+
+		function stopVideo(player_id) {
+
+			for (var i = 0; i < vids.length; i++) {
+				if (player_id != vids[i].a.id)
+					vids[i].stopVideo();
+			}
+		}
+	</script> -->
+	<script type="text/javascript">
+		$('.carousel').carousel({
+			interval : false
+		});
+	</script>
 </body>
 </html>
 

@@ -176,7 +176,10 @@ msg-error {
 
 							<br> <label>Your Name</label> <input type="text"
 								class="form-control" name="name" id="name" placeholder="Name"
-								required> <label>Your Email</label> <input type="email"
+								required> 
+								<!-- <p class="error-msg">Please Enter Your Name</p> -->
+								<label>Your Email</label> 
+								<input type="email"
 								class="form-control" name="email" id="email" placeholder="Email"
 								required> <label>Phone Number</label> <input type="text"
 								class="form-control" name="mobileNo" id="mobileNo"
@@ -188,7 +191,7 @@ msg-error {
 							<br> <span class="msg-error error"></span>
 							<div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>
 							</br>
-							<button class="button login-btn" id="btn-validate"
+							<button class="button send" id="btn-validate"
 								type="submit">
 								<span>Send</span>
 							</button>

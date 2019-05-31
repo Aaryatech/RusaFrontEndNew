@@ -81,8 +81,17 @@
 									var="catList">
 
 									<c:if test="${catList.sectionId==menuList.sectionId}">
+									
+									<c:choose>
+										<c:when test="${slugName==catList.slugName}">
+											<li class="active">
+										</c:when>
+										<c:otherwise>
+											<li> 
+										</c:otherwise>
+									</c:choose>
 
-										<li><c:choose>
+										<!-- <li> --><c:choose>
 												<c:when test="${not empty catList.externalUrl}">
 
 													<c:set value="${catList.externalUrl}" var="string"></c:set>
@@ -144,7 +153,16 @@
 										<c:forEach items="${sessionScope.menuList.subCatList}"
 											var="subCatList">
 											<c:if test="${subCatList.parentId==catList.catId}">
-												<li class="sub-menuleft"><c:choose>
+											
+											 <c:choose>
+												<c:when test="${slugName==subCatList.subSlugName}">
+													<li class="sub-menuleft active">
+												</c:when>
+												<c:otherwise>
+													<li class="sub-menuleft">
+												</c:otherwise>
+											</c:choose> 
+												 <!-- <li class="sub-menuleft"> --><c:choose>
 														<c:when test="${not empty subCatList.externalUrl}">
 
 															<c:set value="${subCatList.externalUrl}" var="string"></c:set>

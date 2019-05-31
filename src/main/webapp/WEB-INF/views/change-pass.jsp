@@ -108,7 +108,7 @@
 			<div class="col-12 col-sm-3 col-lg-3">
 
 
-				<div class="leftColm">
+				<div class="leftColm dashboard-left-menu">
 					<div class="profile-section">
 						<div class="upload-photo">
 							<c:choose>
@@ -168,104 +168,106 @@
 				</div>
 			</div>
 			<!-- onchange="getCheck()"  -->
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
-				<c:if test="${sessionScope.success != null}">
+			<div class="col-12 col-sm-9 col-lg-9">
+				<div class="right-Colm news-listing-page">
+					<c:if test="${sessionScope.success != null}">
 
-					<div class="col-12 col-sm-12 col-lg-12 ">
-						<div class="alert alert-success ">
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-							<strong>Success : </strong> ${success}
-						</div>
-					</div>
-				</c:if>
-				<%
-					session.removeAttribute("success");
-				%>
-				<c:if test="${sessionScope.errorMsg != null}">
-					<div class="col-12 col-sm-12 col-lg-12 ">
-						<div class="alert alert-danger ">
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-							<strong>Error : </strong> ${errorMsg}
-						</div>
-					</div>
-				</c:if>
-				<%
-					session.removeAttribute("errorMsg");
-				%>
-				<h2>Change Password</h2>
-
-				<form method="post"
-					action="${pageContext.request.contextPath}/changePassword"
-					onSubmit="return checkPassword(this)" name="login_form">
-					<div class="row row-eq-height">
-
-						<div id="currentPassDiv" class="col-12 col-sm-12 col-lg-12">
-							<div class="col-12 col-sm-12 col-lg-12">
-								<label>Current password</label> <input type="password"
-									class="form-control" name="pass" id="pass"
-									placeholder="Current password" required>
+						<div class="col-12 col-sm-12 col-lg-12 ">
+							<div class="alert alert-success ">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Success : </strong> ${success}
 							</div>
-							<div class="error_msg" id="error_msg" style="display: none">
-								<div class="alert alert-warning">Enter correct password.</div>
-
+						</div>
+					</c:if>
+					<%
+						session.removeAttribute("success");
+					%>
+					<c:if test="${sessionScope.errorMsg != null}">
+						<div class="col-12 col-sm-12 col-lg-12 ">
+							<div class="alert alert-danger ">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Error : </strong> ${errorMsg}
 							</div>
-							<div class="col-12 col-sm-12 col-lg-12">
+						</div>
+					</c:if>
+					<%
+						session.removeAttribute("errorMsg");
+					%>
+					<h2>Change Password</h2>
 
-								<button type="button" id="search" class="button login-btn"
-									onclick="getCheck()">Submit</button>
-								<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
+					<form method="post"
+						action="${pageContext.request.contextPath}/changePassword"
+						onSubmit="return checkPassword(this)" name="login_form">
+						<div class="row row-eq-height">
+
+							<div id="currentPassDiv" class="col-12 col-sm-12 col-lg-12">
+								<div class="col-12 col-sm-12 col-lg-12">
+									<label>Current password</label> <input type="password"
+										class="form-control" name="pass" id="pass"
+										placeholder="Current password" required>
+								</div>
+								<div class="error_msg" id="error_msg" style="display: none">
+									<div class="alert alert-warning">Enter correct password.</div>
+
+								</div>
+								<div class="col-12 col-sm-12 col-lg-12">
+
+									<button type="button" id="search" class="button login-btn"
+										onclick="getCheck()">Submit</button>
+									<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
-							</div>
-						</div>
-
-						<div id="newPassDiv" style="display: none"
-							class="col-12 col-sm-12 col-lg-12">
-							<div class="col-12 col-sm-12 col-lg-12">
-								<label>New Password</label> <input type="password"
-									class="form-control" name="newPass" id="newPass"
-									placeholder="New Password">
-							</div>
-							<div class="error_msg" id="error_newpass"
-								style="display: none">
-								<div class="alert alert-warning">Password Minimum 6 Character</div>
-
-							</div>
-							<div class="col-12 col-sm-12 col-lg-12">
-								<label>Confirm password</label> <input type="password"
-									class="form-control" name="confirmPass" id="confirmPass"
-									placeholder="Confirm password">
-							</div>
-							<div class="error_msg" id="error_confirmpass"
-								style="display: none">
-								<div class="alert alert-warning">Confirm password.</div>
-
-							</div>
-							<div class="error_msg" id="error_matchpass" style="display: none">
-								<div class="alert alert-warning">Password not matched.</div>
-
+								</div>
 							</div>
 
+							<div id="newPassDiv" style="display: none"
+								class="col-12 col-sm-12 col-lg-12">
+								<div class="col-12 col-sm-12 col-lg-12">
+									<label>New Password</label> <input type="password"
+										class="form-control" name="newPass" id="newPass"
+										placeholder="New Password">
+								</div>
+								<div class="error_msg" id="error_newpass" style="display: none">
+									<div class="alert alert-warning">Password Minimum 6
+										Character</div>
 
-							<div class="col-12 col-sm-12 col-lg-12">
+								</div>
+								<div class="col-12 col-sm-12 col-lg-12">
+									<label>Confirm password</label> <input type="password"
+										class="form-control" name="confirmPass" id="confirmPass"
+										placeholder="Confirm password">
+								</div>
+								<div class="error_msg" id="error_confirmpass"
+									style="display: none">
+									<div class="alert alert-warning">Confirm password.</div>
 
-								<button type="submit" id="log-btn" class="button login-btn">Submit</button>
-								<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
+								</div>
+								<div class="error_msg" id="error_matchpass"
+									style="display: none">
+									<div class="alert alert-warning">Password not matched.</div>
+
+								</div>
+
+
+								<div class="col-12 col-sm-12 col-lg-12">
+
+									<button type="submit" id="log-btn" class="button login-btn">Submit</button>
+									<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
+								</div>
 							</div>
 						</div>
-					</div>
-				</form>
+					</form>
 
 
 
+				</div>
 			</div>
-
 
 		</div>
 	</div>
@@ -286,7 +288,7 @@
 			$('#error_newpass').hide();
 			$('#error_confirmpass').hide();
 			$('#error_matchpass').hide();
-			
+
 			$.getJSON('${getPasswordCheck}', {
 
 				pass : pass,

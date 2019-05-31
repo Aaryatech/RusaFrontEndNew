@@ -80,7 +80,7 @@
 		<div class="row row-eq-height">
 			<div class="col-12 col-sm-3 col-lg-3">
 
-				<div class="leftColm">
+				<div class="leftColm dashboard-left-menu">
 					<div class="profile-section">
 						<div class="upload-photo">
 							<c:choose>
@@ -132,7 +132,8 @@
 				</div>
 			</div>
 
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
+			<div class="col-12 col-sm-9 col-lg-9">
+			<div class="right-Colm news-listing-page">
 				<h2>
 					My Profile
 					<c:if test="${editReg.userType==1}">
@@ -374,6 +375,7 @@
 
 				</form>
 			</div>
+		</div>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
