@@ -91,6 +91,7 @@ public class CmsController {
 				}
 				model.addObject("newsSectionList", newsSectionList);
 				model.addObject("langId", langId);
+				model.addObject("slugName", slugName);
 			}
 
 		} catch (Exception e) {
