@@ -132,7 +132,11 @@
 							<c:forEach items="${videoList}" var="videoList" varStatus="count">
 								<c:if test="${videoList.galleryCatId==catId}">
 									<div class="col-12 col-sm-3 col-lg-3">
-										${videoList.fileName}
+										<iframe width="100%" height="100%"
+												src="https://www.youtube.com/embed/${videoList.fileName}"
+												frameborder="0"
+												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+												allowfullscreen></iframe>
 									</div>
 								</c:if>
 							</c:forEach>

@@ -99,6 +99,8 @@ public class HomeController {
 				}
 				 
 			}
+			
+			System.out.println(testImonial);
 			 
 			NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map,
 					NewsDetails[].class);

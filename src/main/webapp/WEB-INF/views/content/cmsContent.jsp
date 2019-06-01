@@ -81,144 +81,148 @@
 									var="catList">
 
 									<c:if test="${catList.sectionId==menuList.sectionId}">
-									
-									<c:choose>
-										<c:when test="${slugName==catList.slugName}">
-											<li class="active">
-										</c:when>
-										<c:otherwise>
-											<li> 
-										</c:otherwise>
-									</c:choose>
 
-										<!-- <li> --><c:choose>
-												<c:when test="${not empty catList.externalUrl}">
+										<c:choose>
+											<c:when test="${slugName==catList.slugName}">
+												<li class="active">
+											</c:when>
+											<c:otherwise>
+												<li>
+											</c:otherwise>
+										</c:choose>
 
-													<c:set value="${catList.externalUrl}" var="string"></c:set>
+										<!-- <li> -->
+										<c:choose>
+											<c:when test="${not empty catList.externalUrl}">
 
-													<c:choose>
-														<c:when test="${fn:contains(string, 'http')}">
-															<c:choose>
-																<c:when test="${catList.externalUrlTarget==1}">
+												<c:set value="${catList.externalUrl}" var="string"></c:set>
 
-																	<a onclick="checkMaintainance()"
-																		title="${catList.catName}"
-																		href="${catList.externalUrl}" target="_blank">${catList.catName}<span
-																		class="caret"></span></a>
+												<c:choose>
+													<c:when test="${fn:contains(string, 'http')}">
+														<c:choose>
+															<c:when test="${catList.externalUrlTarget==1}">
 
-																</c:when>
-																<c:otherwise>
+																<a onclick="checkMaintainance()"
+																	title="${catList.catName}"
+																	href="${catList.externalUrl}" target="_blank">${catList.catName}<span
+																	class="caret"></span></a>
 
-																	<a onclick="checkMaintainance()"
-																		title="${catList.catName}"
-																		href="${catList.externalUrl}">${catList.catName}<span
-																		class="caret"></span></a>
+															</c:when>
+															<c:otherwise>
+
+																<a onclick="checkMaintainance()"
+																	title="${catList.catName}"
+																	href="${catList.externalUrl}">${catList.catName}<span
+																	class="caret"></span></a>
 
 
-																</c:otherwise>
+															</c:otherwise>
 
-															</c:choose>
+														</c:choose>
 
-														</c:when>
-														<c:otherwise>
-															<c:choose>
-																<c:when test="${catList.externalUrlTarget==1}">
+													</c:when>
+													<c:otherwise>
+														<c:choose>
+															<c:when test="${catList.externalUrlTarget==1}">
 
-																	<a onclick="checkMaintainance()"
-																		title="${catList.catName}"
-																		href="${pageContext.request.contextPath}/${catList.externalUrl}">${catList.catName}<span
-																		class="caret"></span></a>
+																<a onclick="checkMaintainance()"
+																	title="${catList.catName}"
+																	href="${pageContext.request.contextPath}/${catList.externalUrl}">${catList.catName}<span
+																	class="caret"></span></a>
 
-																</c:when>
-																<c:otherwise>
-																	<a class="test" onclick="checkMaintainance()"
-																		title="${catList.catName}"
-																		href="${pageContext.request.contextPath}/${catList.externalUrl}">${catList.catName}<span
-																		class="caret"></span></a>
+															</c:when>
+															<c:otherwise>
+																<a class="test" onclick="checkMaintainance()"
+																	title="${catList.catName}"
+																	href="${pageContext.request.contextPath}/${catList.externalUrl}">${catList.catName}<span
+																	class="caret"></span></a>
 
-																</c:otherwise>
+															</c:otherwise>
 
-															</c:choose>
-														</c:otherwise>
-													</c:choose>
+														</c:choose>
+													</c:otherwise>
+												</c:choose>
 
-												</c:when>
-												<c:otherwise>
-													<a onclick="checkMaintainance()" title="${catList.catName}"
-														href="${pageContext.request.contextPath}/info/${catList.slugName}">${catList.catName}<span
-														class="caret"></span></a>
-												</c:otherwise>
-											</c:choose></li>
+											</c:when>
+											<c:otherwise>
+												<a onclick="checkMaintainance()" title="${catList.catName}"
+													href="${pageContext.request.contextPath}/info/${catList.slugName}">${catList.catName}<span
+													class="caret"></span></a>
+											</c:otherwise>
+										</c:choose>
+										</li>
 
 										<c:forEach items="${sessionScope.menuList.subCatList}"
 											var="subCatList">
 											<c:if test="${subCatList.parentId==catList.catId}">
-											
-											 <c:choose>
-												<c:when test="${slugName==subCatList.subSlugName}">
-													<li class="sub-menuleft active">
-												</c:when>
-												<c:otherwise>
-													<li class="sub-menuleft">
-												</c:otherwise>
-											</c:choose> 
-												 <!-- <li class="sub-menuleft"> --><c:choose>
-														<c:when test="${not empty subCatList.externalUrl}">
 
-															<c:set value="${subCatList.externalUrl}" var="string"></c:set>
+												<c:choose>
+													<c:when test="${slugName==subCatList.subSlugName}">
+														<li class="sub-menuleft active">
+													</c:when>
+													<c:otherwise>
+														<li class="sub-menuleft">
+													</c:otherwise>
+												</c:choose>
+												<!-- <li class="sub-menuleft"> -->
+												<c:choose>
+													<c:when test="${not empty subCatList.externalUrl}">
 
-															<c:choose>
-																<c:when test="${fn:contains(string, 'http')}">
-																	<c:choose>
-																		<c:when test="${subCatList.externalUrlTarget==1}">
+														<c:set value="${subCatList.externalUrl}" var="string"></c:set>
 
-																			<a onclick="checkMaintainance()"
-																				title="${subCatList.subCatName}"
-																				href="${subCatList.externalUrl}" target="_blank">${subCatList.subCatName}
-																			</a>
+														<c:choose>
+															<c:when test="${fn:contains(string, 'http')}">
+																<c:choose>
+																	<c:when test="${subCatList.externalUrlTarget==1}">
 
-																		</c:when>
-																		<c:otherwise>
-																			<a onclick="checkMaintainance()"
-																				title="${subCatList.subCatName}"
-																				href="${subCatList.externalUrl}">${subCatList.subCatName}
-																			</a>
+																		<a onclick="checkMaintainance()"
+																			title="${subCatList.subCatName}"
+																			href="${subCatList.externalUrl}" target="_blank">${subCatList.subCatName}
+																		</a>
 
-																		</c:otherwise>
+																	</c:when>
+																	<c:otherwise>
+																		<a onclick="checkMaintainance()"
+																			title="${subCatList.subCatName}"
+																			href="${subCatList.externalUrl}">${subCatList.subCatName}
+																		</a>
 
-																	</c:choose>
+																	</c:otherwise>
 
-																</c:when>
-																<c:otherwise>
-																	<c:choose>
-																		<c:when test="${catList.externalUrlTarget==1}">
+																</c:choose>
 
-																			<a onclick="checkMaintainance()"
-																				title="${subCatList.subCatName}"
-																				href="${pageContext.request.contextPath}/${subCatList.externalUrl}"
-																				target="_blank">${subCatList.subCatName} </a>
+															</c:when>
+															<c:otherwise>
+																<c:choose>
+																	<c:when test="${catList.externalUrlTarget==1}">
 
-																		</c:when>
-																		<c:otherwise>
-																			<a onclick="checkMaintainance()"
-																				title="${subCatList.subCatName}"
-																				href="${pageContext.request.contextPath}/${subCatList.externalUrl}">${subCatList.subCatName}
-																			</a>
+																		<a onclick="checkMaintainance()"
+																			title="${subCatList.subCatName}"
+																			href="${pageContext.request.contextPath}/${subCatList.externalUrl}"
+																			target="_blank">${subCatList.subCatName} </a>
 
-																		</c:otherwise>
+																	</c:when>
+																	<c:otherwise>
+																		<a onclick="checkMaintainance()"
+																			title="${subCatList.subCatName}"
+																			href="${pageContext.request.contextPath}/${subCatList.externalUrl}">${subCatList.subCatName}
+																		</a>
 
-																	</c:choose>
-																</c:otherwise>
-															</c:choose>
+																	</c:otherwise>
 
-														</c:when>
-														<c:otherwise>
-															<a onclick="checkMaintainance()"
-																title="${subCatList.subCatName}"
-																href="${pageContext.request.contextPath}/info/${subCatList.subSlugName}">${subCatList.subCatName}
-															</a>
-														</c:otherwise>
-													</c:choose></li>
+																</c:choose>
+															</c:otherwise>
+														</c:choose>
+
+													</c:when>
+													<c:otherwise>
+														<a onclick="checkMaintainance()"
+															title="${subCatList.subCatName}"
+															href="${pageContext.request.contextPath}/info/${subCatList.subSlugName}">${subCatList.subCatName}
+														</a>
+													</c:otherwise>
+												</c:choose>
+												</li>
 											</c:if>
 										</c:forEach>
 
@@ -348,7 +352,22 @@
 
 									</div>
 									<p>
-										<span class="icon-quote-left quote"></span>${testImonialList.message}
+										<span class="icon-quote-left quote"></span>
+
+										<c:choose>
+											<c:when test="${testImonialList.exInt1==2}">
+												<iframe width="100%" height="315"
+													src="https://www.youtube.com/embed/${testImonialList.message}"
+													frameborder="0"
+													allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+													allowfullscreen></iframe>
+											</c:when>
+											<c:otherwise>
+										${testImonialList.message}
+										</c:otherwise>
+										</c:choose>
+
+
 									</p>
 									<p>
 										<strong>${testImonialList.fromName}</strong> <span

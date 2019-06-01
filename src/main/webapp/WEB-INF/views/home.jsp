@@ -291,7 +291,7 @@
 					<div id="videoslide" class="carousel " data-ride="carousel">
 						<div class="carousel-inner">
 
-							<c:forEach items="${videoGalleryDetail}" var="videoGalleryDetail"
+							<%-- <c:forEach items="${videoGalleryDetail}" var="videoGalleryDetail"
 								varStatus="count">
 
 								<c:choose>
@@ -305,10 +305,37 @@
 									</c:otherwise>
 								</c:choose>
 								<c:set var="videocount" value="${videocount+1}"></c:set>
+							</c:forEach> --%>
+
+							<c:forEach items="${videoGalleryDetail}" var="videoGalleryDetail"
+								varStatus="count">
+
+								<c:choose>
+									<c:when test="${count.last}">
+										<div class="carousel-item active" id="video${count.index+1}">
+											<iframe width="100%" height="100%"
+												src="https://www.youtube.com/embed/${videoGalleryDetail.fileName}"
+												frameborder="0"
+												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+												allowfullscreen></iframe>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="carousel-item" id="video${count.index+1}">
+											<iframe width="100%" height="100%"
+												src="https://www.youtube.com/embed/${videoGalleryDetail.fileName}"
+												frameborder="0"
+												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+												allowfullscreen></iframe>
+										</div>
+									</c:otherwise>
+								</c:choose>
+
+								<input id="videolink${count.index+1}"
+									value="${videoGalleryDetail.fileName}" type="hidden">
+
+								<c:set var="videocount" value="${videocount+1}"></c:set>
 							</c:forEach>
-
-
-
 
 
 							<a class="carousel-control-prev" href="#videoslide" role="button"
@@ -332,7 +359,7 @@
 
 		</div>
 	</div>
-	 
+
 	<div class="news-section">
 		<div class="container main-content">
 			<div class="row">
@@ -483,24 +510,39 @@
 								</c:choose>
 							</c:when>
 							<c:when test="${testImonial.exInt1==2}">
+							
+							<c:set var="videocount" value="${videocount+1}"></c:set>
+							
 								<c:choose>
 									<c:when test="${count.last}">
 
-										<div class="carousel-item active">
-											${testImonial.message}</div>
+										<div class="carousel-item active" id="video${videocount}">
+											<iframe width="100%" height="315"
+												src="https://www.youtube.com/embed/${testImonial.message}"
+												frameborder="0" 
+												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+												allowfullscreen></iframe>
+										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="carousel-item ">
 											<div class="row">
 												<div class="col-12 col-sm-12 col-lg-3"></div>
-												<div class="col-12 col-sm-12 col-lg-6">
-
-													${testImonial.message}</div>
+												<div class="col-12 col-sm-12 col-lg-6" id="video${videocount}">
+													<iframe width="100%" height="315"
+														src="https://www.youtube.com/embed/${testImonial.message}"
+														frameborder="0" 
+														allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+														allowfullscreen></iframe>
+												</div>
 												<div class="col-12 col-sm-12 col-lg-3"></div>
 											</div>
 										</div>
 									</c:otherwise>
 								</c:choose>
+								<input id="videolink${videocount}"
+									value="${testImonial.message}" type="hidden"> 
+								
 							</c:when>
 						</c:choose>
 					</c:forEach>
@@ -681,8 +723,49 @@
 
 						});
 	</script>
+	<script>
+		var tag = document.createElement('script');
+		tag.src = "//www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		var videoct = document.getElementById("videoct").value; 
+		var vids = [];
 
-	<!-- <div id="player1"></div>
+		function onYouTubeIframeAPIReady() {
+
+			for (var i = 0; i < videoct; i++) {
+
+				var videolink = document.getElementById("videolink" + (i + 1)).value;
+				var player = "video" + (i + 1);
+			 
+				var video = new YT.Player(player, {
+					videoId : videolink,
+					playerVars: {rel: 0, showinfo: 0, ecver: 2},
+					events : {
+						'onStateChange' : onPlayerStateChange
+					}
+				});
+				vids.push(video);
+
+			}
+			 
+		}
+
+		function onPlayerStateChange(event) {
+			if (event.data == YT.PlayerState.PLAYING) {
+				stopVideo(event.target.a.id);
+			}
+		}
+
+		function stopVideo(player_id) {
+
+			for (var i = 0; i < vids.length; i++) {
+				if (player_id != vids[i].a.id)
+					vids[i].stopVideo();
+			}
+		}
+	</script>
+	<!--   <div id="player1"></div>
 	<div id="player2"></div>
 	<div id="player3"></div>
 	<div id="player4"></div>
@@ -691,7 +774,8 @@
 		tag.src = "//www.youtube.com/iframe_api";
 		var firstScriptTag = document.getElementsByTagName('script')[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
+		var videoct = document.getElementById("videoct").value;
+		alert(videoct);
 		var player;
 		var vids = [];
 
@@ -740,8 +824,8 @@
 				if (player_id != vids[i].a.id)
 					vids[i].stopVideo();
 			}
-		}
-	</script> -->
+		} -->
+	</script>
 	<script type="text/javascript">
 		$('.carousel').carousel({
 			interval : false
