@@ -159,58 +159,60 @@
 					</ul>
 
 					<div id="previous" class="tab-pane active">
-						<table align="center" cellpadding="0" cellspacing="0"
-							class="table">
-							<thead>
-								<tr>
-									<th>Sr. no</th>
-									<th>Event Name</th>
-									<th>Download</th>
-									<th>Event Applied Status</th>
-									<th>Feedback</th>
-									<th>Detail</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${previous}" var="previous" varStatus="count">
-									<tr class="odd">
-
-										<td>${count.index+1}</td>
-										<td>${previous.heading}</td>
-										<c:choose>
-											<c:when test="${not empty previous.downloadPdf}">
-												<td><a href="${documentUrl}${previous.downloadPdf}"
-													target="_blank"><span class="icon-download-2"></span>
-														Download</a></td>
-
-											</c:when>
-											<c:otherwise>
-												<td>--</td>
-
-											</c:otherwise>
-										</c:choose>
-										<c:choose>
-											<c:when test="${previous.apply==1}">
-												<td>YES <c:if test="${previous.isFeedback==0}">
-														<br>
-														<a
-															href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.exVar1}">Feedback</a>
-													</c:if></td>
-											</c:when>
-											<c:otherwise>
-												<td>NO</td>
-
-											</c:otherwise>
-										</c:choose>
-										<td>${previous.feedback}</td>
-										<td><a
-											href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${previous.exVar1}&typeId=${typeId}">Detail</a></td>
-
+						<div class="table-responsive">
+							<table align="center" cellpadding="0" cellspacing="0"
+								class="table">
+								<thead>
+									<tr>
+										<th>Sr. no</th>
+										<th>Event Name</th>
+										<th>Download</th>
+										<th>Event Applied Status</th>
+										<th>Feedback</th>
+										<th>Detail</th>
 									</tr>
-								</c:forEach>
+								</thead>
+								<tbody>
+									<c:forEach items="${previous}" var="previous" varStatus="count">
+										<tr class="odd">
 
-							</tbody>
-						</table>
+											<td>${count.index+1}</td>
+											<td>${previous.heading}</td>
+											<c:choose>
+												<c:when test="${not empty previous.downloadPdf}">
+													<td><a href="${documentUrl}${previous.downloadPdf}"
+														target="_blank"><span class="icon-download-2"></span>
+															Download</a></td>
+
+												</c:when>
+												<c:otherwise>
+													<td>--</td>
+
+												</c:otherwise>
+											</c:choose>
+											<c:choose>
+												<c:when test="${previous.apply==1}">
+													<td>YES <c:if test="${previous.isFeedback==0}">
+															<br>
+															<a
+																href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.exVar1}">Feedback</a>
+														</c:if></td>
+												</c:when>
+												<c:otherwise>
+													<td>NO</td>
+
+												</c:otherwise>
+											</c:choose>
+											<td>${previous.feedback}</td>
+											<td><a
+												href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${previous.exVar1}&typeId=${typeId}">Detail</a></td>
+
+										</tr>
+									</c:forEach>
+
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 

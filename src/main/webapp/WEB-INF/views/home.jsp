@@ -739,8 +739,7 @@
 				var player = "video" + (i + 1);
 			 
 				var video = new YT.Player(player, {
-					videoId : videolink,
-					playerVars: {rel: 0, showinfo: 0, ecver: 2},
+					videoId : videolink, 
 					events : {
 						'onStateChange' : onPlayerStateChange
 					}
