@@ -50,7 +50,7 @@
 	}(document, 'script', 'facebook-jssdk'));
 </script>
 </head>
-<body onload="hideText()">
+<body onload="hideText()" class="${contrast}">
 	<c:url value="/checkUniqueField" var="checkUniqueField"></c:url>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>

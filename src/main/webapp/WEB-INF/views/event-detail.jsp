@@ -59,7 +59,7 @@
 }
 </style>
 </head>
-<body onload="show()">
+<body onload="show()" class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>

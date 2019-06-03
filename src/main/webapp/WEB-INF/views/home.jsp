@@ -84,7 +84,7 @@
 </style>
 
 </head>
-<body>
+<body class="${contrast}">
 	<div id="fb-root"></div>
 	<script async defer crossorigin="anonymous"
 		src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3&appId=2318373708408139&autoLogAppEvents=1"></script>
@@ -314,19 +314,15 @@
 									<c:when test="${count.last}">
 										<div class="carousel-item active" id="video${count.index+1}">
 											<iframe width="100%" height="100%"
-												src="https://www.youtube.com/embed/${videoGalleryDetail.fileName}"
-												frameborder="0"
-												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-												allowfullscreen></iframe>
+												src="https://www.youtube.com/embed/${videoGalleryDetail.fileName}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=0"
+												frameborder="0" allowfullscreen></iframe>
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="carousel-item" id="video${count.index+1}">
 											<iframe width="100%" height="100%"
-												src="https://www.youtube.com/embed/${videoGalleryDetail.fileName}"
-												frameborder="0"
-												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-												allowfullscreen></iframe>
+												src="https://www.youtube.com/embed/${videoGalleryDetail.fileName}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=0"
+												frameborder="0" allowfullscreen></iframe>
 										</div>
 									</c:otherwise>
 								</c:choose>
@@ -510,30 +506,27 @@
 								</c:choose>
 							</c:when>
 							<c:when test="${testImonial.exInt1==2}">
-							
-							<c:set var="videocount" value="${videocount+1}"></c:set>
-							
+
+								<c:set var="videocount" value="${videocount+1}"></c:set>
+
 								<c:choose>
 									<c:when test="${count.last}">
 
 										<div class="carousel-item active" id="video${videocount}">
 											<iframe width="100%" height="315"
-												src="https://www.youtube.com/embed/${testImonial.message}"
-												frameborder="0" 
-												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-												allowfullscreen></iframe>
+												src="https://www.youtube.com/embed/${testImonial.message}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=0"
+												frameborder="0" allowfullscreen></iframe>
 										</div>
 									</c:when>
 									<c:otherwise>
 										<div class="carousel-item ">
 											<div class="row">
 												<div class="col-12 col-sm-12 col-lg-3"></div>
-												<div class="col-12 col-sm-12 col-lg-6" id="video${videocount}">
+												<div class="col-12 col-sm-12 col-lg-6"
+													id="video${videocount}">
 													<iframe width="100%" height="315"
-														src="https://www.youtube.com/embed/${testImonial.message}"
-														frameborder="0" 
-														allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-														allowfullscreen></iframe>
+														src="https://www.youtube.com/embed/${testImonial.message}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=0"
+														frameborder="0" allowfullscreen></iframe>
 												</div>
 												<div class="col-12 col-sm-12 col-lg-3"></div>
 											</div>
@@ -541,8 +534,8 @@
 									</c:otherwise>
 								</c:choose>
 								<input id="videolink${videocount}"
-									value="${testImonial.message}" type="hidden"> 
-								
+									value="${testImonial.message}" type="hidden">
+
 							</c:when>
 						</c:choose>
 					</c:forEach>
@@ -728,18 +721,19 @@
 		tag.src = "//www.youtube.com/iframe_api";
 		var firstScriptTag = document.getElementsByTagName('script')[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-		var videoct = document.getElementById("videoct").value; 
+		var videoct = document.getElementById("videoct").value;
 		var vids = [];
-
+		 
 		function onYouTubeIframeAPIReady() {
 
 			for (var i = 0; i < videoct; i++) {
 
 				var videolink = document.getElementById("videolink" + (i + 1)).value;
 				var player = "video" + (i + 1);
-			 
+
 				var video = new YT.Player(player, {
-					videoId : videolink, 
+					videoId : videolink,
+					playerVars: {rel: 0, showinfo: 0, ecver: 2},
 					events : {
 						'onStateChange' : onPlayerStateChange
 					}
@@ -747,15 +741,18 @@
 				vids.push(video);
 
 			}
+
+		}
+
+		function onPlayerStateChange(event) {
+			 
+			if (event.data == YT.PlayerState.PLAYING) {
+				stopVideo(event.target.a.id);
+				 
+			} 
 			 
 		}
 
-		function onPlayerStateChange(event) {
-			if (event.data == YT.PlayerState.PLAYING) {
-				stopVideo(event.target.a.id);
-			}
-		}
-
 		function stopVideo(player_id) {
 
 			for (var i = 0; i < vids.length; i++) {
@@ -764,72 +761,29 @@
 			}
 		}
 	</script>
-	<!--   <div id="player1"></div>
-	<div id="player2"></div>
-	<div id="player3"></div>
-	<div id="player4"></div>
-	<script>
-		var tag = document.createElement('script');
-		tag.src = "//www.youtube.com/iframe_api";
-		var firstScriptTag = document.getElementsByTagName('script')[0];
-		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-		var videoct = document.getElementById("videoct").value;
-		alert(videoct);
-		var player;
-		var vids = [];
-
-		function onYouTubeIframeAPIReady() {
-			player1 = new YT.Player('player1', {
-				videoId : 'gbug3zTm3Ws',
-				events : {
-					'onStateChange' : onPlayerStateChange
-				}
-			});
-			vids.push(player1);
-			player2 = new YT.Player('player2', {
-				videoId : 'JFBUJ6kNl28',
-				events : {
-					'onStateChange' : onPlayerStateChange
-				}
-			});
-			vids.push(player2);
-
-			player3 = new YT.Player('player3', {
-				videoId : 'pUjE9H8QlA4',
-				events : {
-					'onStateChange' : onPlayerStateChange
-				}
-			});
-			vids.push(player3);
-
-			player4 = new YT.Player('player4', {
-				videoId : 'saz1vsk69KI',
-				events : {
-					'onStateChange' : onPlayerStateChange
-				}
-			});
-			vids.push(player4);
-		}
-
-		function onPlayerStateChange(event) {
-			if (event.data == YT.PlayerState.PLAYING) {
-				stopVideo(event.target.a.id);
-			}
-		}
-
-		function stopVideo(player_id) {
-
-			for (var i = 0; i < vids.length; i++) {
-				if (player_id != vids[i].a.id)
-					vids[i].stopVideo();
-			}
-		} -->
-	</script>
+	 
 	<script type="text/javascript">
 		$('.carousel').carousel({
-			interval : false
+			interval : 1000
 		});
 	</script>
+	
+	<!--  <script>
+  var youtubeReady = false;
+
+  function onYouTubeIframeAPIReady(){
+    youtubeReady = true;
+  }
+
+  $('.carousel').on('slide', function(){
+    if(youtubeReady){
+      console.log("setting player");
+      var iframeID = $(this).find('.active').find('iframe').attr("id");
+      player = new YT.Player(iframeID); 
+      player.stopVideo(); 
+    }
+  });
+  </script> -->
 </body>
 </html>
 

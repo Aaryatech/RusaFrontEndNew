@@ -29,13 +29,13 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
- 
+
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -59,7 +59,7 @@
 }
 </style>
 </head>
-<body>
+<body class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
@@ -71,11 +71,13 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> >
-			  <a
-				href="${pageContext.request.contextPath}/imgGallary?name=${slugname}">Back</a>    
+			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+				href="${pageContext.request.contextPath}/imgGallary?name=${slugname}">Back</a>
 		</div>
 	</div>
+
+	<c:set var="videocount" value="0"></c:set>
+
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
 
@@ -96,13 +98,16 @@
 
 					<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
 						role="tablist">
-						<li class="nav-item"><a class="nav-link active show"
-							data-toggle="tab" href="#photos"><span
-								class="icon-frame-landscape icon"></span> Photos</a></li>
 
-						<li class="nav-item"><a class="nav-link" data-toggle="tab"
-							href="#videos"><span class="icon-video-camera icon"></span>
-								Videos</a></li>
+
+
+						<li class="nav-item"><a class="nav-link active show" data-toggle="tab"
+							href="#photos"><span class="icon-frame-landscape icon"></span>
+								Photos</a></li>
+						<li class="nav-item"><a class="nav-link"
+							data-toggle="tab" href="#videos"><span
+								class="icon-video-camera icon"></span> Videos</a></li>
+
 					</ul>
 					<div id="photos" class="tab-pane active show">
 						<div class="row">
@@ -112,8 +117,8 @@
 									<div class="col-12 col-sm-3 col-lg-3">
 										<a href="${gallryImageURL}${imageList.fileName}"
 											data-toggle="lightbox" data-gallery="plan"
-											data-eventtitle="Event Name" data-title="Photo Title"
-											data-footer="Image Description" class="thumbnail">
+											data-eventtitle="${cateName}" data-title="${imageList.title}"
+											  class="thumbnail">
 											<div class="over-effect">
 												<span class="icon-search"></span>
 											</div> <img src="${gallryImageURL}thumbnail${imageList.fileName}"
@@ -126,17 +131,24 @@
 						</div>
 					</div>
 
-					<div id="videos" class="tab-pane ">
+					<div id="videos" class="tab-pane">
 						<div class="row">
 
 							<c:forEach items="${videoList}" var="videoList" varStatus="count">
 								<c:if test="${videoList.galleryCatId==catId}">
-									<div class="col-12 col-sm-3 col-lg-3">
+									<div class="col-12 col-sm-3 col-lg-3" id="video${videocount+1}"
+										style="width: 100%; height: 100%;">
+
 										<iframe width="100%" height="100%"
-												src="https://www.youtube.com/embed/${videoList.fileName}"
-												frameborder="0"
-												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-												allowfullscreen></iframe>
+											src="https://www.youtube.com/embed/${videoList.fileName}"
+											frameborder="0"
+											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+											allowfullscreen> </iframe>
+
+										<input id="videolink${videocount+1}"
+											value="${videoList.fileName}" type="hidden">
+
+										<c:set var="videocount" value="${videocount+1}"></c:set>
 									</div>
 								</c:if>
 							</c:forEach>
@@ -145,16 +157,58 @@
 					</div>
 
 				</div>
- 
+
 			</div>
- 
+
 		</div>
 	</div>
-
+	<input id="videoct" value="${videocount}" type="hidden">
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+
+	<script>
+		var tag = document.createElement('script');
+		tag.src = "//www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		var videoct = document.getElementById("videoct").value;
+		var vids = [];
+
+		function onYouTubeIframeAPIReady() {
+
+			for (var i = 0; i < videoct; i++) {
+
+				var videolink = document.getElementById("videolink" + (i + 1)).value;
+				var player = "video" + (i + 1);
+
+				var video = new YT.Player(player, {
+					videoId : videolink,
+					events : {
+						'onStateChange' : onPlayerStateChange
+					}
+				});
+				vids.push(video);
+				 
+			}
+
+		}
+
+		function onPlayerStateChange(event) {
+			if (event.data == YT.PlayerState.PLAYING) {
+				stopVideo(event.target.a.id);
+			}
+		}
+
+		function stopVideo(player_id) {
+
+			for (var i = 0; i < vids.length; i++) {
+				if (player_id != vids[i].a.id)
+					vids[i].stopVideo();
+			}
+		}
+	</script>
 </body>
 </html>
 

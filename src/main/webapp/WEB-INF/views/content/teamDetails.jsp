@@ -43,7 +43,7 @@
 }
 </style>
 </head>
-<body>
+<body class="${contrast}">
 <c:url var="checkMaintainance" value="/checkMaintainance" />
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>

@@ -77,7 +77,7 @@
 }
 </style>
 </head>
-<body>
+<body class="${contrast}">
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 <% if(userDetail==0){%>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>

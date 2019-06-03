@@ -78,7 +78,7 @@
 }
 </style>
 </head>
-<body>
+<body class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>

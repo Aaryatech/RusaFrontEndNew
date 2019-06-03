@@ -78,7 +78,7 @@
 }
 </style>
 </head>
-<body>
+<body class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
@@ -90,9 +90,12 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> >  <%-- <a
-				href="${pageContext.request.contextPath}/listOFEvent/1"> --%>Event
-				List<!-- </a>  --> >
+			<a href="${pageContext.request.contextPath}/">Home</a> >
+			<%-- <a
+				href="${pageContext.request.contextPath}/listOFEvent/1"> --%>
+			Event List
+			<!-- </a>  -->
+			>
 		</div>
 	</div>
 	<div class="container" id="main-content">
@@ -115,8 +118,8 @@
 									${eventList.eventContactNumber}</span>
 							</p>
 							<a
-								href="${pageContext.request.contextPath}/eventDetailfront/${eventList.exVar1}"
-								target="_blank">Read More</a>
+								href="${pageContext.request.contextPath}/eventDetailfront/${eventList.exVar1}">Read
+								More</a>
 						</div>
 					</div>
 					<c:set var="find" value="1"></c:set>

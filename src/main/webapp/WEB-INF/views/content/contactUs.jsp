@@ -27,7 +27,7 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags --> 
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <c:choose>
@@ -38,7 +38,7 @@
 	<c:otherwise>
 		<meta name="description"
 			content="${sessionScope.homePageMetaData.metaDescription}">
-		<link rel="icon" href="../../favicon.ico">
+
 		<title>${sessionScope.homePageMetaData.siteTitle}</title>
 	</c:otherwise>
 </c:choose>
@@ -62,7 +62,7 @@ msg-error {
 </style>
 
 </head>
-<body>
+<body class="${contrast}">
 	<c:url var="checkMaintainance" value="/checkMaintainance" />
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
@@ -103,9 +103,14 @@ msg-error {
 							style="border: 0" allowfullscreen="" width="100%" height="540"
 							frameborder="0"></iframe> -->
 
-						<iframe class="map" width="100%" height="540"
+						<!-- <iframe class="map" width="100%" height="540"
 							src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=IDBI%20TOWERS%2C%20Cuffe%20Parade%2C%20Mumbai%2C%20Maharashtra%20400005+(My%20Business%20Namsse)&amp;ie=UTF8&amp;t=p&amp;z=18&amp;iwloc=B&amp;output=embed"
-							frameborder="0" style="border: 0" allowfullscreen=""> </iframe>
+							frameborder="0" style="border: 0" allowfullscreen=""> </iframe> -->
+
+						<iframe
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4944.55328848016!2d72.81545531489864!3d18.914606687180793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7d1d2659eb285%3A0xc2c90000ec7ef672!2sSPD+RUSA+Maharashtra!5e1!3m2!1sen!2sin!4v1559551333875!5m2!1sen!2sin"
+							class="map" width="100%" height="540" frameborder="0" style="border: 0"
+							allowfullscreen></iframe>
 
 					</div>
 
@@ -176,10 +181,9 @@ msg-error {
 
 							<br> <label>Your Name</label> <input type="text"
 								class="form-control" name="name" id="name" placeholder="Name"
-								required> 
-								<!-- <p class="error-msg">Please Enter Your Name</p> -->
-								<label>Your Email</label> 
-								<input type="email"
+								required>
+							<!-- <p class="error-msg">Please Enter Your Name</p> -->
+							<label>Your Email</label> <input type="email"
 								class="form-control" name="email" id="email" placeholder="Email"
 								required> <label>Phone Number</label> <input type="text"
 								class="form-control" name="mobileNo" id="mobileNo"
@@ -191,8 +195,7 @@ msg-error {
 							<br> <span class="msg-error error"></span>
 							<div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>
 							</br>
-							<button class="button send" id="btn-validate"
-								type="submit">
+							<button class="button send" id="btn-validate" type="submit">
 								<span>Send</span>
 							</button>
 						</form>

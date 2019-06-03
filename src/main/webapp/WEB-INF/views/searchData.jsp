@@ -40,7 +40,7 @@
 }
 </style>
 </head>
-<body onload="clearWordSession()">
+<body onload="clearWordSession()" class="${contrast}">
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
@@ -194,7 +194,7 @@
 							<div class="col-12 col-sm-3 col-lg-2 search-image">
 
 								<c:choose>
-									<c:when test="${not empty newsSerchList.heading}">
+									<c:when test="${not empty newsSerchList.featuredImage}">
 										<img src="${getGallryImageURL}${newsSerchList.featuredImage}"
 											alt="${newsSerchList.heading}"
 											title="${newsSerchList.heading}" class="img-responsive">

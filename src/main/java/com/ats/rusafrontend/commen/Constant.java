@@ -13,8 +13,8 @@ public class Constant {
 	public static final String getCmsPdf = "http://192.168.2.17:8080/media/pdf/";
 	public static final String getUserProfileURL = "http://192.168.2.17:8080/media/userprofile/";
 	public static final String userProfileURL = "/home/lenovo/Downloads/apache-tomcat-8.5.37/webapps/media/userprofile/";
-	public static final String cmsPdf = "/home/lenovo/Downloads/apache-tomcat-8.5.37/webapps/media/pdf/";
-	public static final String siteFrontEndUrl = "http://localhost:8081/rusafrontend/";
+	public static final String cmsPdf = "/home/lenovo/Downloads/apache-tomcat-8.5.37/webapps/media/pdf/";*/
+	/*public static final String siteFrontEndUrl = "http://localhost:8081/rusafrontend/";
 	public static final String siteDomainUrl = "http://localhost:8081/";*/
 
 	public static final String getLgogImageURL = "http://ats.aaryatechindia.in:15063/media/logo/";

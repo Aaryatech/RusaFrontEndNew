@@ -6,7 +6,7 @@
   <head>
      <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
   </head>
-  <body>
+  <body class="${contrast}">
  
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
          <jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>

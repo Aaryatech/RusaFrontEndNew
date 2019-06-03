@@ -1,4 +1,6 @@
- 
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
      <!-- JavaScript-->
      <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
      <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
@@ -8,7 +10,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script>
 
  
-        
+        <c:url value="/fixContrast" var="fixContrast"></c:url>
 <script type="text/javascript">
     $(document).ready(function ($) {
 
@@ -130,6 +132,7 @@
              
             $(".black").click(function(){
             	 $('body').addClass('black_act')
+            	 fixContrast("black_act");
               /*   $("body").css("background","#000");
                 $("footer").css("background","#000");
                 $("footer p").css("color","#ff0");
@@ -209,6 +212,7 @@
             })
             $(".white").click(function(){
             	 $('body').removeClass('black_act')
+            	 fixContrast("");
                /*  $("body").css("background","#fff");
                 $("footer").css("background","#e8e8e8");
                 $("footer p").css("color","#21316c");
@@ -309,4 +313,22 @@ function topFunction() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
+</script>
+
+ <script>
+ function fixContrast(contrast) {
+	 
+	 
+		$.getJSON('${fixContrast}', {
+
+			contrast : contrast, 
+			ajax : 'true',
+
+		}, function(data) {
+			 //alert(data);
+			//location.reload(true);
+			 
+		});
+
+	}
 </script>

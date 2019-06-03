@@ -2,9 +2,13 @@ package com.ats.rusafrontend;
 
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
  
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.EmailUtility;
+import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.model.*;
 
 /**
@@ -405,6 +410,112 @@ public class HomeController {
 			}
 
 		}
+
+	}
+	
+	@RequestMapping(value = "/changelang", method = RequestMethod.GET)
+	public @ResponseBody Info changelang(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		RestTemplate rest = new RestTemplate();
+		HttpSession session = request.getSession();
+		Info info = new Info();
+		try {
+			
+			int langId = Integer.parseInt(request.getParameter("id"));
+			session.setAttribute("langId", langId);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("langId", langId);
+			map.add("type", 1);
+			TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
+			session.setAttribute("menuList", sectionTree);
+
+			ImageLink[] image = rest.getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
+			List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("id", 1);
+			Logo logo = rest.postForObject(Constant.url + "/getLogoListById", map, Logo.class);
+			session.setAttribute("logo", logo);
+			session.setAttribute("logoUrl", Constant.getLgogImageURL);
+			session.setAttribute("image", imagList);
+			session.setAttribute("url", Constant.getBannerImageURL);
+
+			session.setAttribute("siteFrontEndUrl", Constant.siteFrontEndUrl);
+			session.setAttribute("siteDomainUrl", Constant.siteDomainUrl);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("langId", 1);
+			MetaData metaData = rest.postForObject(Constant.url + "/getHomePageMetaDataByLangId", map,
+					MetaData.class);
+			session.setAttribute("homePageMetaData", metaData);
+			
+			Setting[] settingList = rest.getForObject(Constant.url + "/getAllSettingList", Setting[].class);
+			List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
+			session.setAttribute("setting", setting);
+			
+			SocialChannels[] socialList = rest.getForObject(Constant.url + "/getAllSocialList",
+					SocialChannels[].class);
+			List<SocialChannels> socialChannelData = new ArrayList<SocialChannels>(Arrays.asList(socialList)); 
+			session.setAttribute("socialChannelData", socialChannelData);
+			info.setError(false);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+		}
+		
+		return info;
+ 
+
+	}
+	
+	@RequestMapping(value = "/fixContrast", method = RequestMethod.GET)
+	public @ResponseBody Info fixContrast(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		RestTemplate rest = new RestTemplate();
+		HttpSession session = request.getSession();
+		Info info = new Info();
+		try {
+			 String contrast = request.getParameter("contrast");
+			 
+			session.setAttribute("contrast", contrast);
+ 
+			info.setError(false);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+		}
+		
+		return info;
+ 
+
+	}
+	
+	@RequestMapping(value = "/refreshtime", method = RequestMethod.GET)
+	public @ResponseBody Info refreshtime(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		 
+		Info info = new Info();
+		try {
+			 
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("dd MMM,yyyy | hh:mm:ss a z ", Locale.ENGLISH);
+			sf.setTimeZone(TimeZone.getTimeZone("IST"));
+			info.setError(false);
+			info.setMsg(sf.format(date));
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+		}
+		
+		return info;
+ 
 
 	}
 	
