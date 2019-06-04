@@ -790,12 +790,21 @@ margin-bottom:0px;
 	margin:10px 0px 0px 0px;
 	padding: 0px 0px 0px 20px;
 }
-.right-Colm li::before {
+/* .right-Colm li::before {
 	font-family: 'icomoon' !important;
 	content:"\e915";
 	font-size: 10px;
 	color: #000;
 	margin: 6px 15px 0px -20px;
+	padding: 0px 0px 0px 0px;
+	float: left;
+} */
+.right-Colm li::before {
+	font-family: 'icomoon' !important;
+	content:"\e915";
+	font-size: 10px;
+	color: #000;
+	margin: 6px 15px 0px -25px;
 	padding: 0px 0px 0px 0px;
 	float: left;
 }
@@ -1197,9 +1206,9 @@ padding:.25rem 1.5rem
 a.bg-dark_new:focus, a.bg-dark_new:hover, button.bg-dark_new:focus, button.bg-dark_new:hover {
 	background-color: #151616;
 }
-iframe.twitter-timeline {
+/* iframe.twitter-timeline {
 	height: 290px !important;
-}
+} */
 .fb_iframe_widget {
 	display: inline-block;
 	position: relative;
@@ -1575,6 +1584,7 @@ input[type="radio"]:not(old) + label {
 }
 .black_act  {
 	background-color: #000!important;
+	color: #ff0!important;
 }
 .black_act footer {
 	background-color: #000!important;
@@ -1600,8 +1610,17 @@ input[type="radio"]:not(old) + label {
 }
 
 .black_act a {
-	 
+	color: #ff0!important; 
 }
+
+.black_act .bridcrumb {
+	background-color: #000!important;
+	color: #ff0!important;
+}
+.black_act .inner-slider{
+	background-color: #000!important;
+}
+
 .black_act li {
 	color: #ff0!important;
 }
@@ -1705,7 +1724,8 @@ color: #ff0!important;
 
 .black_act .testimonials{
 color: #ff0!important;
-background-color: #000!important;
+border-top: 1px dotted #919abc !important;
+background: #000!important;
 }
 
 .black_act .testimonials h5{
@@ -1736,11 +1756,81 @@ color: #ff0!important;
 .black_act .main-content p{
 color: #ff0!important;
 }
+.black_act .news-section{
+background-color: #000!important;
+border-top: 1px dotted #919abc !important;
+border-bottom: 1px dotted #919abc !important;
+}
 
+
+.black_act .news-section h4{
+color: #ff0!important;
+}
+
+
+.black_act .news-box:hover {
+  background-color: #000!important;
+}
+.black_act .right-Colm{
+background-color: #000!important;
+border-top: 1px solid #919abc !important; 
+}
+
+.black_act .right-Colm li::before{
+color: #ff0!important;
+}
+
+.black_act .right-Colm h2{
+color: #ff0!important;
+}
 .black_act .leftColm{
- 
+border-top: 1px solid #919abc !important;  
 background-color: #000!important;
 }
+.black_act th {
+    background-color: #000!important;
+    color: #ff0!important;}
+
+.black_act table.table tr.even{
+    background-color: #000!important;
+    color: #ff0!important;}
+
+.black_act .news-listing-page .row:hover {
+    background-color: #000;
+}
+
+.black_act label{
+    color: #ff0!important;
+}
+.black_act .form-control{
+    color: #ff0!important;
+        background-color: #000;
+}
+
+.black_act .main-tab{
+    color: #ff0!important;
+        background-color: #000;
+}
+
+.black_act .rusa-gallery-sub-tab .nav-item .icon{
+    color: #ff0!important;
+}
+.black_act .tab-content p{
+    color: #ff0!important;
+}
+ 
+.black_act .thumbnail-heading span{
+    color: #ff0!important;
+}
+
+.black_act .border-box{
+background-color: #000!important;
+}
+ 
+.black_act .leftColm .menu li::before{
+    color: #ff0!important;
+}
+
 .black_act .leftColm h3{
 color: #ff0!important;
 background-color: #000!important;
@@ -1759,6 +1849,44 @@ color: #ff0!important;
 .black_act .more a{
 color: #ff0!important;
 }
+.black_act .login{
+
+background-color: #000!important;
+}
+
+.black_act .login-box{
+background-color: #000!important;
+}
+.black_act .login-header{
+background-color: #000!important;
+border-bottom: 1px dashed #aaa;
+}
+.black_act .login-header h5{
+color: #ff0!important;
+}
+.black_act .login-box p{
+color: #ff0!important;
+}
+.black_act .profile-section{
+background-color: #000!important;
+border-bottom: 1px dashed #aaa;
+}
+.black_act .user-name{
+color: #ff0!important;
+}
+
+.black_act table.table tr td{
+color: #ff0!important;
+}
+
+.black_act p{
+color: #ff0!important;
+}
+
+.black_act strong{
+color: #ff0!important;
+}
+
 
 
 /*end black section*/
@@ -1770,6 +1898,8 @@ color: #ff0!important;
 	font-size: 12px !important;
 	color:#000 !important;
 }
+
+
 
 /*white section*/
 

@@ -85,9 +85,11 @@
 
 </head>
 <body class="${contrast}">
-	<div id="fb-root"></div>
+	<!-- <div id="fb-root"></div>
 	<script async defer crossorigin="anonymous"
-		src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3&appId=2318373708408139&autoLogAppEvents=1"></script>
+		src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3&appId=2318373708408139&autoLogAppEvents=1"></script> -->
+	<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3"></script>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
@@ -764,7 +766,7 @@
 	 
 	<script type="text/javascript">
 		$('.carousel').carousel({
-			interval : 1000
+			interval : false
 		});
 	</script>
 	
