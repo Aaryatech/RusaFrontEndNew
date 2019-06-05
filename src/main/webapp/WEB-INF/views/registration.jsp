@@ -50,7 +50,7 @@
 	}(document, 'script', 'facebook-jssdk'));
 </script>
 </head>
-<body onload="hideText()" class="${contrast}">
+<body class="${contrast}">
 	<c:url value="/checkUniqueField" var="checkUniqueField"></c:url>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
@@ -315,15 +315,14 @@
 
 
 
+<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
+	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-
-	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include> 
 		<script type="text/javascript">
 	function checkUnique(inputValue, valueType,seqId) {
 		//alert("inputValue"+inputValue);

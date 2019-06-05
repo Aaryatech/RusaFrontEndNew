@@ -90,8 +90,12 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <%-- <a
-				href="${pageContext.request.contextPath}/listOFNews/1"> --%>News List<!-- </a> --> >
+			<a href="${pageContext.request.contextPath}/">Home</a> >
+			<%-- <a
+				href="${pageContext.request.contextPath}/listOFNews/1"> --%>
+			News List
+			<!-- </a> -->
+			>
 		</div>
 	</div>
 	<div class="container" id="main-content">
@@ -129,43 +133,45 @@
 							<p style="text-align: justify;">${fn:substring(newsBlogsList.descriptions, 0, 500)}</p>
 
 							<a
-								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.exVar1}"
-								target="_blank">Read More</a>
+								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.exVar1}">Read
+								More</a>
 						</div>
 					</div>
 					<c:set var="find" value="1"></c:set>
 				</c:forEach>
-			
+
 				<c:if test="${find==0}">
 
 					<h2 style="text-align: center;">No Record Found</h2>
 				</c:if>
 				<c:if test="${find==1}">
 					<c:if test="${totalPage>1}">
-					  <div class="pagination inner-page-pagination">
-					 <c:forEach var="i" begin="1" end="${totalPage}">
-					  <c:choose>
-                        <c:when test="${pageid==i}">
-                         <a href="${pageContext.request.contextPath}/listOFNews/${i}" class="activelink">${i}</a>
-                        </c:when>
-                        <c:otherwise>
-                         <a href="${pageContext.request.contextPath}/listOFNews/${i}" class="inactive">${i}</a>
-                        </c:otherwise>
-                        </c:choose> 
-                        </c:forEach>
-					
-					
-					<%-- <div class="row">
+						<div class="pagination inner-page-pagination">
+							<c:forEach var="i" begin="1" end="${totalPage}">
+								<c:choose>
+									<c:when test="${pageid==i}">
+										<a href="${pageContext.request.contextPath}/listOFNews/${i}"
+											class="activelink">${i}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="${pageContext.request.contextPath}/listOFNews/${i}"
+											class="inactive">${i}</a>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+
+
+							<%-- <div class="row">
 						<c:forEach var="i" begin="1" end="${totalPage}">
 							<div class="col-sm-1" style="max-width: 0.433333%;">
 								<a href="${pageContext.request.contextPath}/listOFNews/${i}">${i}</a>
 							</div>
 						</c:forEach>--%>
-					</div> 
+						</div>
 					</c:if>
 				</c:if>
-				
-				 
+
+
 			</div>
 		</div>
 

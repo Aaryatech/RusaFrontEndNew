@@ -56,7 +56,7 @@
 }
 </style>
 </head>
-<body onload="upcomingEvents" class="${contrast}">
+<body  class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
 

@@ -30,7 +30,7 @@ max-width: 655px; overflow: hidden;
 	
 			</div>
 		</div>
-	<nav class="navbar navbar-expand-xl bg-dark_new ">
+	<nav class="navbar navbar-expand-xl bg-dark_new" id="stick-menu">
     <button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarsExample01" aria-controls="navbarsExample01"
 					aria-expanded="false" aria-label="Toggle navigation">

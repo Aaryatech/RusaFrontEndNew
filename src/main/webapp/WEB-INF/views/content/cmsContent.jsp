@@ -445,7 +445,7 @@
 							<div class="col-12 col-sm-6 col-lg-6">
 								<div class="team-wrap">
 									<span class="team-candidates-status"></span>
-									<figure>
+									<%-- <figure>
 										<c:choose>
 											<c:when test="${not empty testImonialList.imageName}">
 												<a href="#"><img
@@ -458,7 +458,7 @@
 
 											</c:otherwise>
 										</c:choose>
-									</figure>
+									</figure> --%>
 									<div class="team-candidates-text ">
 										<h2>
 
@@ -482,7 +482,7 @@
 							<div class="col-12 col-sm-6 col-lg-6">
 								<div class="team-wrap">
 									<span class="team-candidates-status"></span>
-									<figure>
+									<%-- <figure>
 										<c:choose>
 											<c:when test="${not empty testImonialList.imageName}">
 												<a href="#"><img
@@ -495,7 +495,7 @@
 
 											</c:otherwise>
 										</c:choose>
-									</figure>
+									</figure> --%>
 									<div class="team-candidates-text ">
 										<h2>
 
@@ -523,7 +523,7 @@
 									<div class="col-12 col-sm-6 col-lg-6">
 										<div class="team-wrap">
 											<span class="team-candidates-status"></span>
-											<figure>
+										<%-- 	<figure>
 												<c:choose>
 													<c:when test="${not empty testImonialList.imageName}">
 														<a href="#"><img
@@ -537,7 +537,7 @@
 
 													</c:otherwise>
 												</c:choose>
-											</figure>
+											</figure> --%>
 											<div class="team-candidates-text ">
 												<h2>
 
@@ -554,7 +554,7 @@
 									<div class="col-6 col-sm-4 col-lg-4">
 										<div class="team-wrap">
 											<span class="team-candidates-status"></span>
-											<figure>
+											<%-- <figure>
 												<c:choose>
 													<c:when test="${not empty testImonialList.imageName}">
 														<a href="#"><img
@@ -568,7 +568,7 @@
 
 													</c:otherwise>
 												</c:choose>
-											</figure>
+											</figure> --%>
 											<div class="team-candidates-text ">
 												<h2>
 

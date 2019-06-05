@@ -96,9 +96,26 @@
 	    document.getElementById("demo").innerHTML = date.toISOString();
 	} */
 </script> 
+ <%-- <script type="text/javascript"> 
+function display_c(){
+var refresh=1000; // Refresh rate in milli seconds
+mytime=setTimeout('display_ct()',refresh)
+}
 
+function display_ct() {
+ 
+	'<% Date date = new Date(); 
+	SimpleDateFormat sf = new SimpleDateFormat("dd MMM,yyyy | hh:mm:ss a z ", Locale.ENGLISH);
+			sf.setTimeZone(TimeZone.getTimeZone("IST"));%>';
+	var date = "<%=sf.format(date)%>";
+	//alert(date);
+	document.getElementById('demo').innerHTML = date;
+	display_c(); 
+ }
+</script>  --%>
   <script type="text/javascript"> 
 function display_c(){
+	 
 var refresh=1000; // Refresh rate in milli seconds
 mytime=setTimeout('display_ct()',refresh)
 }
@@ -117,4 +134,5 @@ $.getJSON('${refreshtime}', {
 
  }
 </script> 
+
 </html>

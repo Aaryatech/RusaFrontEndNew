@@ -132,11 +132,11 @@
 				<c:forEach items="${getCMSDesc}" var="getCMSDesc" varStatus="count">
 
 					<div class="col-12 col-sm-6 col-lg-3" style="text-align: justify;">
-						<div class="sub-link-icon">
+						<%-- <div class="sub-link-icon">
 							<img
 								src="${pageContext.request.contextPath}/resources/images/icon.png"
 								alt="">
-						</div>
+						</div> --%>
 						<c:set var="string1" value="${getCMSDesc.pageDesc}" />
 						<c:set var="string2" value="${fn:substring(string1, 0, 250)}" />
 						<h2>${getCMSDesc.heading}</h2>

@@ -392,7 +392,7 @@ p {
 	font-size: 18px;
 	color: #21316c;
 	font-weight: 600;
-	margin: 15px 0px 0px 20px;
+	margin: 15px 0px 0px 0px;
 }
 .sub-link p {
 	float: left;
@@ -1550,6 +1550,7 @@ input[type=radio] + label{
 	font-size:18px;
 	color:#FFF; 
 	font-weight: normal;
+
 	font-weight:400; 
 	padding:0;
 	float: left;
@@ -1586,25 +1587,25 @@ input[type="radio"]:not(old) + label {
 }
 .black_act  {
 	background-color: #000!important;
-	color: #ff0!important;
+	color: #fff!important;
 }
 .black_act footer {
 	background-color: #000!important;
 }
 .black_act footer p{
 	background-color: #000!important;
-	color: #ff0!important;
+	color: #fff!important;
 }
 .black_act footer a{
 	
-	color: #ff0!important;
+	color: #fff!important;
 }
 .black_act footer h6{
-	color: #ff0!important;
+	color: #fff!important;
 }
 
 .black_act footer h6{
-	color: #ff0!important;
+	color: #fff!important;
 }
 
 .black_act .menusats {
@@ -1612,19 +1613,19 @@ input[type="radio"]:not(old) + label {
 }
 
 .black_act a {
-	color: #ff0!important; 
+	color: #fff!important; 
 }
 
 .black_act .bridcrumb {
 	background-color: #000!important;
-	color: #ff0!important;
+	color: #fff!important;
 }
 .black_act .inner-slider{
 	background-color: #000!important;
 }
 
 .black_act li {
-	color: #ff0!important;
+	color: #fff!important;
 }
 .black_act .top-section {
 	background-color: #000!important;
@@ -1638,17 +1639,17 @@ input[type="radio"]:not(old) + label {
 }
 
 .black_act .top-section a span {
-	color: #ff0!important;
+	color: #fff!important;
 }
 
 .black_act .btn .button .search {
-	color: #ff0!important;
+	color: #fff!important;
 }
 .black_act .date {
-	color: #ff0!important;
+	color: #fff!important;
 }
 .black_act .login-re a {
-	color: #ff0!important;
+	color: #fff!important;
 }
 .black_act .top-right-menu a {
 	color: #ff0;
@@ -1659,16 +1660,16 @@ input[type="radio"]:not(old) + label {
  
 
 .black_act .bg-dark_new {
-	color: #ff0!important;
+	color: #fff!important;
 	background-color: #000!important;
 }
 .black_act .test {
-	color: #ff0!important;
+	color: #fff!important;
 	 
 background-color: #000!important;
 }
 .black_act .nav-link  {
-	color: #ff0!important;
+	color: #fff!important;
 	 
  
 }
@@ -1677,7 +1678,7 @@ background-color: #000!important;
 	background-color: #000!important;
 }
 .black_act .dropdown-submenu a {
-	color: #ff0!important;
+	color: #fff!important;
 	background-color: #000!important;
 }
 .black_act .dropdown-menu {
@@ -1692,16 +1693,16 @@ background:none;
 	background-color: #000!important;
 }
 .black_act .slider h1{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .slider h1 span{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .slider p{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .slider span{
-color: #ff0!important;
+color: #fff!important;
 }
 
 .black_act .sub-link{
@@ -1709,54 +1710,54 @@ background-color: #000!important;
 }
 
 .black_act .sub-link h2{
-color: #ff0!important;
+color: #FFFFFF!important;
 }
 
 .black_act .sub-link p{
-color: #ff0!important;
+color: #FFFFFF!important;
 }
 
 .black_act h2 span{
-color: #ff0!important;
+color: #fff!important;
 }
 
 .black_act .news-section a{
-color: #ff0!important;
+color: #fff!important;
 }
 
 .black_act .testimonials{
-color: #ff0!important;
+color: #fff!important;
 border-top: 1px dotted #919abc !important;
 background: #000!important;
 }
 
 .black_act .testimonials h5{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .testimonials p{
-color: #ff0!important;
+color: #fff!important;
 }
 
 .black_act .copy-right {
-color: #ff0!important;
+color: #fff!important;
 background-color: #000!important;
 }
 .black_act .copy-right a {
-color: #ff0!important;
+color: #fff!important;
  
 }
 .black_act .copy-right p {
-color: #ff0!important;
+color: #fff!important;
  
 }
 .black_act .main-content h2{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .main-content h3{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .main-content p{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .news-section{
 background-color: #000!important;
@@ -1766,7 +1767,7 @@ border-bottom: 1px dotted #919abc !important;
 
 
 .black_act .news-section h4{
-color: #ff0!important;
+color: #fff!important;
 }
 
 
@@ -1779,11 +1780,11 @@ border-top: 1px solid #919abc !important;
 }
 
 .black_act .right-Colm li::before{
-color: #ff0!important;
+color: #fff!important;
 }
 
 .black_act .right-Colm h2{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .leftColm{
 border-top: 1px solid #919abc !important;  
@@ -1791,38 +1792,38 @@ background-color: #000!important;
 }
 .black_act th {
     background-color: #000!important;
-    color: #ff0!important;}
+   color: #fff!important;}
 
 .black_act table.table tr.even{
     background-color: #000!important;
-    color: #ff0!important;}
+   color: #fff!important;}
 
 .black_act .news-listing-page .row:hover {
     background-color: #000;
 }
 
 .black_act label{
-    color: #ff0!important;
+   color: #fff!important;
 }
 .black_act .form-control{
-    color: #ff0!important;
+   color: #fff!important;
         background-color: #000;
 }
 
 .black_act .main-tab{
-    color: #ff0!important;
+   color: #fff!important;
         background-color: #000;
 }
 
 .black_act .rusa-gallery-sub-tab .nav-item .icon{
-    color: #ff0!important;
+   color: #fff!important;
 }
 .black_act .tab-content p{
-    color: #ff0!important;
+   color: #fff!important;
 }
  
 .black_act .thumbnail-heading span{
-    color: #ff0!important;
+   color: #fff!important;
 }
 
 .black_act .border-box{
@@ -1830,26 +1831,26 @@ background-color: #000!important;
 }
  
 .black_act .leftColm .menu li::before{
-    color: #ff0!important;
+   color: #fff!important;
 }
 
 .black_act .leftColm h3{
-color: #ff0!important;
+color: #fff!important;
 background-color: #000!important;
 }
 .black_act .leftColm .menu li a{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .inner-slide{
 
 background-color: #000!important;
 }
 .black_act .inner-slider h1{
-color: #ff0!important;
+color: #fff!important;
 }
 
 .black_act .more a{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .login{
 
@@ -1864,29 +1865,29 @@ background-color: #000!important;
 border-bottom: 1px dashed #aaa;
 }
 .black_act .login-header h5{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .login-box p{
-color: #ff0!important;
+color: #fff!important;
 }
 .black_act .profile-section{
 background-color: #000!important;
 border-bottom: 1px dashed #aaa;
 }
 .black_act .user-name{
-color: #ff0!important;
+color: #fff!important;
 }
 
 .black_act table.table tr td{
-color: #ff0!important;
+color: #fff!important;
 }
 
 .black_act p{
-color: #ff0!important;
+color: #fff!important;
 }
 
 .black_act strong{
-color: #ff0!important;
+color: #fff!important;
 }
 
 
@@ -1917,7 +1918,7 @@ color: #ff0!important;
     -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
     position: relative;
-	height: 370px;
+	height: 135px;
 }
 
 .team-candidates-status {
@@ -1932,6 +1933,7 @@ color: #ff0!important;
 .team-wrap figure {
     margin-bottom: 10px;
     text-align: center;
+	display: none;
 }
 .team-wrap figure a {
     width: 160px;
@@ -2177,11 +2179,18 @@ margin:0px 0px 0px 0px !important;
 .important-link{
  	border-left: 1px dotted #919abc !important;
  	border-right:1px dotted #919abc !important;
- 	
- 	
 }
 
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
 
+.sticky + .content {
+  padding-top: 102px;
+}
 @media screen and (max-width:1400px) {
 .navbar-nav .nav-link {
     padding-right: 5px;
