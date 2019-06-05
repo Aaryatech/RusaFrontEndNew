@@ -1,7 +1,9 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
+
 
 <footer>
 	<div class="container">
@@ -58,10 +60,22 @@
 						class="icon-instagram-social-network-logo-of-photo-camera"></span></a>
 				</c:if>
 
-				<c:if test="${setting[5].isActive==1}">
-					<p style="text-align: right; margin-top: 50px">Last Update :
-						${setting[5].keyValues}</p>
-				</c:if>
+				<p style="text-align: right; margin-top: 50px">
+
+					<c:if test="${setting[4].isActive==1}">
+					 Visitor Count :
+						<span id="visitorCnt">${setting[4].keyValues}</span>
+						<br>
+					</c:if>
+					<c:if test="${setting[5].isActive==1}">
+					Last Update :
+						${setting[5].keyValues}
+					</c:if>
+
+
+				</p>
+
+
 
 			</div>
 		</div>
@@ -75,9 +89,12 @@
 			target="_blank">Aaryatech Solutions</a>
 	</p>
 </div>
+
 <c:if test="${setting[0].isActive==1}">
           ${setting[0].keyValues}
           </c:if>
+
+
 <!--   Go to www.addthis.com/dashboard to customize your tools -->
 <!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c812bc21e70ebf7"></script>
  -->

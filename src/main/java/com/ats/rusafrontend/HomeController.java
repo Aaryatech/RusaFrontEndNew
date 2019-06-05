@@ -475,7 +475,7 @@ public class HomeController {
 	public @ResponseBody Info fixContrast(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		RestTemplate rest = new RestTemplate();
+		
 		HttpSession session = request.getSession();
 		Info info = new Info();
 		try {
@@ -509,6 +509,30 @@ public class HomeController {
 			info.setError(false);
 			info.setMsg(sf.format(date));
 			
+		}catch(Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+		}
+		
+		return info;
+ 
+
+	}
+	
+	@RequestMapping(value = "/visitorCount", method = RequestMethod.GET)
+	public @ResponseBody Info visitorCount(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		 
+		Info info = new Info();
+		try {
+			
+			RestTemplate rest = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("key", "website_visitor_hit"); 
+			info = rest.postForObject(Constant.url + "/updateCouunt",map,
+					Info.class);
+			 
 		}catch(Exception e) {
 			e.printStackTrace();
 			info.setError(true);

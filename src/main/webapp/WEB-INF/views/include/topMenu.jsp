@@ -4,12 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 
-<Style>
+ <Style>
 .headerlogo img{
-max-height: 64px;
-max-width: 369px; overflow: hidden;
+max-height: 100px;
+max-width: 655px; overflow: hidden;
 }
-</Style>
+</Style> 
 <c:url var="checkMaintainance" value="/checkMaintainance" />
 <div class="top-menu" id="top-menu">
 		<div class="navbar navbar-expand-md menusats"><%--  --%>

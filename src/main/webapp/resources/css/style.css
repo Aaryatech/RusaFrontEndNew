@@ -599,6 +599,8 @@ border-radius: 100%;
 	font-size: 14px;
 	color: #FFF;
 	margin: 0px;
+	padding-left: 66px;
+    padding-right: 66px;
 }
 .testimonials p strong {
 	font-weight: 600;
