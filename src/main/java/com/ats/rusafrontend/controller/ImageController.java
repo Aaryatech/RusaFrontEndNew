@@ -238,7 +238,17 @@ public class ImageController {
 			String formType = request.getParameter("formType");
 
 			String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-			boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+			String captcha = session.getAttribute("captcha_security").toString();
+			boolean verify;
+			
+			String verifyCaptcha = request.getParameter("captcha");
+			if (captcha.equals(verifyCaptcha)) {
+				verify = true;
+			} else {
+				verify = false;
+			}
+			
+			//boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
 			// boolean verify = true;
 
 			Date date = new Date(); // your date

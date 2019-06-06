@@ -93,13 +93,10 @@ msg-error {
 
 					<div class="col-12 col-sm-12 col-lg-6">
 						<h2>Rashtriya Uchchatar Shiksha Abhiyan</h2>
-						<p>
-
-							Unit No.2, 18th floor, Centre 1, World Trade Centre Cuffe Parade,<br>
-							Colaba, Mumbai-400005<br> Phone No.022, 22160959 / 22160 943 <!-- Unit
-							No.7, 19th floor, Center No. 1, World Trade Centre, Cuffe Parade,<br>
-							Colaba, Mumbai-400005.<br> Phone: 011 - 49725600 -->
-						</p>
+						<p>State Project Directorate (SPD), Maharashtra Rashtriya
+							Uchchatar Shiksha Abhiyan (RUSA), Unit No.2, 18th floor, Centre
+							1, World Trade Centre Cuffe Parade, Colaba, Mumbai-400005 Phone
+							No.022, 22160959 / 22160943</p>
 						<!-- <iframe class="map"
 							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.577356534086!2d72.89611441799786!3d19.149897683543813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86e528cb077%3A0xbeb39574202b3e0e!2sRusa+International!5e0!3m2!1sen!2sin!4v1549861576012"
 							style="border: 0" allowfullscreen="" width="100%" height="540"
@@ -195,11 +192,18 @@ msg-error {
 							<textarea name="message" id="message" class="form-control"
 								placeholder="Message"></textarea>
 							<br> <span class="msg-error error"></span>
-							<div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div>
-							</br>
-							
+							<%-- <div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div> --%>
+
+							<img src="${pageContext.request.contextPath }/captcha" style="height: 50px;width: 200px;" id='captchaImage'> <br>
+							<input type="text" name="captcha" required="required"
+								style="margin-top: 5px;"> <br>  <br>
+
 							<button class="button send" id="btn-validate" type="submit">
 								<span>Send</span>
+							</button>
+							
+							<button class="button send" id="captchaRef" type="button">
+							<span>resend captcha </span>
 							</button>
 						</form>
 					</div>
@@ -235,10 +239,30 @@ msg-error {
 					}
 				})
 	</script>
-	<script>
-		function checkMaintainance() {
+	<script type="text/javascript">
 
-		}
-	</script>
+
+$(document).ready(function() {
+
+ $.ajaxSetup({
+      cache: false
+    });
+
+    var timestamp = (new Date()).getTime();
+
+
+    $("#captchaRef").click(function() {
+
+        var timestamp = (new Date()).getTime();
+        var newSrc = $("#captchaImage").attr("src").split("?");
+     //  $('#captchaImage').attr('src', '').attr('src', 'Captcha.jpg');
+        newSrc = newSrc[0] + "?" + timestamp;
+        $("#captchaImage").attr("src", newSrc);
+        $("#captchaImage").slideDown("fast");
+
+     });
+ });
+
+</script>
 </body>
 </html>

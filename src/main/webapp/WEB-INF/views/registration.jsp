@@ -314,7 +314,7 @@
 	<div class="col-12 col-sm-12 col-lg-3"></div>
 
 
-
+<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include> 
 <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
@@ -322,7 +322,7 @@
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include> 
+	
 		<script type="text/javascript">
 	function checkUnique(inputValue, valueType,seqId) {
 		//alert("inputValue"+inputValue);
