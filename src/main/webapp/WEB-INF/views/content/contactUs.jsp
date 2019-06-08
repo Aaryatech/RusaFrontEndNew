@@ -155,7 +155,7 @@ msg-error {
 						</div>
 
 						<form action="${pageContext.request.contextPath}/insertContactUs"
-							method="post" id="submitContactUs">
+							method="post" id="submitForm">
 							<p>
 								<strong>Please send your message</strong>
 							</p>
@@ -181,24 +181,30 @@ msg-error {
 
 							<br> <label>Your Name</label> <input type="text"
 								class="form-control" name="name" id="name" placeholder="Name"
-								required autocomplete="off">
-							<!-- <p class="error-msg">Please Enter Your Name</p> -->
-							<label>Your Email</label> <input type="email"
-								class="form-control" name="email" id="email" placeholder="Email"
-								required autocomplete="off"> <label>Phone Number</label>
-							<input type="text" class="form-control" name="mobileNo"
-								id="mobileNo" pattern="[7-9]{1}[0-9]{9}" maxlength=10
-								placeholder="Mobile Number" required autocomplete="off">
+								autocomplete="off">
+							<p class="error-msg" id="error_name" style="display: none;">Please
+								Enter Your Name</p>
+
+							<label>Your Email</label> <input type="text" class="form-control"
+								name="email" id="email" placeholder="Email" autocomplete="off">
+							<p class="error-msg" id="error_email" style="display: none;">Please
+								Enter Valid Email</p>
+							<label>Phone Number</label> <input type="text"
+								class="form-control" name="mobileNo" id="mobileNo" maxlength=10
+								placeholder="Mobile Number" autocomplete="off">
+							<p class="error-msg" id="error_mobile" style="display: none;">Please
+								Enter Valid Mobile No.</p>
 							<label>Your Message</label>
 							<textarea name="message" id="message" class="form-control"
 								placeholder="Message"></textarea>
-							<br> <span class="msg-error error"></span>
+							<p class="error-msg" id="error_msg" style="display: none;">Required
+								Field</p>
+							<br>
 							<%-- <div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div> --%>
 
 							<img src="${pageContext.request.contextPath }/captcha"
 								style="height: 50px; width: 200px;" id='captchaImage'> <br>
 							<input type="text" name="captcha" id="captcha"
-								required="required"
 								style="margin-top: 5px; width: 300px; height: 40px;"
 								placeholder="Enter Text" autocomplete="off">
 							<button id="captchaRef" type="button">
@@ -207,12 +213,13 @@ msg-error {
 									alt="Repeat" class="img-responsive"
 									style="width: 20px; height: 20px;" title="Repeat">
 							</button>
-							<br> <span class="msg-error error" id="error_msg"
-								style="display: none; color: red; margin-bottom: 5px; margin-top: 5px;">Invalid Text ! </span><br>
-							<button class="button send" id="btn-validate" type="submit">
+							<br> <span class="msg-error error" id="error_capmsg"
+								style="display: none; color: red; margin-bottom: 5px; margin-top: 5px;">Invalid
+								Text ! </span><br>
+							<button class="button send" id="btn-validate" type="button" onclick="verifyCaptcha()">
 								<span>Send</span>
 							</button>
-
+							<input type="hidden" name="accept" id="accept" value="0">
 							<!-- <button class="button send" id="captchaRef" type="button">
 								<span>resend captcha </span>
 							</button> -->
@@ -258,7 +265,7 @@ msg-error {
 		});
 	</script> -->
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$('#btn-validate').click(function(e) {
 
 			$("#error_msg").hide();
@@ -266,27 +273,172 @@ msg-error {
 				verifyCaptcha();
 		  
 		})
+	</script> -->
+	<script type="text/javascript">
+		function trim(el) {
+			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+			replace(/\n +/, "\n"); // Removes spaces after newlines
+			return;
+		}
+
+		function validateEmail(email) {
+
+			var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+			if (eml.test($.trim(email)) == false) {
+
+				return false;
+
+			}
+
+			return true;
+
+		}
+		function validateMobile(mobile) {
+			var mob = /^[1-9]{1}[0-9]{9}$/;
+
+			if (mob.test($.trim(mobile)) == false) {
+
+				//alert("Please enter a valid email address .");
+				return false;
+
+			}
+			return true;
+
+		}
+
+		
+	</script>
+	
+	<script>
+		function validate() {
+
+			var isError = false;
+			var errMsg = "";
+			$("#error_email").hide();
+			$("#error_mobile").hide();
+			$("#error_name").hide();
+			$("#error_msg").hide();
+			$("#error_capmsg").hide();
+			 
+			if (!$("#name").val()) {
+
+				isError = true;
+
+				$("#error_name").show()
+				//return false;
+			}
+
+			if (!$("#email").val()
+					|| !validateEmail($(
+							"#email").val())) {
+
+				isError = true;
+
+				if (!$("#email").val()) {
+					document
+							.getElementById("error_email").innerHTML = "This field is required.";
+				} else {
+					document
+							.getElementById("error_email").innerHTML = "Enter valid email.";
+				}
+
+				$("#error_email").show()
+
+			}
+
+			if (!$("#mobileNo").val()
+					|| !validateMobile($(
+							"#mobileNo")
+							.val())) {
+
+				isError = true;
+
+				if (!$("#mobileNo").val()) {
+					document
+							.getElementById("error_mobile").innerHTML = "This field is required.";
+				} else {
+					document
+							.getElementById("error_mobile").innerHTML = "Enter valid Mobile No.";
+				}
+
+				$("#error_mobile").show()
+
+			}
+
+			if (!$("#message").val()) {
+
+				isError = true;
+
+				$("#error_msg").show()
+			 
+			}
+			if (!$("#captcha").val()) {
+
+				isError = true;
+
+				document
+						.getElementById("error_capmsg").innerHTML = "This filed required";
+				$("#error_capmsg").show();
+				 
+			}
+
+			if (!isError) {
+				return false;
+			}
+
+			return true;
+
+		}
 	</script>
 
 	<script>
 		function verifyCaptcha() {
 
-			var captcha = $("#captcha").val();
-			//alert(captcha);
-			$.getJSON('${verifyCaptcha}', {
+			//alert(validate());
+			
+			if(validate()==false){
+				var captcha = $("#captcha").val();
+				//alert(captcha);
+				$("#error_capmsg").hide();
 
-				captcha : captcha,
-				ajax : 'true',
+				var flag = 0;
 
-			}, function(data) {
+				if (captcha != "") {
+					$
+							.getJSON(
+									'${verifyCaptcha}',
+									{
 
-				if (data.error == true) {
-					document.getElementById("captcha").value = "";
-					$("#error_msg").show();
-					document.getElementById("captchaRef").click();
+										captcha : captcha,
+										ajax : 'true',
+
+									},
+									function(data) {
+										if (data.error == true) {
+											document.getElementById("captcha").value = "";
+											document.getElementById("error_capmsg").innerHTML = "Invalid Text !";
+											$("#error_capmsg").show();
+											document.getElementById("captchaRef")
+													.click();
+											document.getElementById("accept").value = 0;
+											flag = 0;
+										} else {
+											document.getElementById("accept").value = 1;
+											flag = 1;
+											document.getElementById("submitForm").submit();
+										}
+									});
+	  
+				} else {
+					document.getElementById("error_capmsg").innerHTML = "This filed required";
+					$("#error_capmsg").show();
+					document.getElementById("accept").value = 0;
+					return true;
 				}
-
-			});
+			}
+			  
 
 		}
 	</script>

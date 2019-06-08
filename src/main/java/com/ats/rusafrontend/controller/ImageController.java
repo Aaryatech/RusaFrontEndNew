@@ -309,7 +309,7 @@ public class ImageController {
 			
 			HttpSession session = request.getSession();
 			String captcha = session.getAttribute("captcha_security").toString();
-			System.out.println(verifyCaptcha + "  " + captcha);
+			//System.out.println(verifyCaptcha + "  " + captcha);
 			if (captcha.equals(verifyCaptcha)) {
 				info.setError(false);
 			} else {
