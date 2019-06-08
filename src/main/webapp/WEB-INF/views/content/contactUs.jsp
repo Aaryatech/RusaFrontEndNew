@@ -63,6 +63,7 @@ msg-error {
 
 </head>
 <body class="${contrast}">
+	<c:url var="verifyCaptcha" value="/verifyCaptcha" />
 	<c:url var="checkMaintainance" value="/checkMaintainance" />
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
@@ -154,7 +155,7 @@ msg-error {
 						</div>
 
 						<form action="${pageContext.request.contextPath}/insertContactUs"
-							method="post">
+							method="post" id="submitContactUs">
 							<p>
 								<strong>Please send your message</strong>
 							</p>
@@ -180,15 +181,15 @@ msg-error {
 
 							<br> <label>Your Name</label> <input type="text"
 								class="form-control" name="name" id="name" placeholder="Name"
-								required>
+								required autocomplete="off">
 							<!-- <p class="error-msg">Please Enter Your Name</p> -->
 							<label>Your Email</label> <input type="email"
 								class="form-control" name="email" id="email" placeholder="Email"
-								required> <label>Phone Number</label> <input type="text"
-								class="form-control" name="mobileNo" id="mobileNo"
-								pattern="[7-9]{1}[0-9]{9}" maxlength=10
-								placeholder="Mobile Number" required> <label>Your
-								Message</label>
+								required autocomplete="off"> <label>Phone Number</label>
+							<input type="text" class="form-control" name="mobileNo"
+								id="mobileNo" pattern="[7-9]{1}[0-9]{9}" maxlength=10
+								placeholder="Mobile Number" required autocomplete="off">
+							<label>Your Message</label>
 							<textarea name="message" id="message" class="form-control"
 								placeholder="Message"></textarea>
 							<br> <span class="msg-error error"></span>
@@ -196,12 +197,18 @@ msg-error {
 
 							<img src="${pageContext.request.contextPath }/captcha"
 								style="height: 50px; width: 200px;" id='captchaImage'> <br>
-							<input type="text" name="captcha" required="required"
-								style="margin-top: 5px; width: 300px; height: 40px;" placeholder="Enter Text"> <button   id="captchaRef" type="button"><img
-								src="${pageContext.request.contextPath}/resources/images/repeat.png"
-								alt="Repeat" class="img-responsive" style="width: 20px;height: 20px;" title="Repeat"></button> <br>
-							<br>
-
+							<input type="text" name="captcha" id="captcha"
+								required="required"
+								style="margin-top: 5px; width: 300px; height: 40px;"
+								placeholder="Enter Text" autocomplete="off">
+							<button id="captchaRef" type="button">
+								<img
+									src="${pageContext.request.contextPath}/resources/images/repeat.png"
+									alt="Repeat" class="img-responsive"
+									style="width: 20px; height: 20px;" title="Repeat">
+							</button>
+							<br> <span class="msg-error error" id="error_msg"
+								style="display: none; color: red; margin-bottom: 5px; margin-top: 5px;">Invalid Text ! </span><br>
 							<button class="button send" id="btn-validate" type="submit">
 								<span>Send</span>
 							</button>
@@ -224,25 +231,66 @@ msg-error {
 	<!-- JavaScript-->
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 
-	<script type="text/javascript">
-		$('#btn-validate').click(
-				function(e) {
-					var $captcha = $('#recaptcha'), response = grecaptcha
-							.getResponse();
+	<!-- <script type="text/javascript">
+		$(document).ready(function($) {
 
-					if (response.length === 0) {
-						$('.msg-error').text("reCAPTCHA is mandatory");
-						if (!$captcha.hasClass("error")) {
-							$captcha.addClass("error");
-						}
-						e.preventDefault();
-					} else {
-						$('.msg-error').text('');
-						$captcha.removeClass("error");
-						//  alert( 'reCAPTCHA marked' );
-					}
-				})
+			$("#submitContactUs").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
+
+				var captcha = $("#captcha").val();
+
+				
+				
+				/* var radioValue = $("input[name='formType']:checked").val();
+
+				if (radioValue < 3 && !$("#message").val()) {
+
+					$("#error_msg").show();
+					return false;
+				} else {
+					$("#error_msg").hide();
+
+				}
+
+				return true; */
+			});
+		});
+	</script> -->
+
+	<script type="text/javascript">
+		$('#btn-validate').click(function(e) {
+
+			$("#error_msg").hide();
+			   
+				verifyCaptcha();
+		  
+		})
 	</script>
+
+	<script>
+		function verifyCaptcha() {
+
+			var captcha = $("#captcha").val();
+			//alert(captcha);
+			$.getJSON('${verifyCaptcha}', {
+
+				captcha : captcha,
+				ajax : 'true',
+
+			}, function(data) {
+
+				if (data.error == true) {
+					document.getElementById("captcha").value = "";
+					$("#error_msg").show();
+					document.getElementById("captchaRef").click();
+				}
+
+			});
+
+		}
+	</script>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 

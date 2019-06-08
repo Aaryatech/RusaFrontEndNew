@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -285,7 +287,7 @@ public class ImageController {
 			} else {
 
 				flag = 1;
-				session.setAttribute("errorMsg", "Please Verify ReCaptcha !");
+				session.setAttribute("errorMsg", "Invalid Captcha !");
 			}
 
 		} catch (Exception e) {
@@ -296,6 +298,33 @@ public class ImageController {
 		return "redirect:/ContactUs";
 	}
 
+	@RequestMapping(value = "/verifyCaptcha", method = RequestMethod.GET)
+	public @ResponseBody Info verifyCaptcha(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		 
+		Info info = new Info();
+		try {
+			String verifyCaptcha = request.getParameter("captcha");
+			
+			HttpSession session = request.getSession();
+			String captcha = session.getAttribute("captcha_security").toString();
+			System.out.println(verifyCaptcha + "  " + captcha);
+			if (captcha.equals(verifyCaptcha)) {
+				info.setError(false);
+			} else {
+				info.setError(true);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+		}
+		
+		return info;
+ 
+
+	}
 	@RequestMapping(value = "/screenReader", method = RequestMethod.GET)
 	public ModelAndView screenReader(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
