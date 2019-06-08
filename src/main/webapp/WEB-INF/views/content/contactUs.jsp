@@ -194,17 +194,21 @@ msg-error {
 							<br> <span class="msg-error error"></span>
 							<%-- <div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div> --%>
 
-							<img src="${pageContext.request.contextPath }/captcha" style="height: 50px;width: 200px;" id='captchaImage'> <br>
+							<img src="${pageContext.request.contextPath }/captcha"
+								style="height: 50px; width: 200px;" id='captchaImage'> <br>
 							<input type="text" name="captcha" required="required"
-								style="margin-top: 5px;"> <br>  <br>
+								style="margin-top: 5px; width: 300px; height: 40px;" placeholder="Enter Text"> <button   id="captchaRef" type="button"><img
+								src="${pageContext.request.contextPath}/resources/images/repeat.png"
+								alt="Repeat" class="img-responsive" style="width: 20px;height: 20px;" title="Repeat"></button> <br>
+							<br>
 
 							<button class="button send" id="btn-validate" type="submit">
 								<span>Send</span>
 							</button>
-							
-							<button class="button send" id="captchaRef" type="button">
-							<span>resend captcha </span>
-							</button>
+
+							<!-- <button class="button send" id="captchaRef" type="button">
+								<span>resend captcha </span>
+							</button> -->
 						</form>
 					</div>
 
@@ -240,29 +244,25 @@ msg-error {
 				})
 	</script>
 	<script type="text/javascript">
+		$(document).ready(function() {
 
+			$.ajaxSetup({
+				cache : false
+			});
 
-$(document).ready(function() {
+			var timestamp = (new Date()).getTime();
 
- $.ajaxSetup({
-      cache: false
-    });
+			$("#captchaRef").click(function() {
 
-    var timestamp = (new Date()).getTime();
+				var timestamp = (new Date()).getTime();
+				var newSrc = $("#captchaImage").attr("src").split("?");
+				//  $('#captchaImage').attr('src', '').attr('src', 'Captcha.jpg');
+				newSrc = newSrc[0] + "?" + timestamp;
+				$("#captchaImage").attr("src", newSrc);
+				$("#captchaImage").slideDown("fast");
 
-
-    $("#captchaRef").click(function() {
-
-        var timestamp = (new Date()).getTime();
-        var newSrc = $("#captchaImage").attr("src").split("?");
-     //  $('#captchaImage').attr('src', '').attr('src', 'Captcha.jpg');
-        newSrc = newSrc[0] + "?" + timestamp;
-        $("#captchaImage").attr("src", newSrc);
-        $("#captchaImage").slideDown("fast");
-
-     });
- });
-
-</script>
+			});
+		});
+	</script>
 </body>
 </html>
