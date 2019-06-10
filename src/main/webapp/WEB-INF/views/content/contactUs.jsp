@@ -96,7 +96,7 @@ msg-error {
 						<h2>Rashtriya Uchchatar Shiksha Abhiyan</h2>
 						<p>State Project Directorate (SPD), Maharashtra Rashtriya
 							Uchchatar Shiksha Abhiyan (RUSA), Unit No.2, 18th floor, Centre
-							1, World Trade Centre Cuffe Parade, Colaba, Mumbai-400005 Phone
+							1, World Trade Centre Cuffe Parade, Colaba, Mumbai-400005. <br>Phone
 							No.022, 22160959 / 22160943</p>
 						<!-- <iframe class="map"
 							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.577356534086!2d72.89611441799786!3d19.149897683543813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86e528cb077%3A0xbeb39574202b3e0e!2sRusa+International!5e0!3m2!1sen!2sin!4v1549861576012"
@@ -181,22 +181,22 @@ msg-error {
 
 							<br> <label>Your Name</label> <input type="text"
 								class="form-control" name="name" id="name" placeholder="Name"
-								autocomplete="off">
+								autocomplete="off" onchange="trim(this)">
 							<p class="error-msg" id="error_name" style="display: none;">Please
 								Enter Your Name</p>
 
 							<label>Your Email</label> <input type="text" class="form-control"
-								name="email" id="email" placeholder="Email" autocomplete="off">
+								name="email" id="email" placeholder="Email" autocomplete="off" onchange="trim(this)">
 							<p class="error-msg" id="error_email" style="display: none;">Please
 								Enter Valid Email</p>
 							<label>Phone Number</label> <input type="text"
 								class="form-control" name="mobileNo" id="mobileNo" maxlength=10
-								placeholder="Mobile Number" autocomplete="off">
+								placeholder="Mobile Number" autocomplete="off" onchange="trim(this)">
 							<p class="error-msg" id="error_mobile" style="display: none;">Please
 								Enter Valid Mobile No.</p>
 							<label>Your Message</label>
 							<textarea name="message" id="message" class="form-control"
-								placeholder="Message"></textarea>
+								placeholder="Message" onchange="trim(this)"></textarea>
 							<p class="error-msg" id="error_msg" style="display: none;">Required
 								Field</p>
 							<br>
@@ -206,7 +206,7 @@ msg-error {
 								style="height: 50px; width: 200px;" id='captchaImage'> <br>
 							<input type="text" name="captcha" id="captcha"
 								style="margin-top: 5px; width: 300px; height: 40px;"
-								placeholder="Enter Text" autocomplete="off">
+								placeholder="Enter Text" autocomplete="off" onchange="trim(this)" >
 							<button id="captchaRef" type="button">
 								<img
 									src="${pageContext.request.contextPath}/resources/images/repeat.png"

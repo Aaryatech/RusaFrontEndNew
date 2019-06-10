@@ -32,11 +32,13 @@ import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.model.EventRecord;
 import com.ats.rusafrontend.model.EventRegistration;
+import com.ats.rusafrontend.model.InstituteInfo;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
 import com.ats.rusafrontend.model.OtpResponse;
 import com.ats.rusafrontend.model.PageMetaData;
 import com.ats.rusafrontend.model.Registration;
+import com.ats.rusafrontend.model.University;
 
 @Controller
 @Scope("session")
@@ -254,12 +256,101 @@ public class UserController {
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
+				
+				University[] university = rest.getForObject(Constant.url + "/getUniversityList", University[].class);
+				List<University> universityList = new ArrayList<>(Arrays.asList(university)); 
+				model.addObject("universityList", universityList);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return model;
+	}
+	
+	
+	@RequestMapping(value = "/getInstitute", method = RequestMethod.GET)
+	public @ResponseBody List<InstituteInfo> getInstituteList(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		 
+		List<InstituteInfo> instituteInfolist = new ArrayList<>();
+		try {
+			
+			int uniId = Integer.parseInt(request.getParameter("uniId"));
+			RestTemplate rest = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("uniId", uniId); 
+			InstituteInfo[] instituteInfo = rest.postForObject(Constant.url + "/getInstituteListByUniversityId",map,
+					InstituteInfo[].class);
+			
+			instituteInfolist = new ArrayList<>(Arrays.asList(instituteInfo));
+			 
+		}catch(Exception e) {
+			e.printStackTrace();
+			 
+		}
+		
+		return instituteInfolist;
+ 
+
+	}
+	
+	@RequestMapping(value = "/getAshecodeByInstiid", method = RequestMethod.GET)
+	public @ResponseBody InstituteInfo getAshecode(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		 
+		InstituteInfo instituteInfo  = new InstituteInfo();
+		try {
+			
+			int instiId = Integer.parseInt(request.getParameter("instiId"));
+			RestTemplate rest = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("instiId", instiId); 
+			 instituteInfo = rest.postForObject(Constant.url + "/getInstituteInfoById",map,
+					InstituteInfo .class);
+			 
+			 
+		}catch(Exception e) {
+			e.printStackTrace();
+			 
+		}
+		
+		return instituteInfo;
+ 
+
+	}
+	
+	@RequestMapping(value = "/getInstituteInformation", method = RequestMethod.GET)
+	public @ResponseBody InstituteInfo getInstituteInformation(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		 
+		InstituteInfo instituteInfo  = new InstituteInfo();
+		try {
+			
+			String instiaisheCode =  request.getParameter("instiaisheCode") ;
+			RestTemplate rest = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("asheCode", instiaisheCode); 
+			 instituteInfo = rest.postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
+					InstituteInfo .class);
+			 
+			if(instituteInfo==null) {
+				instituteInfo  = new InstituteInfo();
+			}
+			 
+			 
+		}catch(Exception e) {
+			e.printStackTrace();
+			instituteInfo  = new InstituteInfo();
+		}
+		
+		return instituteInfo;
+ 
+
 	}
 
 	@RequestMapping(value = "/insertUserRegistration", method = RequestMethod.POST)

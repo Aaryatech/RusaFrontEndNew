@@ -29,9 +29,9 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
- 
+
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -51,6 +51,9 @@
 </script>
 </head>
 <body class="${contrast}">
+	<c:url value="/getInstituteInformation" var="getInstituteInfo"></c:url>
+	<c:url value="/getAshecodeByInstiid" var="getAshecode"></c:url>
+	<c:url value="/getInstitute" var="getInstituteList"></c:url>
 	<c:url value="/checkUniqueField" var="checkUniqueField"></c:url>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
@@ -102,143 +105,220 @@
 			<div class="login-box register-box">
 				<div class="login-header">
 					<h5>Register</h5>
-					<p>Register to access your profile</p>
+					<p>Note : Only for Uploading the requisite Document To RUSA
+						Maharashtra</p>
 				</div>
 				<form
 					action="${pageContext.request.contextPath}/insertUserRegistration"
-					onsubmit="return confirm('Do you really want to submit the form?');"
 					method="post" name="login_form">
-					<div class="row row-eq-height">
+					<div class="row row-eq-height" id="typeDiv">
 						<div class="col-12 col-sm-12 col-lg-3"></div>
-
-
 						<div class="col-12 col-sm-12 col-lg-3"></div>
-
-
-
-
 						<div class="col-12 col-sm-12 col-lg-3"></div>
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>Select Type</label> <select id="userType" name="userType"
-								class="form-control" onchange="showForm()" required>
+							<label>Select Type </label>
+							<!-- <select
+								id="userType" name="userType" class="form-control"
+								onchange="showForm()" required>
 
 								<option value="1">Individual</option>
 								<option value="2">Colleges</option>
 								<option value="3">University</option>
-							</select>
+							</select> -->
+							<div class="row">
+								<div class="col-12 col-sm-6 col-lg-3">
+									<input type="radio" name="userType" value="1" id="userType1"
+										onchange="showForm(1)"> <label for="userType1"></label>
+									<span>Individual</span>
+								</div>
+
+
+								<div class="col-12 col-sm-6 col-lg-3">
+									<input type="radio" name="formType" value="2" id="userType2"
+										onchange="showForm(2)"> <label for="userType2"></label>
+									<span>Institute</span>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-3">
+									<input type="radio" name="formType" value="3" id="userType3"
+										onchange="showForm(3)"> <label for="userType3"></label>
+									<span>University</span>
+								</div>
+							</div>
 						</div>
 					</div>
 
+
+
 					<div class="col-12 col-sm-12 col-lg-3"></div>
 
-					<div class="form-group row row-eq-height" style="display: visible"
+					<div class="form-group row row-eq-height" style="display: none;"
 						id="individual">
 
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Select University<span class="text-danger">*</span>
+							</label> <select id="university" name="university" class="form-control"
+								onchange="getInstituteList()">
+								<option value="">Select University</option>
+								<c:forEach items="${universityList}" var="universityList">
+									<option value="${universityList.uniId}">${universityList.uniName}</option>
+								</c:forEach>
+							</select>
+							<p class="error-msg" id="error_university" style="display: none;">Please
+								Select University</p>
+							<!-- <input type="text" class="form-control" name="university"
+								onchange="trim(this)" placeholder="University Affiliated"
+								id="uniAff" required> -->
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label> Select Institute <span class="text-danger">*</span></label>
+							<!-- <input
+								type="text" class="form-control" name="collegeName"
+								onchange="trim(this)" placeholder="College Name"
+								id="collegeName"> -->
+							<select id="collegeName" name="collegeName" class="form-control"
+								onchange="getAshecode()">
+								<option value="">Select Institute</option>
+							</select>
+							<p class="error-msg" id="error_collegeName" style="display: none;">Please
+								Select Institute</p>
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>AISHE Code </label> <input type="text"
+								class="form-control" name="indAshecode" onchange="trim(this)"
+								placeholder="AISHE Code" id="indAshecode" readonly>
+						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 
 							<label>Full Name <span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="name" placeholder="Name" onchange="trim(this)"
-								id="fullname" required>
+								type="text" class="form-control" name="name" placeholder="Name"
+								onchange="trim(this)" id="name">
+							<p class="error-msg" id="error_name" style="display: none;">Please
+								Enter Full Name</p>
 						</div>
 
 
-						<div class="col-12 col-sm-12 col-lg-6">
-							<label>College Name <span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="collegeName" onchange="trim(this)"
-								placeholder="College Name" id="collegeName" required>
-						</div>
-
-						<div class="col-12 col-sm-12 col-lg-6">
-							<label>University Affiliated <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="university" onchange="trim(this)"
-								placeholder="University Affiliated" id="uniAff" required>
-						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Designation of Person <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="authour" onchange="trim(this)"
-								placeholder="Designation of Person" id="authour" required>
+							</label> <input type="text" class="form-control" name="inddesognation"
+								onchange="trim(this)" placeholder="Designation of Person"
+								id="inddesognation">
+							<p class="error-msg" id="error_inddesognation"
+								style="display: none;">Required Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 
 							<label>Name of Department <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="dept" onchange="trim(this)"
-								placeholder="Name of Department" id="depatment" required>
+							</label> <input type="text" class="form-control" name="depatment"
+								onchange="trim(this)" placeholder="Name of Department"
+								id="depatment">
+							<p class="error-msg" id="error_depatment" style="display: none;">Required
+								Field.</p>
 						</div>
 
 
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="mobile" oninput="checkUnique(this.value,1,1)" 
-								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-								placeholder="Mobile No." id="mobile" maxlength="10" required>
+								type="text" class="form-control" name="mobile"
+								oninput="checkUnique(this.value,1,1)" maxlength="10"
+								placeholder="Mobile No." id="mobile">
+							<p class="error-msg" id="error_mobile" style="display: none;">Required
+								Field.</p>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
-								type="email" class="form-control" name="email"  oninput="checkUnique(this.value,2,1)"
-								placeholder="Email" id="email" required>
+								type="text" class="form-control" name="email"
+								oninput="checkUnique(this.value,2,1)" placeholder="Email"
+								id="email">
+							<p class="error-msg" id="error_email" style="display: none;">Required
+								Field.</p>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>Alternate Email-ID</label> <input type="email" onchange="trim(this)"
-								class="form-control" name="altEmail"
+							<label>Alternate Email-ID</label> <input type="text"
+								onchange="trim(this)" class="form-control" name="altEmail"
 								placeholder="Alternate Email" id="altEmail">
+							<p class="error-msg" id="error_altEmail" style="display: none;">Enter
+								Valid Email.</p>
 						</div>
 					</div>
 
 
 					<div class="form-group row row-eq-height" style="display: none"
 						id="college">
+
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>College Name <span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="institute"
-								placeholder="College Name" id="instituteName">
+							<label>AISHE Code <span class="text-danger">*</span>
+							</label> <input type="text" class="form-control"
+								onchange="trim(this);getInstituteInfo()" name="instiaisheCode"
+								placeholder="AISHE Code" value="C-" id="instiaisheCode"
+								maxlength="7" style="text-transform: uppercase">
+							<p class="error-msg" id="error-instiaisheCode"
+								style="display: none;">AISHE code is not match.</p>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>AISHE Code</label> <input type="text" class="form-control" onchange="trim(this)"
-								name="aisheName" placeholder="AISHE Code" id="aisheName">
-						</div>  
+							<label>University Name </label> <input type="text"
+								class="form-control" name="univ" onchange="trim(this)"
+								placeholder="University Affiliated" id="univ" readonly>
+						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>University Affiliated <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="univ" onchange="trim(this)"
-								placeholder="University Affiliated" id="univ">
+							<label>Institute Name </label> <input type="text"
+								class="form-control" name="institute" placeholder="College Name"
+								id="institute" readonly>
 						</div>
+
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Authorized Person Name <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="collegeAuthour" onchange="trim(this)"
-								placeholder="Authorized Person Name" id="cAuthour">
+							</label> <input type="text" class="form-control" name="cAuthour"
+								onchange="trim(this)" placeholder="Authorized Person Name"
+								id="cAuthour">
+							<p class="error-msg" id="error-cAuthour" style="display: none;">Required
+								Field.</p>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Designation of Person<span class="text-danger">*</span>
-							</label> <input type="text" class="form-control"
-								name="designationCollege" placeholder="Designation of Person" onchange="trim(this)"
-								id="designationCollege">
+							</label> <input type="text" class="form-control" name="instidesignation"
+								placeholder="Designation of Person" onchange="trim(this)"
+								id="instidesignation">
+							<p class="error-msg" id="error-instidesignation"
+								style="display: none;">Required Field.</p>
 						</div>
-						<div class="col-12 col-sm-12 col-lg-6"> 
+						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Name of Department <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="dept" onchange="trim(this)"
-								placeholder="Name of Department" id="collegeDept">
+							</label> <input type="text" class="form-control" name="instiDept"
+								onchange="trim(this)" placeholder="Name of Department"
+								id="instiDept">
+							<p class="error-msg" id="error-instiDept" style="display: none;">Required
+								Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="collegeMobile"  oninput="checkUnique(this.value,1,2)" 
-								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-								placeholder="Mobile No." id="collegeNo" maxlength="10">
+								type="text" class="form-control" name="instiMobile"
+								oninput="checkUnique(this.value,1,2)" maxlength="10"
+								placeholder="Mobile No." id="instiMobile">
+							<p class="error-msg" id="error-instiMobile"
+								style="display: none;">Required Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
-								type="email" class="form-control" name="collegeEmail"  oninput="checkUnique(this.value,2,2)"
-								placeholder="Email" id="collegeEmail">
+								type="text" class="form-control" name="instiEmail"
+								oninput="checkUnique(this.value,2,2)" placeholder="Email"
+								id="instiEmail">
+							<p class="error-msg" id="error-instiEmail" style="display: none;">Required
+								Field.</p>
 						</div>
 
 
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>Alternate Email-ID</label> <input type="email"
+							<label>Alternate Email-ID</label> <input type="text"
 								class="form-control" name="altEmail" onchange="trim(this)"
 								placeholder="Alternate Email" id="altEmail">
 						</div>
@@ -246,60 +326,79 @@
 
 
 					<div class="form-group row row-eq-height" style="display: none"
-						id="university">
+						id="universitydiv">
 
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>AISHE Code <span class="text-danger">*</span></label> <input
+								type="text" class="form-control"
+								onchange="trim(this);getuniInfo()" name="uniaisheName"
+								placeholder="AISHE Code" id="uniaisheName" value="C-"
+								style="text-transform: uppercase" maxlength="7">
+							<p class="error-msg" id="error-uniaisheName"
+								style="display: none;">AISHE code is not match.</p>
+						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>University Name <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="uniName" onchange="trim(this)"
-								placeholder="University Name" id="uniName">
+							</label> <input type="text" class="form-control" name="uniName"
+								onchange="trim(this)" placeholder="University Name" id="uniName"
+								readonly>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>AISHE Code</label> <input type="text" class="form-control" onchange="trim(this)"
-								name="aisheName" placeholder="AISHE Code" id="aisheName">
+							<label>Institute Name </label> <input type="text"
+								class="form-control" name="uniinstitute"
+								placeholder="Institute Name" id="uniinstitute" readonly>
 						</div>
+
 
 						<div class="col-12 col-sm-12 col-lg-6">
 
 							<label>Authorized Person Name <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="uniAuthour" onchange="trim(this)"
-								placeholder="Authorized Person Name" id="uniAuthour">
+							</label> <input type="text" class="form-control" name="uniAuthour"
+								onchange="trim(this)" placeholder="Authorized Person Name"
+								id="uniAuthour">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Designation of Person<span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="uniDes" onchange="trim(this)"
-								placeholder="Designation of Person" id="uniDes">
+							</label> <input type="text" class="form-control" name="uniDes"
+								onchange="trim(this)" placeholder="Designation of Person"
+								id="uniDes">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Name of Department <span class="text-danger">*</span>
-							</label> <input type="text" class="form-control" name="uniDept" onchange="trim(this)"
-								placeholder="Name of Department" id="uniDept">
+							</label> <input type="text" class="form-control" name="uniDept"
+								onchange="trim(this)" placeholder="Name of Department"
+								id="uniDept">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
-								type="text" class="form-control" name="uniMobile" oninput="checkUnique(this.value,1,3)" 
-								pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-								placeholder="Mobile No." id="uniNo" maxlength="10">
+								type="text" class="form-control" name="uniMobile"
+								oninput="checkUnique(this.value,1,3)" maxlength="10"
+								placeholder="Mobile No." id="uniNo">
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
-								type="email" class="form-control" name="uniEmail"  oninput="checkUnique(this.value,2,3)"
-								placeholder="Email" id="uniEmail">
+								type="text" class="form-control" name="uniEmail"
+								oninput="checkUnique(this.value,2,3)" placeholder="Email"
+								id="uniEmail">
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
-							<label>Alternate Email-ID</label> <input type="email"
+							<label>Alternate Email-ID</label> <input type="text"
 								class="form-control" name="altEmail" onchange="trim(this)"
 								placeholder="Alternate Email" id="altEmail">
 						</div>
 					</div>
 					<div class="clearfix"></div>
 
-					<div class="col-12 col-sm-12 col-lg-12">
+					<div class="col-12 col-sm-12 col-lg-12" id="regbutton"
+						style="display: none;">
 						<p>
-							<button type="submit" id="log-btn" class="button login-btn">Register</button>
+							<button type="button" onclick="validate()" id="log-btn"
+								class="button login-btn">Register</button>
+							<input type="hidden" class="form-control" name="type" id="type">
 						</p>
 					</div>
 					<p>
@@ -314,246 +413,372 @@
 	<div class="col-12 col-sm-12 col-lg-3"></div>
 
 
-<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include> 
-<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-	
-		<script type="text/javascript">
-	function checkUnique(inputValue, valueType,seqId) {
-		//alert("inputValue"+inputValue);
-		///alert("valueType "+valueType);
-		//alert("seqId "+seqId);
-		
-	
-		
-		
-		var primaryKey=0;
-		//alert("Is Edit " +isEdit);
-		var valid = true;
-		if (valueType == 1) {
-			//alert("Its Mob no");
-			if (inputValue.length == 10) {
-				valid = true;
-				//alert("Len 10")
-			} else {
-				valid = false;
-			}
-		} else if (valueType == 2) {
-			//alert("Its Email " );
 
-			var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-			if (inputValue.match(mailformat)) {
-				valid = true;
-				//alert("Valid Email Id");
-			} else {
-				valid = false;
-				//alert("InValid Email Id");
+	<script type="text/javascript">
+		function checkUnique(inputValue, valueType, seqId) {
+			//alert("inputValue"+inputValue);
+			///alert("valueType "+valueType);
+			//alert("seqId "+seqId);
+
+			var primaryKey = 0;
+			//alert("Is Edit " +isEdit);
+			var valid = true;
+			if (valueType == 1) {
+				//alert("Its Mob no");
+				if (inputValue.length == 10) {
+					valid = true;
+					//alert("Len 10")
+				} else {
+					valid = false;
+				}
+			} else if (valueType == 2) {
+				//alert("Its Email " );
+
+				var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+				if (inputValue.match(mailformat)) {
+					valid = true;
+					//alert("Valid Email Id");
+				} else {
+					valid = false;
+					//alert("InValid Email Id");
+				}
 			}
+			if (valid == true)
+				$
+						.getJSON(
+								'${checkUniqueField}',
+								{
+
+									inputValue : inputValue,
+									valueType : valueType,
+									primaryKey : primaryKey,
+									ajax : 'true',
+
+								},
+								function(data) {
+
+									//alert("Data  " +JSON.stringify(data));
+									if (data.error == true) {
+
+										if (valueType == 2) {
+											alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
+
+											if (seqId == 1) {
+												document
+														.getElementById("email").value = "";
+
+											} else if (seqId == 2) {
+												document
+														.getElementById("instiEmail").value = "";
+											} else {
+												document
+														.getElementById("uniEmail").value = "";
+											}
+
+										} else {
+
+											alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
+
+											if (seqId == 1) {
+												document
+														.getElementById("mobile").value = "";
+
+											} else if (seqId == 2) {
+												document
+														.getElementById("instiMobile").value = "";
+											} else {
+												document
+														.getElementById("uniNo").value = "";
+											}
+
+										}
+									}
+								});
 		}
-		if (valid == true)
+
+		function trim(el) {
+			el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
+			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+			replace(/\n +/, "\n"); // Removes spaces after newlines
+			return;
+		}
+
+		function validateEmail(email) {
+
+			var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+			if (eml.test($.trim(email)) == false) {
+
+				return false;
+
+			}
+
+			return true;
+
+		}
+		function validateMobile(mobile) {
+			var mob = /^[1-9]{1}[0-9]{9}$/;
+
+			if (mob.test($.trim(mobile)) == false) {
+
+				//alert("Please enter a valid email address .");
+				return false;
+
+			}
+			return true;
+
+		}
+	</script>
+
+	<script>
+		function validate() {
+
+			var isError = false;
+			var errMsg = "";
+
+			var type = $("#type").val()
+
+			//alert(type);
+
+			if (type == 1) {
+
+				$("#error_university").hide();
+				$("#error_collegeName").hide();
+				$("#error_name").hide();
+				$("#error_inddesognation").hide();
+				$("#error_depatment").hide();
+				$("#error_mobile").hide();
+				$("#error_email").hide();
+				$("#error_altEmail").hide();
+				
+				if ($("#university").val() == "") {
+
+					isError = true;
+
+					$("#error_university").show();
+					//return false;
+				}
+
+				if ($("#collegeName").val() == "") {
+
+					isError = true;
+
+					$("#error_collegeName").show()
+
+				}
+
+				if (!$("#name").val()) {
+
+					isError = true;
+
+					$("#error_name").show()
+
+				}
+
+				if (!$("#inddesognation").val()) {
+
+					isError = true;
+
+					$("#error_inddesognation").show()
+
+				}
+
+				if (!$("#depatment").val()) {
+
+					isError = true;
+
+					$("#error_depatment").show()
+
+				}
+
+				if (!$("#mobile").val() || !validateMobile($("#mobile").val())) {
+
+					isError = true;
+
+					if (!$("#mobile").val()) {
+						document.getElementById("error_mobile").innerHTML = "This field is required.";
+					} else {
+						document.getElementById("error_mobile").innerHTML = "Enter valid Mobile No.";
+					}
+
+					$("#error_mobile").show()
+
+				}
+
+				if (!$("#email").val() || !validateEmail($("#email").val())) {
+
+					isError = true;
+
+					if (!$("#email").val()) {
+						document.getElementById("error_email").innerHTML = "This field is required.";
+					} else {
+						document.getElementById("error_email").innerHTML = "Enter valid email.";
+					}
+
+					$("#error_email").show()
+
+				}
+
+				if ($("#altEmail").val() != ""
+						&& !validateEmail($("#altEmail").val())) {
+
+					isError = true;
+
+					document.getElementById("error_altEmail").innerHTML = "Enter valid email.";
+
+					$("#error_altEmail").show()
+
+				}
+
+			}
+
+		}
+
+		//
+	</script>
+
+	<script type="text/javascript">
+		function getInstituteList() {
+
+			var university = document.getElementById("university").value;
+
+			$.getJSON('${getInstituteList}', {
+
+				uniId : university,
+				ajax : 'true',
+
+			}, function(data) {
+
+				var html = '<option value=""> Select Institute </option>';
+
+				var len = data.length;
+				for (var i = 0; i < len; i++) {
+
+					html += '<option value="' + data[i].mhInstId + '">'
+							+ data[i].insName + '</option>';
+
+				}
+				html += '</option>';
+				$('#collegeName').html(html);
+				$("#collegeName").trigger("chosen:updated");
+
+			});
+		}
+		function getAshecode() {
+
+			var collegeName = document.getElementById("collegeName").value;
+
+			$.getJSON('${getAshecode}', {
+
+				instiId : collegeName,
+				ajax : 'true',
+
+			}, function(data) {
+
+				document.getElementById("indAshecode").value = data.aisheCode;
+
+			});
+		}
+		function getInstituteInfo() {
+			$("#error-instiaisheCode").hide();
+
+			var instiaisheCode = document.getElementById("instiaisheCode").value;
+
+			//alert(instiaisheCode);
+
+			$.getJSON('${getInstituteInfo}', {
+
+				instiaisheCode : instiaisheCode,
+				ajax : 'true',
+
+			}, function(data) {
+
+				//alert(data.mhInstId);
+				if (data.mhInstId != 0) {
+					document.getElementById("institute").value = data.insName;
+					document.getElementById("univ").value = data.uniName;
+				} else {
+					document.getElementById("institute").value = "";
+					document.getElementById("univ").value = "";
+					$("#error-instiaisheCode").show();
+				}
+
+			});
+		}
+
+		function getuniInfo() {
+			$("#error-uniaisheCode").hide();
+
+			var instiaisheCode = document.getElementById("uniaisheName").value;
+
+			//alert(instiaisheCode);
+
 			$
 					.getJSON(
-							'${checkUniqueField}',
+							'${getInstituteInfo}',
 							{
 
-								inputValue : inputValue,
-								valueType : valueType,
-								primaryKey : primaryKey,
+								instiaisheCode : instiaisheCode,
 								ajax : 'true',
 
 							},
 							function(data) {
 
-								//alert("Data  " +JSON.stringify(data));
-								if (data.error == true) {
-									
-
-									if (valueType == 2) {
-										alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
-
-										if(seqId==1){
-											document.getElementById("email").value = "";
-											
-											
-										}
-										else if(seqId==2){
-											document.getElementById("collegeEmail").value = "";
-										}
-										else{
-										document.getElementById("uniEmail").value = "";
-										}		
-
-									
-									} else {
-										
-										alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
-										
-										
-										if(seqId==1){
-											document.getElementById("mobile").value = "";
-											
-											
-										}
-										else if(seqId==2){
-											document.getElementById("collegeNo").value = "";
-										}
-										else{
-										document.getElementById("uniNo").value = "";
-										}	
-										
-									
-									}
+								//alert(data.mhInstId);
+								if (data.mhInstId != 0) {
+									document.getElementById("uniinstitute").value = data.insName;
+									document.getElementById("uniName").value = data.uniName;
+								} else {
+									document.getElementById("uniinstitute").value = "";
+									document.getElementById("uniName").value = "";
+									$("#error-uniaisheName").show();
 								}
+
 							});
-	}
-	
-	function trim(el) {
-		el.value = el.value.replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
-		replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
-		replace(/\n +/, "\n"); // Removes spaces after newlines
-		return;
-	}
-</script>
-	<!--     <script >
+		}
+	</script>
 
-    $(function() 
-    {
-    	$('input[id$=dob]').datepicker({ dateFormat : 'dd-mm-yy' }); 
-    }
-   
-    </script>
- -->
-	<!-- <script type="text/javascript">
-		$(function() {
-
-			$('.datepicker').datepicker({
-				autoclose : true,
-				format : "dd-mm-yyyy",
-				changeYear : true,
-				changeMonth : true
-
-			});
-		});
-	</script> -->
 	<script type="text/javascript">
-		function showForm() {
+		function showForm(userType) {
 			//document.getElementById("abc").style = "display:none"
-			var userType = document.getElementById("userType").value
-			//alert("qualType::"+qualType);
+			//var userType = document.getElementById("userType").value;
+			//alert("qualType::" + userType);
 
 			if (userType == 1) {
-
-				document.getElementById("individual").style = "visible"
-
-				document.getElementById("email").setAttribute("required",
-						"true");
-				document.getElementById("fullname").setAttribute("required",
-						"true");
-				document.getElementById("collegeName").setAttribute("required",
-						"true");
-				document.getElementById("uniAff").setAttribute("required",
-						"true");
-				document.getElementById("depatment").setAttribute("required",
-						"true");
-
-				document.getElementById("mobile").setAttribute("required",
-						"true");
-				document.getElementById("authour").setAttribute("required",
-						"true");
-
+				$("#universitydiv").hide();
+				$("#college").hide();
+				$("#individual").show();
+				$("#regbutton").show();
+				$("#typeDiv").hide();
+				document.getElementById("type").value = 1;
+			} else if (userType == 2) {
+				$("#universitydiv").hide();
+				$("#college").show();
+				$("#individual").hide();
+				$("#regbutton").show();
+				$("#typeDiv").hide();
+				document.getElementById("type").value = 2;
 			} else {
-
-				document.getElementById("email").removeAttribute("required");
-				document.getElementById("fullname").removeAttribute("required");
-				document.getElementById("collegeName").removeAttribute(
-						"required");
-				document.getElementById("uniAff").removeAttribute("required");
-				document.getElementById("depatment")
-						.removeAttribute("required");
-
-				document.getElementById("mobile").removeAttribute("required");
-				document.getElementById("authour").removeAttribute("required");
-
-				document.getElementById("individual").style = "display:none"
-			}
-			if (userType == 2) {
-
-				document.getElementById("college").style = "visible"
-
-				document.getElementById("collegeEmail").setAttribute(
-						"required", "true");
-				document.getElementById("instituteName").setAttribute(
-						"required", "true");
-				document.getElementById("univ")
-						.setAttribute("required", "true");
-				document.getElementById("collegeDept").setAttribute("required",
-						"true");
-				document.getElementById("designationCollege").setAttribute(
-						"required", "true");
-				document.getElementById("collegeNo").setAttribute("required",
-						"true");
-				document.getElementById("cAuthour").setAttribute("required",
-						"true");
-
-			} else {
-				document.getElementById("collegeEmail").removeAttribute(
-						"required");
-				document.getElementById("instituteName").removeAttribute(
-						"required");
-				document.getElementById("univ").removeAttribute("required");
-				document.getElementById("collegeDept").removeAttribute(
-						"required");
-				document.getElementById("designationCollege").removeAttribute(
-						"required");
-				document.getElementById("collegeNo")
-						.removeAttribute("required");
-				document.getElementById("cAuthour").removeAttribute("required");
-
-				document.getElementById("college").style = "display:none"
-			}
-			if (userType == 3) {
-
-				document.getElementById("university").style = "visible"
-
-				document.getElementById("uniEmail").setAttribute("required",
-						"true");
-				document.getElementById("uniName").setAttribute("required",
-						"true");
-				document.getElementById("uniDept").setAttribute("required",
-						"true");
-				document.getElementById("uniDes").setAttribute("required",
-						"true");
-				document.getElementById("uniNo").setAttribute("required",
-						"true");
-				document.getElementById("uniAuthour").setAttribute("required",
-						"true");
-
-			} else {
-				document.getElementById("uniEmail").removeAttribute("required");
-				document.getElementById("uniName").removeAttribute("required");
-				document.getElementById("uniDept").removeAttribute("required");
-				document.getElementById("uniDes").removeAttribute("required");
-				document.getElementById("uniNo").removeAttribute("required");
-				document.getElementById("uniAuthour").removeAttribute(
-						"required");
-
-				document.getElementById("university").style = "display:none"
+				$("#universitydiv").show();
+				$("#college").hide();
+				$("#individual").hide();
+				$("#regbutton").show();
+				$("#typeDiv").hide();
+				document.getElementById("type").value = 3;
 			}
 
-		}
-
-		function hideText() {
-			//alert("hii");
-			document.getElementById("college").style = "display:none"
 		}
 	</script>
 
 
-	
+
 </body>
 </html>

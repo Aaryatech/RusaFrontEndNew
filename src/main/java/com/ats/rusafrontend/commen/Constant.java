@@ -2,9 +2,9 @@ package com.ats.rusafrontend.commen;
 
 public class Constant {
 
-	//public static final String url = "http://localhost:8094/";
+	public static final String url = "http://localhost:8094/";
 	
-	public static final String url="http://ats.aaryatechindia.in:15063/rusawebapi/";
+	//public static final String url="http://ats.aaryatechindia.in:15063/rusawebapi/";
 
 	/*public static final String getLgogImageURL = "http://192.168.2.17:8080/media/logo/";
 	public static final String getBannerImageURL = "http://192.168.2.17:8080/media/banenr/";
