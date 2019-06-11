@@ -35,6 +35,7 @@ import com.ats.rusafrontend.model.OtpResponse;
 import com.ats.rusafrontend.model.PageMetaData;
 import com.ats.rusafrontend.model.PreviousRegRecord;
 import com.ats.rusafrontend.model.Registration;
+import com.ats.rusafrontend.model.RegistrationUserDetail;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -42,7 +43,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Scope("session")
 public class loginController {
 	RestTemplate rest = new RestTemplate();
-	Registration editReg = new Registration();
+	RegistrationUserDetail editReg = new RegistrationUserDetail();
 	int flag = 0;
 	/*
 	 * @RequestMapping(value = "/editProfile", method = RequestMethod.GET) public
@@ -78,7 +79,7 @@ public class loginController {
 				int userDetail = (int) session.getAttribute("UserDetail");
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("regId", userDetail);
-				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
+				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map1, RegistrationUserDetail.class);
 
 				model.addAttribute("editReg", editReg);
 
@@ -122,7 +123,7 @@ public class loginController {
 				int userDetail = (int) session.getAttribute("UserDetail");
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map, RegistrationUserDetail.class);
 
 				model.addAttribute("editReg", editReg);
 				try {
@@ -143,8 +144,8 @@ public class loginController {
 	}
 
 	PreviousRegRecord prevrecrod = new PreviousRegRecord();
-	Registration jsonRecord = new Registration();
-
+	RegistrationUserDetail jsonRecord = new RegistrationUserDetail();
+	
 	@RequestMapping(value = "/editUserRegistration", method = RequestMethod.POST)
 	public String editUserRegistration(HttpServletRequest request, HttpServletResponse response) {
 
@@ -165,12 +166,12 @@ public class loginController {
 			map.add("regId", editReg.getRegId());
 			prevrecrod = rest.postForObject(Constant.url + "/getPrevRecordByRegId", map, PreviousRegRecord.class);
 
-			jsonRecord = new Registration();
+			jsonRecord = new RegistrationUserDetail();
 
 			if (prevrecrod.isError() == false) {
 
 				ObjectMapper mapper = new ObjectMapper();
-				jsonRecord = mapper.readValue(prevrecrod.getRecord(), Registration.class);
+				jsonRecord = mapper.readValue(prevrecrod.getRecord(), RegistrationUserDetail.class);
 
 			}
 
@@ -623,7 +624,7 @@ public class loginController {
 			try {
 				// upload.saveUploadedImge(file.get(0),
 				// Constant.otherDocURL,imageName,Constant.values,0,0,0,0,0);
-				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map, RegistrationUserDetail.class);
 
 				upload.saveUploadedImge(file.get(0), Constant.userProfileURL, imageName, Constant.values, 0, 0, 0, 0,
 						0);
@@ -673,7 +674,7 @@ public class loginController {
 
 				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 				map2.add("regId", userDetail);
-				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
+				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map2, RegistrationUserDetail.class);
 				//String dobDate = DateConvertor.convertToDMY(editReg.getDob());
 				model.addObject("editReg", editReg);
 				//model.addObject("dobDate", dobDate);
@@ -725,7 +726,7 @@ public class loginController {
 				// ArrayList<NewsDetails>(Arrays.asList(eventList));
 				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 				map2.add("regId", userDetail);
-				editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
+				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map2, RegistrationUserDetail.class);
 
 				model.addAttribute("editReg", editReg);
 

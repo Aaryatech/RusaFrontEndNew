@@ -357,76 +357,105 @@ public class UserController {
 	public String insertUserRegistration(HttpServletRequest request, HttpServletResponse response) {
 
 		String uuid = null;
-
+		HttpSession session = request.getSession();
+		boolean error = false;
+		
 		try {
-			Registration registration = new Registration();
-
-			int type = Integer.parseInt(request.getParameter("userType"));
+			Registration registration = new Registration(); 
+			int type = Integer.parseInt(request.getParameter("type"));
+			
 
 			if (type == 1) {
+				
+				String university = request.getParameter("university") ;
+				String collegeName = request.getParameter("collegeName") ;
+				String indAshecode = request.getParameter("indAshecode");
+				String name = request.getParameter("name");
+				String inddesognation = request.getParameter("inddesognation");
+				String depatment = request.getParameter("depatment");
+				String mobile = request.getParameter("mobile");
 				String email = request.getParameter("email");
 				String altEmail1 = request.getParameter("altEmail");
-				String name = request.getParameter("name");
-				String collegeName = request.getParameter("collegeName");
-				String university = request.getParameter("university");
-				String dept = request.getParameter("dept");
-				// String dob = request.getParameter("dob");
-				String mobile = request.getParameter("mobile");
-				String designation = request.getParameter("authour");
-
+				 
 				registration.setEmails(email);
 				registration.setAlternateEmail(altEmail1);
 				registration.setName(name);
 				registration.setCollegeName(collegeName);
 				registration.setUnversityName(university);
-				registration.setDepartmentName(dept);
+				registration.setDepartmentName(depatment);
 				registration.setUserType(1);
 				registration.setMobileNumber(mobile);
-				registration.setDesignationName(designation);
-
+				registration.setDesignationName(inddesognation);
+				registration.setAisheCode(indAshecode);
+				  
 			}
 			if (type == 2) {
-				String collegeEmail = request.getParameter("collegeEmail");
-				String altEmail2 = request.getParameter("altEmail");
-				String institute = request.getParameter("institute");
-				String aisheName1 = request.getParameter("aisheName");
+				
+				String instiaisheCode = request.getParameter("instiaisheCode");
 				String univ = request.getParameter("univ");
-				String collegeDept = request.getParameter("dept");
-				String collegeMobile = request.getParameter("collegeMobile");
-				String designation = request.getParameter("designationCollege");
-				String cAuthour = request.getParameter("collegeAuthour");
-
-				registration.setMobileNumber(collegeMobile);
-				registration.setEmails(collegeEmail);
-				registration.setAlternateEmail(altEmail2);
-				registration.setName(institute);
-				registration.setAuthorizedPerson(cAuthour);
-				registration.setAisheCode(aisheName1);
-				registration.setUnversityName(univ);
-				registration.setDepartmentName(collegeDept);
-				registration.setDesignationName(designation);
-				registration.setUserType(2);
-
+				String institute = request.getParameter("institute");
+				String designation = request.getParameter("instidesignation");
+				String cAuthour = request.getParameter("cAuthour");
+				String collegeDept = request.getParameter("instiDept");
+				String collegeMobile = request.getParameter("instiMobile"); 
+				String instiEmail = request.getParameter("instiEmail");
+				String instialtEmail = request.getParameter("instialtEmail");
+				 
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("asheCode", instiaisheCode); 
+				InstituteInfo instituteInfo = rest.postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
+						InstituteInfo .class);
+				  
+				if(instituteInfo!=null && instituteInfo.getYesNo()!=1) {
+					registration.setMobileNumber(collegeMobile);
+					registration.setEmails(instiEmail);
+					registration.setAlternateEmail(instialtEmail);
+					registration.setName(instituteInfo.getInsName());
+					registration.setAuthorizedPerson(cAuthour);
+					registration.setAisheCode(instiaisheCode);
+					registration.setUnversityName(String.valueOf(instituteInfo.getAffUniversity()));
+					registration.setCollegeName(String.valueOf(instituteInfo.getMhInstId()));
+					registration.setDepartmentName(collegeDept);
+					registration.setDesignationName(designation);
+					registration.setUserType(2); 
+				}else {
+					error=true;
+				}
 			}
 			if (type == 3) {
-				String uniEmail = request.getParameter("uniEmail");
-				String altEmail3 = request.getParameter("altEmail");
+				
 				String uniName = request.getParameter("uniName");
-				String aisheName2 = request.getParameter("aisheName");
-				String uniDept = request.getParameter("uniDept");
-				String uniMobile = request.getParameter("uniMobile");
-				String uniDes = request.getParameter("uniDes");
+				String uniaisheName = request.getParameter("uniaisheName");
+				String uniinstitute = request.getParameter("uniinstitute"); 
 				String uniAuthour = request.getParameter("uniAuthour");
-
-				registration.setMobileNumber(uniMobile);
-				registration.setEmails(uniEmail);
-				registration.setAlternateEmail(altEmail3);
-				registration.setAisheCode(aisheName2);
-				registration.setName(uniName);
-				registration.setAuthorizedPerson(uniAuthour);
-				registration.setDepartmentName(uniDept);
-				registration.setDesignationName(uniDes);
-				registration.setUserType(3);
+				String uniDes = request.getParameter("uniDes");
+				String uniDept = request.getParameter("uniDept");
+				String uniMobile = request.getParameter("uniMobile"); 
+				String uniEmail = request.getParameter("uniEmail"); 
+				String unialtEmail = request.getParameter("unialtEmail");
+				 
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("asheCode", uniaisheName); 
+				InstituteInfo instituteInfo = rest.postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
+						InstituteInfo .class);
+				if(instituteInfo!=null && instituteInfo.getYesNo()!=1 ) {
+					
+					registration.setMobileNumber(uniMobile);
+					registration.setEmails(uniEmail);
+					registration.setAlternateEmail(unialtEmail);
+					registration.setAisheCode(uniaisheName);
+					registration.setName(instituteInfo.getInsName());
+					registration.setUnversityName(String.valueOf(instituteInfo.getAffUniversity()));
+					registration.setCollegeName(String.valueOf(instituteInfo.getMhInstId()));
+					registration.setAuthorizedPerson(uniAuthour);
+					registration.setDepartmentName(uniDept);
+					registration.setDesignationName(uniDes);
+					registration.setUserType(3);
+					 
+				}else {
+					error=true;
+				}
+				
 
 			}
 
@@ -444,14 +473,23 @@ public class UserController {
 			registration.setDelStatus(1);
 			registration.setRegisterVia("web");
 
-			Registration res = rest.postForObject(Constant.url + "/saveReg", registration, Registration.class);
+			if(error==false) {
+				Registration res = rest.postForObject(Constant.url + "/saveReg", registration, Registration.class);
+				return "redirect:/ verifyOtp /" + uuid;
+			}else {
+				session.setAttribute("errorMsg", "Failed To Register");
+				return "redirect:/registration"; 
+			}
+			
 
 		} catch (Exception e1) {
 			System.out.println("ex " + e1.getMessage());
 			e1.printStackTrace();
+			error=true;
+			session.setAttribute("errorMsg", "Failed To Register");
+			return "redirect:/registration"; 
 		}
-
-		return "redirect:/ verifyOtp /" + uuid;
+		 
 	}
 
 	@RequestMapping(value = "/verifyOtp/{uuid}", method = RequestMethod.GET)
@@ -486,7 +524,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/verifyOtpProcess", method = RequestMethod.POST)
-	public ModelAndView verifyOtpProcess(HttpServletRequest request, HttpServletResponse res) throws IOException {
+	public String verifyOtpProcess(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
 		String userOtp = request.getParameter("userOtp");
 		String uuid = request.getParameter("uuid");
@@ -504,6 +542,7 @@ public class UserController {
 				mav.addObject("uuid", uuid);
 				// mav.addObject("msg", "Invalid Otp");
 				session.setAttribute("errorMsg", "Invalid OTP !");
+				return "redirect:/verifyOtp/"+uuid; 
 			} else {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -515,11 +554,12 @@ public class UserController {
 				if (verifyOtp.isError() == false) {
 					mav = new ModelAndView("registration");
 					session.setAttribute("success", "Registration Successful !");
+					return "redirect:/registration";
 				} else {
 					mav = new ModelAndView("otp");
 					mav.addObject("uuid", uuid);
 					session.setAttribute("errorMsg", "Invalid OTP !");
-
+					return "redirect:/verifyOtp/"+uuid; 
 				}
 			}
 		} catch (Exception e) {
@@ -527,9 +567,10 @@ public class UserController {
 			e.printStackTrace();
 			mav.addObject("msg", "Invalid login");
 			session.setAttribute("errorMsg", "Invalid OTP !");
+			return "redirect:/registration";
 		}
 
-		return mav;
+		
 	}
 
 	@RequestMapping(value = "/resendOtpProcess", method = RequestMethod.POST)

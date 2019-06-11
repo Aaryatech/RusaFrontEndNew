@@ -110,7 +110,7 @@
 				</div>
 				<form
 					action="${pageContext.request.contextPath}/insertUserRegistration"
-					method="post" name="login_form">
+					method="post" name="login_form" id="submitForm">
 					<div class="row row-eq-height" id="typeDiv">
 						<div class="col-12 col-sm-12 col-lg-3"></div>
 						<div class="col-12 col-sm-12 col-lg-3"></div>
@@ -181,8 +181,8 @@
 								onchange="getAshecode()">
 								<option value="">Select Institute</option>
 							</select>
-							<p class="error-msg" id="error_collegeName" style="display: none;">Please
-								Select Institute</p>
+							<p class="error-msg" id="error_collegeName"
+								style="display: none;">Please Select Institute</p>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
@@ -224,7 +224,7 @@
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="mobile"
-								oninput="checkUnique(this.value,1,1)" maxlength="10"
+								onchange="checkUnique(this.value,1,1)" maxlength="10"
 								placeholder="Mobile No." id="mobile">
 							<p class="error-msg" id="error_mobile" style="display: none;">Required
 								Field.</p>
@@ -233,7 +233,7 @@
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="email"
-								oninput="checkUnique(this.value,2,1)" placeholder="Email"
+								onchange="checkUnique(this.value,2,1)" placeholder="Email"
 								id="email">
 							<p class="error-msg" id="error_email" style="display: none;">Required
 								Field.</p>
@@ -258,8 +258,8 @@
 								onchange="trim(this);getInstituteInfo()" name="instiaisheCode"
 								placeholder="AISHE Code" value="C-" id="instiaisheCode"
 								maxlength="7" style="text-transform: uppercase">
-							<p class="error-msg" id="error-instiaisheCode"
-								style="display: none;">AISHE code is not match.</p>
+							<p class="error-msg" id="error_instiaisheCode"
+								style="display: none;">Invalid AISHE Code.</p>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
@@ -279,7 +279,7 @@
 							</label> <input type="text" class="form-control" name="cAuthour"
 								onchange="trim(this)" placeholder="Authorized Person Name"
 								id="cAuthour">
-							<p class="error-msg" id="error-cAuthour" style="display: none;">Required
+							<p class="error-msg" id="error_cAuthour" style="display: none;">Required
 								Field.</p>
 						</div>
 
@@ -288,7 +288,7 @@
 							</label> <input type="text" class="form-control" name="instidesignation"
 								placeholder="Designation of Person" onchange="trim(this)"
 								id="instidesignation">
-							<p class="error-msg" id="error-instidesignation"
+							<p class="error-msg" id="error_instidesignation"
 								style="display: none;">Required Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
@@ -296,31 +296,33 @@
 							</label> <input type="text" class="form-control" name="instiDept"
 								onchange="trim(this)" placeholder="Name of Department"
 								id="instiDept">
-							<p class="error-msg" id="error-instiDept" style="display: none;">Required
+							<p class="error-msg" id="error_instiDept" style="display: none;">Required
 								Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="instiMobile"
-								oninput="checkUnique(this.value,1,2)" maxlength="10"
+								onchange="checkUnique(this.value,1,2)" maxlength="10"
 								placeholder="Mobile No." id="instiMobile">
-							<p class="error-msg" id="error-instiMobile"
+							<p class="error-msg" id="error_instiMobile"
 								style="display: none;">Required Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="instiEmail"
-								oninput="checkUnique(this.value,2,2)" placeholder="Email"
+								onchange="checkUnique(this.value,2,2)" placeholder="Email"
 								id="instiEmail">
-							<p class="error-msg" id="error-instiEmail" style="display: none;">Required
+							<p class="error-msg" id="error_instiEmail" style="display: none;">Required
 								Field.</p>
 						</div>
 
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Alternate Email-ID</label> <input type="text"
-								class="form-control" name="altEmail" onchange="trim(this)"
-								placeholder="Alternate Email" id="altEmail">
+								class="form-control" name="instialtEmail" onchange="trim(this)"
+								placeholder="Alternate Email" id="instialtEmail">
+							<p class="error-msg" id="error_instialtEmail"
+								style="display: none;">Enter Valid Email.</p>
 						</div>
 					</div>
 
@@ -334,8 +336,8 @@
 								onchange="trim(this);getuniInfo()" name="uniaisheName"
 								placeholder="AISHE Code" id="uniaisheName" value="C-"
 								style="text-transform: uppercase" maxlength="7">
-							<p class="error-msg" id="error-uniaisheName"
-								style="display: none;">AISHE code is not match.</p>
+							<p class="error-msg" id="error_uniaisheName"
+								style="display: none;">Invalid AISHE Code.</p>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
@@ -358,6 +360,8 @@
 							</label> <input type="text" class="form-control" name="uniAuthour"
 								onchange="trim(this)" placeholder="Authorized Person Name"
 								id="uniAuthour">
+							<p class="error-msg" id="error_uniAuthour" style="display: none;">Required
+								Field.</p>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
@@ -365,30 +369,40 @@
 							</label> <input type="text" class="form-control" name="uniDes"
 								onchange="trim(this)" placeholder="Designation of Person"
 								id="uniDes">
+							<p class="error-msg" id="error_uniDes" style="display: none;">Required
+								Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Name of Department <span class="text-danger">*</span>
 							</label> <input type="text" class="form-control" name="uniDept"
 								onchange="trim(this)" placeholder="Name of Department"
 								id="uniDept">
+							<p class="error-msg" id="error_uniDept" style="display: none;">Required
+								Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="uniMobile"
-								oninput="checkUnique(this.value,1,3)" maxlength="10"
-								placeholder="Mobile No." id="uniNo">
+								onchange="checkUnique(this.value,1,3)" maxlength="10"
+								placeholder="Mobile No." id="uniMobile">
+							<p class="error-msg" id="error_uniMobile" style="display: none;">Required
+								Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="uniEmail"
-								oninput="checkUnique(this.value,2,3)" placeholder="Email"
+								onchange="checkUnique(this.value,2,3)" placeholder="Email"
 								id="uniEmail">
+							<p class="error-msg" id="error_uniEmail" style="display: none;">Required
+								Field.</p>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Alternate Email-ID</label> <input type="text"
-								class="form-control" name="altEmail" onchange="trim(this)"
-								placeholder="Alternate Email" id="altEmail">
+								class="form-control" name="unialtEmail" onchange="trim(this)"
+								placeholder="Alternate Email" id="unialtEmail">
+							<p class="error-msg" id="error_unialtEmail"
+								style="display: none;">Required Field.</p>
 						</div>
 					</div>
 					<div class="clearfix"></div>
@@ -396,9 +410,11 @@
 					<div class="col-12 col-sm-12 col-lg-12" id="regbutton"
 						style="display: none;">
 						<p>
-							<button type="button" onclick="validate()" id="log-btn"
+							<button type="button" onclick="submitform()" id="log-btn"
 								class="button login-btn">Register</button>
 							<input type="hidden" class="form-control" name="type" id="type">
+							<input type="hidden" class="form-control" name="yesNo" id="yesNo"
+								value="0">
 						</p>
 					</div>
 					<p>
@@ -424,34 +440,38 @@
 
 	<script type="text/javascript">
 		function checkUnique(inputValue, valueType, seqId) {
-			//alert("inputValue"+inputValue);
-			///alert("valueType "+valueType);
-			//alert("seqId "+seqId);
 
 			var primaryKey = 0;
-			//alert("Is Edit " +isEdit);
+			
+			$("#error_email").hide();
+			$("#error_instiEmail").hide();
+			$("#error_uniEmail").hide();
+			$("#error_mobile").hide();
+			$("#error_instiMobile").hide();
+			$("#error_uniMobile").hide();
+
 			var valid = true;
 			if (valueType == 1) {
-				//alert("Its Mob no");
+
 				if (inputValue.length == 10) {
 					valid = true;
-					//alert("Len 10")
+
 				} else {
 					valid = false;
 				}
 			} else if (valueType == 2) {
-				//alert("Its Email " );
 
 				var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 				if (inputValue.match(mailformat)) {
 					valid = true;
-					//alert("Valid Email Id");
+
 				} else {
 					valid = false;
-					//alert("InValid Email Id");
+
 				}
 			}
-			if (valid == true)
+			if (valid == true) {
+
 				$
 						.getJSON(
 								'${checkUniqueField}',
@@ -465,43 +485,68 @@
 								},
 								function(data) {
 
-									//alert("Data  " +JSON.stringify(data));
 									if (data.error == true) {
 
 										if (valueType == 2) {
-											alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
+											//alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
 
 											if (seqId == 1) {
 												document
 														.getElementById("email").value = "";
+												document
+														.getElementById("error_email").innerHTML = "Email Already Register.";
+
+												$("#error_email").show();
 
 											} else if (seqId == 2) {
 												document
 														.getElementById("instiEmail").value = "";
+												document
+														.getElementById("error_instiEmail").innerHTML = "Email Already Register.";
+
+												$("#error_instiEmail").show();
 											} else {
 												document
 														.getElementById("uniEmail").value = "";
+												document
+														.getElementById("error_uniEmail").innerHTML = "Email Already Register.";
+
+												$("#error_uniEmail").show();
 											}
 
 										} else {
 
-											alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
+											//alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
 
 											if (seqId == 1) {
 												document
 														.getElementById("mobile").value = "";
 
+												document
+														.getElementById("error_mobile").innerHTML = "Mobile No Already Register.";
+
+												$("#error_mobile").show();
+
 											} else if (seqId == 2) {
 												document
 														.getElementById("instiMobile").value = "";
+												document
+														.getElementById("error_instiMobile").innerHTML = "Mobile No Already Register.";
+
+												$("#error_instiMobile").show();
 											} else {
 												document
-														.getElementById("uniNo").value = "";
+														.getElementById("uniMobile").value = "";
+												document
+														.getElementById("error_uniMobile").innerHTML = "Mobile No Already Register.";
+
+												$("#error_uniMobile").show();
 											}
 
 										}
 									}
 								});
+			}
 		}
 
 		function trim(el) {
@@ -558,7 +603,7 @@
 				$("#error_mobile").hide();
 				$("#error_email").hide();
 				$("#error_altEmail").hide();
-				
+
 				if ($("#university").val() == "") {
 
 					isError = true;
@@ -638,11 +683,256 @@
 
 				}
 
+				if (!isError) {
+
+					return false;
+				}
+
+			}
+
+			if (type == 2) {
+
+				$("#error_instiaisheCode").hide();
+				$("#error_instidesignation").hide();
+				$("#error_instiDept").hide();
+				$("#error_instiMobile").hide();
+				$("#error_cAuthour").hide();
+				$("#error_instiEmail").hide();
+				$("#error_instialtEmail").hide();
+
+				if (!$("#instiaisheCode").val()) {
+
+					isError = true;
+
+					$("#error_instiaisheCode").show();
+					//return false;
+				}
+
+				if (!$("#univ").val()) {
+
+					isError = true;
+
+					document.getElementById("error_instiaisheCode").innerHTML = "Invalid AISHE Code.";
+
+					$("#error_instiaisheCode").show();
+
+				}
+
+				if (!$("#cAuthour").val()) {
+
+					isError = true;
+
+					$("#error_cAuthour").show();
+
+				}
+
+				if (!$("#instidesignation").val()) {
+
+					isError = true;
+
+					$("#error_instidesignation").show();
+
+				}
+
+				if (!$("#instidesignation").val()) {
+
+					isError = true;
+
+					$("#error_instidesignation").show();
+
+				}
+
+				if (!$("#instiDept").val()) {
+
+					isError = true;
+
+					$("#error_instiDept").show();
+
+				}
+
+				if (!$("#instiMobile").val()
+						|| !validateMobile($("#instiMobile").val())) {
+
+					isError = true;
+
+					if (!$("#instiMobile").val()) {
+						document.getElementById("error_instiMobile").innerHTML = "This field is required.";
+					} else {
+						document.getElementById("error_instiMobile").innerHTML = "Enter valid Mobile No.";
+					}
+
+					$("#error_instiMobile").show();
+
+				}
+
+				if (!$("#instiEmail").val()
+						|| !validateEmail($("#instiEmail").val())) {
+
+					isError = true;
+
+					if (!$("#instiEmail").val()) {
+						document.getElementById("error_instiEmail").innerHTML = "This field is required.";
+					} else {
+						document.getElementById("error_instiEmail").innerHTML = "Enter valid email.";
+					}
+
+					$("#error_instiEmail").show();
+
+				}
+
+				if ($("#instialtEmail").val() != ""
+						&& !validateEmail($("#instialtEmail").val())) {
+
+					isError = true;
+
+					document.getElementById("error_instialtEmail").innerHTML = "Enter valid email.";
+
+					$("#error_instialtEmail").show();
+
+				}
+
+				if (!isError) {
+
+					return false;
+				}
+
+			}
+
+			if (type == 3) {
+
+				$("#error_uniaisheName").hide();
+				$("#error_uniAuthour").hide();
+				$("#error_uniDes").hide();
+				$("#error_uniDept").hide();
+				$("#error_uniMobile").hide();
+				$("#error_uniEmail").hide();
+				$("#error_unialtEmail").hide();
+
+				if (!$("#uniaisheName").val()) {
+
+					isError = true;
+
+					$("#error_uniaisheName").show();
+					//return false;
+				}
+
+				if (!$("#uniName").val()) {
+
+					isError = true;
+
+					document.getElementById("error_uniaisheName").innerHTML = "Invalid AISHE Code.";
+
+					$("#error_uniaisheName").show();
+
+				}
+
+				if (!$("#uniAuthour").val()) {
+
+					isError = true;
+					$("#error_uniAuthour").show();
+
+				}
+
+				if (!$("#uniDes").val()) {
+
+					isError = true;
+					$("#error_uniDes").show();
+
+				}
+				if (!$("#uniDept").val()) {
+
+					isError = true;
+					$("#error_uniDept").show();
+
+				}
+
+				if (!$("#uniMobile").val()
+						|| !validateMobile($("#uniMobile").val())) {
+
+					isError = true;
+
+					if (!$("#uniMobile").val()) {
+						document.getElementById("error_uniMobile").innerHTML = "This field is required.";
+					} else {
+						document.getElementById("error_uniMobile").innerHTML = "Enter valid Mobile No.";
+					}
+
+					$("#error_uniMobile").show();
+
+				}
+
+				if (!$("#uniEmail").val()
+						|| !validateEmail($("#uniEmail").val())) {
+
+					isError = true;
+
+					if (!$("#uniEmail").val()) {
+						document.getElementById("error_uniEmail").innerHTML = "This field is required.";
+					} else {
+						document.getElementById("error_uniEmail").innerHTML = "Enter valid email.";
+					}
+
+					$("#error_uniEmail").show();
+
+				}
+
+				if ($("#unialtEmail").val() != ""
+						&& !validateEmail($("#unialtEmail").val())) {
+
+					isError = true;
+
+					document.getElementById("error_unialtEmail").innerHTML = "Enter valid email.";
+
+					$("#error_unialtEmail").show();
+
+				}
+
+				if (!isError) {
+
+					return false;
+				}
+
 			}
 
 		}
 
 		//
+	</script>
+
+	<script>
+		function submitform() {
+
+			if (validate() == false) {
+
+				var yesNo = document.getElementById("yesNo").value;
+				var type = document.getElementById("type").value;
+
+				if (yesNo == 0 || type == 1) {
+					document.getElementById("submitForm").submit();
+				} else {
+
+					document.getElementById("error_uniaisheName").innerHTML = "Institute Registered";
+					document.getElementById("error_instiaisheCode").innerHTML = "Institute Registered";
+					$("#error_instiaisheCode").show();
+					$("#error_uniaisheName").show();
+				}
+
+			}
+
+		}
+	</script>
+
+	<script>
+		document.oncontextmenu = document.body.oncontextmenu = function() {
+			return false;
+		}
+		$(document).keypress(function(e) {
+			if (e.which == 13) {
+				/* alert('enter key is pressed');
+				console.log('enter key is pressed'); */
+				document.getElementById("log-btn").click();
+			}
+		});
 	</script>
 
 	<script type="text/javascript">
@@ -688,34 +978,49 @@
 			});
 		}
 		function getInstituteInfo() {
-			$("#error-instiaisheCode").hide();
+			$("#error_instiaisheCode").hide();
 
 			var instiaisheCode = document.getElementById("instiaisheCode").value;
 
 			//alert(instiaisheCode);
 
-			$.getJSON('${getInstituteInfo}', {
+			$
+					.getJSON(
+							'${getInstituteInfo}',
+							{
 
-				instiaisheCode : instiaisheCode,
-				ajax : 'true',
+								instiaisheCode : instiaisheCode,
+								ajax : 'true',
 
-			}, function(data) {
+							},
+							function(data) {
 
-				//alert(data.mhInstId);
-				if (data.mhInstId != 0) {
-					document.getElementById("institute").value = data.insName;
-					document.getElementById("univ").value = data.uniName;
-				} else {
-					document.getElementById("institute").value = "";
-					document.getElementById("univ").value = "";
-					$("#error-instiaisheCode").show();
-				}
+								//alert(data.mhInstId);
+								if (data.mhInstId != 0) {
+									document.getElementById("institute").value = data.insName;
+									document.getElementById("univ").value = data.uniName;
+									if (data.yesNo == 1) {
+										document.getElementById("yesNo").value = 1;
+										document
+												.getElementById("error_instiaisheCode").innerHTML = "Institute Registered";
+										$("#error_instiaisheCode").show();
+									} else {
+										document.getElementById("yesNo").value = 0;
+									}
+								} else {
+									document.getElementById("institute").value = "";
+									document.getElementById("univ").value = "";
+									document.getElementById("yesNo").value = 0;
+									document
+											.getElementById("error_instiaisheCode").innerHTML = "Invalid AISHE Code.";
+									$("#error_instiaisheCode").show();
+								}
 
-			});
+							});
 		}
 
 		function getuniInfo() {
-			$("#error-uniaisheCode").hide();
+			$("#error_uniaisheName").hide();
 
 			var instiaisheCode = document.getElementById("uniaisheName").value;
 
@@ -736,10 +1041,21 @@
 								if (data.mhInstId != 0) {
 									document.getElementById("uniinstitute").value = data.insName;
 									document.getElementById("uniName").value = data.uniName;
+									if (data.yesNo == 1) {
+										document.getElementById("yesNo").value = 1;
+										document
+												.getElementById("error_uniaisheName").innerHTML = "Institute Registered";
+										$("#error_uniaisheName").show();
+									} else {
+										document.getElementById("yesNo").value = 0;
+									}
 								} else {
 									document.getElementById("uniinstitute").value = "";
 									document.getElementById("uniName").value = "";
-									$("#error-uniaisheName").show();
+									document.getElementById("yesNo").value = 0;
+									document
+											.getElementById("error_uniaisheName").innerHTML = "Invalid AISHE Code.";
+									$("#error_uniaisheName").show();
 								}
 
 							});

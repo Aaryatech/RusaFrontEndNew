@@ -26,13 +26,13 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
-  
+
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -50,13 +50,21 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 </script>
+
 </head>
 <style>
 .other-gov-site-home {
 	margin-top: 43px;
 }
+.wordwrap { 
+   white-space: pre-wrap;      /* CSS3 */   
+   white-space: -moz-pre-wrap; /* Firefox */    
+   white-space: -pre-wrap;     /* Opera <7 */   
+   white-space: -o-pre-wrap;   /* Opera 7 */    
+   word-wrap: break-word;      /* IE */
+}
 </style>
-<body  class="${contrast}">
+<body class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
@@ -70,7 +78,7 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/editProfile">Edit
+				href="${pageContext.request.contextPath}/myProfile">My
 				Profile</a> >
 		</div>
 	</div>
@@ -100,8 +108,8 @@
 							</c:choose>
 
 							<div class="fileUpload btn">
-								<div class="user-name">${editReg.name}</div>
-								 
+								<div class="user-name wordwrap">${editReg.name}</div>
+
 
 							</div>
 						</div>
@@ -133,249 +141,242 @@
 			</div>
 
 			<div class="col-12 col-sm-9 col-lg-9">
-			<div class="right-Colm news-listing-page">
-				<h2>
-					My Profile
-					<c:if test="${editReg.userType==1}">
+				<div class="right-Colm news-listing-page">
+					<h2>
+						My Profile
+						<c:if test="${editReg.userType==1}">
             	(Individual)
 							</c:if>
-					<c:if test="${editReg.userType==2}">
+						<c:if test="${editReg.userType==2}">
 									(Institute)
 								</c:if>
-					<c:if test="${editReg.userType==3}">
+						<c:if test="${editReg.userType==3}">
 									(University)
 									</c:if>
-					<a href="${pageContext.request.contextPath}/editProfile"
-						class="edit-profile">Edit Profile</a>
-				</h2>
+						<a href="${pageContext.request.contextPath}/editProfile"
+							class="edit-profile">Edit Profile</a>
+					</h2>
 
-				<form
-					action="${pageContext.request.contextPath}/editUserRegistration"
-					onsubmit="return confirm('Do you really want to submit the form?');"
-					method="post" name="login_form">
-
-
-
-					<div class="col-12 col-sm-12 col-lg-3"></div>
-					<input type="hidden" name="userType" value="${editReg.userType}"
-						onchange="showForm()">
+					<form
+						action="${pageContext.request.contextPath}/editUserRegistration"
+						onsubmit="return confirm('Do you really want to submit the form?');"
+						method="post" name="login_form">
 
 
 
-					<div class="col-12 col-sm-12 col-lg-3"></div>
-					
-					<c:if test="${editReg.userType==1}">
-						<div class="form-group row row-eq-height">
 
-							<div class="col-12 col-sm-12 col-lg-6">
+						<input type="hidden" name="userType" value="${editReg.userType}"
+							onchange="showForm()">
 
-								<label>Full Name <span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="name" placeholder="Name"
-									value="${editReg.name}" readonly id="fullname" readonly>
+
+
+						<%-- <c:if test="${editReg.userType==1}"> --%>
+						<!-- <div class="form-group row row-eq-height"> -->
+
+							<div class="col-12 col-sm-12 col-lg-12">
+								<c:if test="${editReg.userType==1}">
+									<label>Full Name : </label>
+									<Strong>${editReg.name}</Strong>
+								</c:if>
+								<c:if test="${editReg.userType==2 || editReg.userType==3}">
+									<label>Institute Name : </label>
+									<Strong>${editReg.name}</Strong>
+								</c:if>
+							</div>
+							<c:if test="${editReg.userType==1}">
+								<div class="col-12 col-sm-12 col-lg-12">
+									<label>Institute Name : </label> <Strong>${editReg.instName}</Strong>
+								</div>
+							</c:if>
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>University Name : </label> <Strong>${editReg.uniName}</Strong>
+							</div>
+							<c:if test="${editReg.userType==2 || editReg.userType==3}">
+								<div class="col-12 col-sm-12 col-lg-12">
+									<label>Authorized Person Name : </label> <Strong>${editReg.authorizedPerson}</Strong>
+								</div>
+							</c:if>
+
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Designation of Person : </label> <Strong>${editReg.designationName}</Strong>
 							</div>
 
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>College Name <span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="collegeName"
-									onchange="trim(this)" value="${editReg.collegeName}"
-									placeholder="College Name" id="collegeName" readonly>
+							<div class="col-12 col-sm-12 col-lg-12">
+
+								<label>Name of Department : </label> <Strong>${editReg.departmentName}</Strong>
 							</div>
 
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>University Affiliated <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="university"
-									value="${editReg.unversityName}"
-									placeholder="University Affiliated" id="uniAff" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Designation of Person <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="authour"
-									onchange="trim(this)" value="${editReg.designationName}"
-									placeholder="Name of Authorized" id="authour" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-
-								<label>Name of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dept"
-									onchange="trim(this)" value="${editReg.departmentName}"
-									placeholder="Name of Department" id="depatment" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Mobile No.<span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="mobile"
-									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="mobile" onchange="trim(this)"
-									value="${editReg.mobileNumber}" readonly>
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Mobile No. : </label> <Strong>${editReg.mobileNumber}</Strong>
 							</div>
 
 
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Email-ID <span class="text-danger">*</span></label> <input
-									type="email" class="form-control" name="email"
-									value="${editReg.emails}" placeholder="Email" id="email" readonly>
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Email-ID :</label> <Strong>${editReg.emails}</Strong>
 							</div>
 
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Alternate Email-ID</label> <input type="email"
-									class="form-control" value="${editReg.alternateEmail}"
-									name="altEmail" placeholder="Alternate Email" id="altEmail"
-									onchange="trim(this)" readonly>
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Alternate Email-ID</label> :
+								<c:choose>
+									<c:when test="${not empty editReg.alternateEmail}">
+										<Strong>${editReg.alternateEmail}</Strong>
+									</c:when>
+									<c:otherwise>-</c:otherwise>
+								</c:choose>
 							</div>
 
 
 
-						</div>
-					</c:if>
+						<!-- </div> -->
+						<%-- </c:if> --%>
 
 
 
-					<c:if test="${editReg.userType==2}">
-						<div class="form-group row row-eq-height">
+						<%-- <c:if test="${editReg.userType==2}">
+							<div class="form-group row row-eq-height">
 
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Institute Name <span class="text-danger">*</span></label>
-								<input type="text" class="form-control" name="institute"
-									onchange="trim(this)" value="${editReg.name}"
-									placeholder="Institute Name" id="instituteName" readonly>
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Institute Name <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" name="institute"
+										onchange="trim(this)" value="${editReg.name}"
+										placeholder="Institute Name" id="instituteName" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>AISHE Code</label> <input type="text"
+										class="form-control" onchange="trim(this)" name="aisheName"
+										value="${editReg.aisheCode}" placeholder="AISHE Code"
+										id="aisheName" readonly>
+								</div>
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>University Affiliated <span class="text-danger">*</span>
+									</label> <input type="text" class="form-control" name="univ"
+										onchange="trim(this)" value="${editReg.unversityName}"
+										placeholder="University Affiliated" id="univ" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Authorized Name <span class="text-danger">*</span>
+									</label> <input type="text" class="form-control" name="collegeAuthour"
+										onchange="trim(this)" value="${editReg.authorizedPerson}"
+										placeholder="Name of Authorized" id="cAuthour" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Designation <span class="text-danger">*</span>
+									</label> <input type="text" class="form-control"
+										name="designationCollege" placeholder="Designation of Person"
+										onchange="trim(this)" value="${editReg.designationName}"
+										id="designationCollege" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Name of Department <span class="text-danger">*</span>
+									</label> <input type="text" class="form-control" name="dept"
+										onchange="trim(this)" value="${editReg.departmentName}"
+										placeholder="Name of Department" id="collegeDept" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Mobile No.<span class="text-danger">*</span></label> <input
+										type="text" class="form-control" name="collegeMobile"
+										onchange="trim(this)" value="${editReg.mobileNumber}"
+										pattern="[7-9]{1}[0-9]{9}" maxlength="10"
+										placeholder="Mobile No." id="collegeNo" maxlength="10"
+										readonly>
+								</div>
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Email-ID <span class="text-danger">*</span></label> <input
+										type="email" class="form-control" name="collegeEmail"
+										onchange="trim(this)" value="${editReg.emails}"
+										placeholder="Email" id="collegeEmail" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Alternate Email-ID</label> <input type="email"
+										class="form-control" onchange="trim(this)"
+										value="${editReg.alternateEmail}" name="altEmail"
+										placeholder="Alternate Email" id="altEmail" readonly>
+								</div>
+
 							</div>
+						</c:if> --%>
 
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>AISHE Code</label> <input type="text"
-									class="form-control" onchange="trim(this)" name="aisheName"
-									value="${editReg.aisheCode}" placeholder="AISHE Code"
-									id="aisheName" readonly>
+						<%-- <c:if test="${editReg.userType==3}">
+							<div class="form-group row row-eq-height">
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>University Name <span class="text-danger">*</span>
+									</label> <input type="text" class="form-control" name="uniName"
+										onchange="trim(this)" value="${editReg.name}"
+										placeholder="University Name" id="uniName" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>AISHE Code</label> <input type="text"
+										class="form-control" onchange="trim(this)" name="aisheName"
+										value="${editReg.aisheCode}" placeholder="AISHE Code"
+										id="aisheName" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+
+									<label>Authorized Name <span class="text-danger">*</span>
+									</label> <input type="text" class="form-control" name="uniAuthour"
+										onchange="trim(this)" value="${editReg.authorizedPerson}"
+										placeholder="Name of Authorized" id="uniAuthour" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Designation <span class="text-danger">*</span>
+									</label> <input type="text" class="form-control" name="uniDes"
+										onchange="trim(this)" value="${editReg.designationName}"
+										placeholder="Designation of Person" id="uniDes" readonly>
+								</div>
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Name of Department <span class="text-danger">*</span>
+									</label> <input type="text" class="form-control" name="uniDept"
+										onchange="trim(this)" value="${editReg.departmentName}"
+										placeholder="Name of Department" id="uniDept" readonly>
+								</div>
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Mobile No.<span class="text-danger">*</span></label> <input
+										type="text" class="form-control" name="uniMobile"
+										onchange="trim(this)" value="${editReg.mobileNumber}"
+										pattern="[7-9]{1}[0-9]{9}" maxlength="10"
+										placeholder="Mobile No." id="uniNo" maxlength="10" readonly>
+								</div>
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Email-ID <span class="text-danger">*</span></label> <input
+										type="email" class="form-control" name="uniEmail"
+										onchange="trim(this)" value="${editReg.emails}"
+										placeholder="Email" id="uniEmail" readonly>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Alternate Email-ID</label> <input type="email"
+										class="form-control" onchange="trim(this)"
+										value="${editReg.alternateEmail}" name="altEmail"
+										placeholder="Alternate Email" id="altEmail" readonly>
+								</div>
+
+
+
 							</div>
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>University Affiliated <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="univ"
-									onchange="trim(this)" value="${editReg.unversityName}"
-									placeholder="University Affiliated" id="univ" readonly>
-							</div>
+						</c:if> --%>
 
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Authorized Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="collegeAuthour"
-									onchange="trim(this)" value="${editReg.authorizedPerson}"
-									placeholder="Name of Authorized" id="cAuthour" readonly>
-							</div>
+						<div class="clearfix"></div>
 
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Designation <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control"
-									name="designationCollege" placeholder="Designation of Person"
-									onchange="trim(this)" value="${editReg.designationName}"
-									id="designationCollege" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Name of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="dept"
-									onchange="trim(this)" value="${editReg.departmentName}"
-									placeholder="Name of Department" id="collegeDept" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Mobile No.<span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="collegeMobile"
-									onchange="trim(this)" value="${editReg.mobileNumber}"
-									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="collegeNo" maxlength="10" readonly>
-							</div>
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Email-ID <span class="text-danger">*</span></label> <input
-									type="email" class="form-control" name="collegeEmail"
-									onchange="trim(this)" value="${editReg.emails}"
-									placeholder="Email" id="collegeEmail" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Alternate Email-ID</label> <input type="email"
-									class="form-control" onchange="trim(this)"
-									value="${editReg.alternateEmail}" name="altEmail"
-									placeholder="Alternate Email" id="altEmail" readonly>
-							</div>
-
-						</div>
-					</c:if>
-
-					<c:if test="${editReg.userType==3}">
-						<div class="form-group row row-eq-height">
-
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>University Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniName"
-									onchange="trim(this)" value="${editReg.name}"
-									placeholder="University Name" id="uniName" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>AISHE Code</label> <input type="text"
-									class="form-control" onchange="trim(this)" name="aisheName"
-									value="${editReg.aisheCode}" placeholder="AISHE Code"
-									id="aisheName" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-
-								<label>Authorized Name <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniAuthour"
-									onchange="trim(this)" value="${editReg.authorizedPerson}"
-									placeholder="Name of Authorized" id="uniAuthour" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Designation <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniDes"
-									onchange="trim(this)" value="${editReg.designationName}"
-									placeholder="Designation of Person" id="uniDes" readonly>
-							</div>
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Name of Department <span class="text-danger">*</span>
-								</label> <input type="text" class="form-control" name="uniDept"
-									onchange="trim(this)" value="${editReg.departmentName}"
-									placeholder="Name of Department" id="uniDept" readonly>
-							</div>
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Mobile No.<span class="text-danger">*</span></label> <input
-									type="text" class="form-control" name="uniMobile"
-									onchange="trim(this)" value="${editReg.mobileNumber}"
-									pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-									placeholder="Mobile No." id="uniNo" maxlength="10" readonly>
-							</div>
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Email-ID <span class="text-danger">*</span></label> <input
-									type="email" class="form-control" name="uniEmail"
-									onchange="trim(this)" value="${editReg.emails}"
-									placeholder="Email" id="uniEmail" readonly>
-							</div>
-
-							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Alternate Email-ID</label> <input type="email"
-									class="form-control" onchange="trim(this)"
-									value="${editReg.alternateEmail}" name="altEmail"
-									placeholder="Alternate Email" id="altEmail" readonly>
-							</div>
-
-
-
-						</div>
-					</c:if>
- 
-					<div class="clearfix"></div>
-
-					<!-- <div class="col-12 col-sm-12 col-lg-12">
+						<!-- <div class="col-12 col-sm-12 col-lg-12">
 							<p>
 								<button type="submit" id="log-btn" class="button login-btn">Save</button>
 							</p>
 						</div> -->
 
 
-				</form>
+					</form>
+				</div>
 			</div>
-		</div>
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
@@ -495,6 +496,6 @@
 		}
 	</script>
 	<br>
-	
+
 </body>
 </html>

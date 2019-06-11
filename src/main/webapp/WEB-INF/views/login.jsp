@@ -107,7 +107,7 @@
 				<div class="col-12 col-sm-12 col-lg-12 login-header">
 
 					<h5>Login</h5>
-					<p>Login to access your profile</p>
+					<p>Note : Only for Uploading the requisite Document To RUSA Maharashtra</p>
 				</div>
 				<div class="col-12 col-sm-12 col-lg-3"></div>
 

@@ -31,23 +31,7 @@
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
  <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png" type="image/x-icon" /> 
 <!-- Bootstrap core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style1.css"
-	rel="stylesheet">
-	 <link href="${pageContext.request.contextPath}/resources/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-        <link href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.request.contextPath}/resources/assets/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.request.contextPath}/resources/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.request.contextPath}/resources/assets/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css"/>
-<link
-	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
-	rel="stylesheet">
+ 
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -77,9 +61,7 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/verifyOtp">Verify OTP</a>
-			>
+			<a href="${pageContext.request.contextPath}/">Home</a> >  
 		</div>
 	</div>
 		<div class="login">
@@ -105,7 +87,7 @@
             	</div>	<div class="col-12 col-sm-12 col-lg-3"></div>
           
                 <div class="col-12 col-sm-12 col-lg-6">
-                            <form action="${pageContext.request.contextPath}/verifyOtpProcess" method="post" onsubmit="return confirm('Do you really want to submit the form?');" name="login_form">  
+                            <form action="${pageContext.request.contextPath}/verifyOtpProcess" method="post"  name="login_form">  
                          
                		       
             
@@ -116,7 +98,7 @@
                             <div class="clearfix"></div>                          
                             <button type="submit" id="log-btn" class="button login-btn">Verify</button>
                             </form>
-                            <form action="${pageContext.request.contextPath}/resendOtpProcess" method="post" onsubmit="return confirm('Do you really want to submit the form?');" name="login_form">  
+                            <form action="${pageContext.request.contextPath}/resendOtpProcess" method="post"  name="login_form">  
                             <input type="hidden" class="form-control" name="uuid" value="${uuid}" required>
                           
                             <button type="submit" id="log-btn" class="button login-btn">Resend</button>

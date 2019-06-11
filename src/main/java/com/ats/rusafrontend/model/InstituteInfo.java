@@ -10,6 +10,8 @@ public class InstituteInfo {
 	private int affUniversity; 
 	private String est_year; 
 	private String uniName;
+	private int yesNo;
+	
 	public int getMhInstId() {
 		return mhInstId;
 	}
@@ -58,11 +60,19 @@ public class InstituteInfo {
 	public void setUniName(String uniName) {
 		this.uniName = uniName;
 	}
+	
+	
+	public int getYesNo() {
+		return yesNo;
+	}
+	public void setYesNo(int yesNo) {
+		this.yesNo = yesNo;
+	}
 	@Override
 	public String toString() {
 		return "InstituteInfo [mhInstId=" + mhInstId + ", aisheCode=" + aisheCode + ", insName=" + insName
 				+ ", district=" + district + ", taluka=" + taluka + ", affUniversity=" + affUniversity + ", est_year="
-				+ est_year + ", uniName=" + uniName + "]";
+				+ est_year + ", uniName=" + uniName + ", yesNo=" + yesNo + "]";
 	}
 	
 	
