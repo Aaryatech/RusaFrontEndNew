@@ -1,5 +1,6 @@
 package com.ats.rusafrontend.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -77,6 +78,29 @@ public class CmsController {
 
 				}
 				model.addObject("pageMetaData", pageMetaData);
+				try {
+					for (int i = 0; i < pageContent.getDocumentUploadList().size(); i++) {
+						 long bytes = pageContent.getDocumentUploadList().get(i).getFileSize();
+						
+						  String size = new String();
+						  
+						  int unit = true ? 1000 : 1024; if (bytes < unit) size = bytes + " B"; int exp
+						  = (int) (Math.log(bytes) / Math.log(unit)); String pre = (true ? "kMGTPE" :
+						  "KMGTPE").charAt(exp-1) + (true ? "" : "i"); size = String.format("%.1f %sB",
+						  bytes / Math.pow(unit, exp), pre);
+						  pageContent.getDocumentUploadList().get(i).setExVar2(size);
+						// Get the number of bytes in the file
+						/*DecimalFormat df = new DecimalFormat("0.00");
+						double sizeInBytes = pageContent.getDocumentUploadList().get(i).getFileSize();
+						// transform in MB
+						String sizeInMb = df.format(sizeInBytes / (1024 * 1024));
+						System.out.println(sizeInMb);
+						pageContent.getDocumentUploadList().get(i).setExVar2(sizeInMb);*/
+						 
+					}
+				} catch (Exception e) {
+
+				}
 
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("sectionId", pageContent.getSectioinId());
@@ -172,15 +196,15 @@ public class CmsController {
 				SearchData searchData = rest.postForObject(Constant.url + "/serchWordFromTable", map, SearchData.class);
 				model.addObject("searchData", searchData);
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
-				
+
 				try {
-					
+
 					for (int i = 0; i < searchData.getNewsSerchList().size(); i++) {
 						searchData.getNewsSerchList().get(i).setExVar1(EmailUtility
 								.Encrypt(String.valueOf(searchData.getNewsSerchList().get(i).getNewsblogsId())));
 					}
-					
-				}catch (Exception e) {
+
+				} catch (Exception e) {
 					// TODO: handle exception
 				}
 				// System.out.println(searchData);

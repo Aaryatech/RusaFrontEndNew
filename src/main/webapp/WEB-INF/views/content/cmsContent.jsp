@@ -65,7 +65,7 @@
 		</div>
 	</div>
 
-
+	<c:set var="find" value="0"></c:set>
 	<div class="container main-content" id="main-content">
 		<div class="row row-eq-height">
 
@@ -81,7 +81,7 @@
 									var="catList">
 
 									<c:if test="${catList.sectionId==menuList.sectionId}">
-
+										<c:set var="find" value="1"></c:set>
 										<c:choose>
 											<c:when test="${slugName==catList.slugName}">
 												<li class="active">
@@ -235,6 +235,18 @@
 						</c:if>
 					</c:forEach>
 
+
+
+					<c:if test="${find==0}">
+						<ul class="menu">
+							<li class="active"><a onclick="checkMaintainance()"
+								title="${pageContent.pageName}"
+								href="${pageContext.request.contextPath}/info/${pageContent.slugName}">${pageContent.pageName}<span
+									class="caret"></span></a></li> 
+						</ul>
+					</c:if>
+
+
 				</div>
 			</div>
 
@@ -318,7 +330,7 @@
 
 					<div class="pdfIcon">
 						<a href="${url}${documentUploadList.fileName}" target="_blank">${documentUploadList.exVar1}
-							- ${documentUploadList.fileSize}</a>
+							- ${documentUploadList.exVar2} </a>
 					</div>
 
 				</c:forEach>
@@ -523,7 +535,7 @@
 									<div class="col-12 col-sm-6 col-lg-6">
 										<div class="team-wrap">
 											<span class="team-candidates-status"></span>
-										<%-- 	<figure>
+											<%-- 	<figure>
 												<c:choose>
 													<c:when test="${not empty testImonialList.imageName}">
 														<a href="#"><img
