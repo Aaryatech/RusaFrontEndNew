@@ -212,10 +212,10 @@
 								<label>Institute Name : </label> <Strong>${editReg.instName}</Strong>
 							</div>
 						</c:if>
-						<div class="col-12 col-sm-12 col-lg-6">
+						<div class="col-12 col-sm-12 col-lg-12">
 							<label>AISHE Code : </label> <Strong>${editReg.aisheCode}</Strong>
 						</div>
-						<div class="col-12 col-sm-12 col-lg-6">
+						<div class="col-12 col-sm-12 col-lg-12">
 							<label>University Name : </label> <Strong>${editReg.uniName}</Strong>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-12">
@@ -256,15 +256,18 @@
 							<div class="col-12 col-sm-12 col-lg-6">
 								<label>Mobile No.<span class="text-danger">*</span></label> <input
 									type="text" class="form-control" name="mobile" maxlength="10"
-									placeholder="Mobile No." id="mobile" onchange="trim(this)"
+									placeholder="Mobile No." id="mobile"
+									onchange="trim(this);checkUnique(this.value,1,1)"
 									value="${editReg.mobileNumber}">
 								<p class="error-msg" id="error_mobile" style="display: none;">Required
 									Field.</p>
-								<!-- oninput="checkUnique(this.value,1,1)" -->
+								<input type="hidden" name="orimobile" id="orimobile"
+									value="${editReg.mobileNumber}">
+
 							</div>
 
 							<div class="col-12 col-sm-12 col-lg-6">
-								<label>Alternate Email-ID</label> <input type="email"
+								<label>Alternate Email-ID</label> <input type="text"
 									class="form-control" value="${editReg.alternateEmail}"
 									name="altEmail" placeholder="Alternate Email" id="altEmail"
 									onchange="trim(this)">
@@ -536,6 +539,12 @@
 				} else {
 					valid = false;
 				}
+
+				if ($("#orimobile").val() == inputValue) {
+					valid = false;
+				}
+
+				orimobile
 			} else if (valueType == 2) {
 				//alert("Its Email " );
 
@@ -566,7 +575,7 @@
 									if (data.error == true) {
 
 										if (valueType == 2) {
-											alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
+											//alert("This Email Id is Already Exist in Database. Please Login with Your Credential.");
 
 											if (seqId == 1) {
 												document
@@ -582,11 +591,15 @@
 
 										} else {
 
-											alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
+											//alert("This Mobile No is Already Exist in Database. Please Login with Your Credential.");
 
 											if (seqId == 1) {
 												document
 														.getElementById("mobile").value = "";
+												document
+														.getElementById("error_mobile").innerHTML = "Mobile No Already Register.";
+
+												$("#error_mobile").show();
 
 											} else if (seqId == 2) {
 												document
