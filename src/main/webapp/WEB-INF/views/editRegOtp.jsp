@@ -26,23 +26,13 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap1.min.css"
-	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style1.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/jcarousel.responsive.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800|Playfair+Display:400,700,900"
-	rel="stylesheet">
+
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -75,7 +65,7 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/registration">Login</a> >
+				href="${pageContext.request.contextPath}/myProfile">My Profile</a> >
 		</div>
 	</div>
 
@@ -85,26 +75,28 @@
 			<div class="col-12 col-sm-3 col-lg-3">
 
 
-				<div class="leftColm">
+				<div class="leftColm dashboard-left-menu">
 					<div class="profile-section">
 						<div class="upload-photo">
-							<c:if test="${not empty editReg.imageName}">
-								<div class="dashboard-profile-img">
-									<img id="blah"
-										src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
-								</div>
-							</c:if>
+							<c:choose>
+								<c:when test="${not empty editReg.imageName}">
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="dashboard-profile-img">
+										<img id="blah"
+											src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
+											alt="" />
+									</div>
+								</c:otherwise>
+							</c:choose>
 
 							<div class="fileUpload btn">
-								<div class="user-name">${editReg.name}</div>
-								<%-- <form class="dropzone" id="myForm"
-										action="${pageContext.request.contextPath}/uploadProfilePhoto"
-										method="post" enctype="multipart/form-data">
-										<input name="isImage" value="1" type="hidden" />
-									
-											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
-								   </form>  <span>Update Picture</span> --%>
-								<!--  <input type="file" class="upload" id="imgInp" /> -->
+								<div class="user-name wordwrap">${editReg.name}</div>
+
 
 							</div>
 						</div>
@@ -135,80 +127,79 @@
 				</div>
 			</div>
 
-			<div class="col-12 col-sm-9 col-lg-9 right-Colm news-listing-page">
-				<c:if test="${sessionScope.success != null}">
+			<div class="col-12 col-sm-9 col-lg-9">
+				<div class="right-Colm news-listing-page">
+					<c:if test="${sessionScope.success != null}">
 
-					<div class="col-12 col-sm-12 col-lg-12 ">
-						<div class="alert alert-success ">
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-							<strong>Success : </strong> ${success}
+						<div class="col-12 col-sm-12 col-lg-12 ">
+							<div class="alert alert-success ">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Success : </strong> ${success}
+							</div>
 						</div>
-					</div>
-				</c:if>
-				<c:if test="${sessionScope.errorMsg != null}">
-					<div class="col-12 col-sm-12 col-lg-12 ">
-						<div class="alert alert-danger ">
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-							<strong>Error : </strong> ${errorMsg}
+					</c:if>
+					<c:if test="${sessionScope.errorMsg != null}">
+						<div class="col-12 col-sm-12 col-lg-12 ">
+							<div class="alert alert-danger ">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Error : </strong> ${errorMsg}
+							</div>
 						</div>
-					</div>
-				</c:if>
-				<%
-					session.removeAttribute("success");
-					session.removeAttribute("errorMsg");
-				%>
+					</c:if>
+					<%
+						session.removeAttribute("success");
+						session.removeAttribute("errorMsg");
+					%>
 
-				<h2>Verify OTP</h2>
+					<h2>Verify OTP</h2>
 
-				<form
-					action="${pageContext.request.contextPath}/verifyEditOtpProcess"
-					method="post"
-					onsubmit="return confirm('Do you really want to submit the form?');"
-					name="login_form">
+					<form
+						action="${pageContext.request.contextPath}/verifyEditOtpProcess"
+						method="post" name="login_form">
 
 
 
-					<div class="col-12 col-sm-12 col-lg-3"></div>
-					<div class="col-12 col-sm-12 col-lg-12">
+						<div class="col-12 col-sm-12 col-lg-3"></div>
+						<div class="col-12 col-sm-12 col-lg-12">
 
-						<label>One Time Pin(OTP) <span class="text-danger">*</span></label>
-						<input type="text" class="form-control" name="userOtp"
-							placeholder="Enter One-Time-Pin(OTP) Here" required> <input
-							type="hidden" class="form-control" name="uuid" value="${editReg.userUuid}"
-							required>
+							<label>One Time Pin(OTP) <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" name="userOtp"
+								placeholder="Enter One-Time-Pin(OTP) Here" required> <input
+								type="hidden" class="form-control" name="uuid"
+								value="${editReg.userUuid}" required>
 
-					</div>
+						</div>
 
-					<div class="col-12 col-sm-12 col-lg-12">
-						<p>
-							<button type="submit" id="log-btn" class="button login-btn">Verify</button>
-						</p>
-
-
-					</div>
-				</form>
-				<form
-					action="${pageContext.request.contextPath}/resendEditOtpProcess"
-					method="post"
-					onsubmit="return confirm('Do you really want to submit the form?');"
-					name="login_form">
-					<input type="hidden" class="form-control" name="uuid"
-						value="${uuid}" required>
-
-					<div class="col-12 col-sm-12 col-lg-12">
-						<p>
-							<a href="${pageContext.request.contextPath}/editVerifyOtp/${editReg.userUuid}/1"><button type="button" id="log-btn" class="button login-btn">Resend</button></a>
-						</p>
-					</div>
-				</form>
+						<div class="col-12 col-sm-12 col-lg-12">
+							<p>
+								<button type="submit" id="log-btn" class="button login-btn">Verify</button>
+							</p>
 
 
+						</div>
+					</form>
+					<form
+						action="${pageContext.request.contextPath}/resendEditOtpProcess"
+						method="post" name="login_form">
+						<input type="hidden" class="form-control" name="uuid"
+							value="${uuid}" required>
+
+						<div class="col-12 col-sm-12 col-lg-12">
+							<p>
+								<a
+									href="${pageContext.request.contextPath}/editVerifyOtp/${editReg.userUuid}/1"><button
+										type="button" id="log-btn" class="button login-btn">Resend</button></a>
+							</p>
+						</div>
+					</form>
+
+				</div>
 
 			</div>
 		</div>

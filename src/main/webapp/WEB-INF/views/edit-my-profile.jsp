@@ -56,7 +56,7 @@
 }
 </style>
 </head>
-<body   class="${contrast}">
+<body class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
@@ -184,86 +184,102 @@
 									(University)
 									</c:if>
 					</h2>
-
+					<input type="hidden" class="form-control" name="type" id="type"
+						value="${editReg.userType}">
 					<form
 						action="${pageContext.request.contextPath}/editUserRegistration"
-						onsubmit="return confirm('Do you really want to submit the form?');"
-						method="post" name="login_form">
+						method="post" name="login_form" id="submitForm">
 
 						<input type="hidden" name="userType" value="${editReg.userType}">
 
+						<%-- <c:if test="${editReg.userType==1}"> --%>
+
+
+						<div class="col-12 col-sm-12 col-lg-12">
+
+							<c:if test="${editReg.userType==1}">
+								<label>Full Name : </label>
+								<Strong>${editReg.name}</Strong>
+							</c:if>
+							<c:if test="${editReg.userType==2 || editReg.userType==3}">
+								<label>Institute Name : </label>
+								<Strong>${editReg.name}</Strong>
+							</c:if>
+						</div>
+
 						<c:if test="${editReg.userType==1}">
-							<div class="form-group row row-eq-height">
-
-								<div class="col-12 col-sm-12 col-lg-6">
-
-									<label>Full Name <span class="text-danger">*</span></label> <input
-										type="text" class="form-control" name="name"
-										placeholder="Name" value="${editReg.name}" readonly
-										id="fullname" readonly>
-								</div>
-
-								<div class="col-12 col-sm-12 col-lg-6">
-									<label>College Name <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="collegeName"
-										onchange="trim(this)" value="${editReg.collegeName}"
-										placeholder="College Name" id="collegeName" required>
-								</div>
-
-								<div class="col-12 col-sm-12 col-lg-6">
-									<label>University Affiliated <span class="text-danger">*</span>
-									</label> <input type="text" class="form-control" name="university"
-										value="${editReg.unversityName}"
-										placeholder="University Affiliated" id="uniAff" required>
-								</div>
-
-								<div class="col-12 col-sm-12 col-lg-6">
-									<label>Designation of Person <span class="text-danger">*</span>
-									</label> <input type="text" class="form-control" name="authour"
-										onchange="trim(this)" value="${editReg.designationName}"
-										placeholder="Name of Authorized" id="authour" required>
-								</div>
-
-								<div class="col-12 col-sm-12 col-lg-6">
-
-									<label>Name of Department <span class="text-danger">*</span>
-									</label> <input type="text" class="form-control" name="dept"
-										onchange="trim(this)" value="${editReg.departmentName}"
-										placeholder="Name of Department" id="depatment" required>
-								</div>
-
-								<div class="col-12 col-sm-12 col-lg-6">
-									<label>Mobile No.<span class="text-danger">*</span></label> <input
-										type="text" class="form-control" name="mobile"
-										pattern="[7-9]{1}[0-9]{9}" maxlength="10"
-										placeholder="Mobile No." id="mobile" onchange="trim(this)"
-										value="${editReg.mobileNumber}"
-										oninput="checkUnique(this.value,1,1)" required>
-								</div>
-
-
-								<div class="col-12 col-sm-12 col-lg-6">
-									<label>Email-ID <span class="text-danger">*</span></label> <input
-										type="email" class="form-control" name="email"
-										value="${editReg.emails}" placeholder="Email" id="email"
-										readonly>
-								</div>
-
-								<div class="col-12 col-sm-12 col-lg-6">
-									<label>Alternate Email-ID</label> <input type="email"
-										class="form-control" value="${editReg.alternateEmail}"
-										name="altEmail" placeholder="Alternate Email" id="altEmail"
-										onchange="trim(this)">
-								</div>
-
-
-
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Institute Name : </label> <Strong>${editReg.instName}</Strong>
 							</div>
 						</c:if>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>AISHE Code : </label> <Strong>${editReg.aisheCode}</Strong>
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>University Name : </label> <Strong>${editReg.uniName}</Strong>
+						</div>
+						<div class="col-12 col-sm-12 col-lg-12">
+							<label>Email-ID :</label> <Strong>${editReg.emails}</Strong>
+						</div>
+
+						<div class="form-group row row-eq-height">
+
+							<c:if test="${editReg.userType==2 || editReg.userType==3}">
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Authorized Name <span class="text-danger">*</span>
+									</label> <input type="text" class="form-control" name="cAuthour"
+										onchange="trim(this)" value="${editReg.authorizedPerson}"
+										placeholder="Name of Authorized" id="cAuthour">
+									<p class="error-msg" id="error_cAuthour" style="display: none;">Required
+										Field.</p>
+								</div>
+							</c:if>
+							<div class="col-12 col-sm-12 col-lg-6">
+								<label>Designation of Person <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="inddesognation"
+									onchange="trim(this)" value="${editReg.designationName}"
+									placeholder="Name of Authorized" id="inddesognation">
+								<p class="error-msg" id="error_inddesognation"
+									style="display: none;">Required Field.</p>
+							</div>
+
+							<div class="col-12 col-sm-12 col-lg-6">
+
+								<label>Name of Department <span class="text-danger">*</span>
+								</label> <input type="text" class="form-control" name="depatment"
+									onchange="trim(this)" value="${editReg.departmentName}"
+									placeholder="Name of Department" id="depatment">
+								<p class="error-msg" id="error_depatment" style="display: none;">Required
+									Field.</p>
+							</div>
+
+							<div class="col-12 col-sm-12 col-lg-6">
+								<label>Mobile No.<span class="text-danger">*</span></label> <input
+									type="text" class="form-control" name="mobile" maxlength="10"
+									placeholder="Mobile No." id="mobile" onchange="trim(this)"
+									value="${editReg.mobileNumber}">
+								<p class="error-msg" id="error_mobile" style="display: none;">Required
+									Field.</p>
+								<!-- oninput="checkUnique(this.value,1,1)" -->
+							</div>
+
+							<div class="col-12 col-sm-12 col-lg-6">
+								<label>Alternate Email-ID</label> <input type="email"
+									class="form-control" value="${editReg.alternateEmail}"
+									name="altEmail" placeholder="Alternate Email" id="altEmail"
+									onchange="trim(this)">
+								<p class="error-msg" id="error_altEmail" style="display: none;">Enter
+									Valid Email.</p>
+							</div>
 
 
 
-						<c:if test="${editReg.userType==2}">
+						</div>
+						<%-- </c:if> --%>
+
+
+
+						<%-- <c:if test="${editReg.userType==2}">
 							<div class="form-group row row-eq-height">
 
 								<div class="col-12 col-sm-12 col-lg-6">
@@ -395,11 +411,12 @@
 
 
 							</div>
-						</c:if>
+						</c:if> --%>
 
 						<div class="col-12 col-sm-12 col-lg-12">
 							<p>
-								<button type="submit" id="log-btn" class="button login-btn">Save</button>
+								<button type="button" id="log-btn" class="button login-btn"
+									onclick="submitform()">Save</button>
 							</p>
 						</div>
 						<div class="clearfix"></div>
@@ -416,6 +433,92 @@
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+	<script>
+		function validate() {
+
+			var isError = false;
+			var errMsg = "";
+
+			var type = $("#type").val()
+
+			$("#error_inddesognation").hide();
+			$("#error_depatment").hide();
+			$("#error_mobile").hide();
+			$("#error_altEmail").hide();
+
+			if (type != 1) {
+				$("#error_cAuthour").hide();
+				if (!$("#cAuthour").val()) {
+
+					isError = true;
+
+					$("#error_cAuthour").show();
+
+				}
+
+			}
+
+			if (!$("#inddesognation").val()) {
+
+				isError = true;
+
+				$("#error_inddesognation").show()
+
+			}
+
+			if (!$("#depatment").val()) {
+
+				isError = true;
+
+				$("#error_depatment").show()
+
+			}
+
+			if (!$("#mobile").val() || !validateMobile($("#mobile").val())) {
+
+				isError = true;
+
+				if (!$("#mobile").val()) {
+					document.getElementById("error_mobile").innerHTML = "This field is required.";
+				} else {
+					document.getElementById("error_mobile").innerHTML = "Enter valid Mobile No.";
+				}
+
+				$("#error_mobile").show()
+
+			}
+
+			if ($("#altEmail").val() != ""
+					&& !validateEmail($("#altEmail").val())) {
+
+				isError = true;
+
+				document.getElementById("error_altEmail").innerHTML = "Enter valid email.";
+
+				$("#error_altEmail").show()
+
+			}
+
+			if (!isError) {
+
+				return false;
+			}
+
+		}
+
+		//
+	</script>
+	<script>
+		function submitform() {
+
+			if (validate() == false) {
+
+				document.getElementById("submitForm").submit();
+
+			}
+
+		}
+	</script>
 	<script type="text/javascript">
 		function checkUnique(inputValue, valueType, seqId) {
 			//alert("inputValue"+inputValue);
@@ -498,6 +601,20 @@
 								});
 		}
 	</script>
+
+	<script>
+		document.oncontextmenu = document.body.oncontextmenu = function() {
+			return false;
+		}
+		$(document).keypress(function(e) {
+			if (e.which == 13) {
+				/* alert('enter key is pressed');
+				console.log('enter key is pressed'); */
+				document.getElementById("log-btn").click();
+			}
+		});
+	</script>
+
 	<script>
 		function upImage() {
 
@@ -510,6 +627,31 @@
 			replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
 			replace(/\n +/, "\n"); // Removes spaces after newlines
 			return;
+		}
+		function validateEmail(email) {
+
+			var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+			if (eml.test($.trim(email)) == false) {
+
+				return false;
+
+			}
+
+			return true;
+
+		}
+		function validateMobile(mobile) {
+			var mob = /^[1-9]{1}[0-9]{9}$/;
+
+			if (mob.test($.trim(mobile)) == false) {
+
+				//alert("Please enter a valid email address .");
+				return false;
+
+			}
+			return true;
+
 		}
 	</script>
 </body>

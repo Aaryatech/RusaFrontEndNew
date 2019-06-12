@@ -56,12 +56,13 @@
 .other-gov-site-home {
 	margin-top: 43px;
 }
-.wordwrap { 
-   white-space: pre-wrap;      /* CSS3 */   
-   white-space: -moz-pre-wrap; /* Firefox */    
-   white-space: -pre-wrap;     /* Opera <7 */   
-   white-space: -o-pre-wrap;   /* Opera 7 */    
-   word-wrap: break-word;      /* IE */
+
+.wordwrap {
+	white-space: pre-wrap; /* CSS3 */
+	white-space: -moz-pre-wrap; /* Firefox */
+	white-space: -pre-wrap; /* Opera <7 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	word-wrap: break-word; /* IE */
 }
 </style>
 <body class="${contrast}">
@@ -78,8 +79,7 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="/">Home</a> > <a
-				href="${pageContext.request.contextPath}/myProfile">My
-				Profile</a> >
+				href="${pageContext.request.contextPath}/myProfile">My Profile</a> >
 		</div>
 	</div>
 
@@ -165,65 +165,67 @@
 
 
 
-						<input type="hidden" name="userType" value="${editReg.userType}"
-							onchange="showForm()">
+						<input type="hidden" name="userType" value="${editReg.userType}">
 
 
 
 						<%-- <c:if test="${editReg.userType==1}"> --%>
 						<!-- <div class="form-group row row-eq-height"> -->
 
-							<div class="col-12 col-sm-12 col-lg-12">
-								<c:if test="${editReg.userType==1}">
-									<label>Full Name : </label>
-									<Strong>${editReg.name}</Strong>
-								</c:if>
-								<c:if test="${editReg.userType==2 || editReg.userType==3}">
-									<label>Institute Name : </label>
-									<Strong>${editReg.name}</Strong>
-								</c:if>
-							</div>
+						<div class="col-12 col-sm-12 col-lg-12">
 							<c:if test="${editReg.userType==1}">
-								<div class="col-12 col-sm-12 col-lg-12">
-									<label>Institute Name : </label> <Strong>${editReg.instName}</Strong>
-								</div>
+								<label>Full Name : </label>
+								<Strong>${editReg.name}</Strong>
 							</c:if>
-							<div class="col-12 col-sm-12 col-lg-12">
-								<label>University Name : </label> <Strong>${editReg.uniName}</Strong>
-							</div>
 							<c:if test="${editReg.userType==2 || editReg.userType==3}">
-								<div class="col-12 col-sm-12 col-lg-12">
-									<label>Authorized Person Name : </label> <Strong>${editReg.authorizedPerson}</Strong>
-								</div>
+								<label>Institute Name : </label>
+								<Strong>${editReg.name}</Strong>
 							</c:if>
-
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
+							<label>AISHE Code : </label> <Strong>${editReg.aisheCode}</Strong>
+						</div>
+						<c:if test="${editReg.userType==1}">
 							<div class="col-12 col-sm-12 col-lg-12">
-								<label>Designation of Person : </label> <Strong>${editReg.designationName}</Strong>
+								<label>Institute Name : </label> <Strong>${editReg.instName}</Strong>
 							</div>
-
+						</c:if>
+						<div class="col-12 col-sm-12 col-lg-12">
+							<label>University Name : </label> <Strong>${editReg.uniName}</Strong>
+						</div>
+						<c:if test="${editReg.userType==2 || editReg.userType==3}">
 							<div class="col-12 col-sm-12 col-lg-12">
-
-								<label>Name of Department : </label> <Strong>${editReg.departmentName}</Strong>
+								<label>Authorized Person Name : </label> <Strong>${editReg.authorizedPerson}</Strong>
 							</div>
+						</c:if>
 
-							<div class="col-12 col-sm-12 col-lg-12">
-								<label>Mobile No. : </label> <Strong>${editReg.mobileNumber}</Strong>
-							</div>
+						<div class="col-12 col-sm-12 col-lg-12">
+							<label>Designation of Person : </label> <Strong>${editReg.designationName}</Strong>
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-12">
+
+							<label>Name of Department : </label> <Strong>${editReg.departmentName}</Strong>
+						</div>
+
+						<div class="col-12 col-sm-12 col-lg-12">
+							<label>Mobile No. : </label> <Strong>${editReg.mobileNumber}</Strong>
+						</div>
 
 
-							<div class="col-12 col-sm-12 col-lg-12">
-								<label>Email-ID :</label> <Strong>${editReg.emails}</Strong>
-							</div>
+						<div class="col-12 col-sm-12 col-lg-12">
+							<label>Email-ID :</label> <Strong>${editReg.emails}</Strong>
+						</div>
 
-							<div class="col-12 col-sm-12 col-lg-12">
-								<label>Alternate Email-ID</label> :
-								<c:choose>
-									<c:when test="${not empty editReg.alternateEmail}">
-										<Strong>${editReg.alternateEmail}</Strong>
-									</c:when>
-									<c:otherwise>-</c:otherwise>
-								</c:choose>
-							</div>
+						<div class="col-12 col-sm-12 col-lg-12">
+							<label>Alternate Email-ID</label> :
+							<c:choose>
+								<c:when test="${not empty editReg.alternateEmail}">
+									<Strong>${editReg.alternateEmail}</Strong>
+								</c:when>
+								<c:otherwise>-</c:otherwise>
+							</c:choose>
+						</div>
 
 
 

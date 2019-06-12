@@ -175,87 +175,90 @@ public class loginController {
 
 			}
 
-			if (type == 1) {
-				String email = request.getParameter("email");
-				String altEmail1 = request.getParameter("altEmail");
-				String name = request.getParameter("name");
-				String collegeName = request.getParameter("collegeName");
-				String university = request.getParameter("university");
-				String dept = request.getParameter("dept");
-				// String dob = request.getParameter("dob");
-				String mobile = request.getParameter("mobile");
-				String designation = request.getParameter("authour");
+			if (type != 1) {
+				
+				String cAuthour = request.getParameter("cAuthour");
+				 
 
-				if (prevrecrod.isError() == false) {
+			} 
+			
+		 
+			String altEmail2 = request.getParameter("altEmail");  
+			String collegeDept = request.getParameter("depatment");
+			String collegeMobile = request.getParameter("mobile");
+			String designation = request.getParameter("inddesognation");  
 
-					if (!editReg.getAlternateEmail().equals(altEmail1)) {
+			if (prevrecrod.isError() == false) {
 
-						jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
+				if (type != 1) {
+					
+					String cAuthour = request.getParameter("cAuthour");
+					if (!editReg.getAuthorizedPerson().equals(cAuthour)) {
+
+						jsonRecord.setAuthorizedPerson(editReg.getAuthorizedPerson());
 						prevrecrod.setLastUpdate(dttime.format(date));
+						editReg.setAuthorizedPerson(cAuthour);
 					}
-					if (!editReg.getCollegeName().equals(collegeName)) {
 
-						jsonRecord.setCollegeName(editReg.getCollegeName());
-						prevrecrod.setLastUpdate(dttime.format(date));
-					}
-					if (!editReg.getUnversityName().equals(university)) {
+				} 
+				
+				if (!editReg.getAlternateEmail().equals(altEmail2)) {
 
-						jsonRecord.setUnversityName(editReg.getUnversityName());
-						prevrecrod.setLastUpdate(dttime.format(date));
-					}
-					if (!editReg.getDepartmentName().equals(dept)) {
-
-						jsonRecord.setDepartmentName(editReg.getDepartmentName());
-						prevrecrod.setLastUpdate(dttime.format(date));
-					}
-					if (!editReg.getDesignationName().equals(designation)) {
-
-						jsonRecord.setDesignationName(editReg.getDesignationName());
-						prevrecrod.setLastUpdate(dttime.format(date));
-					}
-				}
-
-				editReg.setAlternateEmail(altEmail1);
-				editReg.setName(name);
-				editReg.setCollegeName(collegeName);
-				editReg.setUnversityName(university);
-				editReg.setDepartmentName(dept);
-				editReg.setUserType(1);
-				editReg.setDesignationName(designation);
-				// editReg.setDob(DateConvertor.convertToYMD(dob));
-				editReg.setEditDate(sf.format(date));
-
-				if (prevrecrod.isError() == true) {
-
-					jsonRecord = editReg;
+					jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
 					prevrecrod.setLastUpdate(dttime.format(date));
-					prevrecrod.setRegId(editReg.getRegId());
 				}
+				 
+				if (!editReg.getDepartmentName().equals(collegeDept)) {
 
-				if (editReg.getMobileNumber().equals(mobile)) {
-
-					Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
-							Registration.class);
-
-					ObjectMapper mapper = new ObjectMapper();
-					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
-
-					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
-							PreviousRegRecord.class);
-
-					redirect = "redirect:/editProfile";
-				} else {
-					/*
-					 * System.out.println("1. mobile number");
-					 * 
-					 * editReg.setEditDate(sf.format(date)); Registration res =
-					 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
-					 */
-					editReg.setExVar2(mobile);
-					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
+					jsonRecord.setDepartmentName(editReg.getDepartmentName());
+					prevrecrod.setLastUpdate(dttime.format(date));
 				}
+				if (!editReg.getDesignationName().equals(designation)) {
 
-			} else if (type == 2) {
+					jsonRecord.setDesignationName(editReg.getDesignationName());
+					prevrecrod.setLastUpdate(dttime.format(date));
+				}
+				 
+			}
+
+			editReg.setAlternateEmail(altEmail2);  
+			editReg.setDesignationName(designation); 
+			editReg.setDepartmentName(collegeDept);
+			editReg.setEditDate(sf.format(date));
+
+			if (prevrecrod.isError() == true) {
+
+				jsonRecord = editReg;
+				prevrecrod.setLastUpdate(dttime.format(date));
+				prevrecrod.setRegId(editReg.getRegId());
+			}
+
+			if (editReg.getMobileNumber().equals(collegeMobile)) {
+
+				Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
+						Registration.class);
+
+				ObjectMapper mapper = new ObjectMapper();
+				prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
+
+				PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
+						PreviousRegRecord.class);
+
+				redirect = "redirect:/editProfile";
+			} else {
+				
+				 /** System.out.println("Email new");
+				 * 
+				 * editReg.setEditDate(sf.format(date)); Registration res =
+				 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);*/
+				 
+				editReg.setExVar2(collegeMobile);
+				redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
+			}
+			
+			
+			
+			/*else if (type == 2) {
 				String collegeEmail = request.getParameter("collegeEmail");
 				String altEmail2 = request.getParameter("altEmail");
 				String institute = request.getParameter("institute");
@@ -331,17 +334,17 @@ public class loginController {
 
 					redirect = "redirect:/editProfile";
 				} else {
-					/*
+					
 					 * System.out.println("Email new");
 					 * 
 					 * editReg.setEditDate(sf.format(date)); Registration res =
 					 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
-					 */
+					 
 					editReg.setExVar2(collegeMobile);
 					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
 				}
 
-			} else if (type == 3) {
+			}*/ /*else if (type == 3) {
 				String uniEmail = request.getParameter("uniEmail");
 				String altEmail3 = request.getParameter("altEmail");
 				String uniName = request.getParameter("uniName");
@@ -410,17 +413,17 @@ public class loginController {
 
 					redirect = "redirect:/editProfile";
 				} else {
-					/*
+					
 					 * System.out.println("Email new");
 					 * 
 					 * editReg.setEditDate(sf.format(date)); Registration res =
 					 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
-					 */
+					 
 					editReg.setExVar2(uniMobile);
 					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
 				}
 
-			}
+			}*/
 			System.out.println("Data: " + editReg.toString());
 
 			session.setAttribute("success", "Successfully Updated Information !");
