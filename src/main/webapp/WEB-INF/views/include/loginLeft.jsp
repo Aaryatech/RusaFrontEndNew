@@ -19,10 +19,10 @@
 		<div class="profile-section">
 			<div class="upload-photo">
 				<c:choose>
-					<c:when test="${not empty sessionScope.editReg.imageName}">
+					<c:when test="${not empty sessionScope.info.imageName}">
 						<div class="dashboard-profile-img">
 							<img id="blah"
-								src="${sessionScope.profileUrl}${sessionScope.editReg.imageName}"
+								src="${sessionScope.profileUrl}${sessionScope.info.imageName}"
 								alt="" />
 						</div>
 					</c:when>
@@ -36,7 +36,7 @@
 				</c:choose>
 
 				<div class="fileUpload btn">
-					<div class="user-name wordwrap">${sessionScope.editReg.name}</div>
+					<div class="user-name wordwrap">${sessionScope.info.name}</div>
 
 					<%
 						String mapping = (String) session.getAttribute("mapping");

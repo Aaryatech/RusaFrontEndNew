@@ -634,6 +634,7 @@ public class loginController {
 				editReg.setImageName(imageName);
 				System.out.println("Data :" + editReg.toString());
 				Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg, Registration.class);
+				session.setAttribute("info",res);
 
 			} catch (Exception e) {
 				// TODO: handle exception

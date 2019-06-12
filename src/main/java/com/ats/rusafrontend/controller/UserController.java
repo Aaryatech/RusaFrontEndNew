@@ -163,7 +163,7 @@ public class UserController {
 							model.addAttribute("editReg", editReg);
 							model.addAttribute("upcoming", upcoming);
 							model.addAttribute("typeId", 2);
-							session.setAttribute("editReg",editReg);
+							session.setAttribute("info",editReg);
 							session.setAttribute("successMsg", "Login Successful !");
 							session.setAttribute("profileUrl", Constant.getUserProfileURL);
 						}
