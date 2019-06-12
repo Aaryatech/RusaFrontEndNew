@@ -66,7 +66,7 @@
 	<div class="bridcrumb">
 		<div class="container">
 			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
+				href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
 			<!-- 
             <p class="last-update">Last Updated on 25 Feb 2019</p>  -->
 		</div>
@@ -80,67 +80,7 @@
             </c:if> --%>
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
-			<div class="col-12 col-sm-3 col-lg-3">
-
-
-				<div class="leftColm dashboard-left-menu">
-					<div class="profile-section">
-						<div class="upload-photo">
-
-							<c:choose>
-								<c:when test="${not empty editReg.imageName}">
-									<div class="dashboard-profile-img">
-										<img id="blah"
-											src="${sessionScope.profileUrl}${editReg.imageName}" alt="" />
-									</div>
-								</c:when>
-								<c:otherwise>
-									<div class="dashboard-profile-img">
-										<img id="blah"
-											src="${pageContext.request.contextPath}/resources/images/no-img.jpg"
-											alt="" />
-									</div>
-								</c:otherwise>
-							</c:choose>
-							<div class="fileUpload btn">
-								<div class="user-name">${editReg.name}</div>
-								<%--  	<form class="dropzone" id="myForm"
-										action="${pageContext.request.contextPath}/uploadProfilePhoto"
-										method="post" enctype="multipart/form-data">
-										<input name="isImage" value="1" type="hidden" />
-									
-											<input name="file" class="upload" type="file" id="imgInp" onchange="upImage()" />
-								   </form>   <span>Update Picture</span>--%>
-								<!--  <input type="file" class="upload" id="imgInp" /> -->
-
-							</div>
-						</div>
-
-
-						<div class="clearfix"></div>
-					</div>
-
-					<div class="clearfix"></div>
-					<ul class="menu">
-						<li><a onclick="checkMaintainance()" title="Dashboard"
-							href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
-						</li>
-
-						<li><a onclick="checkMaintainance()" title="About RUSA"
-							href="${pageContext.request.contextPath}/myProfile">My
-								Profile</a></li>
-
-						<li><a onclick="checkMaintainance()" title="Change Password"
-							href="${pageContext.request.contextPath}/changePass">Change
-								Password</a></li>
-						<%--     <li>
-	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/eventList">Event List</a>
-                            </li> --%>
-						<li><a onclick="checkMaintainance()" title="Logout"
-							href="${pageContext.request.contextPath}/logout">Logout</a></li>
-					</ul>
-				</div>
-			</div>
+			 <jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
 
 			<div class="col-12 col-sm-9 col-lg-9">
 				<div class="right-Colm news-listing-page">

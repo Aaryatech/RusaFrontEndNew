@@ -78,7 +78,8 @@
 
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
-			<div class="col-12 col-sm-3 col-lg-3">
+		<jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
+			<%-- <div class="col-12 col-sm-3 col-lg-3">
 
 				<div class="leftColm dashboard-left-menu">
 					<div class="profile-section">
@@ -131,14 +132,14 @@
 						<li><a onclick="checkMaintainance()" title="Change Password"
 							href="${pageContext.request.contextPath}/changePass">Change
 								Password</a></li>
-						<%--     <li>
+						    <li>
 	                            <a onclick="checkMaintainance()" title="About RUSA" href="${pageContext.request.contextPath}/eventList">Event List</a>
-                            </li> --%>
+                            </li>
 						<li><a onclick="checkMaintainance()" title="Logout"
 							href="${pageContext.request.contextPath}/logout">Logout</a></li>
 					</ul>
 				</div>
-			</div>
+			</div> --%>
 
 			<div class="col-12 col-sm-9 col-lg-9">
 				<div class="right-Colm news-listing-page">
@@ -178,7 +179,7 @@
             	(Individual)
 							</c:if>
 						<c:if test="${editReg.userType==2}">
-									(Colleges)
+									(Institute)
 								</c:if>
 						<c:if test="${editReg.userType==3}">
 									(University)
