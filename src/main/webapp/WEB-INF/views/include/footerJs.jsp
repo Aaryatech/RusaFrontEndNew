@@ -13,6 +13,34 @@
 	src="${pageContext.request.contextPath}/resources/js/jcarousel.responsive.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery.jcarousel.min.js"></script>
+    
+                  <script>
+$(function() {
+    $('.jcarousel')
+        .jcarousel({
+              interval: 3000,
+            target: '+=1',
+            autostart: true
+        })
+        .jcarouselAutoscroll({
+            interval: 3000,
+            target: '+=1',
+            autostart: true
+        })
+		
+		create: $('.jcarousel').hover(function() 
+    {
+        $(this).jcarouselAutoscroll('stop');
+    },
+    function() 
+    {
+        $(this).jcarouselAutoscroll('start');
+    });
+    ;
+});
+</script>
+
+
 <script
 	src="${pageContext.request.contextPath}/resources/js/ekko-lightbox.js"></script>
 
@@ -379,4 +407,3 @@ function myFunction() {
   }
 }
 </script> 
-

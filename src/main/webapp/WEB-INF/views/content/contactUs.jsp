@@ -94,10 +94,12 @@ msg-error {
 
 					<div class="col-12 col-sm-12 col-lg-6">
 						<h2>Rashtriya Uchchatar Shiksha Abhiyan</h2>
-						<p>State Project Directorate (SPD), Maharashtra Rashtriya
-							Uchchatar Shiksha Abhiyan (RUSA), Unit No.2, 18th floor, Centre
-							1, World Trade Centre Cuffe Parade, Colaba, Mumbai-400005. <br>Phone
-							No.022, 22160959 / 22160943</p>
+						<p>
+							State Project Directorate (SPD), Maharashtra Rashtriya Uchchatar
+							Shiksha Abhiyan (RUSA), Unit No.2, 18th floor, Centre 1, World
+							Trade Centre Cuffe Parade, Colaba, Mumbai-400005. <br>Phone
+							No.022, 22160959 / 22160943
+						</p>
 						<!-- <iframe class="map"
 							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.577356534086!2d72.89611441799786!3d19.149897683543813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86e528cb077%3A0xbeb39574202b3e0e!2sRusa+International!5e0!3m2!1sen!2sin!4v1549861576012"
 							style="border: 0" allowfullscreen="" width="100%" height="540"
@@ -186,12 +188,14 @@ msg-error {
 								Enter Your Name</p>
 
 							<label>Your Email</label> <input type="text" class="form-control"
-								name="email" id="email" placeholder="Email" autocomplete="off" onchange="trim(this)">
+								name="email" id="email" placeholder="Email" autocomplete="off"
+								onchange="trim(this)">
 							<p class="error-msg" id="error_email" style="display: none;">Please
 								Enter Valid Email</p>
 							<label>Phone Number</label> <input type="text"
 								class="form-control" name="mobileNo" id="mobileNo" maxlength=10
-								placeholder="Mobile Number" autocomplete="off" onchange="trim(this)">
+								placeholder="Mobile Number" autocomplete="off"
+								onchange="trim(this)">
 							<p class="error-msg" id="error_mobile" style="display: none;">Please
 								Enter Valid Mobile No.</p>
 							<label>Your Message</label>
@@ -199,24 +203,27 @@ msg-error {
 								placeholder="Message" onchange="trim(this)"></textarea>
 							<p class="error-msg" id="error_msg" style="display: none;">Required
 								Field</p>
-							<br>
-							<%-- <div id="recaptcha" class="g-recaptcha" data-sitekey="${siteKey}"></div> --%>
+
 
 							<img src="${pageContext.request.contextPath }/captcha"
-								style="height: 50px; width: 200px;" id='captchaImage'> <br>
-							<input type="text" name="captcha" id="captcha"
-								style="margin-top: 5px; width: 300px; height: 40px;"
-								placeholder="Enter Text" autocomplete="off" onchange="trim(this)" >
+								id='captchaImage' class="capcha-img"> <br> <br>
+							<input type="text" class="form-control capcha-input" name="captcha" id="captcha"
+								placeholder="Enter Text" autocomplete="off"
+								onchange="trim(this)">
+
 							<button id="captchaRef" type="button">
 								<img
 									src="${pageContext.request.contextPath}/resources/images/repeat.png"
-									alt="Repeat" class="img-responsive"
-									style="width: 20px; height: 20px;" title="Repeat">
+									alt="Repeat" class="repeat img-responsive" title="Repeat">
 							</button>
-							<br> <span class="msg-error error" id="error_capmsg"
+
+							 <!-- <span class="msg-error error" id="error_capmsg"
 								style="display: none; color: red; margin-bottom: 5px; margin-top: 5px;">Invalid
-								Text ! </span><br>
-							<button class="button send" id="btn-validate" type="button" onclick="verifyCaptcha()">
+								Text ! </span> -->
+								<p class="error-msg" id="error_capmsg" style="display: none;">Invalid
+								Text !</p><br> 
+							<button class="button send" id="btn-validate" type="button"
+								onclick="verifyCaptcha()">
 								<span>Send</span>
 							</button>
 							<input type="hidden" name="accept" id="accept" value="0">
@@ -307,10 +314,8 @@ msg-error {
 			return true;
 
 		}
-
-		
 	</script>
-	
+
 	<script>
 		function validate() {
 
@@ -321,7 +326,7 @@ msg-error {
 			$("#error_name").hide();
 			$("#error_msg").hide();
 			$("#error_capmsg").hide();
-			 
+
 			if (!$("#name").val()) {
 
 				isError = true;
@@ -330,37 +335,28 @@ msg-error {
 				//return false;
 			}
 
-			if (!$("#email").val()
-					|| !validateEmail($(
-							"#email").val())) {
+			if (!$("#email").val() || !validateEmail($("#email").val())) {
 
 				isError = true;
 
 				if (!$("#email").val()) {
-					document
-							.getElementById("error_email").innerHTML = "This field is required.";
+					document.getElementById("error_email").innerHTML = "This field is required.";
 				} else {
-					document
-							.getElementById("error_email").innerHTML = "Enter valid email.";
+					document.getElementById("error_email").innerHTML = "Enter valid email.";
 				}
 
 				$("#error_email").show()
 
 			}
 
-			if (!$("#mobileNo").val()
-					|| !validateMobile($(
-							"#mobileNo")
-							.val())) {
+			if (!$("#mobileNo").val() || !validateMobile($("#mobileNo").val())) {
 
 				isError = true;
 
 				if (!$("#mobileNo").val()) {
-					document
-							.getElementById("error_mobile").innerHTML = "This field is required.";
+					document.getElementById("error_mobile").innerHTML = "This field is required.";
 				} else {
-					document
-							.getElementById("error_mobile").innerHTML = "Enter valid Mobile No.";
+					document.getElementById("error_mobile").innerHTML = "Enter valid Mobile No.";
 				}
 
 				$("#error_mobile").show()
@@ -372,16 +368,15 @@ msg-error {
 				isError = true;
 
 				$("#error_msg").show()
-			 
+
 			}
 			if (!$("#captcha").val()) {
 
 				isError = true;
 
-				document
-						.getElementById("error_capmsg").innerHTML = "This filed required";
+				document.getElementById("error_capmsg").innerHTML = "This filed required";
 				$("#error_capmsg").show();
-				 
+
 			}
 
 			if (!isError) {
@@ -397,8 +392,8 @@ msg-error {
 		function verifyCaptcha() {
 
 			//alert(validate());
-			
-			if(validate()==false){
+
+			if (validate() == false) {
 				var captcha = $("#captcha").val();
 				//alert(captcha);
 				$("#error_capmsg").hide();
@@ -418,19 +413,21 @@ msg-error {
 									function(data) {
 										if (data.error == true) {
 											document.getElementById("captcha").value = "";
-											document.getElementById("error_capmsg").innerHTML = "Invalid Text !";
+											document
+													.getElementById("error_capmsg").innerHTML = "Invalid Text !";
 											$("#error_capmsg").show();
-											document.getElementById("captchaRef")
-													.click();
+											document.getElementById(
+													"captchaRef").click();
 											document.getElementById("accept").value = 0;
 											flag = 0;
 										} else {
 											document.getElementById("accept").value = 1;
 											flag = 1;
-											document.getElementById("submitForm").submit();
+											document.getElementById(
+													"submitForm").submit();
 										}
 									});
-	  
+
 				} else {
 					document.getElementById("error_capmsg").innerHTML = "This filed required";
 					$("#error_capmsg").show();
@@ -438,7 +435,6 @@ msg-error {
 					return true;
 				}
 			}
-			  
 
 		}
 	</script>
