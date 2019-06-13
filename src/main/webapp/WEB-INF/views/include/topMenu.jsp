@@ -17,7 +17,7 @@ max-width: 655px; overflow: hidden;
 				<a class="navbar-brand" href="${pageContext.request.contextPath}/"><img
 					src="${logoUrl}${logo.logoMain}" alt="" class="websitelogo"></a>
 				
-				  <div class="collapse navbar-collapse justify-content-md-end">
+				  <div class="navbar-collapse justify-content-md-end">
 				<form class="form-inline my-2 my-md-0 search-section"
 					action="${pageContext.request.contextPath}/searchData" method="get">
 					<input class="form-control" type="text" placeholder="Search"

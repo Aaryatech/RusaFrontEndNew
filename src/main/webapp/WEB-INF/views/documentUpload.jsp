@@ -64,7 +64,7 @@
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>Edit Profile</h1>
+			<h1>Upload Document</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
@@ -81,7 +81,7 @@
 			<jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
 
 
-			<div class="col-12 col-sm-9 col-lg-9">
+			<div class="col-12 col-sm-12 col-lg-9">
 				<div class="right-Colm news-listing-page">
 					<c:if test="${sessionScope.success != null}">
 
@@ -153,7 +153,7 @@
 
 						<div class="col-12 col-sm-12 col-lg-12">
 							<p>
-								<button type="submit" id="log-btn" class="button login-btn">Save</button>
+								<button type="submit" id="log-btn" class="button login-btn">Upload</button>
 							</p>
 						</div>
 					</form>

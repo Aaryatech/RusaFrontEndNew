@@ -162,13 +162,13 @@ msg-error {
 								<strong>Please send your message</strong>
 							</p>
 							<div class="row">
-								<div class="col-12 col-sm-6 col-lg-3">
+								<div class="col-12 col-sm-4 col-lg-4">
 									<input type="radio" name="formType" value="Query" checked
 										id="radio1"> <label for="radio1"></label> <span>Query</span>
 								</div>
 
 
-								<div class="col-12 col-sm-6 col-lg-3">
+								<div class="col-12 col-sm-4 col-lg-4">
 									<input type="radio" name="formType" value="Feedback"
 										id="radio2"> <label for="radio2"></label> <span>Feedback</span>
 								</div>
@@ -204,17 +204,19 @@ msg-error {
 							<p class="error-msg" id="error_msg" style="display: none;">Required
 								Field</p>
 
-
+		<div class="capcha-img">
 							<img src="${pageContext.request.contextPath }/captcha"
-								id='captchaImage' class="capcha-img"> <br> <br>
+								id='captchaImage' ></div> <br>
+							
 							<input type="text" class="form-control capcha-input" name="captcha" id="captcha"
 								placeholder="Enter Text" autocomplete="off"
 								onchange="trim(this)">
 
-							<button id="captchaRef" type="button">
+							<button id="captchaRef" type="button" class="repeat-btn">
+							<div class="repeat">
 								<img
 									src="${pageContext.request.contextPath}/resources/images/repeat.png"
-									alt="Repeat" class="repeat img-responsive" title="Repeat">
+									alt="Repeat" class="img-responsive" title="Repeat"></div>
 							</button>
 
 							 <!-- <span class="msg-error error" id="error_capmsg"

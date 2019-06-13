@@ -8,13 +8,13 @@
 <footer>
 	<div class="container">
 		<div class="row">
-			<div class="col-12 col-sm-4 col-lg-3">
+			<div class="col-12 col-sm-12 col-lg-3">
 				<h6>Contact Us</h6>
 				<c:if test="${setting[8].isActive==1}">
           				 ${setting[8].keyValues}
        			 		  </c:if>
 			</div>
-			<div class="col-12 col-sm-8 col-lg-5 important-link">
+			<div class="col-12 col-sm-12 col-lg-5 important-link">
 				<h6>Important Links</h6>
 				<c:if test="${setting[7].isActive==1}">
           				 ${setting[7].keyValues}
@@ -60,7 +60,7 @@
 						class="icon-instagram-social-network-logo-of-photo-camera"></span></a>
 				</c:if>
 
-				<p style="text-align: right; margin-top: 50px">
+				<p>
 
 					<c:if test="${setting[4].isActive==1}">
 					 Visitor Count :

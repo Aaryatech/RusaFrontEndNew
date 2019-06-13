@@ -82,7 +82,7 @@
 		<div class="row row-eq-height">
 			 <jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
 
-			<div class="col-12 col-sm-9 col-lg-9">
+			<div class="col-12 col-sm-12 col-lg-9">
 				<div class="right-Colm news-listing-page">
 					<h2>Dashboard</h2>
 

@@ -73,7 +73,7 @@
 				href="${pageContext.request.contextPath}/changePass">Change
 					Password</a></li>
 			<li><a onclick="checkMaintainance()" title="Upload Document"
-				href="#">Upload Document</a></li>
+				href="${pageContext.request.contextPath}/documentUpload">Upload Document</a></li>
 			<li><a onclick="checkMaintainance()" title="Logout"
 				href="${pageContext.request.contextPath}/logout">Logout</a></li>
 		</ul>
