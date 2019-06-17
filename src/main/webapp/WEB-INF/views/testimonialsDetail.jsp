@@ -29,7 +29,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
@@ -83,78 +83,59 @@
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 
-   <div class="inner-slider" id="slider">
-    	 <div class="container">
+	<div class="inner-slider" id="slider">
+		<div class="container">
 			<h1>Testimonials</h1>
-         </div>
-    </div>
+		</div>
+	</div>
 	<div class="bridcrumb">
-    	<div class="container">
-        	<a href="${pageContext.request.contextPath}/">Home</a> >  
-        </div>
-    </div> 
- <div class="container" id="main-content">
-        <div class="row row-eq-height">
+		<div class="container">
+			<a href="${pageContext.request.contextPath}/">Home</a> >
+		</div>
+	</div>
+	<div class="container" id="main-content">
+		<div class="row row-eq-height">
 
- 			    <div class="col-12 col-sm-12 col-lg-12">
-            	<h2>Testimonials</h2>
-            	<c:if test="${valueType==1}">
-                	<c:forEach items="${testImonial}" var="testImonial"
-					varStatus="count">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-lg-12">
-                    	<div class="success-stories testimonials-detail">
-                        <div class="testimonials-user-photo">
-                      <c:choose>
-						<c:when test="${not empty testImonial.imageName}">
-						  
-                        <img src="${sessionScope.gallryImageURL}${testImonial.imageName}" alt="${testImonial.fromName}" title="${testImonial.fromName}" class="img-responsive thumbnail" style="width: 100px; height: 100px;">	
-                        </c:when>
-                       <c:otherwise>
-                     <img	src="${pageContext.request.contextPath}/resources/images/team.jpg"
-														alt="" class="img-responsive thumbnail" >
-                       </c:otherwise>   
-                       </c:choose>
-		            </div>
-                        <p><span class="icon-quote-left quote"></span>${testImonial.message}</p>
-						<p>
-                        <strong>${testImonial.fromName}</strong>
-                      <!--   <span class="sup-text">adsfgthukik</span> -->
-                        </p>
-                        </div>
-                    </div>
-            </div>
-            </c:forEach>
-            </c:if>
-            	<c:if test="${valueType==2}">
-                	<c:forEach items="${testImonial}" var="testImonial"
-					varStatus="count">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-lg-12">
-                    	<div class="success-stories testimonials-detail">
-                     
-                   
-						<%-- <iframe width="100%" height="300" src="${testImonial.message}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-                     --%>
-                     
-		           
-                       <p><span class="icon-quote-left quote"></span></p>
-                       <p><span style="margin-left:200px"></span><iframe width="100%" height="315"
-														src="https://www.youtube.com/embed/${testImonial.message}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=0"
-														frameborder="0" allowfullscreen></iframe></p>
-						<p> 
-                        <strong>${testImonial.fromName}</strong>
-                      <!--   <span class="sup-text">adsfgthukik</span> -->
-                        </p>
-                       </div>
-            </div></div>
-            </c:forEach>
-            </c:if>
-            </div>
-            
-        </div>
-    </div>
-	
+			<div class="col-12 col-sm-12 col-lg-12">
+				<h2>Testimonials</h2>
+
+
+				<div class="row">
+					<div class="col-12 col-sm-12 col-lg-12">
+						<div class="success-stories testimonials-detail">
+							<div class="testimonials-user-photo">
+								<c:choose>
+									<c:when test="${not empty testImonial.imageName}">
+
+										<img
+											src="${sessionScope.gallryImageURL}${testImonial.imageName}"
+											alt="${testImonial.fromName}" title="${testImonial.fromName}"
+											class="img-responsive thumbnail"
+											style="width: 100px; height: 100px;">
+									</c:when>
+									<c:otherwise>
+										<img
+											src="${pageContext.request.contextPath}/resources/images/team.jpg"
+											alt="" class="img-responsive thumbnail">
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<p>
+								<span class="icon-quote-left quote"></span>${testImonial.message}</p>
+							<p>
+								<strong>${testImonial.fromName}</strong>
+								<!--   <span class="sup-text">adsfgthukik</span> -->
+							</p>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+		</div>
+	</div>
+
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

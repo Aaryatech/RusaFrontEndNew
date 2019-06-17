@@ -105,8 +105,8 @@
 
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
-			 <jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
-			 
+			<jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
+
 			<div class="col-12 col-sm-12 col-lg-9">
 				<div class="right-Colm news-listing-page">
 					<c:if test="${sessionScope.success != null}">
@@ -143,64 +143,57 @@
 					<form method="post"
 						action="${pageContext.request.contextPath}/changePassword"
 						onSubmit="return checkPassword(this)" name="login_form">
-						<div class="row row-eq-height">
 
-							<div id="currentPassDiv" class="col-12 col-sm-12 col-lg-12">
-								<div class="col-12 col-sm-12 col-lg-12">
-									<label>Current password</label> <input type="password"
-										class="form-control" name="pass" id="pass"
-										placeholder="Current password" required>
-								</div>
-								<div class="error_msg" id="error_msg" style="display: none">
-									<div class="alert alert-warning">Enter correct password.</div>
 
-								</div>
-								<div class="col-12 col-sm-12 col-lg-12">
-
-									<button type="button" id="search" class="button login-btn"
-										onclick="getCheck()">Submit</button>
-									<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
-                               -->
-								</div>
+						<div id="currentPassDiv" class="col-12 col-sm-12 col-lg-12">
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Current password</label> <input type="password"
+									class="form-control" name="pass" id="pass"
+									placeholder="Current password" required>
+								<p class="error-msg" id="error_msg" style="display: none">*
+									Enter correct password.</p>
 							</div>
 
-							<div id="newPassDiv" style="display: none"
-								class="col-12 col-sm-12 col-lg-12">
-								<div class="col-12 col-sm-12 col-lg-12">
-									<label>New Password</label> <input type="password"
-										class="form-control" name="newPass" id="newPass"
-										placeholder="New Password">
-								</div>
-								<div class="error_msg" id="error_newpass" style="display: none">
-									<div class="alert alert-warning">Password Minimum 6
-										Character</div>
+							<div class="col-12 col-sm-12 col-lg-12">
 
-								</div>
-								<div class="col-12 col-sm-12 col-lg-12">
-									<label>Confirm password</label> <input type="password"
-										class="form-control" name="confirmPass" id="confirmPass"
-										placeholder="Confirm password">
-								</div>
-								<div class="error_msg" id="error_confirmpass"
-									style="display: none">
-									<div class="alert alert-warning">Confirm password.</div>
-
-								</div>
-								<div class="error_msg" id="error_matchpass"
-									style="display: none">
-									<div class="alert alert-warning">Password not matched.</div>
-
-								</div>
-
-
-								<div class="col-12 col-sm-12 col-lg-12">
-
-									<button type="submit" id="log-btn" class="button login-btn">Submit</button>
-									<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
+								<button type="button" id="search" class="button login-btn"
+									onclick="getCheck()">Submit</button>
+								<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
-								</div>
 							</div>
 						</div>
+
+						<div id="newPassDiv" style="display: none"
+							class="col-12 col-sm-12 col-lg-12">
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>New Password</label> <input type="password"
+									class="form-control" name="newPass" id="newPass"
+									placeholder="New Password">
+								<p class="error-msg" id="error_newpass" style="display: none">
+									* Password Minimum 6</p>
+							</div>
+
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>Confirm password</label> <input type="password"
+									class="form-control" name="confirmPass" id="confirmPass"
+									placeholder="Confirm password">
+								<p class="error-msg" id="error_confirmpass"
+									style="display: none">* Confirm password.</p>
+								<p class="error-msg" id="error_matchpass" style="display: none">
+									* Password not matched.</p>
+							</div>
+
+
+
+
+							<div class="col-12 col-sm-12 col-lg-12">
+
+								<button type="submit" id="log-btn" class="button login-btn">Submit</button>
+								<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
+                               -->
+							</div>
+						</div>
+
 					</form>
 
 

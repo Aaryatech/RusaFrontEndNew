@@ -51,7 +51,7 @@
 	}(document, 'script', 'facebook-jssdk'));
 </script>
 </head>
-<body  class="${contrast}">
+<body class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
 
@@ -80,7 +80,7 @@
             </c:if> --%>
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
-			 <jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
+			<jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
 
 			<div class="col-12 col-sm-12 col-lg-9">
 				<div class="right-Colm news-listing-page">
@@ -114,40 +114,43 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${previous}" var="previous" varStatus="count">
-										<tr class="odd">
 
-											<td>${count.index+1}</td>
-											<td>${previous.heading}</td>
-											<c:choose>
-												<c:when test="${not empty previous.downloadPdf}">
-													<td><a href="${documentUrl}${previous.downloadPdf}"
-														target="_blank"><span class="icon-download-2"></span>
-															Download</a></td>
+										<c:if test="${previous.apply==1}">
+											<tr class="odd">
 
-												</c:when>
-												<c:otherwise>
-													<td>--</td>
+												<td>${count.index+1}</td>
+												<td>${previous.heading}</td>
+												<c:choose>
+													<c:when test="${not empty previous.downloadPdf}">
+														<td><a href="${documentUrl}${previous.downloadPdf}"
+															target="_blank"><span class="icon-download-2"></span>
+																Download</a></td>
 
-												</c:otherwise>
-											</c:choose>
-											<c:choose>
-												<c:when test="${previous.apply==1}">
-													<td>YES <c:if test="${previous.isFeedback==0}">
-															<br>
-															<a
-																href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.exVar1}">Feedback</a>
-														</c:if></td>
-												</c:when>
-												<c:otherwise>
-													<td>NO</td>
+													</c:when>
+													<c:otherwise>
+														<td>--</td>
 
-												</c:otherwise>
-											</c:choose>
-											<td>${previous.feedback}</td>
-											<td><a
-												href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${previous.exVar1}&typeId=${typeId}">Detail</a></td>
+													</c:otherwise>
+												</c:choose>
+												<c:choose>
+													<c:when test="${previous.apply==1}">
+														<td>YES <c:if test="${previous.isFeedback==0}">
+																<br>
+																<a
+																	href="${pageContext.request.contextPath}/fillFeeback?eventId=${previous.exVar1}">Feedback</a>
+															</c:if></td>
+													</c:when>
+													<c:otherwise>
+														<td>NO</td>
 
-										</tr>
+													</c:otherwise>
+												</c:choose>
+												<td>${previous.feedback}</td>
+												<td><a
+													href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${previous.exVar1}&typeId=${typeId}">Detail</a></td>
+
+											</tr>
+										</c:if>
 									</c:forEach>
 
 								</tbody>

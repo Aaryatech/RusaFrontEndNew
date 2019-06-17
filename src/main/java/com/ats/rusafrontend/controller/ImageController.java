@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
+ 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
@@ -849,7 +849,7 @@ public class ImageController {
 		try {
 
 			HttpSession session = request.getSession();
-			session.setAttribute("mapping", "testimonialsList");
+			session.setAttribute("mapping", "testimonialsImageList");
 			int langId = 1;
 			int valueType = 1;
 
@@ -889,7 +889,7 @@ public class ImageController {
 		try {
 
 			HttpSession session = request.getSession();
-			session.setAttribute("mapping", "testimonialsList");
+			session.setAttribute("mapping", "testimonialsVideoList");
 			int langId = 1;
 			int valueType = 2;
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
@@ -911,6 +911,46 @@ public class ImageController {
 				model.addObject("flag", flag);
 				model.addObject("valueType", valueType);
 				flag = 0;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/testimonialsDetail", method = RequestMethod.GET)
+	public ModelAndView testimonialsDetail(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("testimonialsDetail");
+
+		try {
+
+			HttpSession session = request.getSession();
+			 
+			session.setAttribute("mapping", "testimonialsDetail"); 
+			//int testimonialId = Integer.parseInt(EmailUtility.DecodeKey(request.getParameter("testimonialId")));
+			int testimonialId = Integer.parseInt(request.getParameter("testimonialId"));
+			
+			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+				model = new ModelAndView("maintainance");
+				model.addObject("maintainance", maintainance);
+			} else {
+				
+				if (session.getAttribute("menuList") == null) {
+					InitializeSession.intializeSission(request);
+				}
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("id", testimonialId); 
+
+				TestImonial testImonial = rest.postForObject(Constant.url + "/getTestImonialById", map, TestImonial.class);
+				 
+				model.addObject("testImonial", testImonial);
+				session.setAttribute("gallryImageURL", Constant.getGallryImageURL); 
 			}
 
 		} catch (Exception e) {

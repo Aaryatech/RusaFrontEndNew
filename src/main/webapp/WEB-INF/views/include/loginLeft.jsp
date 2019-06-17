@@ -62,18 +62,68 @@
 
 		<div class="clearfix"></div>
 		<ul class="menu">
-			<li><a onclick="checkMaintainance()" title="Dashboard"
+
+			<%
+				if (mapping.equals("upcomingEvents") || mapping.equals("previousEvents")) {
+			%>
+			<li class="active">
+				<%
+					} else {
+				%>
+			
+			<li>
+				<%
+					}
+				%> <a onclick="checkMaintainance()" title="Dashboard"
 				href="${pageContext.request.contextPath}/upcomingEvents">Dashboard</a>
 			</li>
 
-			<li><a onclick="checkMaintainance()" title="About RUSA"
-				href="${pageContext.request.contextPath}/myProfile">My Profile</a></li>
+			<%
+				if (mapping.equals("myProfile")) {
+			%>
+			<li class="active">
+				<%
+					} else {
+				%>
+			
+			<li>
+				<%
+					}
+				%> <a onclick="checkMaintainance()" title="About RUSA"
+				href="${pageContext.request.contextPath}/myProfile">My Profile</a>
+			</li>
 
-			<li><a onclick="checkMaintainance()" title="Change Password"
+
+
+			<%
+				if (mapping.equals("changePass")) {
+			%>
+			<li class="active">
+				<%
+					} else {
+				%>
+			
+			<li>
+				<%
+					}
+				%><a onclick="checkMaintainance()" title="Change Password"
 				href="${pageContext.request.contextPath}/changePass">Change
 					Password</a></li>
-			<li><a onclick="checkMaintainance()" title="Upload Document"
-				href="${pageContext.request.contextPath}/documentUpload">Upload Document</a></li>
+					
+			<%
+				if (mapping.equals("documentUpload")) {
+			%>
+			<li class="active">
+				<%
+					} else {
+				%>
+			
+			<li>
+				<%
+					}
+				%><a onclick="checkMaintainance()" title="Upload Document"
+				href="${pageContext.request.contextPath}/documentUpload">Upload
+					Document</a></li>
 			<li><a onclick="checkMaintainance()" title="Logout"
 				href="${pageContext.request.contextPath}/logout">Logout</a></li>
 		</ul>

@@ -26,6 +26,8 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/chosen.css">
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
@@ -168,7 +170,7 @@
 								Select University</p>
 							<!-- <input type="text" class="form-control" name="university"
 								onchange="trim(this)" placeholder="University Affiliated"
-								id="uniAff" required> -->
+								id="uniAff" required> chosen-select-->
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
@@ -431,18 +433,27 @@
 
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-
-	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/jquery-2.1.4.min.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/chosen.jquery.min.js"
+		type="text/javascript"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/init.js"
+		type="text/javascript" charset="utf-8"></script>
+	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+
 
 	<script type="text/javascript">
 		function checkUnique(inputValue, valueType, seqId) {
 
 			var primaryKey = 0;
-			
+
 			$("#error_email").hide();
 			$("#error_instiEmail").hide();
 			$("#error_uniEmail").hide();
@@ -923,9 +934,9 @@
 	</script>
 
 	<script>
-		document.oncontextmenu = document.body.oncontextmenu = function() {
+		/* document.oncontextmenu = document.body.oncontextmenu = function() {
 			return false;
-		}
+		} */
 		$(document).keypress(function(e) {
 			if (e.which == 13) {
 				/* alert('enter key is pressed');

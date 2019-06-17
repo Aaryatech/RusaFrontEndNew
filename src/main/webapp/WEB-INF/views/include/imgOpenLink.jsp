@@ -6,7 +6,7 @@
  <div class="other-gov-site other-gov-site-home" style="vertical-align: middle;">
             <div class="container">
             <div class="jcarousel-wrapper">
-            <div class="jcarousel">
+            <div class="jcarousel" id="slideshow">
                 <ul>
               <c:forEach items="${sessionScope.image}" var="imageList" varStatus="count">
               

@@ -142,7 +142,7 @@
 								<tr>
 									<th>Sr.no</th>
 									<th>Event Name</th>
-									<th>Event Date</th>
+									<th style="width: 15%;text-align: center;">Event Date</th>
 									<th>Details</th>
 
 								</tr>
@@ -154,7 +154,7 @@
 									<tr class="odd">
 										<td>${count.index+1}</td>
 										<td>${upcoming.heading}</td>
-										<td>${upcoming.eventDateFrom}</td>
+										<td style="text-align: center;">${upcoming.eventDateFrom}</td>
 										<td><a
 											href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${upcoming.exVar1}&typeId=${typeId}">Detail</a></td>
 									</tr>
