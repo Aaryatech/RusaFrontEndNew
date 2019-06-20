@@ -237,7 +237,7 @@
 									varStatus="count">
 
 									<c:choose>
-										<c:when test="${count.last}">
+										<c:when test="${count.index==0}">
 											<div class="carousel-item active">
 												<a
 													href="${sessionScope.gallryImageURL}${editPhotoDetail.fileName}"
