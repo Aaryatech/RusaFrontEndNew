@@ -31,6 +31,7 @@ import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.Info;
+import com.ats.rusafrontend.commen.InitializeSession;
 import com.ats.rusafrontend.model.EventRecord;
 import com.ats.rusafrontend.model.EventRegistration;
 import com.ats.rusafrontend.model.InstituteInfo;
@@ -144,6 +145,12 @@ public class UserController {
 						 
 					} else {
 
+						session.setAttribute("mapping", "upcomingEvents");
+						
+						if (session.getAttribute("menuList") == null) {
+							InitializeSession.intializeSission(request);
+						}
+						
 						if (verify.getExInt1() == 0) {
 							mav = "changePass";
 							session.setAttribute("UserDetail", verify.getRegId());
@@ -152,7 +159,7 @@ public class UserController {
 
 						} else {
 							
-							session.setAttribute("mapping", "upcomingEvents");
+							
 							 
 							session.setAttribute("UserDetail", verify.getRegId());
 

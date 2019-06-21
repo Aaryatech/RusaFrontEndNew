@@ -27,6 +27,7 @@ import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.Info;
+import com.ats.rusafrontend.commen.InitializeSession;
 import com.ats.rusafrontend.commen.VpsImageUpload;
 import com.ats.rusafrontend.model.EventRegistration;
 import com.ats.rusafrontend.model.Maintainance;
@@ -923,11 +924,11 @@ public class loginController {
 	}
 
 	@RequestMapping(value = "/firstChangePassword", method = RequestMethod.POST)
-	public ModelAndView FirstChangePassword(HttpServletRequest request, HttpServletResponse response) {
+	public String FirstChangePassword(HttpServletRequest request, HttpServletResponse response,Model model) {
 
 		String newPass = request.getParameter("newPass");
 		System.out.println("newPass : " + newPass);
-		ModelAndView mav = new ModelAndView("changePass");
+		String mav = new String();
 		HttpSession session = request.getSession();
 
 		Info info = new Info();
@@ -937,17 +938,17 @@ public class loginController {
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
-				mav = new ModelAndView("maintainance");
-				mav.addObject("maintainance", maintainance);
+				mav =  "maintainance" ;
+				model.addAttribute("maintainance", maintainance);
 			} else {
 
-				mav.addObject("siteKey", Constant.siteKey);
-				mav.addObject("flag", flag);
+				model.addAttribute("siteKey", Constant.siteKey);
+				model.addAttribute("flag", flag);
 				flag = 0;
 				int userDetail = (int) session.getAttribute("UserDetail");
 				if (newPass.equalsIgnoreCase(" ") || newPass == null) {
 
-					mav = new ModelAndView("changePass");
+					mav =  "changePass";
 					session.setAttribute("errorMsg", "Invalid Password !");
 				} else {
 
@@ -957,7 +958,17 @@ public class loginController {
 
 					info = rest.postForObject(Constant.url + "/changePassword", map1, Info.class);
 					if (info.isError() == false) {
-						mav = new ModelAndView("login");
+						
+						session.removeAttribute("userDetail");
+						session.removeAttribute("userInfo");
+						session.invalidate();
+						 
+						session = request.getSession();
+						if (session.getAttribute("menuList") == null) {
+							InitializeSession.intializeSission(request);
+						}
+						
+						mav ="redirect:/login";
 						System.out.println(info.toString());
 						session.setAttribute("success", "Successfully Updated Password !");
 					}

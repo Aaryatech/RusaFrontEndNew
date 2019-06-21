@@ -165,10 +165,12 @@
 
 						<div id="newPassDiv" style="display: none"
 							class="col-12 col-sm-12 col-lg-12">
+							<div class="col-12 col-sm-12 col-lg-12" style="color: green;">
+								Note :contain minimum 6 letter,one capital letter,one small letter, one digit, one special character</div>
 							<div class="col-12 col-sm-12 col-lg-12">
 								<label>New Password</label> <input type="password"
 									class="form-control" name="newPass" id="newPass"
-									placeholder="New Password">
+									placeholder="New Password" onkeyup="return passwordChanged();">
 								<p class="error-msg" id="error_newpass" style="display: none">
 									* Password Minimum 6</p>
 							</div>
@@ -189,6 +191,7 @@
 							<div class="col-12 col-sm-12 col-lg-12">
 
 								<button type="submit" id="log-btn" class="button login-btn">Submit</button>
+								<input type="hidden" id="allowPass" name="allowPass" value="0">
 								<!--    <button type="submit" id="log-btn" value="Submit" class="button login-btn"  onclick="Validate()">Save</button>
                                -->
 							</div>
@@ -254,12 +257,14 @@
 		function checkPassword(form) {
 			password1 = form.newPass.value;
 			password2 = form.confirmPass.value;
-			$('#error_newpass').hide();
+			//$('#error_newpass').hide();
 			$('#error_confirmpass').hide();
 			$('#error_matchpass').hide();
-
+			var allowPass = document.getElementById("allowPass").value;
+			//alert(allowPass);
+			
 			// If password not entered 
-			if (password1 == '' || password1.length < 6) {
+			if (password1 == '' || allowPass == 0) {
 				$('#error_newpass').show();
 				return false;
 			}
@@ -278,6 +283,44 @@
 			else {
 				// alert("Password Match") 
 				return true;
+			}
+		}
+	</script>
+	
+	<script>
+		function passwordChanged() {
+			
+			var strength = document.getElementById("error_newpass");
+			
+			var strongRegex = new RegExp(
+					"^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$",
+					"g");
+			var mediumRegex = new RegExp(
+					"^(?=.{6,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$",
+					"g");
+			var enoughRegex = new RegExp("(?=.{6,}).*", "g");
+			var pwd = document.getElementById("newPass").value;
+			 
+			if (pwd.length == 0) {
+				document.getElementById("error_newpass").innerHTML = "Type Password";
+				$('#error_newpass').show();
+				document.getElementById("allowPass").value=0;
+			} else if (false == enoughRegex.test(pwd)) {
+				document.getElementById("error_newpass").innerHTML = "More Characters";
+				$('#error_newpass').show();
+				document.getElementById("allowPass").value=0;
+			} else if (strongRegex.test(pwd)) {
+				document.getElementById("error_newpass").innerHTML = "<span style='color:green'>Strong!</span>";
+				$('#error_newpass').show();
+				document.getElementById("allowPass").value=1;
+			} else if (mediumRegex.test(pwd)) {
+				document.getElementById("error_newpass").innerHTML = "<span style='color:orange'>Medium!</span>";
+				$('#error_newpass').show();
+				document.getElementById("allowPass").value=1;
+			} else {
+				document.getElementById("error_newpass").innerHTML = "<span style='color:red'>Weak!</span>";
+				$('#error_newpass').show();
+				document.getElementById("allowPass").value=0;
 			}
 		}
 	</script>
