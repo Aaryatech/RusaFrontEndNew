@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -93,7 +94,7 @@ public class UserController {
 		String mav = new String();
 
 		try {
-			session.setAttribute("mapping", "upcomingEvents");
+			
 
 			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
@@ -116,7 +117,15 @@ public class UserController {
 
 					String eventId = request.getParameter("eventId");
 
-					System.out.println(eventId);
+					
+					System.out.println("print1: "+request.getSession().getId());
+					session.removeAttribute("userDetail");
+					session.removeAttribute("userInfo");
+					session.invalidate();
+					
+					session = request.getSession();
+					
+					System.out.println("print2: "+request.getSession().getId());
 					
 					if (!eventId.equals("0")) {
 						
@@ -142,8 +151,9 @@ public class UserController {
 							session.setAttribute("userInfo", verify);
 
 						} else {
-							mav = "redirect:/upcomingEvents";
-							// System.out.println("Login :" + verify.getRegId());
+							
+							session.setAttribute("mapping", "upcomingEvents");
+							 
 							session.setAttribute("UserDetail", verify.getRegId());
 
 							session.setAttribute("userInfo", verify);
@@ -166,6 +176,7 @@ public class UserController {
 							session.setAttribute("info",editReg);
 							session.setAttribute("successMsg", "Login Successful !");
 							session.setAttribute("profileUrl", Constant.getUserProfileURL);
+							mav = "redirect:/upcomingEvents";
 						}
 					}
 
@@ -921,9 +932,17 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("User Logout");
 		// int userDetail = (int) session.getAttribute("UserDetail");
+		Cookie[] cookies = request.getCookies();
+	    if (cookies != null)
+	        for (Cookie cookie : cookies) {
+	            cookie.setValue("");
+	            cookie.setPath("/");
+	            cookie.setMaxAge(0);
+	            response.addCookie(cookie);
+	        }
 		session.removeAttribute("userDetail");
 		session.removeAttribute("userInfo");
 		session.invalidate();

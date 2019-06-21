@@ -120,9 +120,9 @@
 						action="${pageContext.request.contextPath}/loginResponse"
 						name="login_form">
 						<label>User Name</label> <input type="text" class="form-control"
-							name="userName" placeholder="User Name"> <label>Password</label>
+							name="userName" placeholder="User Name" autocomplete="off" > <label>Password</label>
 						<input type="password" class="form-control" name="password"
-							placeholder="Password">
+							placeholder="Password" autocomplete="off">
 
 						<div class="clearfix"></div>
 						<p>
@@ -165,5 +165,11 @@
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+	<script>
+		  document.oncontextmenu = document.body.oncontextmenu = function() {
+			return false;
+		} 
+		 
+	</script>
 </body>
 </html>
