@@ -43,7 +43,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 @Scope("session")
 public class loginController {
-	RestTemplate rest = new RestTemplate();
+	 
 	RegistrationUserDetail editReg = new RegistrationUserDetail();
 	int flag = 0;
 	/*
@@ -67,7 +67,7 @@ public class loginController {
 
 			session.setAttribute("mapping", "myProfile");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav = "maintainance";
@@ -80,7 +80,7 @@ public class loginController {
 				int userDetail = (int) session.getAttribute("UserDetail");
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("regId", userDetail);
-				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map1, RegistrationUserDetail.class);
+				editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserDetailbyRegId", map1, RegistrationUserDetail.class);
 
 				model.addAttribute("editReg", editReg);
 
@@ -109,7 +109,7 @@ public class loginController {
 
 		try {
 			session.setAttribute("mapping", "editProfile");
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -124,7 +124,7 @@ public class loginController {
 				int userDetail = (int) session.getAttribute("UserDetail");
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map, RegistrationUserDetail.class);
+				editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserDetailbyRegId", map, RegistrationUserDetail.class);
 
 				model.addAttribute("editReg", editReg);
 				try {
@@ -165,7 +165,7 @@ public class loginController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 			map.add("regId", editReg.getRegId());
-			prevrecrod = rest.postForObject(Constant.url + "/getPrevRecordByRegId", map, PreviousRegRecord.class);
+			prevrecrod = Constant.getRestTemplate().postForObject(Constant.url + "/getPrevRecordByRegId", map, PreviousRegRecord.class);
 
 			jsonRecord = new RegistrationUserDetail();
 
@@ -236,13 +236,13 @@ public class loginController {
 
 			if (editReg.getMobileNumber().equals(collegeMobile)) {
 
-				Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
+				Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration", editReg,
 						Registration.class);
 
 				ObjectMapper mapper = new ObjectMapper();
 				prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
 
-				PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
+				PreviousRegRecord update = Constant.getRestTemplate().postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
 						PreviousRegRecord.class);
 
 				redirect = "redirect:/editProfile";
@@ -251,7 +251,7 @@ public class loginController {
 				 /** System.out.println("Email new");
 				 * 
 				 * editReg.setEditDate(sf.format(date)); Registration res =
-				 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);*/
+				 * Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", editReg, Registration.class);*/
 				 
 				editReg.setExVar2(collegeMobile);
 				redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
@@ -324,13 +324,13 @@ public class loginController {
 
 				if (editReg.getMobileNumber().equals(collegeMobile)) {
 
-					Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
+					Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
 
 					ObjectMapper mapper = new ObjectMapper();
 					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
 
-					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
+					PreviousRegRecord update = Constant.getRestTemplate().postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
 							PreviousRegRecord.class);
 
 					redirect = "redirect:/editProfile";
@@ -339,7 +339,7 @@ public class loginController {
 					 * System.out.println("Email new");
 					 * 
 					 * editReg.setEditDate(sf.format(date)); Registration res =
-					 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
+					 * Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", editReg, Registration.class);
 					 
 					editReg.setExVar2(collegeMobile);
 					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
@@ -403,13 +403,13 @@ public class loginController {
 
 				if (editReg.getMobileNumber().equals(uniMobile)) {
 
-					Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg,
+					Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
 
 					ObjectMapper mapper = new ObjectMapper();
 					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
 
-					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
+					PreviousRegRecord update = Constant.getRestTemplate().postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
 							PreviousRegRecord.class);
 
 					redirect = "redirect:/editProfile";
@@ -418,7 +418,7 @@ public class loginController {
 					 * System.out.println("Email new");
 					 * 
 					 * editReg.setEditDate(sf.format(date)); Registration res =
-					 * rest.postForObject(Constant.url + "/saveReg", editReg, Registration.class);
+					 * Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", editReg, Registration.class);
 					 
 					editReg.setExVar2(uniMobile);
 					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
@@ -457,7 +457,7 @@ public class loginController {
 					MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 					map.add("uuid", uuid);
 					map.add("mobileNo", editReg.getExVar2());
-					resWithOtp = rest.postForObject(Constant.url + "/sendOtp", map, Info.class);
+					resWithOtp = Constant.getRestTemplate().postForObject(Constant.url + "/sendOtp", map, Info.class);
 					if (resWithOtp.isError() == false) {
 
 						session.setAttribute("success", "Opt Send Successfully");
@@ -499,13 +499,13 @@ public class loginController {
 					jsonRecord.setMobileNumber(editReg.getMobileNumber());
 					editReg.setMobileNumber(editReg.getExVar2());
 
-					Registration a = rest.postForObject(Constant.url + "/saveRegistration", editReg,
+					Registration a = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration", editReg,
 							Registration.class);
 
 					ObjectMapper mapper = new ObjectMapper();
 					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
 					prevrecrod.setLastUpdate(dttime.format(date));
-					PreviousRegRecord update = rest.postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
+					PreviousRegRecord update = Constant.getRestTemplate().postForObject(Constant.url + "/savePreviousRecord", prevrecrod,
 							PreviousRegRecord.class);
 
 					ret = "redirect:/editProfile";
@@ -535,7 +535,7 @@ public class loginController {
 		Info info = new Info();
 		try {
 			session.setAttribute("mapping", "changePassword");
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -557,7 +557,7 @@ public class loginController {
 					map.add("regId", userDetail);
 					map.add("password", newPass);
 
-					info = rest.postForObject(Constant.url + "/changePassword", map, Info.class);
+					info = Constant.getRestTemplate().postForObject(Constant.url + "/changePassword", map, Info.class);
 					mav = new ModelAndView("change-pass");
 					System.out.println(info.toString());
 
@@ -565,7 +565,7 @@ public class loginController {
 					
 					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 					map1.add("regId", userDetail);
-					Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map1,
+					Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map1,
 							Registration.class); 
 					mav.addObject("editReg", editReg); 
 					
@@ -588,7 +588,7 @@ public class loginController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("uuid", uuid);
 
-			OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyEditResendOtp", map, OtpResponse.class);
+			OtpResponse verifyOtp = Constant.getRestTemplate().postForObject(Constant.url + "/verifyEditResendOtp", map, OtpResponse.class);
 
 			if (verifyOtp.isError() == false) {
 				mav = new ModelAndView("editRegOtp");
@@ -628,13 +628,13 @@ public class loginController {
 			try {
 				// upload.saveUploadedImge(file.get(0),
 				// Constant.otherDocURL,imageName,Constant.values,0,0,0,0,0);
-				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map, RegistrationUserDetail.class);
+				editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserDetailbyRegId", map, RegistrationUserDetail.class);
 
 				upload.saveUploadedImge(file.get(0), Constant.userProfileURL, imageName, Constant.values, 0, 0, 0, 0,
 						0);
 				editReg.setImageName(imageName);
 				System.out.println("Data :" + editReg.toString());
-				Registration res = rest.postForObject(Constant.url + "/saveRegistration", editReg, Registration.class);
+				Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration", editReg, Registration.class);
 				session.setAttribute("info",res);
 
 			} catch (Exception e) {
@@ -659,7 +659,7 @@ public class loginController {
 			int userDetail = (int) session.getAttribute("UserDetail");
 			session.setAttribute("mapping", "eventList");
 			int langId = 1;
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -668,7 +668,7 @@ public class loginController {
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
-				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL", map1,
+				NewsDetails[] eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllEventsL", map1,
 						NewsDetails[].class);
 				List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
 				for (int i = 0; i < event.size(); i++) {
@@ -679,7 +679,7 @@ public class loginController {
 
 				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 				map2.add("regId", userDetail);
-				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map2, RegistrationUserDetail.class);
+				editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserDetailbyRegId", map2, RegistrationUserDetail.class);
 				//String dobDate = DateConvertor.convertToDMY(editReg.getDob());
 				model.addObject("editReg", editReg);
 				//model.addObject("dobDate", dobDate);
@@ -712,7 +712,7 @@ public class loginController {
 			int typeId = Integer.parseInt( EmailUtility.DecodeKey(String.valueOf(type)));
 
 			int langId = 1;
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav = "maintainance" ;
@@ -724,14 +724,14 @@ public class loginController {
 				map1.add("langId", langId);
 
 				map1.add("newsblogsId", newsblogsId);
-				NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId", map1,
+				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId", map1,
 						NewsDetails.class);
 
 				// List<NewsDetails> event = new
 				// ArrayList<NewsDetails>(Arrays.asList(eventList));
 				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 				map2.add("regId", userDetail);
-				editReg = rest.postForObject(Constant.url + "/getRegUserDetailbyRegId", map2, RegistrationUserDetail.class);
+				editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserDetailbyRegId", map2, RegistrationUserDetail.class);
 
 				model.addAttribute("editReg", editReg);
 
@@ -780,7 +780,7 @@ public class loginController {
 
 			map1.add("newsblogsId", newsblogsId);
 			map1.add("userId", userDetail);
-			info = rest.postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+			info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
 			if (info.isError() == true) {
 				EventRegistration eventReg = new EventRegistration();
 
@@ -795,7 +795,7 @@ public class loginController {
 				eventReg.setRegDate(sf.format(date));
 				eventReg.setUserId(userDetail);
 
-				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+				EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister", eventReg,
 						EventRegistration.class);
 
 				System.out.println("res Id: " + res.toString());
@@ -844,7 +844,7 @@ public class loginController {
 
 			map1.add("newsblogsId", newsblogsId);
 			map1.add("userId", userDetail);
-			info = rest.postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+			info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
 
 			if (info.isError() == true) {
 				EventRegistration eventReg = new EventRegistration();
@@ -858,7 +858,7 @@ public class loginController {
 				eventReg.setUserId(userDetail);
 				eventReg.setDoc1(pdfName);
 
-				EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+				EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister", eventReg,
 						EventRegistration.class);
 
 				System.out.println("res Id: " + res.toString());
@@ -872,7 +872,7 @@ public class loginController {
 					 * Object>(); map.add("regId", userDetail); map.add("newsblogsId", newsblogsId);
 					 * map.add("pdfName", pdfName);
 					 * 
-					 * info = rest.postForObject(Constant.url + "/uploadEventDocument", map,
+					 * info = Constant.getRestTemplate().postForObject(Constant.url + "/uploadEventDocument", map,
 					 * Info.class);
 					 * 
 					 * System.out.println(info.toString());
@@ -905,7 +905,7 @@ public class loginController {
 
 			session.setAttribute("mapping", "firstChangePass");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -935,7 +935,7 @@ public class loginController {
 		try {
 			session.setAttribute("mapping", "firstChangePassword");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav =  "maintainance" ;
@@ -956,7 +956,7 @@ public class loginController {
 					map1.add("regId", userDetail);
 					map1.add("password", newPass);
 
-					info = rest.postForObject(Constant.url + "/changePassword", map1, Info.class);
+					info = Constant.getRestTemplate().postForObject(Constant.url + "/changePassword", map1, Info.class);
 					if (info.isError() == false) {
 						
 						session.removeAttribute("userDetail");

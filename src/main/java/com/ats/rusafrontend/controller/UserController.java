@@ -46,7 +46,7 @@ import com.ats.rusafrontend.model.University;
 @Scope("session")
 public class UserController {
 
-	RestTemplate rest = new RestTemplate();
+ 
 	int flag = 0;
 	/*
 	 * <dependency> <groupId>com.fasterxml.uuid</groupId>
@@ -62,7 +62,7 @@ public class UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "login");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -97,7 +97,7 @@ public class UserController {
 		try {
 			
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav = "maintainance";
@@ -112,7 +112,7 @@ public class UserController {
 				map.add("userName", userName);
 				map.add("password", password);
 
-				Registration verify = rest.postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
+				Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
 
 				if (verify.isError() == false) {
 
@@ -169,13 +169,13 @@ public class UserController {
 							MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 							map1.add("langId", 1);
-							NewsDetails[] newsDetails = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+							NewsDetails[] newsDetails = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
 									NewsDetails[].class);
 							List<NewsDetails> upcoming = new ArrayList<NewsDetails>(Arrays.asList(newsDetails));
 
 							MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 							map2.add("regId", verify.getRegId());
-							Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map2,
+							Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map2,
 									Registration.class);
 							model.addAttribute("editReg", editReg);
 							model.addAttribute("upcoming", upcoming);
@@ -222,7 +222,7 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "dashboard");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav = "maintainance";
@@ -236,12 +236,12 @@ public class UserController {
 				System.out.println("userDetail : " + userDetail);
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
-				List<NewsDetails> upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+				List<NewsDetails> upcoming = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
 						List.class);
 				model.addAttribute("editReg", editReg);
 				System.out.println("list_new: " + upcoming.toString());
@@ -265,7 +265,7 @@ public class UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "registration");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -276,7 +276,7 @@ public class UserController {
 				model.addObject("flag", flag);
 				flag = 0;
 				
-				University[] university = rest.getForObject(Constant.url + "/getUniversityList", University[].class);
+				University[] university = Constant.getRestTemplate().getForObject(Constant.url + "/getUniversityList", University[].class);
 				List<University> universityList = new ArrayList<>(Arrays.asList(university)); 
 				model.addObject("universityList", universityList);
 				
@@ -298,10 +298,10 @@ public class UserController {
 		try {
 			
 			int uniId = Integer.parseInt(request.getParameter("uniId"));
-			RestTemplate rest = new RestTemplate();
+			 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("uniId", uniId); 
-			InstituteInfo[] instituteInfo = rest.postForObject(Constant.url + "/getInstituteListByUniversityId",map,
+			InstituteInfo[] instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteListByUniversityId",map,
 					InstituteInfo[].class);
 			
 			instituteInfolist = new ArrayList<>(Arrays.asList(instituteInfo));
@@ -325,10 +325,10 @@ public class UserController {
 		try {
 			
 			int instiId = Integer.parseInt(request.getParameter("instiId"));
-			RestTemplate rest = new RestTemplate();
+			 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("instiId", instiId); 
-			 instituteInfo = rest.postForObject(Constant.url + "/getInstituteInfoById",map,
+			 instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoById",map,
 					InstituteInfo .class);
 			 
 			 
@@ -351,10 +351,10 @@ public class UserController {
 		try {
 			
 			String instiaisheCode =  request.getParameter("instiaisheCode") ;
-			RestTemplate rest = new RestTemplate();
+			 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("asheCode", instiaisheCode); 
-			 instituteInfo = rest.postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
+			 instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
 					InstituteInfo .class);
 			 
 			if(instituteInfo==null) {
@@ -422,7 +422,7 @@ public class UserController {
 				 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("asheCode", instiaisheCode); 
-				InstituteInfo instituteInfo = rest.postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
+				InstituteInfo instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
 						InstituteInfo .class);
 				  
 				if(instituteInfo!=null && instituteInfo.getYesNo()!=1) {
@@ -455,7 +455,7 @@ public class UserController {
 				 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("asheCode", uniaisheName); 
-				InstituteInfo instituteInfo = rest.postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
+				InstituteInfo instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
 						InstituteInfo .class);
 				if(instituteInfo!=null && instituteInfo.getYesNo()!=1 ) {
 					
@@ -493,7 +493,7 @@ public class UserController {
 			registration.setRegisterVia("web");
 
 			if(error==false) {
-				Registration res = rest.postForObject(Constant.url + "/saveReg", registration, Registration.class);
+				Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", registration, Registration.class);
 				return "redirect:/ verifyOtp /" + uuid;
 			}else {
 				session.setAttribute("errorMsg", "Failed To Register");
@@ -521,14 +521,14 @@ public class UserController {
 			 * HttpSession session = request.getSession(); session.setAttribute("mapping",
 			 * "verifyOtp");
 			 * 
-			 * Maintainance maintainance = rest.getForObject(Constant.url +
+			 * Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url +
 			 * "/checkIsMaintenance", Maintainance.class); if
 			 * (maintainance.getMaintenanceStatus() == 1) {
 			 * 
 			 * model = new ModelAndView("maintainance"); model.addObject("maintainance",
 			 * maintainance); } else { MultiValueMap<String, Object> map = new
 			 * LinkedMultiValueMap<String, Object>(); map.add("slugName", "login");
-			 * PageMetaData pageMetaData = rest.postForObject(Constant.url +
+			 * PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url +
 			 * "/getPageMetaData", map, PageMetaData.class); model.addObject("pageMetaData",
 			 * pageMetaData); model.addObject("siteKey", Constant.siteKey);
 			 * model.addObject("flag", flag); flag = 0; }
@@ -551,7 +551,7 @@ public class UserController {
 
 		ModelAndView mav = new ModelAndView("otp");
 		mav.addObject("uuid", uuid);
-		RestTemplate rest = new RestTemplate();
+		 
 		res.setContentType("text/html");
 		HttpSession session = request.getSession();
 		try {
@@ -568,7 +568,7 @@ public class UserController {
 				map.add("userOtp", userOtp);
 				map.add("uuid", uuid);
 
-				OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyOtpResponse", map, OtpResponse.class);
+				OtpResponse verifyOtp = Constant.getRestTemplate().postForObject(Constant.url + "/verifyOtpResponse", map, OtpResponse.class);
 
 				if (verifyOtp.isError() == false) {
 					mav = new ModelAndView("registration");
@@ -600,7 +600,7 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "resendOtpProcess");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav = new ModelAndView("maintainance");
@@ -614,7 +614,7 @@ public class UserController {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("uuid", uuid);
 
-				OtpResponse verifyOtp = rest.postForObject(Constant.url + "/verifyResendOtpResponse", map,
+				OtpResponse verifyOtp = Constant.getRestTemplate().postForObject(Constant.url + "/verifyResendOtpResponse", map,
 						OtpResponse.class);
 
 				if (verifyOtp.isError() == false) {
@@ -658,7 +658,7 @@ public class UserController {
 			map.add("endDate", endDate);
 			// map.add("firstDate", firstDate);
 
-			NewsDetails monthDate = rest.postForObject(Constant.url + "/getCurrentMonthEvents", map, NewsDetails.class);
+			NewsDetails monthDate = Constant.getRestTemplate().postForObject(Constant.url + "/getCurrentMonthEvents", map, NewsDetails.class);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -697,7 +697,7 @@ public class UserController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId); 
 				map1.add("newsblogsId", newsblogsId);
-				NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId", map1,
+				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId", map1,
 						NewsDetails.class); 
 				int userType = (Integer) session.getAttribute("userType"); 
 				String[] ids = eventList.getExVar2().split(",");
@@ -718,7 +718,7 @@ public class UserController {
 
 					map1.add("newsblogsId", newsblogsId);
 					map1.add("userId", userDetail);
-					info = rest.postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+					info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
 					if (info.isError() == true) {
 						EventRegistration eventReg = new EventRegistration();
 
@@ -733,7 +733,7 @@ public class UserController {
 						eventReg.setRegDate(sf.format(date));
 						eventReg.setUserId(userDetail);
 
-						EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+						EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister", eventReg,
 								EventRegistration.class);
 
 						if (res != null) {
@@ -772,7 +772,7 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "upcomingEvents");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				// model = new ModelAndView("maintainance");
@@ -788,7 +788,7 @@ public class UserController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
-				NewsDetails[] upcoming = rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+				NewsDetails[] upcoming = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
 						NewsDetails[].class);
 				List<NewsDetails> upcomingList = new ArrayList<NewsDetails>(Arrays.asList(upcoming));
 
@@ -799,7 +799,7 @@ public class UserController {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 				model.addAttribute("editReg", editReg);
 				// System.out.println("list_new: " + upcoming.toString());
 				model.addAttribute("upcoming", upcomingList);
@@ -828,7 +828,7 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "previousEvents");
 			int userDetail = (int) session.getAttribute("UserDetail");
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -841,7 +841,7 @@ public class UserController {
 
 				map1.add("langId", 1);
 				map1.add("userId", userDetail);
-				EventRecord[] previousList = rest.postForObject(Constant.url + "/allPreviousEventWithApllied", map1,
+				EventRecord[] previousList = Constant.getRestTemplate().postForObject(Constant.url + "/allPreviousEventWithApllied", map1,
 						EventRecord[].class);
 				List<EventRecord> previous = new ArrayList<EventRecord>(Arrays.asList(previousList));
 
@@ -852,7 +852,7 @@ public class UserController {
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 				model.addAttribute("editReg", editReg);
 				// System.out.println("list_new: " + previous.toString());
 				model.addAttribute("previous", previous);
@@ -879,7 +879,7 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "changePass");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -894,7 +894,7 @@ public class UserController {
 				System.out.println("userDetail : " + userDetail);
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 				model.addAttribute("editReg", editReg);
 			}
 		} catch (Exception e) {
@@ -922,7 +922,7 @@ public class UserController {
 			map.add("userId", userDetail);
 			map.add("pass", pass);
 
-			info = rest.postForObject(Constant.url + "/checkPasswordByUserId", map, Info.class);
+			info = Constant.getRestTemplate().postForObject(Constant.url + "/checkPasswordByUserId", map, Info.class);
 			/*
 			 * if (verify.isError() == false) { mav = new ModelAndView("changePass");
 			 * 
@@ -963,7 +963,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		try {
 			session.setAttribute("mapping", "forgetPass");
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -996,7 +996,7 @@ public class UserController {
 			map.add("email", userName);
 			map.add("mobileNumber", mobileNumber);
 
-			Registration verify = rest.postForObject(Constant.url + "/forgetPassword", map, Registration.class);
+			Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/forgetPassword", map, Registration.class);
 			if (verify.isError() == false) {
 				session.setAttribute("success", "Please Check mail !");
 				// System.out.println("Login :" + verify.getRegId());
@@ -1021,7 +1021,7 @@ public class UserController {
 
 		try {
 			HttpSession session = request.getSession();
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			session.setAttribute("mapping", "fillFeeback");
 
 			if (maintainance.getMaintenanceStatus() == 1) {
@@ -1036,7 +1036,7 @@ public class UserController {
 				mav = "eventfeedback";
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = rest.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
 				model.addAttribute("editReg", editReg);
 				model.addAttribute("eventId", eventId);
 			}
@@ -1066,7 +1066,7 @@ public class UserController {
 			map.add("eventId", eventId);
 			map.add("value", value);
 			map.add("messge", msg);
-			Info update = rest.postForObject(Constant.url + "/updateEventFeedback", map, Info.class);
+			Info update = Constant.getRestTemplate().postForObject(Constant.url + "/updateEventFeedback", map, Info.class);
 
 			if (update.isError() == true) {
 				session.setAttribute("errorMsg", "Failed to submit feedback ");
@@ -1100,7 +1100,7 @@ public class UserController {
 			map.add("valueType", valueType);
 			map.add("primaryKey", primaryKey);
 
-			info = rest.postForObject(Constant.url + "checkUniqueField", map, Info.class);
+			info = Constant.getRestTemplate().postForObject(Constant.url + "checkUniqueField", map, Info.class);
 			System.err.println("Info Response  " + info.toString());
 
 		} catch (Exception e) {

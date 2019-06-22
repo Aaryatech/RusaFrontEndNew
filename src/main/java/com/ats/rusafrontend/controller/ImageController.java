@@ -57,7 +57,7 @@ public class ImageController {
 	<version>1.0.2</version>
 	</dependency>*/
 
-	RestTemplate rest = new RestTemplate();
+ 
 	ContactUs contactUs = new ContactUs();
 	int flag = 0;
 
@@ -73,7 +73,7 @@ public class ImageController {
 
 			session.setAttribute("mapping", "NewsDetails-" + newsblogsId);
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -90,7 +90,7 @@ public class ImageController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("newsblogsId", newsId);
 				map1.add("langId", langId);
-				NewsDetails image = rest.postForObject(Constant.url + "/getNewsListByNewsId", map1, NewsDetails.class);
+				NewsDetails image = Constant.getRestTemplate().postForObject(Constant.url + "/getNewsListByNewsId", map1, NewsDetails.class);
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				// System.out.println("list_new: " + image.toString());
 				model.addObject("image", image);
@@ -113,7 +113,7 @@ public class ImageController {
 	 * 
 	 * ModelAndView model = new ModelAndView("content/news-detail"); try {
 	 * 
-	 * Maintainance maintainance = rest.getForObject(Constant.url +
+	 * Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url +
 	 * "/checkIsMaintenance", Maintainance.class);
 	 * 
 	 * if (maintainance.getMaintenanceStatus() == 1) {
@@ -123,13 +123,13 @@ public class ImageController {
 	 * 
 	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
 	 * Object>(); map.add("langId", langId); TopMenuList sectionTree =
-	 * rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
 	 * model.addObject("menuList", sectionTree);
 	 * 
 	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
 	 * Object>(); map1.add("langId", langId); map1.add("pageId", pageId);
 	 * map1.add("newsblogsId", newsblogsId); NewsDetails image =
-	 * rest.postForObject(Constant.url + "/getNewsBlogById", map1,
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getNewsBlogById", map1,
 	 * NewsDetails.class); // List<ImageLink> imagList = new
 	 * ArrayList<ImageLink>(Arrays.asList(image)); System.out.println("list_new: " +
 	 * image.toString()); model.addObject("image", image);
@@ -151,7 +151,7 @@ public class ImageController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "ContactUs");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -186,7 +186,7 @@ public class ImageController {
 				session.setAttribute("langId", langId);
 			}
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -197,7 +197,7 @@ public class ImageController {
 				 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
 				 * Object>(); map.add("langId", langId);
 				 * 
-				 * TopMenuList sectionTree = rest.postForObject(Constant.url +
+				 * TopMenuList sectionTree = Constant.getRestTemplate().postForObject(Constant.url +
 				 * "/getTopMenuList", map, TopMenuList.class);
 				 * 
 				 * // HttpSession session = request.getSession();
@@ -205,14 +205,14 @@ public class ImageController {
 				 */
 				session.setAttribute("mapping", "teamDetails");
 
-				TestImonial[] getTeamList = rest.getForObject(Constant.url + "/getTeamDetail", TestImonial[].class);
+				TestImonial[] getTeamList = Constant.getRestTemplate().getForObject(Constant.url + "/getTeamDetail", TestImonial[].class);
 				List<TestImonial> teamList = new ArrayList<TestImonial>(Arrays.asList(getTeamList));
 				model.addObject("teamList", teamList);
 				model.addObject("gallryImageURL", Constant.getGallryImageURL);
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("slugName", "teamDetails");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map1,
+				PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData", map1,
 						PageMetaData.class);
 				model.addObject("pageMetaData", pageMetaData);
 
@@ -276,7 +276,7 @@ public class ImageController {
 				System.out.println("Verify");
 				// contactUs.setRemark(null);
 
-				ContactUs res = rest.postForObject(Constant.url + "/saveContactUs", contactUs, ContactUs.class);
+				ContactUs res = Constant.getRestTemplate().postForObject(Constant.url + "/saveContactUs", contactUs, ContactUs.class);
 
 				if (res == null) {
 					session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
@@ -332,7 +332,7 @@ public class ImageController {
 		try {
 			session.setAttribute("mapping", "screenReader");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -340,7 +340,7 @@ public class ImageController {
 			} else {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("slugName", "screenReader");
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+				PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData", map,
 						PageMetaData.class);
 				model.addObject("pageMetaData", pageMetaData);
 				model.addObject("siteKey", Constant.siteKey);
@@ -363,7 +363,7 @@ public class ImageController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "newsList");
 			int langId = 1;
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -372,7 +372,7 @@ public class ImageController {
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
-				NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map1,
+				NewsDetails[] getPagesModule = Constant.getRestTemplate().postForObject(Constant.url + "/getLastFourNewsByLangId", map1,
 						NewsDetails[].class);
 				List<NewsDetails> newsBlogsList = new ArrayList<NewsDetails>(Arrays.asList(getPagesModule));
 
@@ -399,7 +399,7 @@ public class ImageController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "eventfrontList");
 			int langId = 1;
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -408,7 +408,7 @@ public class ImageController {
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
-				NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsL", map1,
+				NewsDetails[] eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllEventsL", map1,
 						NewsDetails[].class);
 				List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
 				/*
@@ -441,7 +441,7 @@ public class ImageController {
 	 * ModelAndView model = new ModelAndView("content/upcoming-front"); try {
 	 * 
 	 * // session.setAttribute("mapping", "upcomingEvents"); Maintainance
-	 * maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance",
+	 * maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
 	 * Maintainance.class);
 	 * 
 	 * if (maintainance.getMaintenanceStatus() == 1) {
@@ -452,14 +452,14 @@ public class ImageController {
 	 * 
 	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
 	 * Object>(); map.add("slugName", "upcomingEvents"); PageMetaData pageMetaData =
-	 * rest.postForObject(Constant.url + "/getPageMetaData", map,
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData", map,
 	 * PageMetaData.class);
 	 * 
 	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
 	 * Object>();
 	 * 
 	 * map1.add("langId", 1); List<NewsDetails> upcoming =
-	 * rest.postForObject(Constant.url + "/getAllUpcomingEvents", map1, List.class);
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1, List.class);
 	 * // List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 	 * System.out.println("list_new: " + upcoming.toString());
 	 * model.addObject("upcoming", upcoming); model.addObject("typeId", 2); //
@@ -480,7 +480,7 @@ public class ImageController {
 	 * ModelAndView model = new ModelAndView("content/previousfront"); try {
 	 * 
 	 * // session.setAttribute("mapping", "upcomingEvents"); Maintainance
-	 * maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance",
+	 * maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
 	 * Maintainance.class);
 	 * 
 	 * if (maintainance.getMaintenanceStatus() == 1) {
@@ -491,14 +491,14 @@ public class ImageController {
 	 * 
 	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
 	 * Object>(); map.add("slugName", "upcomingEvents"); PageMetaData pageMetaData =
-	 * rest.postForObject(Constant.url + "/getPageMetaData", map,
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData", map,
 	 * PageMetaData.class);
 	 * 
 	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
 	 * Object>();
 	 * 
 	 * map1.add("langId", 1); NewsDetails[] previousList =
-	 * rest.postForObject(Constant.url + "/getAllPreviousEvents", map1,
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getAllPreviousEvents", map1,
 	 * NewsDetails[].class); List<NewsDetails> previous = new
 	 * ArrayList<NewsDetails>(Arrays.asList(previousList));
 	 * System.out.println("list_new: " + previous.toString());
@@ -525,7 +525,7 @@ public class ImageController {
 
 			int newsId = Integer.parseInt(EmailUtility.DecodeKey(String.valueOf(newsblogsId)));
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -540,7 +540,7 @@ public class ImageController {
 				map1.add("langId", langId);
 
 				map1.add("newsblogsId", newsId);
-				NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId", map1,
+				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId", map1,
 						NewsDetails.class);
 
 				// List<NewsDetails> event = new
@@ -599,21 +599,21 @@ public class ImageController {
 	 * HttpSession session = request.getSession();
 	 * session.setAttribute("mapping","eventList");
 	 * 
-	 * Maintainance maintainance = rest.getForObject(Constant.url +
+	 * Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url +
 	 * "/checkIsMaintenance", Maintainance.class); if
 	 * (maintainance.getMaintenanceStatus() == 1) {
 	 * 
 	 * model = new ModelAndView("maintainance"); model.addObject("maintainance",
 	 * maintainance); } else { MultiValueMap<String, Object> map = new
 	 * LinkedMultiValueMap<String, Object>(); map.add("slugName", "eventList");
-	 * PageMetaData pageMetaData = rest.postForObject(Constant.url +
+	 * PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url +
 	 * "/getPageMetaData", map, PageMetaData.class);
 	 * 
 	 * 
 	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
 	 * Object>(); map1.add("langId", langId); map1.add("pageId", pageId);
 	 * map1.add("newsblogsId", newsblogsId); NewsDetails eventList =
-	 * rest.postForObject(Constant.url + "/getEventListByNewsId",map1,
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId",map1,
 	 * NewsDetails.class);
 	 * 
 	 * // List<NewsDetails> event = new
@@ -641,7 +641,7 @@ public class ImageController {
 
 			System.out.println("akshay kasar");
 
-			CalenderList m = rest.getForObject(Constant.url + "/getEventListforCalender", CalenderList.class);
+			CalenderList m = Constant.getRestTemplate().getForObject(Constant.url + "/getEventListforCalender", CalenderList.class);
 
 			for (int i = 0; i < m.getResult().size(); i++) {
 				m.getResult().get(i).setUrl(Constant.siteFrontEndUrl + "eventDetailfront/"
@@ -700,7 +700,7 @@ public class ImageController {
 
 				map1.add("newsblogsId", newsblogsId);
 				map1.add("userId", userDetail.getRegId());
-				info = rest.postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+				info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
 
 				if (info.isError() == true) {
 					EventRegistration eventReg = new EventRegistration();
@@ -714,7 +714,7 @@ public class ImageController {
 					eventReg.setUserId(userDetail.getRegId());
 					eventReg.setDoc1(pdfName);
 
-					EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+					EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister", eventReg,
 							EventRegistration.class);
 
 					session.setAttribute("success", "Successfully Registed Event !");
@@ -771,7 +771,7 @@ public class ImageController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
 				map1.add("newsblogsId", newsblogsId);
-				NewsDetails eventList = rest.postForObject(Constant.url + "/getEventListByNewsId", map1,
+				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId", map1,
 						NewsDetails.class);
 				int userType = (Integer) session.getAttribute("userType");
 				String[] ids = eventList.getExVar2().split(",");
@@ -795,7 +795,7 @@ public class ImageController {
 
 					map1.add("newsblogsId", newsblogsId);
 					map1.add("userId", userDetail.getRegId());
-					info = rest.postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+					info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
 
 					if (info.isError() == true) {
 						EventRegistration eventReg = new EventRegistration();
@@ -809,7 +809,7 @@ public class ImageController {
 						eventReg.setUserId(userDetail.getRegId());
 						eventReg.setDoc1(imageName);
 
-						EventRegistration res = rest.postForObject(Constant.url + "/saveEventRegister", eventReg,
+						EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister", eventReg,
 								EventRegistration.class);
 
 						session.setAttribute("success", "Successfully Registed Event !");
@@ -853,7 +853,7 @@ public class ImageController {
 			int langId = 1;
 			int valueType = 1;
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -862,7 +862,7 @@ public class ImageController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("valueType", valueType);
 
-				TestImonial[] testImonialList = rest.postForObject(Constant.url + "/getAllTestImonialsList", map1,
+				TestImonial[] testImonialList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllTestImonialsList", map1,
 						TestImonial[].class);
 				List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 				System.out.println("testImonial :" + testImonial.toString());
@@ -892,7 +892,7 @@ public class ImageController {
 			session.setAttribute("mapping", "testimonialsVideoList");
 			int langId = 1;
 			int valueType = 2;
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -901,7 +901,7 @@ public class ImageController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("valueType", valueType);
 
-				TestImonial[] testImonialList = rest.postForObject(Constant.url + "/getAllTestImonialsList", map1,
+				TestImonial[] testImonialList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllTestImonialsList", map1,
 						TestImonial[].class);
 				List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 				System.out.println("testImonial :" + testImonial.toString());
@@ -933,7 +933,7 @@ public class ImageController {
 			//int testimonialId = Integer.parseInt(EmailUtility.DecodeKey(request.getParameter("testimonialId")));
 			int testimonialId = Integer.parseInt(request.getParameter("testimonialId"));
 			
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -947,7 +947,7 @@ public class ImageController {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("id", testimonialId); 
 
-				TestImonial testImonial = rest.postForObject(Constant.url + "/getTestImonialById", map, TestImonial.class);
+				TestImonial testImonial = Constant.getRestTemplate().postForObject(Constant.url + "/getTestImonialById", map, TestImonial.class);
 				 
 				model.addObject("testImonial", testImonial);
 				session.setAttribute("gallryImageURL", Constant.getGallryImageURL); 

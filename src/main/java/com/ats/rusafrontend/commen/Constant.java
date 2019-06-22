@@ -1,4 +1,7 @@
 package com.ats.rusafrontend.commen;
+ 
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
+import org.springframework.web.client.RestTemplate;
 
 public class Constant {
 
@@ -13,9 +16,11 @@ public class Constant {
 	public static final String getCmsPdf = "http://192.168.2.17:8080/media/pdf/";
 	public static final String getUserProfileURL = "http://192.168.2.17:8080/media/userprofile/";
 	public static final String userProfileURL = "/home/lenovo/Downloads/apache-tomcat-8.5.37/webapps/media/userprofile/";
-	public static final String cmsPdf = "/home/lenovo/Downloads/apache-tomcat-8.5.37/webapps/media/pdf/";*/
-	/*public static final String siteFrontEndUrl = "http://localhost:8081/rusafrontend/";
-	public static final String siteDomainUrl = "http://localhost:8081/";*/
+	public static final String cmsPdf = "/home/lenovo/Downloads/apache-tomcat-8.5.37/webapps/media/pdf/"; 
+	public static final String siteFrontEndUrl = "http://localhost:8081/rusafrontend/";
+	public static final String siteDomainUrl = "http://localhost:8081/"; */
+	/*public static final String userDocURL = "/home/lenovo/Downloads/apache-tomcat-8.5.37/webapps/media/userdocument/";
+	public static final String getUserDocURL = "http://192.168.2.17:8080/media/userdocument/";*/
 
 	public static final String getLgogImageURL = "http://ats.aaryatechindia.in:15063/media/logo/";
 	public static final String getBannerImageURL = "http://ats.aaryatechindia.in:15063/media/banenr/";
@@ -26,6 +31,8 @@ public class Constant {
 	public static final String siteFrontEndUrl = "http://ats.aaryatechindia.in:15063/rusafrontend/";
 	public static final String siteDomainUrl = "http://ats.aaryatechindia.in:15063/";
 	public static final String userProfileURL = "/home/tomcataaryatechi/ats.aaryatechindia.in/tomcat-8.0.18/webapps/media/userprofile/";
+	public static final String userDocURL = "/home/tomcataaryatechi/ats.aaryatechindia.in/tomcat-8.0.18/webapps/media/userdocument/";
+	public static final String getUserDocURL = "http://ats.aaryatechindia.in:15063/media/userdocument/";
 	public static final String cmsPdf = "/home/tomcataaryatechi/ats.aaryatechindia.in/tomcat-8.0.18/webapps/media/pdf/";
 
 	public static final String secretKey = "6LfXSJYUAAAAALy3h-8ulTPu7DdW4kFVwFAlFiJL";
@@ -33,5 +40,14 @@ public class Constant {
 	public static String[] values = { "jpg", "jpeg", "gif", "png" };
 
 	public static int totalEventCount = 10;
+	
+	
+	public static RestTemplate rest = new RestTemplate();
+	 public static RestTemplate getRestTemplate() {
+			rest=new RestTemplate();
+			rest.getInterceptors().add(new BasicAuthorizationInterceptor("aaryatech", "Aaryatech@1cr"));
+			return rest;
+
+			} 
 
 }

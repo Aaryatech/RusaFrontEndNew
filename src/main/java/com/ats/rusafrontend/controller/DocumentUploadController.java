@@ -34,7 +34,7 @@ import com.ats.rusafrontend.model.UploadDocument;
 @Scope("session")
 public class DocumentUploadController {
 	
-	RestTemplate rest = new RestTemplate();
+	 
 	
 	
 	@RequestMapping(value = "/documentUpload", method = RequestMethod.GET)
@@ -46,7 +46,7 @@ public class DocumentUploadController {
 
 			session.setAttribute("mapping", "documentUpload");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav = "maintainance";
@@ -54,13 +54,13 @@ public class DocumentUploadController {
 			} else {
 				mav = "documentUpload";
 				int userDetail = (int) session.getAttribute("UserDetail");
-				DocType[] docType = rest.getForObject(Constant.url + "/getDocTypeList", DocType[].class);
+				DocType[] docType = Constant.getRestTemplate().getForObject(Constant.url + "/getDocTypeList", DocType[].class);
 				List<DocType> docTypelist = new ArrayList<>(Arrays.asList(docType));
 				model.addAttribute("docTypelist", docTypelist);
 				
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 				map.add("regId", userDetail);
-				UploadDocument[] uploadDocument = rest.postForObject(Constant.url + "/getDocumentByRegId",map, UploadDocument[].class);
+				UploadDocument[] uploadDocument = Constant.getRestTemplate().postForObject(Constant.url + "/getDocumentByRegId",map, UploadDocument[].class);
 				List<UploadDocument> uploadDocumentlist = new ArrayList<>(Arrays.asList(uploadDocument));
 				
 				
@@ -117,7 +117,7 @@ public class DocumentUploadController {
 				save.setTitle(title);
 				save.setUploadDateTime(sf.format(date));
 				
-				UploadDocument res = rest.postForObject(Constant.url + "/saveUploadDocument", save, UploadDocument.class);
+				UploadDocument res = Constant.getRestTemplate().postForObject(Constant.url + "/saveUploadDocument", save, UploadDocument.class);
 				session.setAttribute("success", "Document Uploaded Successfully ");
 				
 			} catch (Exception e) {

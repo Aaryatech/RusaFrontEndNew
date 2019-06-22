@@ -31,7 +31,7 @@ import com.ats.rusafrontend.model.Registration;
 @Scope("session")
 public class PagingController {
 
-	RestTemplate rest = new RestTemplate();
+	 
 	
 	@RequestMapping(value = "/listOFEvent/{page}", method = RequestMethod.GET)
 	public ModelAndView listOFEvent(@PathVariable("page") String page, HttpServletRequest request,
@@ -42,7 +42,7 @@ public class PagingController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "listOFEvent");
 			 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -56,7 +56,7 @@ public class PagingController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			int langId = (Integer) session.getAttribute("langId");
 			map.add("langId", langId);
-			NewsDetails[] eventConutList = rest.postForObject(Constant.url + "/getAllEventsL", map,
+			NewsDetails[] eventConutList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllEventsL", map,
 					NewsDetails[].class);
 			List<NewsDetails> eventCount = new ArrayList<NewsDetails>(Arrays.asList(eventConutList));
 			System.out.println("Event List Count :"+eventCount.size());
@@ -86,7 +86,7 @@ public class PagingController {
 			map1.add("langId", langId);
 			map1.add("pageid", pageid);
 			map1.add("total", total);
-			NewsDetails[] eventList = rest.postForObject(Constant.url + "/getAllEventsByLimit", map1,
+			NewsDetails[] eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllEventsByLimit", map1,
 					NewsDetails[].class);
 			List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
 			for (int i = 0; i < event.size(); i++) {
@@ -120,7 +120,7 @@ public class PagingController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "listOFNews");
 			 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -134,7 +134,7 @@ public class PagingController {
 				int langId = (Integer) session.getAttribute("langId");
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("langId", langId);
-				NewsDetails[] newsConutList = rest.postForObject(Constant.url + "/getAllNewsByLangId", map,
+				NewsDetails[] newsConutList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllNewsByLangId", map,
 						NewsDetails[].class);
 				List<NewsDetails> newsCount = new ArrayList<NewsDetails>(Arrays.asList(newsConutList));
 				System.out.println("News List Count :"+newsCount.size());
@@ -163,7 +163,7 @@ public class PagingController {
 			map1.add("langId", langId);
 			map1.add("pageid", pageid);
 			map1.add("total", total);
-			NewsDetails[] newsList = rest.postForObject(Constant.url + "/getAllNewsByLimit", map1,
+			NewsDetails[] newsList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllNewsByLimit", map1,
 					NewsDetails[].class);
 			List<NewsDetails> newsAllList = new ArrayList<NewsDetails>(Arrays.asList(newsList));
 			

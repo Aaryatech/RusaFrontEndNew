@@ -28,7 +28,7 @@ import com.ats.rusafrontend.model.*;
 @Scope("session")
 public class CmsController {
 
-	RestTemplate rest = new RestTemplate();
+	 
 
 	@RequestMapping(value = "/info/{slugName}", method = RequestMethod.GET)
 	public ModelAndView info(@PathVariable("slugName") String slugName, HttpServletRequest request,
@@ -42,7 +42,7 @@ public class CmsController {
 			int langId = (Integer) session.getAttribute("langId");
 			System.out.println(slugName);
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -57,7 +57,7 @@ public class CmsController {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("slugName", slugName);
 				map.add("langId", langId);
-				PageContent pageContent = rest.postForObject(Constant.url + "/getDataBySlugName", map,
+				PageContent pageContent = Constant.getRestTemplate().postForObject(Constant.url + "/getDataBySlugName", map,
 						PageContent.class);
 				pageContent.setSlugName(slugName);
 				model.addObject("pageContent", pageContent);
@@ -66,7 +66,7 @@ public class CmsController {
 
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("slugName", slugName);
-				PageMetaData pageMetaData = rest.postForObject(Constant.url + "/getPageMetaData", map,
+				PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData", map,
 						PageMetaData.class);
 
 				try {
@@ -105,7 +105,7 @@ public class CmsController {
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("sectionId", pageContent.getSectioinId());
 				map.add("langId", langId);
-				NewsSectionList[] news = rest.postForObject(Constant.url + "/getNewsSectionBySectionId", map,
+				NewsSectionList[] news = Constant.getRestTemplate().postForObject(Constant.url + "/getNewsSectionBySectionId", map,
 						NewsSectionList[].class);
 				newsSectionList = new ArrayList<>(Arrays.asList(news));
 
@@ -155,7 +155,7 @@ public class CmsController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "siteMap");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -182,7 +182,7 @@ public class CmsController {
 			int langId = (Integer) session.getAttribute("langId");
 			String word = request.getParameter("word");
 			session.setAttribute("seachSentence", word);
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -193,7 +193,7 @@ public class CmsController {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("word", word);
 				map.add("langId", langId);
-				SearchData searchData = rest.postForObject(Constant.url + "/serchWordFromTable", map, SearchData.class);
+				SearchData searchData = Constant.getRestTemplate().postForObject(Constant.url + "/serchWordFromTable", map, SearchData.class);
 				model.addObject("searchData", searchData);
 				session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
 
@@ -238,7 +238,7 @@ public class CmsController {
 
 			}
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -254,11 +254,11 @@ public class CmsController {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("key", "gallarySectionId");
-				Setting setting = rest.postForObject(Constant.url + "/getSettingRecordByKey", map, Setting.class);
+				Setting setting = Constant.getRestTemplate().postForObject(Constant.url + "/getSettingRecordByKey", map, Setting.class);
 
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("sectionId", setting.getKeyValues());
-				GetCategory[] category = rest.postForObject(Constant.url + "/getAllCatIdBySectionIdOrderByDesc", map,
+				GetCategory[] category = Constant.getRestTemplate().postForObject(Constant.url + "/getAllCatIdBySectionIdOrderByDesc", map,
 						GetCategory[].class);
 				List<GetCategory> categoryList = new ArrayList<GetCategory>(Arrays.asList(category));
 				model.addObject("rusaList", categoryList);
@@ -271,7 +271,7 @@ public class CmsController {
 				map.add("slugName", slugname);
 				map.add("langId", langId);
 				System.out.println(map);
-				PageContent pageContent = rest.postForObject(Constant.url + "/getImages", map, PageContent.class);
+				PageContent pageContent = Constant.getRestTemplate().postForObject(Constant.url + "/getImages", map, PageContent.class);
 				model.addObject("imageList", pageContent);
 				model.addObject("gallryImageURL", Constant.getGallryImageURL);
 				model.addObject("slugname", slugname);
@@ -294,7 +294,7 @@ public class CmsController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "imgGallary");
 
-			Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -310,11 +310,11 @@ public class CmsController {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("key", "gallarySectionId");
-				Setting setting = rest.postForObject(Constant.url + "/getSettingRecordByKey", map, Setting.class);
+				Setting setting = Constant.getRestTemplate().postForObject(Constant.url + "/getSettingRecordByKey", map, Setting.class);
 
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("sectionId", setting.getKeyValues());
-				GetCategory[] category = rest.postForObject(Constant.url + "/getAllCatIdBySectionId", map,
+				GetCategory[] category = Constant.getRestTemplate().postForObject(Constant.url + "/getAllCatIdBySectionId", map,
 						GetCategory[].class);
 				List<GetCategory> categoryList = new ArrayList<GetCategory>(Arrays.asList(category));
 				model.addObject("rusaList", categoryList);
@@ -323,7 +323,7 @@ public class CmsController {
 				map.add("slugName", slugname);
 				map.add("langId", langId);
 				System.out.println(map);
-				PageContent pageContent = rest.postForObject(Constant.url + "/getImages", map, PageContent.class);
+				PageContent pageContent = Constant.getRestTemplate().postForObject(Constant.url + "/getImages", map, PageContent.class);
 				model.addObject("imageList", pageContent.getGallaryDetailList());
 				model.addObject("videoList", pageContent.getVideoList());
 				model.addObject("gallryImageURL", Constant.getGallryImageURL);
