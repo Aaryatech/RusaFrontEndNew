@@ -47,7 +47,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
 
-		RestTemplate rest = new RestTemplate();
+		 
 		try {
 			int langId = 1;
 
@@ -63,29 +63,29 @@ public class HomeController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("langId", langId);
 			map.add("type", 1);
-			TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
+			TopMenuList sectionTree = Constant.getRestTemplate().postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
 
-			ImageLink[] image = rest.getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
+			ImageLink[] image = Constant.getRestTemplate().getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
 			List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 
-			Setting[] settingList = rest.getForObject(Constant.url + "/getAllSettingList", Setting[].class);
+			Setting[] settingList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSettingList", Setting[].class);
 			List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
 			
-			BannerImages editbanner = rest.getForObject(Constant.url + "/getLastSliderImagesByStatus",
+			BannerImages editbanner = Constant.getRestTemplate().getForObject(Constant.url + "/getLastSliderImagesByStatus",
 					BannerImages.class);
 		
 			MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 			map2.add("id", 1);
-			Logo logo = rest.postForObject(Constant.url + "/getLogoListById", map2, Logo.class);
+			Logo logo = Constant.getRestTemplate().postForObject(Constant.url + "/getLogoListById", map2, Logo.class);
 
-			GallaryDetail[] galleryDetail = rest.getForObject(Constant.url + "/getLastTenVideos",
+			GallaryDetail[] galleryDetail = Constant.getRestTemplate().getForObject(Constant.url + "/getLastTenVideos",
 					GallaryDetail[].class);
 			List<GallaryDetail> gerGalleryList = new ArrayList<GallaryDetail>(Arrays.asList(galleryDetail));
 
-			GallaryDetail[] photoDetail = rest.getForObject(Constant.url + "/getLastTenPhotos", GallaryDetail[].class);
+			GallaryDetail[] photoDetail = Constant.getRestTemplate().getForObject(Constant.url + "/getLastTenPhotos", GallaryDetail[].class);
 			List<GallaryDetail> photoList = new ArrayList<GallaryDetail>(Arrays.asList(photoDetail));
 
-			CmsSearchData[] getCMSDescList = rest.postForObject(Constant.url + "/getCMSDescByExInt1", map,
+			CmsSearchData[] getCMSDescList = Constant.getRestTemplate().postForObject(Constant.url + "/getCMSDescByExInt1", map,
 					CmsSearchData[].class);
 			List<CmsSearchData> getCMSDesc = new ArrayList<CmsSearchData>(Arrays.asList(getCMSDescList));
 
@@ -93,7 +93,7 @@ public class HomeController {
 				getCMSDesc.get(i).setPageDesc(Jsoup.parse(getCMSDesc.get(i).getPageDesc()).text());
 			}
 			
-			TestImonial[] testImonialList = rest.getForObject(Constant.url + "/getLastFiveTestImonials",
+			TestImonial[] testImonialList = Constant.getRestTemplate().getForObject(Constant.url + "/getLastFiveTestImonials",
 					TestImonial[].class);
 			List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 
@@ -107,7 +107,7 @@ public class HomeController {
 			
 			//System.out.println(testImonial);
 			 
-			NewsDetails[] getPagesModule = rest.postForObject(Constant.url + "/getLastFourNewsByLangId", map,
+			NewsDetails[] getPagesModule = Constant.getRestTemplate().postForObject(Constant.url + "/getLastFourNewsByLangId", map,
 					NewsDetails[].class);
 			List<NewsDetails> newsBlogsList = new ArrayList<NewsDetails>(Arrays.asList(getPagesModule));
 			
@@ -116,7 +116,7 @@ public class HomeController {
 				newsBlogsList.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(newsBlogsList.get(i).getNewsblogsId())));
 			}
 			
-			SocialChannels[] socialList = rest.getForObject(Constant.url + "/getAllSocialList",
+			SocialChannels[] socialList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSocialList",
 					SocialChannels[].class);
 			List<SocialChannels> socialChannelData = new ArrayList<SocialChannels>(Arrays.asList(socialList));
 			//System.out.println("event :"+event.toString());
@@ -141,10 +141,10 @@ public class HomeController {
 			session.setAttribute("siteFrontEndUrl", Constant.siteFrontEndUrl);
 			session.setAttribute("siteDomainUrl", Constant.siteDomainUrl);
 
-			MetaData metaData = rest.postForObject(Constant.url + "/getHomePageMetaDataByLangId", map, MetaData.class);
+			MetaData metaData = Constant.getRestTemplate().postForObject(Constant.url + "/getHomePageMetaDataByLangId", map, MetaData.class);
 			session.setAttribute("homePageMetaData", metaData);
 
-			NewsDetails[] eventList = rest.postForObject(Constant.url + "/newsListForHomePage",map,
+			NewsDetails[] eventList = Constant.getRestTemplate().postForObject(Constant.url + "/newsListForHomePage",map,
 					NewsDetails[].class);
 			List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
 			session.setAttribute("event", event);
@@ -153,7 +153,7 @@ public class HomeController {
 				event.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(event.get(i).getNewsblogsId())));
 			}
 			
-			NewsDetails[] expireEvent = rest.postForObject(Constant.url + "/newsExpiredListForHomePage",map,
+			NewsDetails[] expireEvent = Constant.getRestTemplate().postForObject(Constant.url + "/newsExpiredListForHomePage",map,
 					NewsDetails[].class);
 			List<NewsDetails> expireEventList = new ArrayList<NewsDetails>(Arrays.asList(expireEvent));
 			session.setAttribute("expireEventList", expireEventList);
@@ -170,7 +170,7 @@ public class HomeController {
 
 		ModelAndView model = new ModelAndView("home");
 
-		Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+		Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 		if (maintainance.getMaintenanceStatus() == 1) {
 			model = new ModelAndView("maintainance");
 			model.addObject("maintainance", maintainance);
@@ -181,14 +181,14 @@ public class HomeController {
 	@RequestMapping(value = "/checkMaintainance", method = RequestMethod.GET)
 	public @ResponseBody Maintainance checkMaintainance(HttpServletRequest request, HttpServletResponse response) {
 
-		RestTemplate rest = new RestTemplate();
+		 
 		Maintainance maintainance = new Maintainance();
 
 		try {
 			System.out.println("in Maintainance ");
 			HttpSession session = request.getSession();
 
-			maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			session.setAttribute("maintainance", maintainance);
 
 		} catch (Exception e) {
@@ -215,9 +215,9 @@ public class HomeController {
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String[] arry = url.split("-");
-		RestTemplate rest = new RestTemplate();
+		 
 
-		Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+		Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 		if (maintainance.getMaintenanceStatus() == 1) {
 			session.setAttribute("maintainance", maintainance);
 			return "maintainance";
@@ -232,15 +232,15 @@ public class HomeController {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("langId", 1);
 				map.add("type", 1);
-				TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
+				TopMenuList sectionTree = Constant.getRestTemplate().postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
 				session.setAttribute("menuList", sectionTree);
 
-				ImageLink[] image = rest.getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
+				ImageLink[] image = Constant.getRestTemplate().getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
 				List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("id", 1);
-				Logo logo = rest.postForObject(Constant.url + "/getLogoListById", map, Logo.class);
+				Logo logo = Constant.getRestTemplate().postForObject(Constant.url + "/getLogoListById", map, Logo.class);
 				session.setAttribute("logo", logo);
 				session.setAttribute("logoUrl", Constant.getLgogImageURL);
 				session.setAttribute("image", imagList);
@@ -251,15 +251,15 @@ public class HomeController {
 
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("langId", 1);
-				MetaData metaData = rest.postForObject(Constant.url + "/getHomePageMetaDataByLangId", map,
+				MetaData metaData = Constant.getRestTemplate().postForObject(Constant.url + "/getHomePageMetaDataByLangId", map,
 						MetaData.class);
 				session.setAttribute("homePageMetaData", metaData);
 				
-				Setting[] settingList = rest.getForObject(Constant.url + "/getAllSettingList", Setting[].class);
+				Setting[] settingList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSettingList", Setting[].class);
 				List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
 				session.setAttribute("setting", setting);
 				
-				SocialChannels[] socialList = rest.getForObject(Constant.url + "/getAllSocialList",
+				SocialChannels[] socialList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSocialList",
 						SocialChannels[].class);
 				List<SocialChannels> socialChannelData = new ArrayList<SocialChannels>(Arrays.asList(socialList)); 
 				session.setAttribute("socialChannelData", socialChannelData);
@@ -327,10 +327,10 @@ public class HomeController {
 	public String changeLangage(@PathVariable("url") String url, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		RestTemplate rest = new RestTemplate();
+		 
 		HttpSession session = request.getSession();
 
-		Maintainance maintainance = rest.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+		Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 		if (maintainance.getMaintenanceStatus() == 1) {
 			
 			session.setAttribute("maintainance", maintainance);
@@ -349,7 +349,7 @@ public class HomeController {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("langId", arry[0]);
 				map.add("type", 1);
-				TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
+				TopMenuList sectionTree = Constant.getRestTemplate().postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
 
 				session.setAttribute("menuList", sectionTree);
 
@@ -417,7 +417,7 @@ public class HomeController {
 	public @ResponseBody Info changelang(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		RestTemplate rest = new RestTemplate();
+		 
 		HttpSession session = request.getSession();
 		Info info = new Info();
 		try {
@@ -428,15 +428,15 @@ public class HomeController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("langId", langId);
 			map.add("type", 1);
-			TopMenuList sectionTree = rest.postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
+			TopMenuList sectionTree = Constant.getRestTemplate().postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
 			session.setAttribute("menuList", sectionTree);
 
-			ImageLink[] image = rest.getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
+			ImageLink[] image = Constant.getRestTemplate().getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
 			List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("id", 1);
-			Logo logo = rest.postForObject(Constant.url + "/getLogoListById", map, Logo.class);
+			Logo logo = Constant.getRestTemplate().postForObject(Constant.url + "/getLogoListById", map, Logo.class);
 			session.setAttribute("logo", logo);
 			session.setAttribute("logoUrl", Constant.getLgogImageURL);
 			session.setAttribute("image", imagList);
@@ -447,15 +447,15 @@ public class HomeController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("langId", 1);
-			MetaData metaData = rest.postForObject(Constant.url + "/getHomePageMetaDataByLangId", map,
+			MetaData metaData = Constant.getRestTemplate().postForObject(Constant.url + "/getHomePageMetaDataByLangId", map,
 					MetaData.class);
 			session.setAttribute("homePageMetaData", metaData);
 			
-			Setting[] settingList = rest.getForObject(Constant.url + "/getAllSettingList", Setting[].class);
+			Setting[] settingList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSettingList", Setting[].class);
 			List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
 			session.setAttribute("setting", setting);
 			
-			SocialChannels[] socialList = rest.getForObject(Constant.url + "/getAllSocialList",
+			SocialChannels[] socialList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSocialList",
 					SocialChannels[].class);
 			List<SocialChannels> socialChannelData = new ArrayList<SocialChannels>(Arrays.asList(socialList)); 
 			session.setAttribute("socialChannelData", socialChannelData);
@@ -527,10 +527,10 @@ public class HomeController {
 		Info info = new Info();
 		try {
 			
-			RestTemplate rest = new RestTemplate();
+			 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("key", "website_visitor_hit"); 
-			info = rest.postForObject(Constant.url + "/updateCouunt",map,
+			info = Constant.getRestTemplate().postForObject(Constant.url + "/updateCouunt",map,
 					Info.class);
 			 
 		}catch(Exception e) {
