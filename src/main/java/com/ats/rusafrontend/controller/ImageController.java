@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
+import com.ats.rusafrontend.commen.FormValidation;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
 import com.ats.rusafrontend.commen.VpsImageUpload;
@@ -241,15 +242,23 @@ public class ImageController {
 
 			String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
 			String captcha = session.getAttribute("captcha_security").toString();
-			boolean verify;
+			boolean error;
 			
 			String verifyCaptcha = request.getParameter("captcha");
 			if (captcha.equals(verifyCaptcha)) {
-				verify = true;
+				error = false;
 			} else {
-				verify = false;
+				error = true;
 			}
 			
+			
+			if ( FormValidation.Validaton(email, "email") == true || FormValidation.Validaton(mobileNo, "mobile") == true || FormValidation.Validaton(name, "") == true ||
+					FormValidation.Validaton(message, "") == true || error==true) {
+
+				error = true;
+
+			}
+		 
 			//boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
 			// boolean verify = true;
 
@@ -258,7 +267,7 @@ public class ImageController {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
 
-			if (verify) {
+			if (error==false) {
 				InetAddress addr = InetAddress.getByName(request.getRemoteAddr());
 				String hostName = addr.getHostName();
 				String userAgent = request.getHeader("User-Agent");
