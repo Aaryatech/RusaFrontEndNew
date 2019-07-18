@@ -29,7 +29,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
@@ -83,82 +83,151 @@
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 
-   <div class="inner-slider" id="slider">
-    	 <div class="container">
+	<div class="inner-slider" id="slider">
+		<div class="container">
 			<h1>Testimonials</h1>
-         </div>
-    </div>
+		</div>
+	</div>
 	<div class="bridcrumb">
-    	<div class="container">
-        	<a href="${pageContext.request.contextPath}/">Home</a> >  
-        </div>
-    </div> 
- <div class="container" id="main-content">
-        <div class="row row-eq-height">
+		<div class="container">
+			<a href="${pageContext.request.contextPath}/">Home</a> >
+		</div>
+	</div>
+	<c:set var="videocount" value="0"></c:set>
+	<div class="container" id="main-content">
+		<div class="row row-eq-height">
 
- 			    <div class="col-12 col-sm-12 col-lg-12">
-            	<h2>Testimonials</h2>
-            	<c:if test="${valueType==1}">
-                	<c:forEach items="${testImonial}" var="testImonial"
-					varStatus="count">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-lg-12">
-                    	<div class="success-stories testimonials-detail">
-                        <div class="testimonials-user-photo">
-                      <c:choose>
-						<c:when test="${not empty testImonial.imageName}">
-						  
-                        <img src="${sessionScope.gallryImageURL}${testImonial.imageName}" alt="${testImonial.fromName}" title="${testImonial.fromName}" class="img-responsive thumbnail" style="width: 100px; height: 100px;">	
-                        </c:when>
-                       <c:otherwise>
-                     <img	src="${pageContext.request.contextPath}/resources/images/team.jpg"
-														alt="" class="img-responsive thumbnail" >
-                       </c:otherwise>   
-                       </c:choose>
-		            </div>
-                        <p><span class="icon-quote-left quote"></span>${testImonial.message}</p>
-						<p>
-                        <strong>${testImonial.fromName}</strong>
-                      <!--   <span class="sup-text">adsfgthukik</span> -->
-                        </p>
-                        </div>
-                    </div>
-            </div>
-            </c:forEach>
-            </c:if>
-            	<c:if test="${valueType==2}">
-                	<c:forEach items="${testImonial}" var="testImonial"
-					varStatus="count">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-lg-12">
-                    	<div class="success-stories testimonials-detail">
-                     
-                   
-						<%-- <iframe width="100%" height="300" src="${testImonial.message}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+			<div class="col-12 col-sm-12 col-lg-12">
+				<h2>Testimonials</h2>
+				<c:if test="${valueType==1}">
+					<c:forEach items="${testImonial}" var="testImonial"
+						varStatus="count">
+						<div class="row">
+							<div class="col-12 col-sm-12 col-lg-12">
+								<div class="success-stories testimonials-detail">
+									<div class="testimonials-user-photo">
+										<c:choose>
+											<c:when test="${not empty testImonial.imageName}">
+
+												<img
+													src="${sessionScope.gallryImageURL}${testImonial.imageName}"
+													alt="${testImonial.fromName}"
+													title="${testImonial.fromName}"
+													class="img-responsive thumbnail"
+													style="width: 100px; height: 100px;">
+											</c:when>
+											<c:otherwise>
+												<img
+													src="${pageContext.request.contextPath}/resources/images/team.jpg"
+													alt="" class="img-responsive thumbnail">
+											</c:otherwise>
+										</c:choose>
+									</div>
+									<p>
+										<span class="icon-quote-left quote"></span>${testImonial.message}</p>
+									<p>
+										<strong>${testImonial.fromName}</strong>
+										<!--   <span class="sup-text">adsfgthukik</span> -->
+									</p>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:if>
+				<c:if test="${valueType==2}">
+					<c:forEach items="${testImonial}" var="testImonial"
+						varStatus="count">
+						<div class="row">
+							<div class="col-12 col-sm-12 col-lg-12">
+								<c:set var="videocount" value="${videocount+1}"></c:set>
+								<div class="success-stories testimonials-detail">
+
+
+									<%-- <iframe width="100%" height="300" src="${testImonial.message}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
                      --%>
-                     
-		           
-                       <p><span class="icon-quote-left quote"></span></p>
-                       <p><span style="margin-left:200px"></span><iframe width="100%" height="315"
-														src="https://www.youtube.com/embed/${testImonial.message}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=0"
-														frameborder="0" allowfullscreen></iframe></p>
-						<p> 
-                        <strong>${testImonial.fromName}</strong>
-                      <!--   <span class="sup-text">adsfgthukik</span> -->
-                        </p>
-                       </div>
-            </div></div>
-            </c:forEach>
-            </c:if>
-            </div>
-            
-        </div>
-    </div>
-	
+
+
+									<p>
+										<span class="icon-quote-left quote"></span>
+									</p>
+									<p id="video${videocount}">
+										<span style="margin-left: 200px"></span>
+										<iframe width="100%" height="315"
+											src="https://www.youtube.com/embed/${testImonial.message}?rel=0&amp;controls=1&amp&amp;showinfo=0&amp;modestbranding=0"
+											frameborder="0" allowfullscreen></iframe>
+									</p>
+									<p>
+										<strong>${testImonial.fromName}</strong>
+										<!--   <span class="sup-text">adsfgthukik</span> -->
+									</p>
+									<input id="videolink${videocount}"
+										value="${testImonial.message}" type="hidden">
+
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:if>
+			</div>
+
+		</div>
+	</div>
+	<input id="videoct" value="${videocount}" type="hidden">
 	<jsp:include page="/WEB-INF/views/include/imgOpenLink.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+
+	<script>
+		var tag = document.createElement('script');
+		tag.src = "//www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		var videoct = document.getElementById("videoct").value;
+		var vids = [];
+
+		function onYouTubeIframeAPIReady() {
+
+			for (var i = 0; i < videoct; i++) {
+
+				var videolink = document.getElementById("videolink" + (i + 1)).value;
+				var player = "video" + (i + 1);
+
+				var video = new YT.Player(player, {
+					videoId : videolink,
+					playerVars : {
+						rel : 0,
+						showinfo : 0,
+						ecver : 2
+					},
+					events : {
+						'onStateChange' : onPlayerStateChange
+					}
+				});
+				vids.push(video);
+
+			}
+
+		}
+
+		function onPlayerStateChange(event) {
+
+			if (event.data == YT.PlayerState.PLAYING) {
+				stopVideo(event.target.a.id);
+
+			}
+
+		}
+
+		function stopVideo(player_id) {
+
+			for (var i = 0; i < vids.length; i++) {
+				if (player_id != vids[i].a.id)
+					vids[i].stopVideo();
+			}
+		}
+	</script>
+
 </body>
 </html>
 
