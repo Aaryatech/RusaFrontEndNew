@@ -71,7 +71,7 @@ public class HomeController {
 			Setting[] settingList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllSettingList",map, Setting[].class);
 			List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
 			 
-			BannerImages editbanner = Constant.getRestTemplate().getForObject(Constant.url + "/getLastSliderImagesByStatus",
+			BannerImages editbanner = Constant.getRestTemplate().postForObject(Constant.url + "/getLastSliderImagesByStatus",map,
 					BannerImages.class);
 		
 			MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
