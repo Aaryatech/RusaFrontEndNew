@@ -68,9 +68,9 @@ public class HomeController {
 			ImageLink[] image = Constant.getRestTemplate().getForObject(Constant.url + "/getAllImageLinkList", ImageLink[].class);
 			List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 
-			Setting[] settingList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSettingList", Setting[].class);
+			Setting[] settingList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllSettingList",map, Setting[].class);
 			List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
-			
+			 
 			BannerImages editbanner = Constant.getRestTemplate().getForObject(Constant.url + "/getLastSliderImagesByStatus",
 					BannerImages.class);
 		
@@ -161,6 +161,12 @@ public class HomeController {
 			for(int i=0 ; i<expireEventList.size() ; i++) {
 				expireEventList.get(i).setExVar1(EmailUtility.Encrypt(String.valueOf(expireEventList.get(i).getNewsblogsId())));
 			}
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("langId", 1); 
+			Setting[] settingListct = Constant.getRestTemplate().postForObject(Constant.url + "/getAllSettingList",map, Setting[].class);
+			List<Setting> settingct = new ArrayList<Setting>(Arrays.asList(settingListct));
+			session.setAttribute("settingcount", settingct);
 			
 			//System.out.println(metaData);
 
@@ -446,20 +452,26 @@ public class HomeController {
 			session.setAttribute("siteDomainUrl", Constant.siteDomainUrl);
 
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("langId", 1);
+			map.add("langId", langId);
 			MetaData metaData = Constant.getRestTemplate().postForObject(Constant.url + "/getHomePageMetaDataByLangId", map,
 					MetaData.class);
 			session.setAttribute("homePageMetaData", metaData);
 			
-			Setting[] settingList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSettingList", Setting[].class);
+			Setting[] settingList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllSettingList",map, Setting[].class);
 			List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
 			session.setAttribute("setting", setting);
-			
+			 
 			SocialChannels[] socialList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSocialList",
 					SocialChannels[].class);
 			List<SocialChannels> socialChannelData = new ArrayList<SocialChannels>(Arrays.asList(socialList)); 
 			session.setAttribute("socialChannelData", socialChannelData);
 			info.setError(false);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("langId", 1); 
+			Setting[] settingListct = Constant.getRestTemplate().postForObject(Constant.url + "/getAllSettingList",map, Setting[].class);
+			List<Setting> settingct = new ArrayList<Setting>(Arrays.asList(settingListct));
+			session.setAttribute("settingcount", settingct);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

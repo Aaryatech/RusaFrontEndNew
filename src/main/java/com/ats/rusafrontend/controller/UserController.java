@@ -117,16 +117,16 @@ public class UserController {
 				if (verify.isError() == false) {
 
 					String eventId = request.getParameter("eventId");
-
+					int langId = (Integer) session.getAttribute("langId");
 					
-					System.out.println("print1: "+request.getSession().getId());
+					System.out.println("langId: "+langId);
 					session.removeAttribute("userDetail");
 					session.removeAttribute("userInfo");
 					session.invalidate();
 					
 					session = request.getSession();
 					
-					System.out.println("print2: "+request.getSession().getId());
+					//System.out.println("print2: "+request.getSession().getId());
 					
 					if (!eventId.equals("0")) {
 						
@@ -147,8 +147,9 @@ public class UserController {
 
 						session.setAttribute("mapping", "upcomingEvents");
 						
+						
 						if (session.getAttribute("menuList") == null) {
-							InitializeSession.intializeSission(request);
+							InitializeSession.intializeSissionByLangId(request,langId);
 						}
 						
 						if (verify.getExInt1() == 0) {
@@ -168,7 +169,7 @@ public class UserController {
 
 							MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
-							map1.add("langId", 1);
+							map1.add("langId", langId);
 							NewsDetails[] newsDetails = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
 									NewsDetails[].class);
 							List<NewsDetails> upcoming = new ArrayList<NewsDetails>(Arrays.asList(newsDetails));
@@ -779,7 +780,7 @@ public class UserController {
 				model.addAttribute("maintainance", maintainance);
 				ret = "maintainance";
 			} else {
-
+				int langId = (Integer) session.getAttribute("langId");
 				model.addAttribute("siteKey", Constant.siteKey);
 				model.addAttribute("flag", flag);
 				flag = 0;
@@ -787,7 +788,7 @@ public class UserController {
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
-				map1.add("langId", 1);
+				map1.add("langId", langId);
 				NewsDetails[] upcoming = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
 						NewsDetails[].class);
 				List<NewsDetails> upcomingList = new ArrayList<NewsDetails>(Arrays.asList(upcoming));
@@ -838,8 +839,9 @@ public class UserController {
 
 				mav = "content/previous-dashboard";
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-
-				map1.add("langId", 1);
+				int langId = (Integer) session.getAttribute("langId");
+				
+				map1.add("langId", langId);
 				map1.add("userId", userDetail);
 				EventRecord[] previousList = Constant.getRestTemplate().postForObject(Constant.url + "/allPreviousEventWithApllied", map1,
 						EventRecord[].class);

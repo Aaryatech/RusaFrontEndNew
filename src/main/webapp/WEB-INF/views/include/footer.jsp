@@ -9,13 +9,48 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-12 col-sm-12 col-lg-3">
+
+				<c:set var="vistrcnt" value="Visitor Count"></c:set>
+				<c:set var="update" value="Last Update"></c:set>
+				<%
+					int langId = 1;
+					try {
+						langId = (Integer) session.getAttribute("langId");
+
+					} catch (Exception e) {
+						session.setAttribute("langId", langId);
+						langId = 1;
+					}
+
+					if (langId == 2) {
+				%><h6>
+					<b>संपर्क साधा</b>
+				</h6>
+				<%
+					} else {
+				%>
 				<h6>Contact Us</h6>
+				<%
+					}
+				%>
 				<c:if test="${setting[8].isActive==1}">
           				 ${setting[8].keyValues}
        			 		  </c:if>
 			</div>
 			<div class="col-12 col-sm-12 col-lg-5 important-link">
+
+				<%
+					if (langId == 2) {
+				%><h6>महत्त्वपूर्ण</h6>
+				<%
+					} else {
+				%>
 				<h6>Important Links</h6>
+				<%
+					}
+				%>
+
+
 				<c:if test="${setting[7].isActive==1}">
           				 ${setting[7].keyValues}
        			 		  </c:if>
@@ -31,7 +66,20 @@
                         </ul> --%>
 			</div>
 			<div class="col-12 col-sm-12 col-lg-4 social-link">
+
+				<%
+					if (langId == 2) {
+				%><h6>अनुसरण कराः</h6>
+				<c:set var="vistrcnt" value="अभ्यागत गणना "></c:set>
+				<c:set var="update" value="शेवटचे अपडेट "></c:set>
+				<%
+					} else {
+				%>
 				<h6>Follow us on:</h6>
+				<%
+					}
+				%>
+
 				<%--  <c:forEach items="${socialChannelData}" var="socialChannel"
 								varStatus="count">
 								 --%>
@@ -62,14 +110,14 @@
 
 				<p>
 
-					<c:if test="${setting[4].isActive==1}">
-					 Visitor Count :
-						<span id="visitorCnt">${setting[4].keyValues}</span>
+					<c:if test="${settingcount[4].isActive==1}">
+					 ${vistrcnt}:
+						<span id="visitorCnt">${settingcount[4].keyValues}</span>
 						<br>
 					</c:if>
-					<c:if test="${setting[5].isActive==1}">
-					Last Update :
-						${setting[5].keyValues}
+					<c:if test="${settingcount[5].isActive==1}">
+					 ${update}:
+						${settingcount[5].keyValues}
 					</c:if>
 
 
@@ -93,7 +141,7 @@
 <c:if test="${setting[0].isActive==1}">
           ${setting[0].keyValues}
           </c:if>
- 
+
 
 <!--   Go to www.addthis.com/dashboard to customize your tools -->
 <!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c812bc21e70ebf7"></script>
