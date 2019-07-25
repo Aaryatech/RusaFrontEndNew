@@ -242,7 +242,7 @@
 							<li class="active"><a onclick="checkMaintainance()"
 								title="${pageContent.pageName}"
 								href="${pageContext.request.contextPath}/info/${pageContent.slugName}">${pageContent.pageName}<span
-									class="caret"></span></a></li> 
+									class="caret"></span></a></li>
 						</ul>
 					</c:if>
 
@@ -673,7 +673,27 @@
 			</c:if>
 			<c:if test="${find==0}">
 
+				<!-- <h2 style="text-align: center;">No Record Found</h2> -->
+
+				<%
+					int langId = 1;
+						try {
+							langId = (Integer) session.getAttribute("langId");
+
+						} catch (Exception e) {
+							session.setAttribute("langId", langId);
+							langId = 1;
+						}
+
+						if (langId == 2) {
+				%><h2 style="text-align: center;">माहिती अस्तित्वात नाही</h2>
+				<%
+					} else {
+				%>
 				<h2 style="text-align: center;">No Record Found</h2>
+				<%
+					}
+				%>
 			</c:if>
 		</div>
 

@@ -89,7 +89,8 @@
 	<script async defer crossorigin="anonymous"
 		src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3&appId=2318373708408139&autoLogAppEvents=1"></script> -->
 	<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3"></script>
+	<script async defer crossorigin="anonymous"
+		src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.3"></script>
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
@@ -133,11 +134,11 @@
 
 					<div class="col-12 col-sm-6 col-lg-3" style="text-align: justify;">
 						<div class="sub-link-icon">
-						<span class="icon-tick "></</span>
+							<span class="icon-tick "></</span>
 							<%-- <img
 								src="${pageContext.request.contextPath}/resources/images/icon.png"
 								alt="">--%>
-						</div> 
+						</div>
 						<c:set var="string1" value="${getCMSDesc.pageDesc}" />
 						<c:set var="string2" value="${fn:substring(string1, 0, 250)}" />
 						<h2>${getCMSDesc.heading}</h2>
@@ -158,7 +159,27 @@
 
 		<div class="row">
 			<div class="col-12 col-sm-12 col-lg-4 news-notifications">
-				<h3>News and Notification</h3>
+				<%
+					int langId = 1;
+					try {
+						langId = (Integer) session.getAttribute("langId");
+
+					} catch (Exception e) {
+						session.setAttribute("langId", langId);
+						langId = 1;
+					}
+
+					if (langId == 2) {
+				%>
+				<h3>कार्यक्रम आणि अधिसूचना</h3>
+				<%
+					} else {
+				%>
+				<h3>Events and Notification</h3>
+				<%
+					}
+				%>
+
 				<div class="border-box">
 					<div class="tab-content">
 
@@ -224,8 +245,19 @@
 
 			<div class="col-12 col-sm-12 col-lg-4 gallery">
 				<h3>
+					<%
+						if (langId == 2) {
+					%>
+					<a href="${pageContext.request.contextPath}/imgGallary"> फोटो
+						गॅलरी </a>
+					<%
+						} else {
+					%>
 					<a href="${pageContext.request.contextPath}/imgGallary">Photos
 						Gallery</a>
+					<%
+						}
+					%>
 				</h3>
 				<c:if test="${photoList.size()>0}">
 					<div class="border-box">
@@ -288,7 +320,19 @@
 
 
 			<div class="col-12 col-sm-12 col-lg-4 gallery">
-				<h3>Videos Gallery</h3>
+				<h3>
+					<%
+						if (langId == 2) {
+					%>
+					व्हिडिओ गॅलरी
+					<%
+						} else {
+					%>
+					Videos Gallery
+					<%
+						}
+					%>
+				</h3>
 
 				<div class="border-box">
 					<div id="videoslide" class="carousel " data-ride="carousel">
@@ -363,7 +407,19 @@
 		<div class="container main-content">
 			<div class="row">
 				<h2>
-					<span>Updates</span>
+					<!-- <span>Updates</span> -->
+
+					<%
+						if (langId == 2) {
+					%>
+					<span>बातम्या</span>
+					<%
+						} else {
+					%>
+					<span>News</span>
+					<%
+						}
+					%>
 				</h2>
 				<c:forEach items="${newsBlogsList}" var="newsBlogsList"
 					varStatus="count">
@@ -434,7 +490,17 @@
 
 	<div class="testimonials">
 		<div class="container">
-			<h5>Testimonials</h5>
+			<h5><%
+						if (langId == 2) {
+					%>
+					<span>प्रशंसापत्र</span>
+					<%
+						} else {
+					%>
+					<span>Testimonials</span>
+					<%
+						}
+					%></h5>
 			<div id="carouselExampleControls2" class="carousel slide"
 				data-ride="carousel">
 				<div class="carousel-inner">
@@ -726,7 +792,7 @@
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 		var videoct = document.getElementById("videoct").value;
 		var vids = [];
-		 
+
 		function onYouTubeIframeAPIReady() {
 
 			for (var i = 0; i < videoct; i++) {
@@ -736,7 +802,11 @@
 
 				var video = new YT.Player(player, {
 					videoId : videolink,
-					playerVars: {rel: 0, showinfo: 0, ecver: 2},
+					playerVars : {
+						rel : 0,
+						showinfo : 0,
+						ecver : 2
+					},
 					events : {
 						'onStateChange' : onPlayerStateChange
 					}
@@ -748,12 +818,12 @@
 		}
 
 		function onPlayerStateChange(event) {
-			 
+
 			if (event.data == YT.PlayerState.PLAYING) {
 				stopVideo(event.target.a.id);
-				 
-			} 
-			 
+
+			}
+
 		}
 
 		function stopVideo(player_id) {
@@ -764,13 +834,13 @@
 			}
 		}
 	</script>
-	 
+
 	<script type="text/javascript">
 		$('.carousel').carousel({
 			interval : false
 		});
 	</script>
-	
+
 	<!--  <script>
   var youtubeReady = false;
 

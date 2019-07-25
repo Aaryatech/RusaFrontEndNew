@@ -66,7 +66,28 @@
 
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>Photo Gallery</h1>
+			<h1>
+				<%
+					int langId = 1;
+					try {
+						langId = (Integer) session.getAttribute("langId");
+
+					} catch (Exception e) {
+						session.setAttribute("langId", langId);
+						langId = 1;
+					}
+
+					if (langId == 2) {
+				%>
+				फोटो गॅलरी
+				<%
+					} else {
+				%>
+				Photo Gallery
+				<%
+					}
+				%>
+			</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
@@ -101,12 +122,12 @@
 
 
 
-						<li class="nav-item"><a class="nav-link active show" data-toggle="tab"
-							href="#photos"><span class="icon-frame-landscape icon"></span>
-								Photos</a></li>
-						<li class="nav-item"><a class="nav-link"
-							data-toggle="tab" href="#videos"><span
-								class="icon-video-camera icon"></span> Videos</a></li>
+						<li class="nav-item"><a class="nav-link active show"
+							data-toggle="tab" href="#photos"><span
+								class="icon-frame-landscape icon"></span> Photos</a></li>
+						<li class="nav-item"><a class="nav-link" data-toggle="tab"
+							href="#videos"><span class="icon-video-camera icon"></span>
+								Videos</a></li>
 
 					</ul>
 					<div id="photos" class="tab-pane active show">
@@ -118,7 +139,7 @@
 										<a href="${gallryImageURL}${imageList.fileName}"
 											data-toggle="lightbox" data-gallery="plan"
 											data-eventtitle="${cateName}" data-title="${imageList.title}"
-											  class="thumbnail">
+											class="thumbnail">
 											<div class="over-effect">
 												<span class="icon-search"></span>
 											</div> <img src="${gallryImageURL}thumbnail${imageList.fileName}"
@@ -190,7 +211,7 @@
 					}
 				});
 				vids.push(video);
-				 
+
 			}
 
 		}

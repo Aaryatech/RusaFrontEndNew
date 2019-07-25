@@ -29,7 +29,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
@@ -85,12 +85,33 @@
 
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>Photo Gallery</h1>
+			<h1>
+				<%
+					int langId = 1;
+					try {
+						langId = (Integer) session.getAttribute("langId");
+
+					} catch (Exception e) {
+						session.setAttribute("langId", langId);
+						langId = 1;
+					}
+
+					if (langId == 2) {
+				%>
+				फोटो गॅलरी
+				<%
+					} else {
+				%>
+				Photo Gallery
+				<%
+					}
+				%> 
+			</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a>  
+			<a href="${pageContext.request.contextPath}/">Home></a>
 			<%-- <a
 				href="${pageContext.request.contextPath}/eventList">Events</a> > --%>
 		</div>
@@ -195,12 +216,13 @@
 									<c:choose>
 										<c:when
 											test="${imageList.picCount==0 && imageList.videoCount>0}">
-											
+
 											<a
 												href="${pageContext.request.contextPath}/imgGallaryDetail/${slugname}/${imageList.galleryCatId}/${imageList.cateName}"
-												class="thumbnail thumbnail-listing" > <img
+												class="thumbnail thumbnail-listing"> <img
 												src="${pageContext.request.contextPath}/resources/images/noimageteam.png"
-												alt="Rusa 2" title="Rusa 2" class="img-responsive" width="261" height="190">
+												alt="Rusa 2" title="Rusa 2" class="img-responsive"
+												width="261" height="190">
 												<p class="thumbnail-heading">
 													${imageList.cateName} <br> <span><i
 														class="icon-frame-landscape icon"></i>
