@@ -951,9 +951,9 @@
 
 			var university = document.getElementById("university").value;
 
-			$.getJSON('${getInstituteList}', {
+			$.post('${getInstituteList}', {
 
-				uniId : university,
+				uniId : university, 
 				ajax : 'true',
 
 			}, function(data) {

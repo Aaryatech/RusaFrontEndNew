@@ -686,7 +686,7 @@
 						}
 
 						if (langId == 2) {
-				%><h2 style="text-align: center;">माहिती अस्तित्वात नाही</h2>
+				%><h2 style="text-align: center;">माहिती उपलब्ध नाही</h2>
 				<%
 					} else {
 				%>

@@ -119,14 +119,14 @@ public class UserController {
 					String eventId = request.getParameter("eventId");
 					int langId = (Integer) session.getAttribute("langId");
 					
-					System.out.println("langId: "+langId);
+					System.out.println("print: "+session.getId());
 					session.removeAttribute("userDetail");
 					session.removeAttribute("userInfo");
 					session.invalidate();
 					
 					session = request.getSession();
 					
-					//System.out.println("print2: "+request.getSession().getId());
+					System.out.println("print2: "+request.getSession().getId());
 					
 					if (!eventId.equals("0")) {
 						
@@ -290,7 +290,7 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping(value = "/getInstitute", method = RequestMethod.GET)
+	@RequestMapping(value = "/getInstitute", method = RequestMethod.POST)
 	public @ResponseBody List<InstituteInfo> getInstituteList(HttpServletRequest request,
 			HttpServletResponse response) {
 
