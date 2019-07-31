@@ -70,7 +70,7 @@ msg-error {
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>Contact Us</h1>
+			<h1>आमच्याशी संपर्क साधा</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
@@ -94,9 +94,9 @@ msg-error {
 				<div class="row row-eq-height">
 
 					<div class="col-12 col-sm-12 col-lg-6">
-						<h2>राष्ट्रीय उच्छतर शिक्षा अभियान</h2>
+						<h2>राष्ट्रीय उच्चतर शिक्षा अभियान</h2>
 						<p>
-							राज्य प्रकल्प संचालनालय (एसपीडी), महाराष्ट्र राष्ट्रीय उच्छतर
+							राज्य प्रकल्प संचालनालय (एसपीडी), महाराष्ट्र राष्ट्रीय उच्चतर
 							शिक्षण अभियान (रुसा), युनिट क्रमांक 2, 18 वा मजला, केंद्र 1,
 							जागतिक व्यापार केंद्र कफ परेड, कुलाबा, मुंबई -400005. <br>
 							फोन क्र .022, 22160959/22160943
