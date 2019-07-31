@@ -145,12 +145,21 @@ public class ImageController {
 
 	@RequestMapping(value = "/ContactUs", method = RequestMethod.GET)
 	public ModelAndView ContactUs(HttpServletRequest request, HttpServletResponse response) {
+		
 
-		ModelAndView model = new ModelAndView("content/contactUs");
+		HttpSession session = request.getSession();
+		session.setAttribute("mapping", "ContactUs");
+		int langId = (Integer) session.getAttribute("langId");
+		System.out.println("langI d ***"+langId);
+		ModelAndView model = null;
+
+		if(langId==2) {
+			model = new ModelAndView("content/contactUsMarathi");
+		}else {
+			model = new ModelAndView("content/contactUs");
+		}
 		try {
 
-			HttpSession session = request.getSession();
-			session.setAttribute("mapping", "ContactUs");
 
 			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
