@@ -93,7 +93,7 @@ public class HomeController {
 				getCMSDesc.get(i).setPageDesc(Jsoup.parse(getCMSDesc.get(i).getPageDesc()).text());
 			}
 			
-			TestImonial[] testImonialList = Constant.getRestTemplate().getForObject(Constant.url + "/getLastFiveTestImonials",
+			TestImonial[] testImonialList = Constant.getRestTemplate().postForObject(Constant.url + "/getLastFiveTestImonials",map,
 					TestImonial[].class);
 			List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 
