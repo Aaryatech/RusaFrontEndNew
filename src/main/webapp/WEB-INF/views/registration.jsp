@@ -336,7 +336,7 @@
 							<label>AISHE Code <span class="text-danger">*</span></label> <input
 								type="text" class="form-control"
 								onchange="trim(this);getuniInfo()" name="uniaisheName"
-								placeholder="AISHE Code" id="uniaisheName" value="C-"
+								placeholder="AISHE Code" id="uniaisheName" value="U-"
 								style="text-transform: uppercase" maxlength="7">
 							<p class="error-msg" id="error_uniaisheName"
 								style="display: none;">Invalid AISHE Code.</p>
