@@ -63,14 +63,43 @@
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>News Detail</h1>
+			<%
+				String contextPath = request.getContextPath();
+
+				int langId = 1;
+				try {
+					langId = (Integer) session.getAttribute("langId");
+
+				} catch (Exception e) {
+					session.setAttribute("langId", langId);
+					langId = 1;
+
+				}
+
+				if (langId == 2) {
+			%><h1>बातमी तपशील</h1>
+			<%
+				} else {
+			%><h1>News Detail</h1>
+			<%
+				}
+			%>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+			<%
+				if (langId == 2) {
+			%><a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ </a> > <a
+				href="${pageContext.request.contextPath}/listOFNews/1">बातम्या</a>
+			<%
+				} else {
+			%><a href="${pageContext.request.contextPath}/">Home</a> > <a
 				href="${pageContext.request.contextPath}/listOFNews/1">News List</a>
-			>
+			<%
+				}
+			%>
+
 
 		</div>
 	</div>
@@ -92,8 +121,8 @@
 						<p>${image.descriptions}</p>
 
 						<div>
-							Source Link : <a href="${image.newsSourceUrlName}" target="_blank">
-							${image.newsSourceUrlName}</a>
+							Source Link : <a href="${image.newsSourceUrlName}"
+								target="_blank"> ${image.newsSourceUrlName}</a>
 						</div>
 
 					</div>

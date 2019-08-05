@@ -85,16 +85,43 @@
 
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>Events</h1>
+			<%
+				String contextPath = request.getContextPath();
+
+				int langId = 1;
+				try {
+					langId = (Integer) session.getAttribute("langId");
+
+				} catch (Exception e) {
+					session.setAttribute("langId", langId);
+					langId = 1;
+
+				}
+
+				if (langId == 2) {
+			%><h1>कार्यक्रम</h1>
+			<%
+				} else {
+			%><h1>Events</h1>
+			<%
+				}
+			%>
+
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> >
-			<%-- <a
-				href="${pageContext.request.contextPath}/listOFEvent/1"> --%>
-			Event List
-			<!-- </a>  -->
+			<%
+				if (langId == 2) {
+			%><a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ </a> >
+			कार्यक्रम यादी
+			<%
+				} else {
+			%><a href="${pageContext.request.contextPath}/">Home</a> > Event List
+			<%
+				}
+			%>
+
 			>
 		</div>
 	</div>
@@ -117,9 +144,21 @@
 									class="icon-smartphone-call"></i> <strong>Contact: </strong>+91
 									${eventList.eventContactNumber}</span>
 							</p>
-							<a
+
+							<%
+								if (langId == 2) {
+							%><a
+								href="${pageContext.request.contextPath}/eventDetailfront/${eventList.exVar1}">सविस्तर
+								वाचा</a>
+							<%
+								} else {
+							%><a
 								href="${pageContext.request.contextPath}/eventDetailfront/${eventList.exVar1}">Read
 								More</a>
+							<%
+								}
+							%>
+
 						</div>
 					</div>
 					<c:set var="find" value="1"></c:set>

@@ -72,14 +72,44 @@
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>Event Detail</h1>
+			<%
+				String contextPath = request.getContextPath();
+
+				int langId = 1;
+				try {
+					langId = (Integer) session.getAttribute("langId");
+
+				} catch (Exception e) {
+					session.setAttribute("langId", langId);
+					langId = 1;
+
+				}
+
+				if (langId == 2) {
+			%><h1>कार्यक्रम तपशील</h1>
+			<%
+				} else {
+			%><h1>Event Detail</h1>
+			<%
+				}
+			%>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+			<%
+				if (langId == 2) {
+			%><a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ </a> > <a
+				href="${pageContext.request.contextPath}/listOFEvent/1">
+				कार्यक्रम यादी</a>
+			<%
+				} else {
+			%><a href="${pageContext.request.contextPath}/">Home</a> > <a
 				href="${pageContext.request.contextPath}/listOFEvent/1">Event
-				List</a> >
+				List</a>
+			<%
+				}
+			%>
 		</div>
 	</div>
 

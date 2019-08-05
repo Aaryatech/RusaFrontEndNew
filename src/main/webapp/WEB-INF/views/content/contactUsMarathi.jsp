@@ -75,7 +75,7 @@ msg-error {
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+			<a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ</a> > <a
 				href="${pageContext.request.contextPath}/ContactUs">आमच्याशी
 				संपर्क साधा</a>
 		</div>

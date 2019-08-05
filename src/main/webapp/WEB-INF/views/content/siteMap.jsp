@@ -31,7 +31,7 @@
 <meta name="description"
 	content="${sessionScope.homePageMetaData.metaDescription}">
 <meta name="author"
-	content="${sessionScope.homePageMetaData.metaAuthor}"> 
+	content="${sessionScope.homePageMetaData.metaAuthor}">
 <title>${sessionScope.homePageMetaData.siteTitle}</title>
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 <style>
@@ -47,13 +47,42 @@
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>Site Map</h1>
+			<%
+				String contextPath = request.getContextPath();
+
+				int langId = 1;
+				try {
+					langId = (Integer) session.getAttribute("langId");
+
+				} catch (Exception e) {
+					session.setAttribute("langId", langId);
+					langId = 1;
+
+				}
+
+				if (langId == 2) {
+			%><h1>साइट नकाशा</h1>
+			<%
+				} else {
+			%><h1>Site Map</h1>
+			<%
+				}
+			%>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+			<%
+				if (langId == 2) {
+			%><a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ </a> > <a
+				href="${pageContext.request.contextPath}/siteMap">साइट नकाशा</a>
+			<%
+				} else {
+			%><a href="${pageContext.request.contextPath}/">Home</a> > <a
 				href="${pageContext.request.contextPath}/siteMap">Site Map</a>
+			<%
+				}
+			%>
 
 		</div>
 	</div>
@@ -336,11 +365,27 @@
 			</div>  --%>
 
 			<div class="col-12 col-sm-12 col-lg-12 right-Colm">
-				<h2>Site Map</h2>
+				<%
+					if (langId == 2) {
+				%><h2>साइट नकाशा</h2>
+				<%
+					} else {
+				%><h2>Site Map</h2>
+				<%
+					}
+				%>
 
 
 				<ul class="sitemap">
-					<li><a href="${pageContext.request.contextPath}/">Home</a></li>
+					<li>
+						<%
+							if (langId == 2) {
+						%> <a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ</a> <%
+ 	} else {
+ %><a href="${pageContext.request.contextPath}/">Home</a> <%
+ 	}
+ %>
+					</li>
 
 					<c:forEach items="${sessionScope.menuList.sectionlist}"
 						var="menuList">

@@ -92,8 +92,19 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
-				href="${pageContext.request.contextPath}/imgGallary?name=${slugname}">Back</a>
+			<%
+				if (langId == 2) {
+			%><a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ </a> > <a
+				href="${pageContext.request.contextPath}/imgGallary?name=${slugname}">फोटो
+				गॅलरी</a>
+			<%
+				} else {
+			%><a href="${pageContext.request.contextPath}/">Home</a> > <a
+				href="${pageContext.request.contextPath}/imgGallary?name=${slugname}">Photo
+				Gallery</a>
+			<%
+				}
+			%>
 		</div>
 	</div>
 

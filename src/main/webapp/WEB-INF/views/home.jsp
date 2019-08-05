@@ -140,13 +140,42 @@
 								alt="">--%>
 						</div>
 						<c:set var="string1" value="${getCMSDesc.pageDesc}" />
-						<c:set var="string2" value="${fn:substring(string1, 0, 250)}" />
+						<%
+							int langId = 1;
+								try {
+									langId = (Integer) session.getAttribute("langId");
+
+								} catch (Exception e) {
+									session.setAttribute("langId", langId);
+									langId = 1;
+								}
+						%>
+						<%
+							if (langId == 2) {
+						%><c:set var="string2" value="${fn:substring(string1, 0, 270)}" />
+						<%
+							} else {
+						%><c:set var="string2" value="${fn:substring(string1, 0, 250)}" />
+						<%
+							}
+						%>
+
 						<h2>${getCMSDesc.heading}</h2>
 						<p>${string2}</p>
 						<div class="more" style="clear: both">
-							<a
+							<%
+								if (langId == 2) {
+							%><a
+								href="${pageContext.request.contextPath}/info/${getCMSDesc.pageSlug}">सविस्तर
+								वाचा</a>
+							<%
+								} else {
+							%><a
 								href="${pageContext.request.contextPath}/info/${getCMSDesc.pageSlug}">Read
-								More </a>
+								More</a>
+							<%
+								}
+							%>
 						</div>
 					</div>
 
@@ -234,9 +263,19 @@
 
 						</div>
 					</div>
-
-					<a href="${pageContext.request.contextPath}/listOFEvent/1">Read
+					<%
+						if (langId == 2) {
+					%><a href="${pageContext.request.contextPath}/listOFEvent/1">सविस्तर
+						वाचा</a>
+					<%
+						} else {
+					%><a href="${pageContext.request.contextPath}/listOFEvent/1">Read
 						More</a>
+					<%
+						}
+					%>
+					<%-- <a href="${pageContext.request.contextPath}/listOFEvent/1">Read
+						More</a> --%>
 
 				</div>
 			</div>
@@ -444,9 +483,21 @@
 							</div>
 							<h4>${fn:substring(newsBlogsList.heading, 0, 80)}</h4>
 							<p>${fn:substring(newsBlogsList.descriptions, 0, 80)}</p>
-							<a
+							<%
+								if (langId == 2) {
+							%><a
+								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.exVar1}">सविस्तर
+								वाचा</a>
+							<%
+								} else {
+							%><a
 								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.exVar1}">Read
 								More</a>
+							<%
+								}
+							%><%-- <a
+								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.exVar1}">Read
+								More</a> --%>
 						</div>
 					</div>
 				</c:forEach>
@@ -490,17 +541,19 @@
 
 	<div class="testimonials">
 		<div class="container">
-			<h5><%
-						if (langId == 2) {
-					%>
-					<span>प्रशंसापत्र</span>
-					<%
-						} else {
-					%>
-					<span>Testimonials</span>
-					<%
-						}
-					%></h5>
+			<h5>
+				<%
+					if (langId == 2) {
+				%>
+				<span>प्रशंसापत्र</span>
+				<%
+					} else {
+				%>
+				<span>Testimonials</span>
+				<%
+					}
+				%>
+			</h5>
 			<div id="carouselExampleControls2" class="carousel slide"
 				data-ride="carousel">
 				<div class="carousel-inner">

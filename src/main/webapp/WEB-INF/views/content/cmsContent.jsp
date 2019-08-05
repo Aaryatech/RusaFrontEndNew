@@ -59,7 +59,29 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > <a
+
+			<%
+				String contextPath = request.getContextPath();
+
+				int langId = 1;
+				try {
+					langId = (Integer) session.getAttribute("langId");
+
+				} catch (Exception e) {
+					session.setAttribute("langId", langId);
+					langId = 1;
+
+				}
+
+				if (langId == 2) {
+			%><a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ </a>
+			<%
+				} else {
+			%><a href="${pageContext.request.contextPath}/">Home</a>
+			<%
+				}
+			%>
+			> <a
 				href="${pageContext.request.contextPath}/info/${pageContent.slugName}">${pageContent.pageName}</a>
 			>
 		</div>
@@ -676,7 +698,7 @@
 				<!-- <h2 style="text-align: center;">No Record Found</h2> -->
 
 				<%
-					int langId = 1;
+				 
 						try {
 							langId = (Integer) session.getAttribute("langId");
 

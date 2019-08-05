@@ -85,17 +85,42 @@
 
 	<div class="inner-slider" id="slider">
 		<div class="container">
-			<h1>News</h1>
+			<%
+				String contextPath = request.getContextPath();
+
+				int langId = 1;
+				try {
+					langId = (Integer) session.getAttribute("langId");
+
+				} catch (Exception e) {
+					session.setAttribute("langId", langId);
+					langId = 1;
+
+				}
+
+				if (langId == 2) {
+			%><h1>बातम्या</h1>
+			<%
+				} else {
+			%><h1>News</h1>
+			<%
+				}
+			%>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> >
-			<%-- <a
-				href="${pageContext.request.contextPath}/listOFNews/1"> --%>
-			News List
-			<!-- </a> -->
-			>
+			<%
+				if (langId == 2) {
+			%><a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ </a> >
+			बातम्या
+			<%
+				} else {
+			%><a href="${pageContext.request.contextPath}/">Home</a> > News List
+			<%
+				}
+			%>
+
 		</div>
 	</div>
 	<div class="container" id="main-content">
@@ -131,10 +156,20 @@
 						<div class="col-12 col-sm-9 col-lg-9">
 							<strong> ${newsBlogsList.heading}</strong><br>
 							<p style="text-align: justify;">${fn:substring(newsBlogsList.descriptions, 0, 500)}</p>
-
-							<a
+							<%
+								if (langId == 2) {
+							%><a
+								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.exVar1}">सविस्तर
+								वाचा</a>
+							<%
+								} else {
+							%><a
 								href="${pageContext.request.contextPath}/NewsDetails/${newsBlogsList.exVar1}">Read
 								More</a>
+							<%
+								}
+							%>
+							 
 						</div>
 					</div>
 					<c:set var="find" value="1"></c:set>

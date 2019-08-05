@@ -105,15 +105,22 @@
 				Photo Gallery
 				<%
 					}
-				%> 
+				%>
 			</h1>
 		</div>
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home></a>
-			<%-- <a
-				href="${pageContext.request.contextPath}/eventList">Events</a> > --%>
+			<%
+				if (langId == 2) {
+			%><a href="${pageContext.request.contextPath}/">मुख्य पृष्ठ </a> >
+			<%
+				} else {
+			%><a href="${pageContext.request.contextPath}/">Home</a> >
+			<%
+				}
+			%>
+
 		</div>
 	</div>
 	<div class="container" id="main-content">
