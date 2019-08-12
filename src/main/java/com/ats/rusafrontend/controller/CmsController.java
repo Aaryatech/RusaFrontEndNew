@@ -258,7 +258,8 @@ public class CmsController {
 
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("sectionId", setting.getKeyValues());
-				GetCategory[] category = Constant.getRestTemplate().postForObject(Constant.url + "/getAllCatIdBySectionIdOrderByDesc", map,
+				map.add("langId", langId);
+				GetCategory[] category = Constant.getRestTemplate().postForObject(Constant.url + "/getAllCatIdBySectionIdAndLangIdOrderByDesc", map,
 						GetCategory[].class);
 				List<GetCategory> categoryList = new ArrayList<GetCategory>(Arrays.asList(category));
 				model.addObject("rusaList", categoryList);
