@@ -127,20 +127,47 @@
 					</ul>
 				</div>
 				<div class="tab-content">
-
-					<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
+				
+				
+				<%
+				if (langId == 2) {
+			%><ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
 						role="tablist">
 
 
 
 						<li class="nav-item"><a class="nav-link active show"
-							data-toggle="tab" href="#photos"><span
+							data-toggle="tab" href="#photos">
+							
+							<span
+								class="icon-frame-landscape icon"></span>प्रतिमा </a></li>
+						<li class="nav-item"><a class="nav-link" data-toggle="tab"
+							href="#videos"><span class="icon-video-camera icon"></span>
+								व्हिडिओ </a></li>
+
+					</ul>
+			<%
+				} else {
+			%><ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
+						role="tablist">
+
+
+
+						<li class="nav-item"><a class="nav-link active show"
+							data-toggle="tab" href="#photos">
+							
+							<span
 								class="icon-frame-landscape icon"></span> Photos</a></li>
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#videos"><span class="icon-video-camera icon"></span>
 								Videos</a></li>
 
 					</ul>
+			<%
+				}
+			%>
+
+					
 					<div id="photos" class="tab-pane active show">
 						<div class="row">
 

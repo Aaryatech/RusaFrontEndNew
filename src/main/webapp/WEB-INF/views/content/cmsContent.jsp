@@ -314,11 +314,19 @@
 				<c:set var="find" value="1"></c:set>
 			</c:if>
 
+
+
+
 			<c:if test="${pageContent.faqContentList.size()>0}">
-				<h2>FAQ's</h2>
-
-
-
+				<%
+					if (langId == 2) {
+				%><h5>साधरण प्रश्न</h5>
+				<%
+					} else {
+				%><h2>FAQ's</h2>
+				<%
+					}
+				%>
 
 				<div id="accordion" class="accordion">
 
@@ -345,7 +353,16 @@
 			</c:if>
 
 			<c:if test="${pageContent.documentUploadList.size()>0}">
-				<h5>Downloads</h5>
+				<%
+					if (langId == 2) {
+				%><h5>डाउनलोड</h5>
+				<%
+					} else {
+				%><h5>Downloads</h5>
+				<%
+					}
+				%>
+
 
 				<c:forEach items="${pageContent.documentUploadList}"
 					var="documentUploadList">
@@ -698,8 +715,7 @@
 				<!-- <h2 style="text-align: center;">No Record Found</h2> -->
 
 				<%
-				 
-						try {
+					try {
 							langId = (Integer) session.getAttribute("langId");
 
 						} catch (Exception e) {

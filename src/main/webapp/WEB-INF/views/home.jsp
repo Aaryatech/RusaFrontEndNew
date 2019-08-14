@@ -523,14 +523,46 @@
 				<div class="border-box bootom-box">
 					<div class="btn-group">
 						<!--  <button class="btn btn-primary button btn-calendar prev" data-calendar-nav="prev">< Prev </button> -->
-						<button class="btn btn-default button btn-calendar today"
+						
+						<%
+						if (langId == 2) {
+					%>
+					<button class="btn btn-default button btn-calendar today"
+							data-calendar-nav="today">आज</button>
+					<%
+						} else {
+					%>
+					<button class="btn btn-default button btn-calendar today"
 							data-calendar-nav="today">Today</button>
+					<%
+						}
+					%>
+						
+						
+						
+						
+						
+						
+						
+						
 						<!--   <button class="btn btn-primary button btn-calendar next" data-calendar-nav="next">Next ></button> -->
 					</div>
 					<h3></h3>
 					<div id="calendar"></div>
+					<%
+						if (langId == 2) {
+					%>
+					<a href="${pageContext.request.contextPath}/listOFEvent/1">
+						सर्व कार्यक्रम पहा</a>
+					<%
+						} else {
+					%>
 					<a href="${pageContext.request.contextPath}/listOFEvent/1">See
 						All Events</a>
+					<%
+						}
+					%>
+
 				</div>
 			</div>
 
