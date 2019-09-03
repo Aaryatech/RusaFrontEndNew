@@ -560,7 +560,7 @@ overflow: hidden;
 	float: left;
 }
 .testimonials {
-	padding:100px 0px;
+	padding:50px 0px;
 	background:url(../images/watermark.jpg) repeat;
 	text-align: center;
 	margin:50px 0px 0px 0px;
@@ -572,15 +572,21 @@ overflow: hidden;
 	font-weight: 600;
 	margin:0px 0px 30px 0px;
 }
+
+.testimonials .carousel{
+	height: 360px;
+}
 .testimonials .carousel-control-next {
 	width: 50px;
 height: 50px;
+    top: 44%;
 border-radius: 50%;
 background: #334995;
 }
 .testimonials .carousel-control-prev {
 	width: 50px;
 height: 50px;
+    top: 44%;
 border-radius: 50%;
 background: #334995;
 }
