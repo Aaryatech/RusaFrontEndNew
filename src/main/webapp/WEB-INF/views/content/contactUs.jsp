@@ -94,9 +94,12 @@ msg-error {
 
 					<div class="col-12 col-sm-12 col-lg-6">
 						<h2>Rashtriya Uchchatar Shiksha Abhiyan</h2>
-						<p>State Project Directorate (SPD), Rashtriya Uchchatar
-							Shiksha Abhiyan (RUSA) Maharashtra, 18th Floor, Centre 1, World
-							Trade Centre, Cuffe Parade, Colaba, Mumbai - 400005.</p>
+						<p>
+							State Project Directorate (SPD), Rashtriya Uchchatar Shiksha
+							Abhiyan (RUSA) Maharashtra, 18th Floor, Centre 1, World Trade
+							Centre, Cuffe Parade, Colaba, Mumbai - 400005.<br> Email Id:
+							spdrusamah@gmail.com<br>Contact no: 022-22160959
+						</p>
 						<!-- <iframe class="map"
 							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60304.577356534086!2d72.89611441799786!3d19.149897683543813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86e528cb077%3A0xbeb39574202b3e0e!2sRusa+International!5e0!3m2!1sen!2sin!4v1549861576012"
 							style="border: 0" allowfullscreen="" width="100%" height="540"

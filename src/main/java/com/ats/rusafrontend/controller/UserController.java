@@ -495,7 +495,7 @@ public class UserController {
 
 			if(error==false) {
 				Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", registration, Registration.class);
-				return "redirect:/ verifyOtp /" + uuid;
+				return "redirect:/verifyOtp/"+uuid;
 			}else {
 				session.setAttribute("errorMsg", "Failed To Register");
 				return "redirect:/registration"; 
