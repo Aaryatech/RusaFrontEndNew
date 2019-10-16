@@ -34,9 +34,8 @@
 						</div>
 					</c:otherwise>
 				</c:choose>
-
+				<div class="user-name wordwrap">${sessionScope.info.name}</div>
 				<div class="fileUpload btn">
-					<div class="user-name wordwrap">${sessionScope.info.name}</div>
 
 					<%
 						String mapping = (String) session.getAttribute("mapping");
@@ -108,8 +107,9 @@
 					}
 				%><a onclick="checkMaintainance()" title="Change Password"
 				href="${pageContext.request.contextPath}/changePass">Change
-					Password</a></li>
-					
+					Password</a>
+			</li>
+
 			<%
 				if (mapping.equals("documentUpload")) {
 			%>
@@ -123,7 +123,8 @@
 					}
 				%><a onclick="checkMaintainance()" title="Upload Document"
 				href="${pageContext.request.contextPath}/documentUpload">Upload
-					Document</a></li>
+					Document</a>
+			</li>
 			<li><a onclick="checkMaintainance()" title="Logout"
 				href="${pageContext.request.contextPath}/logout">Logout</a></li>
 		</ul>
