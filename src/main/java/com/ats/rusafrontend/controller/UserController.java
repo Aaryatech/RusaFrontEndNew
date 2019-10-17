@@ -133,7 +133,7 @@ public class UserController {
 						session.setAttribute("UserDetail", verify.getRegId()); 
 						session.setAttribute("userInfo", verify);
 						session.setAttribute("userType", (Integer) verify.getUserType());
-						
+						session.setAttribute("langId", langId);
 						
 						int file = Integer.parseInt(EmailUtility.DecodeKey(request.getParameter("file")));
 						

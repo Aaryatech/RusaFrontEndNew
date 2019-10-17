@@ -349,11 +349,9 @@
 								readonly>
 						</div>
 
-						<div class="col-12 col-sm-12 col-lg-6">
-							<label>Institute Name </label> <input type="text"
-								class="form-control" name="uniinstitute"
-								placeholder="Institute Name" id="uniinstitute" readonly>
-						</div>
+						<input type="hidden" class="form-control" name="uniinstitute"
+							placeholder="Institute Name" id="uniinstitute" readonly>
+
 
 
 						<div class="col-12 col-sm-12 col-lg-6">
@@ -443,8 +441,7 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/js/chosen.jquery.min.js"
 		type="text/javascript"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/init.js"
+	<script src="${pageContext.request.contextPath}/resources/js/init.js"
 		type="text/javascript" charset="utf-8"></script>
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
 
@@ -953,7 +950,7 @@
 
 			$.post('${getInstituteList}', {
 
-				uniId : university, 
+				uniId : university,
 				ajax : 'true',
 
 			}, function(data) {

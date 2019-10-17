@@ -86,7 +86,7 @@
 
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
-			  <jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
+			<jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
 
 			<div class="col-12 col-sm-12 col-lg-9">
 				<div class="right-Colm news-listing-page">
@@ -125,8 +125,12 @@
 								<label>Full Name : </label>
 								<Strong>${editReg.name}</Strong>
 							</c:if>
-							<c:if test="${editReg.userType==2 || editReg.userType==3}">
+							<c:if test="${editReg.userType==2}">
 								<label>Institute Name : </label>
+								<Strong>${editReg.name}</Strong>
+							</c:if>
+							<c:if test="${editReg.userType==3}">
+								<label>University Name : </label>
 								<Strong>${editReg.name}</Strong>
 							</c:if>
 						</div>
@@ -138,9 +142,12 @@
 								<label>Institute Name : </label> <Strong>${editReg.instName}</Strong>
 							</div>
 						</c:if>
-						<div class="col-12 col-sm-12 col-lg-12">
-							<label>University Name : </label> <Strong>${editReg.uniName}</Strong>
-						</div>
+
+						<c:if test="${editReg.userType==1 || editReg.userType==2}">
+							<div class="col-12 col-sm-12 col-lg-12">
+								<label>University Name : </label> <Strong>${editReg.uniName}</Strong>
+							</div>
+						</c:if>
 						<c:if test="${editReg.userType==2 || editReg.userType==3}">
 							<div class="col-12 col-sm-12 col-lg-12">
 								<label>Authorized Person Name : </label> <Strong>${editReg.authorizedPerson}</Strong>
