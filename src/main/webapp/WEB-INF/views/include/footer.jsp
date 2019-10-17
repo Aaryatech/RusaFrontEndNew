@@ -130,8 +130,24 @@
 	</div>
 </footer>
 <div class="copy-right">
-	Copyright 2018 RUSA, Govt. of Maharashtra. | <a href="#">Disclaimer</a>
-	| <a href="#">Privacy Policy</a>
+	<%
+		if (langId == 2) {
+	%><p>© हे रुसा महाराष्ट्र चे अधिकृत संकेतस्थळ आहे. सर्व हक्क
+		सुरक्षित.</p>
+	<%
+		} else {
+	%>
+	<p>© This is the official website of RUSA Maharashtra. All Rights
+		Reserved.</p>
+	<%
+		}
+	%>
+
+	<p>
+		Copyright 2018 RUSA, Govt. of Maharashtra. | <a href="#">Disclaimer</a>
+		| <a href="#">Privacy Policy</a>
+	</p>
+
 	<p>
 		Design & Developed By: <a href="http://aaryatechindia.in/atsuc/"
 			target="_blank">Aaryatech Solutions</a>
