@@ -116,8 +116,10 @@
 
 					<input type="hidden" class="form-control" name="type" id="type"
 						value="${editReg.userType}">
-					<form action="${pageContext.request.contextPath}/submitUploadDocForm" method="post"
-						name="login_form" id="submitForm" enctype="multipart/form-data">
+					<form
+						action="${pageContext.request.contextPath}/submitUploadDocForm"
+						method="post" name="login_form" id="submitForm"
+						enctype="multipart/form-data">
 
 						<input type="hidden" name="userType" value="${editReg.userType}">
 
@@ -147,6 +149,8 @@
 							<label>Select Document <span class="text-danger">*</span>
 							</label> <input type="file" class="form-control" name="docName"
 								id="docName">
+							<p class="error-msg">* Only .pdf,.xlsx,.csv,.text,.docx
+								document</p>
 							<p class="error-msg" id="error_docName" style="display: none;">Required
 								Field.</p>
 						</div>
@@ -177,7 +181,8 @@
 										<td>${count.index+1}</td>
 										<td>${uploadDocumentlist.title}</td>
 										<td>${uploadDocumentlist.typeName}</td>
-										<td><a href="${frontDocUrl}${uploadDocumentlist.fileName}"
+										<td><a
+											href="${frontDocUrl}${uploadDocumentlist.fileName}"
 											target="_blank">Download</a></td>
 										<td style="text-align: right;">${uploadDocumentlist.extraVarchar1}</td>
 									</tr>

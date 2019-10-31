@@ -274,6 +274,16 @@
 
 							</div>
 
+							<c:if test="${editReg.userType==2 || editReg.userType==3}">
+								<div class="col-12 col-sm-12 col-lg-6">
+									<label>Phone No. </label> <input type="text"
+										class="form-control" name="phoneNo" onchange="trim(this)"
+										value="${editReg.exVar2}" placeholder="Phone No" id="phoneNo">
+									<p class="error-msg" id="error_phoneNo" style="display: none;">Required
+										Field.</p>
+								</div>
+							</c:if>
+
 							<div class="col-12 col-sm-12 col-lg-6">
 								<label>Alternate Email-ID</label> <input type="text"
 									class="form-control" value="${editReg.alternateEmail}"
@@ -459,11 +469,24 @@
 
 			if (type != 1) {
 				$("#error_cAuthour").hide();
+				$("#error_phoneNo").hide();
+
 				if (!$("#cAuthour").val()) {
 
 					isError = true;
 
 					$("#error_cAuthour").show();
+
+				}
+
+				if ($("#phoneNo").val() != ""
+						&& !validateMobile($("#phoneNo").val())) {
+
+					isError = true;
+
+					document.getElementById("error_phoneNo").innerHTML = "Enter valid Phone No.";
+
+					$("#error_phoneNo").show()
 
 				}
 

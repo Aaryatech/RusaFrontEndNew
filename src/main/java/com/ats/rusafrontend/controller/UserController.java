@@ -420,7 +420,8 @@ public class UserController {
 				String collegeMobile = request.getParameter("instiMobile"); 
 				String instiEmail = request.getParameter("instiEmail");
 				String instialtEmail = request.getParameter("instialtEmail");
-				 
+				String instiPhone = request.getParameter("instiPhone"); 
+				
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("asheCode", instiaisheCode); 
 				InstituteInfo instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
@@ -437,6 +438,7 @@ public class UserController {
 					registration.setCollegeName(String.valueOf(instituteInfo.getMhInstId()));
 					registration.setDepartmentName(collegeDept);
 					registration.setDesignationName(designation);
+					registration.setExVar2(instiPhone);
 					registration.setUserType(2); 
 				}else {
 					error=true;
@@ -453,7 +455,8 @@ public class UserController {
 				String uniMobile = request.getParameter("uniMobile"); 
 				String uniEmail = request.getParameter("uniEmail"); 
 				String unialtEmail = request.getParameter("unialtEmail");
-				 
+				String uniPhone = request.getParameter("uniPhone");
+				
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("asheCode", uniaisheName); 
 				InstituteInfo instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
@@ -470,6 +473,7 @@ public class UserController {
 					registration.setAuthorizedPerson(uniAuthour);
 					registration.setDepartmentName(uniDept);
 					registration.setDesignationName(uniDes);
+					registration.setExVar2(uniPhone);
 					registration.setUserType(3);
 					 
 				}else {

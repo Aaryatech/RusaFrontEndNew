@@ -272,8 +272,8 @@
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Institute Name </label> <input type="text"
-								class="form-control" name="institute" placeholder="Institute Name"
-								id="institute" readonly>
+								class="form-control" name="institute"
+								placeholder="Institute Name" id="institute" readonly>
 						</div>
 
 						<div class="col-12 col-sm-12 col-lg-6">
@@ -304,16 +304,23 @@
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="instiMobile"
-								onchange="checkUnique(this.value,1,2)" maxlength="10"
+								onchange="trim(this);checkUnique(this.value,1,2)" maxlength="10"
 								placeholder="Mobile No." id="instiMobile">
 							<p class="error-msg" id="error_instiMobile"
 								style="display: none;">Required Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Phone No. </label> <input type="text" class="form-control"
+								name="instiPhone" maxlength="10" placeholder="Phone No."
+								id="instiPhone" onchange="trim(this)">
+							<p class="error-msg" id="error_instiPhone" style="display: none;">Required
+								Field.</p>
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="instiEmail"
-								onchange="checkUnique(this.value,2,2)" placeholder="Email"
-								id="instiEmail">
+								onchange="trim(this);checkUnique(this.value,2,2)"
+								placeholder="Email" id="instiEmail">
 							<p class="error-msg" id="error_instiEmail" style="display: none;">Required
 								Field.</p>
 						</div>
@@ -384,16 +391,23 @@
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Mobile No.<span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="uniMobile"
-								onchange="checkUnique(this.value,1,3)" maxlength="10"
+								onchange="trim(this);checkUnique(this.value,1,3)" maxlength="10"
 								placeholder="Mobile No." id="uniMobile">
 							<p class="error-msg" id="error_uniMobile" style="display: none;">Required
 								Field.</p>
 						</div>
 						<div class="col-12 col-sm-12 col-lg-6">
+							<label>Phone No. </label> <input type="text" class="form-control"
+								name="uniPhone" onchange="trim(this)" maxlength="10"
+								placeholder="Phone No." id="uniPhone">
+							<p class="error-msg" id="error_uniPhone" style="display: none;">Required
+								Field.</p>
+						</div>
+						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Email-ID <span class="text-danger">*</span></label> <input
 								type="text" class="form-control" name="uniEmail"
-								onchange="checkUnique(this.value,2,3)" placeholder="Email"
-								id="uniEmail">
+								onchange="trim(this);checkUnique(this.value,2,3)"
+								placeholder="Email" id="uniEmail">
 							<p class="error-msg" id="error_uniEmail" style="display: none;">Required
 								Field.</p>
 						</div>
@@ -708,6 +722,7 @@
 				$("#error_cAuthour").hide();
 				$("#error_instiEmail").hide();
 				$("#error_instialtEmail").hide();
+				$("#error_instiPhone").hide();
 
 				if (!$("#instiaisheCode").val()) {
 
@@ -774,6 +789,17 @@
 
 				}
 
+				if ($("#instiPhone").val() != ""
+						&& !validateMobile($("#instiPhone").val())) {
+
+					isError = true;
+
+					document.getElementById("error_instiPhone").innerHTML = "Enter valid Phone No.";
+
+					$("#error_instiPhone").show();
+
+				}
+
 				if (!$("#instiEmail").val()
 						|| !validateEmail($("#instiEmail").val())) {
 
@@ -816,6 +842,7 @@
 				$("#error_uniMobile").hide();
 				$("#error_uniEmail").hide();
 				$("#error_unialtEmail").hide();
+				$("#error_uniPhone").hide();
 
 				if (!$("#uniaisheName").val()) {
 
@@ -867,6 +894,17 @@
 					}
 
 					$("#error_uniMobile").show();
+
+				}
+
+				if ($("#uniPhone").val() != ""
+						&& !validateMobile($("#uniPhone").val())) {
+
+					isError = true;
+
+					document.getElementById("error_uniPhone").innerHTML = "Enter valid Phone No.";
+
+					$("#error_uniPhone").show();
 
 				}
 
