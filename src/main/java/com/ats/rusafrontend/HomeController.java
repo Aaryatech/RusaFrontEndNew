@@ -549,6 +549,24 @@ public class HomeController {
 			map.add("key", "website_visitor_hit");
 			info = Constant.getRestTemplate().postForObject(Constant.url + "/updateCouunt", map, Info.class);
 
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "searchData");
+			int langId = (Integer) session.getAttribute("langId");
+
+			if (langId == 2) {
+				info.setMsg(info.getMsg().replace("1", "१"));
+				info.setMsg(info.getMsg().replace("2", "२"));
+				info.setMsg(info.getMsg().replace("3", "३"));
+				info.setMsg(info.getMsg().replace("4", "४"));
+				info.setMsg(info.getMsg().replace("5", "५"));
+				info.setMsg(info.getMsg().replace("6", "६"));
+				info.setMsg(info.getMsg().replace("7", "७"));
+				info.setMsg(info.getMsg().replace("8", "८"));
+				info.setMsg(info.getMsg().replace("9", "९"));
+				info.setMsg(info.getMsg().replace("0", "०"));
+			}
+
+			//
 		} catch (Exception e) {
 			e.printStackTrace();
 			info.setError(true);
