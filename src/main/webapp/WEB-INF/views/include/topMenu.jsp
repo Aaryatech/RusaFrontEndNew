@@ -16,25 +16,33 @@
 	<div class="navbar navbar-expand-md menusats">
 		<%--  --%>
 		<div class="container headerlogo">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}/"><img
-				src="${logoUrl}${logo.logoMain}" alt="" class="websitelogo"></a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/">
+				<%
+					String contextPath = request.getContextPath();
+
+					int langId = 1;
+					try {
+						langId = (Integer) session.getAttribute("langId");
+
+					} catch (Exception e) {
+						session.setAttribute("langId", langId);
+						langId = 1;
+					}
+					if (langId == 2) {
+				%> <img src="${logoUrl}${logo.logo2}" alt="" class="websitelogo">
+				<%
+					} else {
+				%> <img src="${logoUrl}${logo.logoMain}" alt="" class="websitelogo">
+				<%
+					}
+				%>
+			</a>
 
 			<div class="navbar-collapse justify-content-md-end">
 				<form class="form-inline my-2 my-md-0 search-section"
 					action="${pageContext.request.contextPath}/searchData" method="get">
 
 					<%
-						String contextPath = request.getContextPath();
-
-						int langId = 1;
-						try {
-							langId = (Integer) session.getAttribute("langId");
-
-						} catch (Exception e) {
-							session.setAttribute("langId", langId);
-							langId = 1;
-
-						}
 						if (langId == 2) {
 					%><input class="form-control" type="text" placeholder="शोधा "
 						name="word" value="${seachSentence}">
