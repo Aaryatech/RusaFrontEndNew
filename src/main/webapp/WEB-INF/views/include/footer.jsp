@@ -144,14 +144,23 @@
 	%>
 
 	<p>
-		Copyright 2018 RUSA, Govt. of Maharashtra. | <a href="#"> <%
- 	if (langId == 2) {
- %> उत्तरदायित्वास नकार आणि धोरणे<%
- 	} else {
- %> Disclaimer and Privacy Policy<%
- 	}
- %>
-		</a>
+		Copyright 2018 RUSA, Govt. of Maharashtra. |
+		<%
+		if (langId == 2) {
+	%>
+		<a href="${pageContext.request.contextPath}/privacyPolicy">उत्तरदायित्वास
+			नकार आणि धोरणे</a> | <a
+			href="${pageContext.request.contextPath}/accessibility">वापरसुलभता</a>
+		<%
+			} else {
+		%>
+		<a href="${pageContext.request.contextPath}/privacyPolicy">Disclaimer
+			and Privacy Policy</a> | <a
+			href="${pageContext.request.contextPath}/accessibility">Accessibility</a>
+		<%
+			}
+		%>
+
 	</p>
 
 	<p>
