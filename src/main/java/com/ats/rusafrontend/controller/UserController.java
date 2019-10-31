@@ -789,7 +789,8 @@ public class UserController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", langId);
-				NewsDetails[] upcoming = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+				map1.add("userId", userDetail);
+				NewsDetails[] upcoming = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEventsWithIsApply", map1,
 						NewsDetails[].class);
 				List<NewsDetails> upcomingList = new ArrayList<NewsDetails>(Arrays.asList(upcoming));
 

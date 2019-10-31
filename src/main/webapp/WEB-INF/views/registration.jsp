@@ -138,7 +138,7 @@
 								<div class="col-12 col-sm-6 col-lg-3">
 									<input type="radio" name="formType" value="2" id="userType2"
 										onchange="showForm(2)"> <label for="userType2"></label>
-									<span>Institute</span>
+									<span>College</span>
 								</div>
 
 								<div class="col-12 col-sm-6 col-lg-3">
@@ -272,7 +272,7 @@
 
 						<div class="col-12 col-sm-12 col-lg-6">
 							<label>Institute Name </label> <input type="text"
-								class="form-control" name="institute" placeholder="College Name"
+								class="form-control" name="institute" placeholder="Institute Name"
 								id="institute" readonly>
 						</div>
 
@@ -356,7 +356,8 @@
 
 						<div class="col-12 col-sm-12 col-lg-6">
 
-							<label>Authorized Person Name <span class="text-danger">*</span>
+							<label>Authorized Person Name/RUSA Coordinator <span
+								class="text-danger">*</span>
 							</label> <input type="text" class="form-control" name="uniAuthour"
 								onchange="trim(this)" placeholder="Authorized Person Name"
 								id="uniAuthour">

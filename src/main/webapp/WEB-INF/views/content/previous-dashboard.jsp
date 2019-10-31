@@ -113,12 +113,14 @@
 									</tr>
 								</thead>
 								<tbody>
+
+									<c:set value="0" var="sr"></c:set>
 									<c:forEach items="${previous}" var="previous" varStatus="count">
 
 										<c:if test="${previous.apply==1}">
 											<tr class="odd">
-
-												<td>${count.index+1}</td>
+												<c:set var="sr" value="${sr+1}"></c:set>
+												<td>${sr}</td>
 												<td>${previous.heading}</td>
 												<c:choose>
 													<c:when test="${not empty previous.downloadPdf}">

@@ -56,7 +56,7 @@
 }
 </style>
 </head>
-<body  class="${contrast}">
+<body class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<%-- <jsp:include page="/WEB-INF/views/include/topBarLogin.jsp"></jsp:include> --%>
 
@@ -86,88 +86,96 @@
             </c:if> --%>
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
-		
-		<jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
-			 
+
+			<jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
+
 
 			<div class="col-12 col-sm-12 col-lg-9">
-			<div class="right-Colm news-listing-page">
-				<c:if test="${sessionScope.success != null}">
+				<div class="right-Colm news-listing-page">
+					<c:if test="${sessionScope.success != null}">
 
-					<div class="col-12 col-sm-12 col-lg-12 ">
-						<div class="alert alert-success ">
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-							<strong>Success : </strong> ${success}
+						<div class="col-12 col-sm-12 col-lg-12 ">
+							<div class="alert alert-success ">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Success : </strong> ${success}
+							</div>
 						</div>
-					</div>
-				</c:if>
-				<%
-					session.removeAttribute("success");
-				%>
-				<c:if test="${sessionScope.errorMsg != null}">
-					<div class="col-12 col-sm-12 col-lg-12 ">
-						<div class="alert alert-danger ">
-							<button type="button" class="close" data-dismiss="alert"
-								aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-							<strong>Error : </strong> ${errorMsg}
+					</c:if>
+					<%
+						session.removeAttribute("success");
+					%>
+					<c:if test="${sessionScope.errorMsg != null}">
+						<div class="col-12 col-sm-12 col-lg-12 ">
+							<div class="alert alert-danger ">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Error : </strong> ${errorMsg}
+							</div>
 						</div>
-					</div>
-				</c:if>
-				<%
-					session.removeAttribute("errorMsg");
-				%>
-				<h2>Dashboard</h2>
-				<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
-					role="tablist">
-					<li class="nav-item"><a class="nav-link active"
-						href="${pageContext.request.contextPath}/upcomingEvents"><span
-							class="icon-calendar-with-a-clock-time-tools icon"></span>
-							Upcoming Events</a></li>
+					</c:if>
+					<%
+						session.removeAttribute("errorMsg");
+					%>
+					<h2>Dashboard</h2>
+					<ul class="nav nav-tabs rusa-gallery-tab rusa-gallery-sub-tab"
+						role="tablist">
+						<li class="nav-item"><a class="nav-link active"
+							href="${pageContext.request.contextPath}/upcomingEvents"><span
+								class="icon-calendar-with-a-clock-time-tools icon"></span>
+								Upcoming Events</a></li>
 
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/previousEvents"><span
-							class="icon-calendar icon"></span> Previous Events </a></li>
-				</ul>
+						<li class="nav-item"><a class="nav-link"
+							href="${pageContext.request.contextPath}/previousEvents"><span
+								class="icon-calendar icon"></span> Previous Events </a></li>
+					</ul>
 
-				<div class="tab-content">
-					<div id="upcoming" class="tab-pane active">
-						<table align="center" cellpadding="0" cellspacing="0"
-							class="table">
-							<thead>
-								<tr>
-									<th>Sr.no</th>
-									<th>Event Name</th>
-									<th style="width: 15%;text-align: center;">Event Date</th>
-									<th>Details</th>
+					<div class="tab-content">
+						<div id="upcoming" class="tab-pane active">
+							<table align="center" cellpadding="0" cellspacing="0"
+								class="table">
+								<thead>
+									<tr>
+										<th width="7%">Sr.no</th>
+										<th style="text-align: center;">Event Name</th>
+										<th style="width: 15%; text-align: center;">Event Date</th>
+										<th style="text-align: center;" width="15%">Is Apply</th>
+										<th style="text-align: center;" width="10%">Details</th>
 
-								</tr>
-							</thead>
-							<tbody>
-
-
-								<c:forEach items="${upcoming}" var="upcoming" varStatus="count">
-									<tr class="odd">
-										<td>${count.index+1}</td>
-										<td>${upcoming.heading}</td>
-										<td style="text-align: center;">${upcoming.eventDateFrom}</td>
-										<td><a
-											href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${upcoming.exVar1}&typeId=${typeId}">Detail</a></td>
 									</tr>
-								</c:forEach>
+								</thead>
+								<tbody>
+
+
+									<c:forEach items="${upcoming}" var="upcoming" varStatus="count">
+										<tr class="odd">
+											<td>${count.index+1}</td>
+											<td>${upcoming.heading}</td>
+											<td style="text-align: center;">${upcoming.eventDateFrom}</td>
+											<td style="text-align: center;"><c:choose>
+													<c:when test="${upcoming.exInt1==1}">
+													Applied
+													</c:when>
+													<c:otherwise>
+													Not Apply</c:otherwise>
+												</c:choose></td>
+											<td><a
+												href="${pageContext.request.contextPath}/eventDetail?newsblogsId=${upcoming.exVar1}&typeId=${typeId}">Detail</a></td>
+										</tr>
+									</c:forEach>
 
 
 
-							</tbody>
-						</table>
+								</tbody>
+							</table>
 
-					</div>
+						</div>
 
-					<%--  <div id="previous" class="tab-pane"> 
+						<%--  <div id="previous" class="tab-pane"> 
                                 	 <table align="center" cellpadding="0" cellspacing="0"  class="table">
                                     <thead>
                                         <tr>
@@ -193,10 +201,10 @@
                                     </tbody>
                                     </table>	
                                 </div> --%>
-				</div>
+					</div>
 
+				</div>
 			</div>
-</div>
 
 
 

@@ -21,9 +21,32 @@
 		<div class="top-right-menu">
 			<ul>
 				<li class="hide-mobile"><a href="#main-content"
-					class="dropdown-arrow"><span>Skip to main content</span></a></li>
+					class="dropdown-arrow"><span> <%
+ 	int langId = 1;
+ 	try {
+ 		langId = (Integer) session.getAttribute("langId");
+
+ 	} catch (Exception e) {
+ 		session.setAttribute("langId", langId);
+ 		langId = 1;
+ 	}
+
+ 	if (langId == 2) {
+ %>मुख्य विषयाकडे जा <%
+ 	} else {
+ %>Skip to main content <%
+ 	}
+ %>
+					</span></a></li>
 				<li class="hide-mobile"><a href="#slider"
-					class="dropdown-arrow"><span>Skip to navigation</span></a></li>
+					class="dropdown-arrow"><span> <%
+ 	if (langId == 2) {
+ %>दिशादर्शकाकडे जा<%
+ 	} else {
+ %>Skip to navigation<%
+ 	}
+ %>
+					</span></a></li>
 				<li class="hide-mobile"><a
 					href="${pageContext.request.contextPath}/screenReader"
 					class="dropdown-arrow"><span>Screen Reader Access</span></a></li>
@@ -40,15 +63,6 @@
 
 				<%
 					String contextPath = request.getContextPath();
-
-					int langId = 1;
-					try {
-						langId = (Integer) session.getAttribute("langId");
-
-					} catch (Exception e) {
-						session.setAttribute("langId", langId);
-						langId = 1;
-					}
 
 					if (session.getAttribute("userInfo") == null) {
 
