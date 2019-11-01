@@ -47,7 +47,25 @@
  	}
  %>
 					</span></a></li>
-				<li class="hide-mobile"><a
+
+				<%
+					if (langId == 2) {
+				%><li class="hide-mobile"><a
+					href="${pageContext.request.contextPath}/screenReader"
+					class="dropdown-arrow"><span>स्क्रीन रीडर प्रवेश</span></a></li>
+				<li class="hide-mobile"><a href="javascript:void(0);"
+					class="black" data-rel="High Contrast" title="High Contrast">अ</a>
+					<a href="javascript:void(0);" class="white" data-rel="Low Contrast"
+					title="Low Contrast">अ</a></li>
+				<li class="hide-mobile"><a href="avascript:void(0);"><strong>मजकुराचा
+							आकार</strong></a> <a href="javascript:void(0);" title="Text Size: Decrease"
+					id="btn-decrease" class="decrease">अ-</a> <a
+					href="javascript:void(0);" title="Text Size: Normal" id="btn-orig"
+					class="reset">अ</a> <a href="javascript:void(0);"
+					title="Text Size: Increase" id="btn-increase" class="increase">अ+</a></li>
+				<%
+					} else {
+				%><li class="hide-mobile"><a
 					href="${pageContext.request.contextPath}/screenReader"
 					class="dropdown-arrow"><span>Screen Reader Access</span></a></li>
 				<li class="hide-mobile"><a href="javascript:void(0);"
@@ -60,6 +78,11 @@
 					href="javascript:void(0);" title="Text Size: Normal" id="btn-orig"
 					class="reset">A</a> <a href="javascript:void(0);"
 					title="Text Size: Increase" id="btn-increase" class="increase">A+</a></li>
+				<%
+					}
+				%>
+
+
 
 				<%
 					String contextPath = request.getContextPath();
