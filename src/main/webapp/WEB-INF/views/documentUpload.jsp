@@ -149,8 +149,8 @@
 							<label>Select Document <span class="text-danger">*</span>
 							</label> <input type="file" class="form-control" name="docName"
 								id="docName">
-							<p class="error-msg">* Only .pdf,.xlsx,.csv,.text,.docx
-								document</p>
+							<p class="error-msg">* Only
+								.pdf,.xlsx,.csv,.text,.docx,.jpg,.jpeg,.png,.gif document</p>
 							<p class="error-msg" id="error_docName" style="display: none;">Required
 								Field.</p>
 						</div>
@@ -244,8 +244,21 @@
 					isError = true;
 					$("#error_docName").show()
 
+				}else{
+					var validError = Validate();
+					var fileSize = (document.getElementById('docName').files[0].size)/1024/1024;
+					
+					if(validError == true && fileSize > 2){
+						 
+						document.getElementById("error_docName").innerHTML = "you can upload file less than 2MB";
+						$("#error_docName").show()
+						isError = true;
+					}else if(validError == false){
+						isError = true;
+					}
 				}
-
+				
+				
 				if (!isError) {
 
 					document.getElementById("log-btn").disabled = true;
@@ -258,5 +271,47 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+	 
+		var _validFileExtensions = [ ".pdf", ".xlsx", ".csv", ".docx",".jpg", ".jpeg", ".gif", ".png",".JPG", ".JPEG", ".GIF", ".PNG" ];
+		function Validate() {
+
+			var arrInputs = document.getElementsByTagName("input");
+			
+			for (var i = 0; i < arrInputs.length; i++) {
+				var oInput = arrInputs[i];
+				 
+				if (oInput.type == "file") { 
+					var sFileName = oInput.value;
+					if (sFileName.length > 0) {
+						var blnValid = false;
+						for (var j = 0; j < _validFileExtensions.length; j++) {
+							var sCurExtension = _validFileExtensions[j];
+							if (sFileName.substr(
+									sFileName.length - sCurExtension.length,
+									sCurExtension.length).toLowerCase() == sCurExtension
+									.toLowerCase()) {
+								blnValid = true;
+								break;
+							}
+						}
+
+						if (!blnValid) {
+							alert("Sorry, File is invalid, allowed extensions are: .pdf,.xlsx,.csv,.text,.docx,.jpg,.jpeg,.png,.gif ");
+							return false;
+						}
+					}
+				}
+			}
+
+			return true;
+		}
+	</script>
+	<script>
+		document.oncontextmenu = document.body.oncontextmenu = function() {
+			return false;
+		}
+		 
+	</script>
 </body>
 </html>

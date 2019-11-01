@@ -706,7 +706,7 @@
 	</script>
 
 	<script type="text/javascript">
-		var _validFileExtensions = [ ".jpg", ".jpeg", ".gif", ".png" ];
+		var _validFileExtensions = [ ".jpg", ".jpeg", ".gif", ".png",".JPG", ".JPEG", ".GIF", ".PNG" ];
 		function Validate() {
 
 			var arrInputs = document.getElementsByTagName("input");
