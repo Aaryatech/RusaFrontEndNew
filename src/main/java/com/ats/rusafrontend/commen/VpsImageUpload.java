@@ -18,132 +18,134 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-
 public class VpsImageUpload {
-	
-	 
-	
-	//public static final String galleryImage= "/home/devour/apache-tomcat-9.0.12/webapps/mongistoreuploads/";
-	public static final String galleryImage= "/home/lenovo/Documents/pdf/";
-	 
-	public Info saveUploadedImge(MultipartFile file,String uploadPath,String imageName,String[] allowExt,int isResize, int width, int hieght
-			, int isCheckSize, int imageSizeMax) throws IOException {
 
-				Info info = new Info();
-				
-				 try {
-					 String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-					 
-					 if ( ArrayUtils.contains( allowExt, extension ) ) {
-						
-							Path path = Paths.get(uploadPath + imageName);
-				
-							byte[] bytes = file.getBytes();
-				 
-								System.out.println("Inside Image Type =1");
-				
-								//path = Paths.get(uploadPath + imageName);
-				
-								System.out.println("Path= " + path.toString() + "" +file.getSize());
-				
-							 
-				
-							Files.write(path, bytes);
-							
-							if(isResize==1) {
-							 
-								Image img = null;
-								BufferedImage tempPNG = null;
-								 
-								File newFilePNG = null;
-								 
-						        System.out.println("File " + imageName);
-						        img = ImageIO.read(new File(uploadPath+imageName));
-						        tempPNG = resizeImage(img, width, hieght);
-						        
-						        newFilePNG = new File(uploadPath+"thumbnail"+imageName);
-						       
-						        ImageIO.write(tempPNG, extension, newFilePNG);
-						       
-								System.out.println("DONE");
-							} 
-						
-						info.setError(false);
-						info.setMsg("Upload Successfully ");
-					 }else {
-						 	info.setError(true);
-							info.setMsg("Error While Uploading Image");
-					 }
-						
-				 }catch (Exception e) {
-					 
-					e.printStackTrace();
-					info.setError(true);
-					info.setMsg("Error While Uploading Image");
-				}
-			return info;
+	// public static final String galleryImage=
+	// "/home/devour/apache-tomcat-9.0.12/webapps/mongistoreuploads/";
+	public static final String galleryImage = "/home/lenovo/Documents/pdf/";
 
-		}
-	
-	public void saveUploadedFiles(MultipartFile file, String filePath, String imageName) throws IOException {
+	public Info saveUploadedImge(MultipartFile file, String uploadPath, String imageName, String[] allowExt,
+			int isResize, int width, int hieght, int isCheckSize, int imageSizeMax) throws IOException {
 
-		 
+		Info info = new Info();
 
-			Path path = Paths.get(filePath + imageName);
+		try {
+			String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
-			byte[] bytes = file.getBytes();
+			if (ArrayUtils.contains(allowExt, extension)) {
 
-			 
+				Path path = Paths.get(uploadPath + imageName);
+
+				byte[] bytes = file.getBytes();
+
 				System.out.println("Inside Image Type =1");
 
-				path = Paths.get(filePath + imageName);
+				// path = Paths.get(uploadPath + imageName);
 
-				System.out.println("Path= " + path.toString());
- 
+				System.out.println("Path= " + path.toString() + "" + file.getSize());
 
-			Files.write(path, bytes);
+				Files.write(path, bytes);
 
-		}
-	
-	public static BufferedImage resizeImage(final Image image, int width, int height) {
-        final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        final Graphics2D graphics2D = bufferedImage.createGraphics();
-        graphics2D.setComposite(AlphaComposite.Src);
-        //below three lines are for RenderingHints for better image quality at cost of higher processing time
-        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
-        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics2D.drawImage(image, 0, 0, width, height, null);
-        graphics2D.dispose();
-        return bufferedImage;
-    }
-	/*public void saveUploadedFiles(MultipartFile file, int imageType, String imageName) throws IOException {
+				if (isResize == 1) {
 
-		for (MultipartFile file : files) {
+					Image img = null;
+					BufferedImage tempPNG = null;
 
-			if (file.isEmpty()) {
+					File newFilePNG = null;
 
-				System.out.println("int if");
-				continue;
+					System.out.println("File " + imageName);
+					img = ImageIO.read(new File(uploadPath + imageName));
+					tempPNG = resizeImage(img, width, hieght);
 
+					newFilePNG = new File(uploadPath + "thumbnail" + imageName);
+
+					ImageIO.write(tempPNG, extension, newFilePNG);
+
+					System.out.println("DONE");
+				}
+
+				info.setError(false);
+				info.setMsg("Upload Successfully ");
+			} else {
+				info.setError(true);
+				info.setMsg("Error While Uploading Image");
 			}
 
-			Path path = Paths.get(galleryImage + imageName);
+		} catch (Exception e) {
 
-			byte[] bytes = file.getBytes();
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("Error While Uploading Image");
+		}
+		return info;
 
-			if (imageType == 1) {
-				System.out.println("Inside Image Type =1");
+	}
 
-				path = Paths.get(galleryImage + imageName);
+	public Info saveUploadedFiles(MultipartFile file, String filePath, String[] allowExt, String imageName) throws IOException {
 
-				System.out.println("Path= " + path.toString());
+		Info info = new Info();
+		try {
+			String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+			if (ArrayUtils.contains(allowExt, extension.toLowerCase())) {
+				
+				Path path = Paths.get(filePath + imageName);
 
-			}  
+				byte[] bytes = file.getBytes(); 
+				path = Paths.get(filePath + imageName); 
 
-			Files.write(path, bytes);
+				Files.write(path, bytes);
+			}
+			
+		} catch (Exception e) {
 
-		}*/
-	//}
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("Error While Uploading Image");
+		}
+		return info;
+	}
+
+	public static BufferedImage resizeImage(final Image image, int width, int height) {
+		final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		final Graphics2D graphics2D = bufferedImage.createGraphics();
+		graphics2D.setComposite(AlphaComposite.Src);
+		// below three lines are for RenderingHints for better image quality at cost of
+		// higher processing time
+		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics2D.drawImage(image, 0, 0, width, height, null);
+		graphics2D.dispose();
+		return bufferedImage;
+	}
+	/*
+	 * public void saveUploadedFiles(MultipartFile file, int imageType, String
+	 * imageName) throws IOException {
+	 * 
+	 * for (MultipartFile file : files) {
+	 * 
+	 * if (file.isEmpty()) {
+	 * 
+	 * System.out.println("int if"); continue;
+	 * 
+	 * }
+	 * 
+	 * Path path = Paths.get(galleryImage + imageName);
+	 * 
+	 * byte[] bytes = file.getBytes();
+	 * 
+	 * if (imageType == 1) { System.out.println("Inside Image Type =1");
+	 * 
+	 * path = Paths.get(galleryImage + imageName);
+	 * 
+	 * System.out.println("Path= " + path.toString());
+	 * 
+	 * }
+	 * 
+	 * Files.write(path, bytes);
+	 * 
+	 * }
+	 */
+	// }
 
 }

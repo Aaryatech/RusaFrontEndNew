@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
- 
+
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
@@ -58,7 +58,6 @@ public class ImageController {
 	<version>1.0.2</version>
 	</dependency>*/
 
- 
 	ContactUs contactUs = new ContactUs();
 	int flag = 0;
 
@@ -67,14 +66,14 @@ public class ImageController {
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
-		
 		ModelAndView model = new ModelAndView("content/news-detail");
 
 		try {
 
 			session.setAttribute("mapping", "NewsDetails-" + newsblogsId);
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -91,7 +90,8 @@ public class ImageController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("newsblogsId", newsId);
 				map1.add("langId", langId);
-				NewsDetails image = Constant.getRestTemplate().postForObject(Constant.url + "/getNewsListByNewsId", map1, NewsDetails.class);
+				NewsDetails image = Constant.getRestTemplate().postForObject(Constant.url + "/getNewsListByNewsId",
+						map1, NewsDetails.class);
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				// System.out.println("list_new: " + image.toString());
 				model.addObject("image", image);
@@ -114,8 +114,9 @@ public class ImageController {
 	 * 
 	 * ModelAndView model = new ModelAndView("content/news-detail"); try {
 	 * 
-	 * Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url +
-	 * "/checkIsMaintenance", Maintainance.class);
+	 * Maintainance maintainance =
+	 * Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+	 * Maintainance.class);
 	 * 
 	 * if (maintainance.getMaintenanceStatus() == 1) {
 	 * 
@@ -124,14 +125,14 @@ public class ImageController {
 	 * 
 	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
 	 * Object>(); map.add("langId", langId); TopMenuList sectionTree =
-	 * Constant.getRestTemplate().postForObject(Constant.url + "/getTopMenuList", map, TopMenuList.class);
-	 * model.addObject("menuList", sectionTree);
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getTopMenuList",
+	 * map, TopMenuList.class); model.addObject("menuList", sectionTree);
 	 * 
 	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
 	 * Object>(); map1.add("langId", langId); map1.add("pageId", pageId);
 	 * map1.add("newsblogsId", newsblogsId); NewsDetails image =
-	 * Constant.getRestTemplate().postForObject(Constant.url + "/getNewsBlogById", map1,
-	 * NewsDetails.class); // List<ImageLink> imagList = new
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getNewsBlogById",
+	 * map1, NewsDetails.class); // List<ImageLink> imagList = new
 	 * ArrayList<ImageLink>(Arrays.asList(image)); System.out.println("list_new: " +
 	 * image.toString()); model.addObject("image", image);
 	 * model.addObject("getGallryImageURL", Constant.getGallryImageURL);
@@ -145,34 +146,32 @@ public class ImageController {
 
 	@RequestMapping(value = "/ContactUs", method = RequestMethod.GET)
 	public ModelAndView ContactUs(HttpServletRequest request, HttpServletResponse response) {
-		
 
-		
-		//System.out.println("langI d ***"+langId);
+		// System.out.println("langI d ***"+langId);
 		ModelAndView model = null;
 
-		
 		try {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "ContactUs");
-			
+
 			int langId = 1;
-			
+
 			try {
 				langId = (Integer) session.getAttribute("langId");
 			} catch (Exception e) {
 				// e.printStackTrace();
 				session.setAttribute("langId", langId);
 			}
-			
-			if(langId==2) {
+
+			if (langId == 2) {
 				model = new ModelAndView("content/contactUsMarathi");
-			}else {
+			} else {
 				model = new ModelAndView("content/contactUs");
 			}
-			
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -207,7 +206,8 @@ public class ImageController {
 				session.setAttribute("langId", langId);
 			}
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -218,23 +218,25 @@ public class ImageController {
 				 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
 				 * Object>(); map.add("langId", langId);
 				 * 
-				 * TopMenuList sectionTree = Constant.getRestTemplate().postForObject(Constant.url +
-				 * "/getTopMenuList", map, TopMenuList.class);
+				 * TopMenuList sectionTree =
+				 * Constant.getRestTemplate().postForObject(Constant.url + "/getTopMenuList",
+				 * map, TopMenuList.class);
 				 * 
 				 * // HttpSession session = request.getSession();
 				 * session.setAttribute("menuList", sectionTree);
 				 */
 				session.setAttribute("mapping", "teamDetails");
 
-				TestImonial[] getTeamList = Constant.getRestTemplate().getForObject(Constant.url + "/getTeamDetail", TestImonial[].class);
+				TestImonial[] getTeamList = Constant.getRestTemplate().getForObject(Constant.url + "/getTeamDetail",
+						TestImonial[].class);
 				List<TestImonial> teamList = new ArrayList<TestImonial>(Arrays.asList(getTeamList));
 				model.addObject("teamList", teamList);
 				model.addObject("gallryImageURL", Constant.getGallryImageURL);
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("slugName", "teamDetails");
-				PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData", map1,
-						PageMetaData.class);
+				PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData",
+						map1, PageMetaData.class);
 				model.addObject("pageMetaData", pageMetaData);
 
 			}
@@ -263,23 +265,23 @@ public class ImageController {
 			String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
 			String captcha = session.getAttribute("captcha_security").toString();
 			boolean error;
-			
+
 			String verifyCaptcha = request.getParameter("captcha");
 			if (captcha.equals(verifyCaptcha)) {
 				error = false;
 			} else {
 				error = true;
 			}
-			
-			
-			if ( FormValidation.Validaton(email, "email") == true || FormValidation.Validaton(mobileNo, "mobile") == true || FormValidation.Validaton(name, "") == true ||
-					FormValidation.Validaton(message, "") == true || error==true) {
+
+			if (FormValidation.Validaton(email, "email") == true || FormValidation.Validaton(mobileNo, "mobile") == true
+					|| FormValidation.Validaton(name, "") == true || FormValidation.Validaton(message, "") == true
+					|| error == true) {
 
 				error = true;
 
 			}
-		 
-			//boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+
+			// boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
 			// boolean verify = true;
 
 			Date date = new Date(); // your date
@@ -287,7 +289,7 @@ public class ImageController {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
 
-			if (error==false) {
+			if (error == false) {
 				InetAddress addr = InetAddress.getByName(request.getRemoteAddr());
 				String hostName = addr.getHostName();
 				String userAgent = request.getHeader("User-Agent");
@@ -305,7 +307,8 @@ public class ImageController {
 				System.out.println("Verify");
 				// contactUs.setRemark(null);
 
-				ContactUs res = Constant.getRestTemplate().postForObject(Constant.url + "/saveContactUs", contactUs, ContactUs.class);
+				ContactUs res = Constant.getRestTemplate().postForObject(Constant.url + "/saveContactUs", contactUs,
+						ContactUs.class);
 
 				if (res == null) {
 					session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
@@ -328,32 +331,30 @@ public class ImageController {
 	}
 
 	@RequestMapping(value = "/verifyCaptcha", method = RequestMethod.GET)
-	public @ResponseBody Info verifyCaptcha(HttpServletRequest request,
-			HttpServletResponse response) {
+	public @ResponseBody Info verifyCaptcha(HttpServletRequest request, HttpServletResponse response) {
 
-		 
 		Info info = new Info();
 		try {
 			String verifyCaptcha = request.getParameter("captcha");
-			
+
 			HttpSession session = request.getSession();
 			String captcha = session.getAttribute("captcha_security").toString();
-			//System.out.println(verifyCaptcha + "  " + captcha);
+			// System.out.println(verifyCaptcha + " " + captcha);
 			if (captcha.equals(verifyCaptcha)) {
 				info.setError(false);
 			} else {
 				info.setError(true);
 			}
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			info.setError(true);
 		}
-		
+
 		return info;
- 
 
 	}
+
 	@RequestMapping(value = "/screenReader", method = RequestMethod.GET)
 	public ModelAndView screenReader(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -361,7 +362,8 @@ public class ImageController {
 		try {
 			session.setAttribute("mapping", "screenReader");
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -369,8 +371,8 @@ public class ImageController {
 			} else {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("slugName", "screenReader");
-				PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData", map,
-						PageMetaData.class);
+				PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData",
+						map, PageMetaData.class);
 				model.addObject("pageMetaData", pageMetaData);
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
@@ -392,7 +394,8 @@ public class ImageController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "newsList");
 			int langId = 1;
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -401,8 +404,8 @@ public class ImageController {
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
-				NewsDetails[] getPagesModule = Constant.getRestTemplate().postForObject(Constant.url + "/getLastFourNewsByLangId", map1,
-						NewsDetails[].class);
+				NewsDetails[] getPagesModule = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/getLastFourNewsByLangId", map1, NewsDetails[].class);
 				List<NewsDetails> newsBlogsList = new ArrayList<NewsDetails>(Arrays.asList(getPagesModule));
 
 				model.addObject("newsBlogsList", newsBlogsList);
@@ -428,7 +431,8 @@ public class ImageController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "eventfrontList");
 			int langId = 1;
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -437,8 +441,8 @@ public class ImageController {
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
-				NewsDetails[] eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllEventsL", map1,
-						NewsDetails[].class);
+				NewsDetails[] eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllEventsL",
+						map1, NewsDetails[].class);
 				List<NewsDetails> event = new ArrayList<NewsDetails>(Arrays.asList(eventList));
 				/*
 				 * for (int i = 0; i < event.size(); i++) {
@@ -470,8 +474,8 @@ public class ImageController {
 	 * ModelAndView model = new ModelAndView("content/upcoming-front"); try {
 	 * 
 	 * // session.setAttribute("mapping", "upcomingEvents"); Maintainance
-	 * maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
-	 * Maintainance.class);
+	 * maintainance = Constant.getRestTemplate().getForObject(Constant.url +
+	 * "/checkIsMaintenance", Maintainance.class);
 	 * 
 	 * if (maintainance.getMaintenanceStatus() == 1) {
 	 * 
@@ -481,18 +485,18 @@ public class ImageController {
 	 * 
 	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
 	 * Object>(); map.add("slugName", "upcomingEvents"); PageMetaData pageMetaData =
-	 * Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData", map,
-	 * PageMetaData.class);
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData",
+	 * map, PageMetaData.class);
 	 * 
 	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
 	 * Object>();
 	 * 
 	 * map1.add("langId", 1); List<NewsDetails> upcoming =
-	 * Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1, List.class);
-	 * // List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
-	 * System.out.println("list_new: " + upcoming.toString());
-	 * model.addObject("upcoming", upcoming); model.addObject("typeId", 2); //
-	 * model.addObject("value", 0);
+	 * Constant.getRestTemplate().postForObject(Constant.url +
+	 * "/getAllUpcomingEvents", map1, List.class); // List<ImageLink> imagList = new
+	 * ArrayList<ImageLink>(Arrays.asList(image)); System.out.println("list_new: " +
+	 * upcoming.toString()); model.addObject("upcoming", upcoming);
+	 * model.addObject("typeId", 2); // model.addObject("value", 0);
 	 * 
 	 * // model.addObject("pageMetaData", pageMetaData);
 	 * session.setAttribute("getGallryImageURL", Constant.getGallryImageURL);
@@ -509,8 +513,8 @@ public class ImageController {
 	 * ModelAndView model = new ModelAndView("content/previousfront"); try {
 	 * 
 	 * // session.setAttribute("mapping", "upcomingEvents"); Maintainance
-	 * maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
-	 * Maintainance.class);
+	 * maintainance = Constant.getRestTemplate().getForObject(Constant.url +
+	 * "/checkIsMaintenance", Maintainance.class);
 	 * 
 	 * if (maintainance.getMaintenanceStatus() == 1) {
 	 * 
@@ -520,16 +524,16 @@ public class ImageController {
 	 * 
 	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
 	 * Object>(); map.add("slugName", "upcomingEvents"); PageMetaData pageMetaData =
-	 * Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData", map,
-	 * PageMetaData.class);
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData",
+	 * map, PageMetaData.class);
 	 * 
 	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
 	 * Object>();
 	 * 
 	 * map1.add("langId", 1); NewsDetails[] previousList =
-	 * Constant.getRestTemplate().postForObject(Constant.url + "/getAllPreviousEvents", map1,
-	 * NewsDetails[].class); List<NewsDetails> previous = new
-	 * ArrayList<NewsDetails>(Arrays.asList(previousList));
+	 * Constant.getRestTemplate().postForObject(Constant.url +
+	 * "/getAllPreviousEvents", map1, NewsDetails[].class); List<NewsDetails>
+	 * previous = new ArrayList<NewsDetails>(Arrays.asList(previousList));
 	 * System.out.println("list_new: " + previous.toString());
 	 * model.addObject("previous", previous); model.addObject("typeId", 1); //
 	 * model.addObject("pageMetaData", pageMetaData);
@@ -554,7 +558,8 @@ public class ImageController {
 
 			int newsId = Integer.parseInt(EmailUtility.DecodeKey(String.valueOf(newsblogsId)));
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -569,8 +574,8 @@ public class ImageController {
 				map1.add("langId", langId);
 
 				map1.add("newsblogsId", newsId);
-				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId", map1,
-						NewsDetails.class);
+				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId",
+						map1, NewsDetails.class);
 
 				// List<NewsDetails> event = new
 				// ArrayList<NewsDetails>(Arrays.asList(eventList));
@@ -628,22 +633,23 @@ public class ImageController {
 	 * HttpSession session = request.getSession();
 	 * session.setAttribute("mapping","eventList");
 	 * 
-	 * Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url +
-	 * "/checkIsMaintenance", Maintainance.class); if
-	 * (maintainance.getMaintenanceStatus() == 1) {
+	 * Maintainance maintainance =
+	 * Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+	 * Maintainance.class); if (maintainance.getMaintenanceStatus() == 1) {
 	 * 
 	 * model = new ModelAndView("maintainance"); model.addObject("maintainance",
 	 * maintainance); } else { MultiValueMap<String, Object> map = new
 	 * LinkedMultiValueMap<String, Object>(); map.add("slugName", "eventList");
-	 * PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url +
-	 * "/getPageMetaData", map, PageMetaData.class);
+	 * PageMetaData pageMetaData =
+	 * Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData",
+	 * map, PageMetaData.class);
 	 * 
 	 * 
 	 * MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String,
 	 * Object>(); map1.add("langId", langId); map1.add("pageId", pageId);
 	 * map1.add("newsblogsId", newsblogsId); NewsDetails eventList =
-	 * Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId",map1,
-	 * NewsDetails.class);
+	 * Constant.getRestTemplate().postForObject(Constant.url +
+	 * "/getEventListByNewsId",map1, NewsDetails.class);
 	 * 
 	 * // List<NewsDetails> event = new
 	 * ArrayList<NewsDetails>(Arrays.asList(eventList)); String dateEvent=
@@ -670,7 +676,8 @@ public class ImageController {
 
 			System.out.println("akshay kasar");
 
-			CalenderList m = Constant.getRestTemplate().getForObject(Constant.url + "/getEventListforCalender", CalenderList.class);
+			CalenderList m = Constant.getRestTemplate().getForObject(Constant.url + "/getEventListforCalender",
+					CalenderList.class);
 
 			for (int i = 0; i < m.getResult().size(); i++) {
 				m.getResult().get(i).setUrl(Constant.siteFrontEndUrl + "eventDetailfront/"
@@ -689,7 +696,7 @@ public class ImageController {
 
 	List<MultipartFile> pdfList = new ArrayList<>();
 	String imageName = new String();
-	
+
 	@RequestMapping(value = "/submtFrontEventAppliedForm", method = RequestMethod.POST)
 	public String submtFrontEventAppliedForm(@RequestParam("pagePdf") List<MultipartFile> pagePdf,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -712,7 +719,7 @@ public class ImageController {
 		SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
 		VpsImageUpload upload = new VpsImageUpload();
-		
+
 		try {
 			userDetail = (Registration) session.getAttribute("userInfo");
 			System.out.println("userDetail: " + userDetail);
@@ -722,7 +729,7 @@ public class ImageController {
 		}
 		try {
 			if (userDetail != null) {
- 
+
 				pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
@@ -743,11 +750,11 @@ public class ImageController {
 					eventReg.setUserId(userDetail.getRegId());
 					eventReg.setDoc1(pdfName);
 
-					EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister", eventReg,
-							EventRegistration.class);
+					EventRegistration res = Constant.getRestTemplate()
+							.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
 
 					session.setAttribute("success", "Successfully Registed Event !");
-					upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, pdfName);
+					upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
 
 				} else {
 
@@ -757,7 +764,7 @@ public class ImageController {
 			} else {
 
 				imageName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
-				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, imageName);
+				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, imageName);
 				System.out.println("User Id: " + userDetail);
 				session.setAttribute("errorMsg", "Please login for apply event !");
 				ss = "redirect:/login?file=" + EmailUtility.Encrypt(String.valueOf(1)) + "&event="
@@ -777,7 +784,7 @@ public class ImageController {
 			HttpServletResponse response) {
 
 		Info info = new Info();
-	 
+
 		String ss = new String();
 		HttpSession session = request.getSession();
 
@@ -800,8 +807,8 @@ public class ImageController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("langId", langId);
 				map1.add("newsblogsId", newsblogsId);
-				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId", map1,
-						NewsDetails.class);
+				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId",
+						map1, NewsDetails.class);
 				int userType = (Integer) session.getAttribute("userType");
 				String[] ids = eventList.getExVar2().split(",");
 
@@ -819,12 +826,13 @@ public class ImageController {
 
 					Date date = new Date();
 					SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-					 
+
 					map1 = new LinkedMultiValueMap<String, Object>();
 
 					map1.add("newsblogsId", newsblogsId);
 					map1.add("userId", userDetail.getRegId());
-					info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+					info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1,
+							Info.class);
 
 					if (info.isError() == true) {
 						EventRegistration eventReg = new EventRegistration();
@@ -838,11 +846,10 @@ public class ImageController {
 						eventReg.setUserId(userDetail.getRegId());
 						eventReg.setDoc1(imageName);
 
-						EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister", eventReg,
-								EventRegistration.class);
+						EventRegistration res = Constant.getRestTemplate()
+								.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
 
 						session.setAttribute("success", "Successfully Registed Event !");
-					 
 
 					} else {
 						session.setAttribute("errorMsg", "Event Already Registered !");
@@ -852,11 +859,11 @@ public class ImageController {
 
 					session.setAttribute("errorMsg", "You can't apply for this event !");
 				}
-				
+
 				ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
 				imageName = new String();
 			} else {
- 
+
 				session.setAttribute("errorMsg", "Please login for apply event !");
 				ss = "redirect:/login?file=" + EmailUtility.Encrypt(String.valueOf(1)) + "&event="
 						+ EmailUtility.Encrypt(String.valueOf(newsblogsId));
@@ -882,7 +889,8 @@ public class ImageController {
 			int langId = 1;
 			int valueType = 1;
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -891,8 +899,8 @@ public class ImageController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("valueType", valueType);
 
-				TestImonial[] testImonialList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllTestImonialsList", map1,
-						TestImonial[].class);
+				TestImonial[] testImonialList = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/getAllTestImonialsList", map1, TestImonial[].class);
 				List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 				System.out.println("testImonial :" + testImonial.toString());
 				model.addObject("testImonial", testImonial);
@@ -921,7 +929,8 @@ public class ImageController {
 			session.setAttribute("mapping", "testimonialsVideoList");
 			int langId = 1;
 			int valueType = 2;
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -930,8 +939,8 @@ public class ImageController {
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("valueType", valueType);
 
-				TestImonial[] testImonialList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllTestImonialsList", map1,
-						TestImonial[].class);
+				TestImonial[] testImonialList = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/getAllTestImonialsList", map1, TestImonial[].class);
 				List<TestImonial> testImonial = new ArrayList<TestImonial>(Arrays.asList(testImonialList));
 				System.out.println("testImonial :" + testImonial.toString());
 				model.addObject("testImonial", testImonial);
@@ -948,7 +957,7 @@ public class ImageController {
 
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/testimonialsDetail", method = RequestMethod.GET)
 	public ModelAndView testimonialsDetail(HttpServletRequest request, HttpServletResponse response) {
 
@@ -957,29 +966,32 @@ public class ImageController {
 		try {
 
 			HttpSession session = request.getSession();
-			 
-			session.setAttribute("mapping", "testimonialsDetail"); 
-			//int testimonialId = Integer.parseInt(EmailUtility.DecodeKey(request.getParameter("testimonialId")));
+
+			session.setAttribute("mapping", "testimonialsDetail");
+			// int testimonialId =
+			// Integer.parseInt(EmailUtility.DecodeKey(request.getParameter("testimonialId")));
 			int testimonialId = Integer.parseInt(request.getParameter("testimonialId"));
-			
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
 				model.addObject("maintainance", maintainance);
 			} else {
-				
+
 				if (session.getAttribute("menuList") == null) {
 					InitializeSession.intializeSission(request);
 				}
-				
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("id", testimonialId); 
 
-				TestImonial testImonial = Constant.getRestTemplate().postForObject(Constant.url + "/getTestImonialById", map, TestImonial.class);
-				 
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("id", testimonialId);
+
+				TestImonial testImonial = Constant.getRestTemplate().postForObject(Constant.url + "/getTestImonialById",
+						map, TestImonial.class);
+
 				model.addObject("testImonial", testImonial);
-				session.setAttribute("gallryImageURL", Constant.getGallryImageURL); 
+				session.setAttribute("gallryImageURL", Constant.getGallryImageURL);
 			}
 
 		} catch (Exception e) {

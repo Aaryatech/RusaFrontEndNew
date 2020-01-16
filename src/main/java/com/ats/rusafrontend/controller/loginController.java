@@ -871,7 +871,7 @@ public class loginController {
 				System.out.println("res Id: " + res.toString());
 
 				session.setAttribute("success", "Successfully Registed Event !");
-				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, pdfName);
+				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
 			} else {
 				try {
 					/*

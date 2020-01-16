@@ -5,10 +5,10 @@ import org.springframework.web.client.RestTemplate;
 
 public class Constant {
 
-	//public static final String url = "http://localhost:8094/";
+	public static final String url = "http://localhost:8094/";
 	
 	//public static final String url="http://ats.aaryatechindia.in:15063/rusawebapi/";
-	public static final String url="http://10.9.63.2:8080/RusaWebapi/";
+	//public static final String url="http://10.9.63.2:8080/RusaWebapi/";
 
 	/*public static final String getLgogImageURL = "http://192.168.2.17:8080/media/logo/";
 	public static final String getBannerImageURL = "http://192.168.2.17:8080/media/banenr/";
@@ -53,7 +53,10 @@ public class Constant {
 	public static final String secretKey = "6LfXSJYUAAAAALy3h-8ulTPu7DdW4kFVwFAlFiJL";
 	public static final String siteKey = "6LfXSJYUAAAAAPrR2Jkt9ZpittUp2qTAM6OzG-Ce";
 	public static String[] values = { "jpg", "jpeg", "gif", "png" };
-
+	public static String[] pdf = { "pdf", "PDF"};
+	public static String[] files = { "pdf", "xlsx", "csv", "docx","jpg", "jpeg", "gif", "png","JPG", "JPEG", "GIF", "PNG"};
+	
+	
 	public static int totalEventCount = 10;
 	
 	

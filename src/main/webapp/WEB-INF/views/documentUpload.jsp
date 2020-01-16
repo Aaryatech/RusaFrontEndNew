@@ -19,14 +19,14 @@
 <head>
 
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" 
+<!-- <meta http-equiv="Content-Security-Policy" 
         content="default-src 'self' data: gap: 'unsafe-eval' ws: ; 
         style-src 'self' 'unsafe-inline'; 
         script-src https: *.example.com ;
         media-src 'none'; 
         font-src *;
         connect-src *;
-        img-src 'self' data: content:;">
+        img-src 'self' data: content:;"> -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="viewport"

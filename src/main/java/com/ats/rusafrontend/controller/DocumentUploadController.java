@@ -24,6 +24,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
+import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.VpsImageUpload;
 import com.ats.rusafrontend.model.DocType;
 import com.ats.rusafrontend.model.Maintainance;
@@ -34,10 +35,7 @@ import com.ats.rusafrontend.model.UploadDocument;
 @Controller
 @Scope("session")
 public class DocumentUploadController {
-	
-	 
-	
-	
+
 	@RequestMapping(value = "/documentUpload", method = RequestMethod.GET)
 	public String documentUpload(HttpServletRequest request, HttpServletResponse response, Model model) {
 
@@ -47,7 +45,8 @@ public class DocumentUploadController {
 
 			session.setAttribute("mapping", "documentUpload");
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav = "maintainance";
@@ -55,28 +54,34 @@ public class DocumentUploadController {
 			} else {
 				mav = "documentUpload";
 				int userDetail = (int) session.getAttribute("UserDetail");
-				DocType[] docType = Constant.getRestTemplate().getForObject(Constant.url + "/getDocTypeList", DocType[].class);
+				DocType[] docType = Constant.getRestTemplate().getForObject(Constant.url + "/getDocTypeList",
+						DocType[].class);
 				List<DocType> docTypelist = new ArrayList<>(Arrays.asList(docType));
 				model.addAttribute("docTypelist", docTypelist);
-				
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 				map.add("regId", userDetail);
-				UploadDocument[] uploadDocument = Constant.getRestTemplate().postForObject(Constant.url + "/getDocumentByRegId",map, UploadDocument[].class);
+				UploadDocument[] uploadDocument = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/getDocumentByRegId", map, UploadDocument[].class);
 				List<UploadDocument> uploadDocumentlist = new ArrayList<>(Arrays.asList(uploadDocument));
-				
-				
-				for(int i=0;i<uploadDocumentlist.size() ; i++) {
-					
-					long bytes = uploadDocumentlist.get(i).getDocSize(); 
-					 String size = new String();
-					  
-					  int unit = true ? 1000 : 1024; if (bytes < unit) size = bytes + " B"; int exp
-					  = (int) (Math.log(bytes) / Math.log(unit)); String pre = (true ? "kMGTPE" :
-					  "KMGTPE").charAt(exp-1) + (true ? "" : "i"); size = String.format("%.1f %sB",
-					  bytes / Math.pow(unit, exp), pre);
-					  uploadDocumentlist.get(i).setExtraVarchar1(size);
+
+				for (int i = 0; i < uploadDocumentlist.size(); i++) {
+
+					long bytes = uploadDocumentlist.get(i).getDocSize();
+					String size = new String();
+					try {
+						int unit = true ? 1000 : 1024;
+						if (bytes < unit)
+							size = bytes + " B";
+						int exp = (int) (Math.log(bytes) / Math.log(unit));
+						String pre = (true ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (true ? "" : "i");
+						size = String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+						uploadDocumentlist.get(i).setExtraVarchar1(size);
+					} catch (Exception e) {
+						uploadDocumentlist.get(i).setExtraVarchar1("1kb");
+					}
 				}
-				
+
 				model.addAttribute("uploadDocumentlist", uploadDocumentlist);
 				model.addAttribute("frontDocUrl", Constant.getUserDocURL);
 			}
@@ -87,47 +92,53 @@ public class DocumentUploadController {
 
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/submitUploadDocForm", method = RequestMethod.POST)
-	public String submitUploadDocForm(@RequestParam("docName") List<MultipartFile> docName,HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String submitUploadDocForm(@RequestParam("docName") List<MultipartFile> docName, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
 
 		HttpSession session = request.getSession();
-		 
+
 		try {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			
+
 			int typeId = Integer.parseInt(request.getParameter("typeId"));
 			String title = request.getParameter("docTitle");
-			
+
 			try {
-				 
+
 				VpsImageUpload upload = new VpsImageUpload();
 				Date date = new Date();
 				SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 				String imageName = new String();
 				imageName = dateTimeInGMT.format(date) + "_" + docName.get(0).getOriginalFilename();
-				upload.saveUploadedFiles(docName.get(0), Constant.userDocURL, imageName );
-				int userDetail = (int) session.getAttribute("UserDetail");
-				 
-				UploadDocument save = new UploadDocument();
-				save.setDelStatus(1);
-				save.setDocSize(docName.get(0).getSize());
-				save.setFileName(imageName);
-				save.setTypeId(typeId);
-				save.setRegId(userDetail);
-				save.setTitle(HtmlUtils.htmlEscape(title));
-				save.setUploadDateTime(sf.format(date));
-				
-				UploadDocument res = Constant.getRestTemplate().postForObject(Constant.url + "/saveUploadDocument", save, UploadDocument.class);
-				session.setAttribute("success", "Document Uploaded Successfully ");
-				
+				Info info = upload.saveUploadedFiles(docName.get(0), Constant.userDocURL, Constant.files, imageName);
+
+				if (info.isError() == false) {
+					int userDetail = (int) session.getAttribute("UserDetail");
+
+					UploadDocument save = new UploadDocument();
+					save.setDelStatus(1);
+					save.setDocSize(docName.get(0).getSize());
+					save.setFileName(imageName);
+					save.setTypeId(typeId);
+					save.setRegId(userDetail);
+					save.setTitle(HtmlUtils.htmlEscape(title));
+					save.setUploadDateTime(sf.format(date));
+
+					UploadDocument res = Constant.getRestTemplate().postForObject(Constant.url + "/saveUploadDocument",
+							save, UploadDocument.class);
+					session.setAttribute("success", "Document Uploaded Successfully ");
+				} else {
+					session.setAttribute("errorMsg", "Failed to upload !");
+				}
+
 			} catch (Exception e) {
 				session.setAttribute("errorMsg", "Failed to upload !");
 			}
 
-			 
 		} catch (Exception e) {
-			e.printStackTrace(); 
+			e.printStackTrace();
 			session.setAttribute("errorMsg", "Failed to upload !");
 		}
 
