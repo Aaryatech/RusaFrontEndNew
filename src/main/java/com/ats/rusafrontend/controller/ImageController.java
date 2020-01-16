@@ -147,20 +147,31 @@ public class ImageController {
 	public ModelAndView ContactUs(HttpServletRequest request, HttpServletResponse response) {
 		
 
-		HttpSession session = request.getSession();
-		session.setAttribute("mapping", "ContactUs");
-		int langId = (Integer) session.getAttribute("langId");
-		System.out.println("langI d ***"+langId);
+		
+		//System.out.println("langI d ***"+langId);
 		ModelAndView model = null;
 
-		if(langId==2) {
-			model = new ModelAndView("content/contactUsMarathi");
-		}else {
-			model = new ModelAndView("content/contactUs");
-		}
+		
 		try {
 
-
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "ContactUs");
+			
+			int langId = 1;
+			
+			try {
+				langId = (Integer) session.getAttribute("langId");
+			} catch (Exception e) {
+				// e.printStackTrace();
+				session.setAttribute("langId", langId);
+			}
+			
+			if(langId==2) {
+				model = new ModelAndView("content/contactUsMarathi");
+			}else {
+				model = new ModelAndView("content/contactUs");
+			}
+			
 			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 

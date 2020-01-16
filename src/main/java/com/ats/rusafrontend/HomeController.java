@@ -272,8 +272,8 @@ public class HomeController {
 						.postForObject(Constant.url + "/getHomePageMetaDataByLangId", map, MetaData.class);
 				session.setAttribute("homePageMetaData", metaData);
 
-				Setting[] settingList = Constant.getRestTemplate().getForObject(Constant.url + "/getAllSettingList",
-						Setting[].class);
+				Setting[] settingList = Constant.getRestTemplate().postForObject(Constant.url + "/getAllSettingList",
+						map,Setting[].class);
 				List<Setting> setting = new ArrayList<Setting>(Arrays.asList(settingList));
 				session.setAttribute("setting", setting);
 
