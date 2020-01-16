@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -18,6 +19,14 @@
 <head>
 
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" 
+        content="default-src 'self' data: gap: 'unsafe-eval' ws: ; 
+        style-src 'self' 'unsafe-inline'; 
+        script-src https: *.example.com ;
+        media-src 'none'; 
+        font-src *;
+        connect-src *;
+        img-src 'self' data: content:;">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="viewport"
@@ -179,8 +188,8 @@
 									<tr class="odd">
 
 										<td>${count.index+1}</td>
-										<td>${uploadDocumentlist.title}</td>
-										<td>${uploadDocumentlist.typeName}</td>
+										<td><c:out value="${uploadDocumentlist.title}" escapeXml="true"/></td>
+										<td><c:out value="${uploadDocumentlist.typeName}" escapeXml="true"/></td>
 										<td><a
 											href="${frontDocUrl}${uploadDocumentlist.fileName}"
 											target="_blank">Download</a></td>

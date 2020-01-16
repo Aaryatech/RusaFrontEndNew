@@ -32,7 +32,7 @@
 	href="${pageContext.request.contextPath}/resources/images/favicon.png"
 	type="image/x-icon" />
 <!-- Bootstrap core CSS -->
-
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <jsp:include page="/WEB-INF/views/include/meta.jsp"></jsp:include>
 
 <script>
@@ -50,11 +50,33 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 </script>
+<style type="text/css">
+msg-error {
+	color: #c65848;
+}
+
+.g-recaptcha.error {
+	border: solid 2px #c64848;
+	padding: .2em;
+	width: 19em;
+}
+
+.other-gov-site-home {
+	margin-top: 43px;
+}
+.img-responsive{
+max-width:20px!important;
+}
+</style>
+
 </head>
 <body class="${contrast}">
 	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 	<jsp:include page="/WEB-INF/views/include/topBar.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/include/topMenu.jsp"></jsp:include>
+
+	<c:url var="verifyCaptcha" value="/verifyCaptcha" />
+
 	<div class="inner-slider" id="slider">
 		<div class="container">
 			<h1>Login</h1>
@@ -107,7 +129,8 @@
 				<div class="col-12 col-sm-12 col-lg-12 login-header">
 
 					<h5>Login</h5>
-					<p>Note : Only for Uploading the requisite Document To RUSA Maharashtra</p>
+					<p>Note : Only for Uploading the requisite Document To RUSA
+						Maharashtra</p>
 				</div>
 				<div class="col-12 col-sm-12 col-lg-3"></div>
 
@@ -116,13 +139,39 @@
 
 				<div class="col-12 col-sm-12 col-lg-6">
 
-					<form method="post"
+					<form method="post" id="login_form"
 						action="${pageContext.request.contextPath}/loginResponse"
 						name="login_form">
 						<label>User Name</label> <input type="text" class="form-control"
-							name="userName" placeholder="User Name" autocomplete="off" > <label>Password</label>
-						<input type="password" class="form-control" name="password"
-							placeholder="Password" autocomplete="off">
+							name="userName" placeholder="User Name" autocomplete="off">
+						<label>Password</label> <input type="password"
+							class="form-control" name="password" placeholder="Password"
+							autocomplete="off">
+
+						<div class="capcha-img">
+							<img src="${pageContext.request.contextPath }/captcha"
+								id='captchaImage'>
+						</div>
+						<br> <input type="text" class="form-control capcha-input"
+							name="captcha" id="captcha" placeholder="Enter Text"
+							autocomplete="off" onchange="trim(this)">
+							
+							
+
+						<button id="captchaRef" type="button" class="repeat-btn">
+							<div class="repeat">
+								<img
+									src="${pageContext.request.contextPath}/resources/images/repeat.png"
+									alt="Repeat" class="img-responsive" title="Repeat">
+							</div>
+						</button>
+
+					<span class="msg-error error" id="error_captcha"
+						style="display: none; color: red; margin-bottom: 5px; margin-top: 5px;">Invalid
+						Text ! </span> 
+						
+						<br>
+
 
 						<div class="clearfix"></div>
 						<p>
@@ -133,7 +182,7 @@
 							<c:when test="${eventId!=null}">
 								<input type="hidden" name="eventId" id="eventId"
 									value="${eventId}">
-									<input type="hidden" name="file" id="file" value="${file}">
+								<input type="hidden" name="file" id="file" value="${file}">
 							</c:when>
 							<c:otherwise>
 								<input type="hidden" name="eventId" id="eventId" value="0">
@@ -165,11 +214,107 @@
 	<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	<jsp:include page="/WEB-INF/views/include/footerJs.jsp"></jsp:include>
+	<script type="text/javascript">
+	$(document).ready(function($){
+		
+		$("#login_form").submit(function(e) {
+		
+			var isError=false;
+			 var errMsg="";    
+				
+				if(!$("#captcha").val()){ 					 
+    				isError=true;   				
+    				
+    				$("#error_captcha").show()
+    			} else {
+    				$("#error_captcha").hide()
+    			}
+				 
+				
+				
+            	 if (!isError) {
+            		return  true;
+				}
+					return false;
+			});
+});
+	</script>
+	
 	<script>
-		  document.oncontextmenu = document.body.oncontextmenu = function() {
+		document.oncontextmenu = document.body.oncontextmenu = function() {
 			return false;
-		} 
-		 
+		}
+
+		
+		$(document).ready(function() {
+
+			$.ajaxSetup({
+				cache : false
+			});
+
+			var timestamp = (new Date()).getTime();
+
+			$("#captchaRef").click(function() {
+				document.getElementById('captcha').value = "";
+				var timestamp = (new Date()).getTime();
+				var newSrc = $("#captchaImage").attr("src").split("?");
+				//  $('#captchaImage').attr('src', '').attr('src', 'Captcha.jpg');
+				newSrc = newSrc[0] + "?" + timestamp;
+				$("#captchaImage").attr("src", newSrc);
+				$("#captchaImage").slideDown("fast");
+
+			});
+		});
+	</script>
+	<script>
+		function verifyCaptcha() {
+
+			//alert(validate());
+
+			if (validate() == false) {
+				var captcha = $("#captcha").val();
+				//alert(captcha);
+				$("#error_capmsg").hide();
+
+				var flag = 0;
+
+				if (captcha != "") {
+					$
+							.getJSON(
+									'${verifyCaptcha}',
+									{
+
+										captcha : captcha,
+										ajax : 'true',
+
+									},
+									function(data) {
+										if (data.error == true) {
+											document.getElementById("captcha").value = "";
+											document
+													.getElementById("error_capmsg").innerHTML = "Invalid Text !";
+											$("#error_capmsg").show();
+											document.getElementById(
+													"captchaRef").click();
+											document.getElementById("accept").value = 0;
+											flag = 0;
+										} else {
+											document.getElementById("accept").value = 1;
+											flag = 1;
+											document.getElementById(
+													"submitForm").submit();
+										}
+									});
+
+				} else {
+					document.getElementById("error_capmsg").innerHTML = "This filed required";
+					$("#error_capmsg").show();
+					document.getElementById("accept").value = 0;
+					return true;
+				}
+			}
+
+		}
 	</script>
 </body>
 </html>

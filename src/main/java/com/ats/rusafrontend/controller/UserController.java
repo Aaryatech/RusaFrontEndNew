@@ -92,120 +92,145 @@ public class UserController {
 
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
+		String captcha = session.getAttribute("captcha_security").toString();
+		System.out.println(captcha);
 		String mav = new String();
 
 		try {
-			
+		
+			String verifyCaptcha = request.getParameter("captcha");
+			System.out.println("Form----------"+captcha);
+			if (captcha.equals(verifyCaptcha)) {
+				System.out.println("Captcha Found----------"+captcha);
+				Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+				if (maintainance.getMaintenanceStatus() == 1) {
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
-			if (maintainance.getMaintenanceStatus() == 1) {
+					mav = "maintainance";
+					model.addAttribute("maintainance", maintainance);
+				} else {
 
-				mav = "maintainance";
-				model.addAttribute("maintainance", maintainance);
-			} else {
+					model.addAttribute("siteKey", Constant.siteKey);
+					model.addAttribute("flag", flag);
+					flag = 0;
 
-				model.addAttribute("siteKey", Constant.siteKey);
-				model.addAttribute("flag", flag);
-				flag = 0;
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					map.add("userName", userName);
+					map.add("password", password);
 
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("userName", userName);
-				map.add("password", password);
+					Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
 
-				Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
+					if (verify.isError() == false) {
 
-				if (verify.isError() == false) {
-
-					String eventId = request.getParameter("eventId");
-					int langId = (Integer) session.getAttribute("langId");
-					
-					System.out.println("print: "+session.getId());
-					session.removeAttribute("userDetail");
-					session.removeAttribute("userInfo");
-					session.invalidate();
-					
-					session = request.getSession();
-					
-					System.out.println("print2: "+request.getSession().getId());
-					
-					if (!eventId.equals("0")) {
+						String eventId = request.getParameter("eventId");
+						int langId = (Integer) session.getAttribute("langId");
 						
-						session.setAttribute("UserDetail", verify.getRegId()); 
-						session.setAttribute("userInfo", verify);
-						session.setAttribute("userType", (Integer) verify.getUserType());
-						session.setAttribute("langId", langId);
+						System.out.println("print: "+session.getId());
+						session.removeAttribute("userDetail");
+						session.removeAttribute("userInfo");
+						session.invalidate();
 						
-						int file = Integer.parseInt(EmailUtility.DecodeKey(request.getParameter("file")));
+						session = request.getSession();
 						
-						if(file==1) {
-							mav="redirect:/applyEventFrontWithFile/"+EmailUtility.DecodeKey(String.valueOf(eventId));
-						}else {
-							mav="redirect:/applyEventFront/"+EmailUtility.DecodeKey(String.valueOf(eventId));
-						}
-						 
-					} else {
-
-						session.setAttribute("mapping", "upcomingEvents");
+						System.out.println("print2: "+request.getSession().getId());
 						
-						
-						if (session.getAttribute("menuList") == null) {
-							InitializeSession.intializeSissionByLangId(request,langId);
-						}
-						
-						if (verify.getExInt1() == 0) {
-							mav = "changePass";
-							session.setAttribute("UserDetail", verify.getRegId());
-
-							session.setAttribute("userInfo", verify);
-
-						} else {
+						if (!eventId.equals("0")) {
 							
-							
-							 
-							session.setAttribute("UserDetail", verify.getRegId());
-
+							session.setAttribute("UserDetail", verify.getRegId()); 
 							session.setAttribute("userInfo", verify);
 							session.setAttribute("userType", (Integer) verify.getUserType());
+							session.setAttribute("langId", langId);
+							
+							int file = Integer.parseInt(EmailUtility.DecodeKey(request.getParameter("file")));
+							
+							if(file==1) {
+								mav="redirect:/applyEventFrontWithFile/"+EmailUtility.DecodeKey(String.valueOf(eventId));
+							}else {
+								mav="redirect:/applyEventFront/"+EmailUtility.DecodeKey(String.valueOf(eventId));
+							}
+							 
+						} else {
 
-							MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+							session.setAttribute("mapping", "upcomingEvents");
+							
+							
+							if (session.getAttribute("menuList") == null) {
+								InitializeSession.intializeSissionByLangId(request,langId);
+							}
+							
+							if (verify.getExInt1() == 0) {
+								mav = "changePass";
+								session.setAttribute("UserDetail", verify.getRegId());
 
-							map1.add("langId", langId);
-							NewsDetails[] newsDetails = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
-									NewsDetails[].class);
-							List<NewsDetails> upcoming = new ArrayList<NewsDetails>(Arrays.asList(newsDetails));
+								session.setAttribute("userInfo", verify);
 
-							MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
-							map2.add("regId", verify.getRegId());
-							Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map2,
-									Registration.class);
-							model.addAttribute("editReg", editReg);
-							model.addAttribute("upcoming", upcoming);
-							model.addAttribute("typeId", 2);
-							session.setAttribute("info",editReg);
-							session.setAttribute("successMsg", "Login Successful !");
-							session.setAttribute("profileUrl", Constant.getUserProfileURL);
-							mav = "redirect:/upcomingEvents";
+							} else {
+								
+								
+								 
+								session.setAttribute("UserDetail", verify.getRegId());
+
+								session.setAttribute("userInfo", verify);
+								session.setAttribute("userType", (Integer) verify.getUserType());
+
+								MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+								map1.add("langId", langId);
+								NewsDetails[] newsDetails = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
+										NewsDetails[].class);
+								List<NewsDetails> upcoming = new ArrayList<NewsDetails>(Arrays.asList(newsDetails));
+
+								MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+								map2.add("regId", verify.getRegId());
+								Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map2,
+										Registration.class);
+								model.addAttribute("editReg", editReg);
+								model.addAttribute("upcoming", upcoming);
+								model.addAttribute("typeId", 2);
+								session.setAttribute("info",editReg);
+								session.setAttribute("successMsg", "Login Successful !");
+								session.setAttribute("profileUrl", Constant.getUserProfileURL);
+								mav = "redirect:/upcomingEvents";
+							}
 						}
-					}
 
-				} else {
-					
-					
-					String eventId = request.getParameter("eventId");
- 
-					if (!eventId.equals("0")) {
+					} else {
 						
-						String file = request.getParameter("file") ;
-						mav = "redirect:/login?file="+file+"&event=" + eventId;
 						
-					}else {
-						mav = "redirect:/login";
+						String eventId = request.getParameter("eventId");
+	 
+						if (!eventId.equals("0")) {
+							
+							String file = request.getParameter("file") ;
+							mav = "redirect:/login?file="+file+"&event=" + eventId;
+							
+						}else {
+							mav = "redirect:/login";
+						}
+						 
+						session.setAttribute("errorMsg", true);
+						session.setAttribute("errorMsg", "Invalid login credentials !");
 					}
-					 
-					session.setAttribute("errorMsg", true);
-					session.setAttribute("errorMsg", "Invalid login credentials !");
+				
 				}
+			} else {
+				System.out.println("Invalid Captcha----------"+captcha);
+				
+				String eventId = request.getParameter("eventId");
+
+				if (!eventId.equals("0")) {
+					
+					String file = request.getParameter("file") ;
+					mav = "redirect:/login?file="+file+"&event=" + eventId;
+					
+				}else {
+					mav = "redirect:/login";
+				}
+				 
+				session.setAttribute("errorMsg", true);
+				session.setAttribute("errorMsg", "Invalid Captcha!");
 			}
+
+			
 
 		} catch (Exception e1) {
 			e1.printStackTrace();
