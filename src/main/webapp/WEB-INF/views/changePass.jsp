@@ -62,7 +62,7 @@
 	</div>
 	<div class="bridcrumb">
 		<div class="container">
-			<a href="${pageContext.request.contextPath}/">Home</a> > >
+			<%-- <a href="${pageContext.request.contextPath}/">Home</a> > --%>
 		</div>
 	</div>
 
@@ -121,7 +121,8 @@
 						<div class="row row-eq-height">
 
 							<div class="col-12 col-sm-12 col-lg-12" style="color: green;">
-								Note :contain minimum 6 letter,one capital letter,one small letter, one digit, one special character</div>
+								Note :contain minimum 8 letter,one capital letter,one small
+								letter, one digit, one special character</div>
 
 							<!-- <div class="col-12 col-sm-12 col-lg-12">
 								<div class="error_msg" id="error_msg" style="display: none">
@@ -136,7 +137,7 @@
 									placeholder="Enter New Password" onchange="trim(this)"
 									onkeyup="return passwordChanged();">
 								<p class="error-msg" id="error_newpass" style="display: none">
-									* Password Minimum 6</p>
+									* Password Minimum 8</p>
 							</div>
 
 
@@ -220,7 +221,7 @@
 			} else if (mediumRegex.test(pwd)) {
 				document.getElementById("error_newpass").innerHTML = "<span style='color:orange'>Medium!</span>";
 				$('#error_newpass').show();
-				document.getElementById("allowPass").value = 1;
+				document.getElementById("allowPass").value = 0;
 			} else {
 				document.getElementById("error_newpass").innerHTML = "<span style='color:red'>Weak!</span>";
 				$('#error_newpass').show();
@@ -229,45 +230,38 @@
 		}
 	</script>
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function($) {
+		$(document).ready(function($) {
 
-							$("#changePassform")
-									.submit(
-											function(e) {
-												var isError = false;
-												var errMsg = "";
+			$("#changePassform").submit(function(e) {
+				var isError = false;
+				var errMsg = "";
 
-												var pass1 = $("#newPass").val();
-												var pass2 = $("#confirmPass")
-														.val();
-												var allowPass = document
-														.getElementById("allowPass").value;
-												$('#error_confirmpass').hide();
-												$('#error_matchpass').hide();
+				var pass1 = $("#newPass").val();
+				var pass2 = $("#confirmPass").val();
+				var allowPass = document.getElementById("allowPass").value;
+				$('#error_confirmpass').hide();
+				$('#error_matchpass').hide();
 
-												if (!pass1 || allowPass == 0) {
+				if (!pass1 || allowPass == 0) {
 
-													$('#error_newpass').show();
-													return false;
-												}
-												if (!pass2 || pass2.length < 6) {
+					$('#error_newpass').show();
+					return false;
+				}
+				if (!pass2 || pass2.length < 6) {
 
-													$('#error_confirmpass')
-															.show();
-													return false;
-												}
+					$('#error_confirmpass').show();
+					return false;
+				}
 
-												if (pass1 != pass2) {
+				if (pass1 != pass2) {
 
-													$('#error_matchpass').show();
-													return false;
-												}
+					$('#error_matchpass').show();
+					return false;
+				}
 
-												return true;
-											});
-						});
+				return true;
+			});
+		});
 	</script>
 
 	<script type="text/javascript">

@@ -166,13 +166,13 @@
 						<div id="newPassDiv" style="display: none"
 							class="col-12 col-sm-12 col-lg-12">
 							<div class="col-12 col-sm-12 col-lg-12" style="color: green;">
-								Note :contain minimum 6 letter,one capital letter,one small letter, one digit, one special character</div>
+								Note :contain minimum 8 letter,one capital letter,one small letter, one digit, one special character</div>
 							<div class="col-12 col-sm-12 col-lg-12">
 								<label>New Password</label> <input type="password"
 									class="form-control" name="newPass" id="newPass"
 									placeholder="New Password" onkeyup="return passwordChanged();">
 								<p class="error-msg" id="error_newpass" style="display: none">
-									* Password Minimum 6</p>
+									* Password Minimum 8</p>
 							</div>
 
 							<div class="col-12 col-sm-12 col-lg-12">
@@ -316,7 +316,7 @@
 			} else if (mediumRegex.test(pwd)) {
 				document.getElementById("error_newpass").innerHTML = "<span style='color:orange'>Medium!</span>";
 				$('#error_newpass').show();
-				document.getElementById("allowPass").value=1;
+				document.getElementById("allowPass").value=0;
 			} else {
 				document.getElementById("error_newpass").innerHTML = "<span style='color:red'>Weak!</span>";
 				$('#error_newpass').show();

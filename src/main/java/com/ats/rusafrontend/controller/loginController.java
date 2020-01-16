@@ -1,12 +1,16 @@
 package com.ats.rusafrontend.controller;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
@@ -526,6 +531,7 @@ public class loginController {
 	public String changePassword(HttpServletRequest request, HttpServletResponse response) {
 
 		String newPass = request.getParameter("newPass");
+		String oldPass = request.getParameter("pass");
 		System.out.println("newPass : " + newPass);
 		ModelAndView mav = new ModelAndView("change-pass");
 		HttpSession session = request.getSession();
@@ -546,27 +552,53 @@ public class loginController {
 				mav.addObject("flag", flag);
 				flag = 0;
 				int userDetail = (int) session.getAttribute("UserDetail");
+
 				if (newPass.equalsIgnoreCase(" ") || newPass == null) {
 					mav = new ModelAndView("change-pass");
 					session.setAttribute("errorMsg", "Invalid Password !");
 
 				} else {
 
+					MessageDigest md = MessageDigest.getInstance("MD5");
+					byte[] messageDigest = md.digest(oldPass.getBytes());
+					BigInteger number = new BigInteger(1, messageDigest);
+					String oldHashText = number.toString(16);
+
 					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-					map.add("regId", userDetail);
-					map.add("password", newPass);
+					map.add("userId", userDetail);
+					map.add("pass", oldHashText);
 
-					info = Constant.getRestTemplate().postForObject(Constant.url + "/changePassword", map, Info.class);
-					mav = new ModelAndView("change-pass");
-					System.out.println(info.toString());
+					info = Constant.getRestTemplate().postForObject(Constant.url + "/checkPasswordByUserId", map,
+							Info.class);
 
-					session.setAttribute("success", "Successfully Updated Password !");
+					messageDigest = md.digest(newPass.getBytes());
+					number = new BigInteger(1, messageDigest);
+					String hashtext = number.toString(16);
 
-					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-					map1.add("regId", userDetail);
-					Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId",
-							map1, Registration.class);
-					mav.addObject("editReg", editReg);
+					Pattern p = Pattern.compile("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$");
+					Matcher m = p.matcher(newPass);
+
+					if (info.isError() == false && m.matches()) {
+
+						map = new LinkedMultiValueMap<String, Object>();
+						map.add("regId", userDetail);
+						map.add("password", hashtext);
+
+						info = Constant.getRestTemplate().postForObject(Constant.url + "/changePassword", map,
+								Info.class);
+						mav = new ModelAndView("change-pass");
+						System.out.println(info.toString());
+
+						session.setAttribute("success", "Successfully Updated Password !");
+
+						MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+						map1.add("regId", userDetail);
+						Registration editReg = Constant.getRestTemplate()
+								.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
+						mav.addObject("editReg", editReg);
+					} else {
+						session.setAttribute("errorMsg", "Invalid Password");
+					}
 
 				}
 			}
@@ -962,26 +994,40 @@ public class loginController {
 					session.setAttribute("errorMsg", "Invalid Password !");
 				} else {
 
-					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-					map1.add("regId", userDetail);
-					map1.add("password", newPass);
+					Pattern p = Pattern.compile("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$");
+					Matcher m = p.matcher(newPass);
 
-					info = Constant.getRestTemplate().postForObject(Constant.url + "/changePassword", map1, Info.class);
-					if (info.isError() == false) {
+					if (m.matches()) {
+						MessageDigest md = MessageDigest.getInstance("MD5");
+						byte[] messageDigest = md.digest(newPass.getBytes());
+						BigInteger number = new BigInteger(1, messageDigest);
+						String pass = number.toString(16);
 
-						session.removeAttribute("userDetail");
-						session.removeAttribute("userInfo");
-						session.invalidate();
+						MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+						map1.add("regId", userDetail);
+						map1.add("password", pass);
 
-						session = request.getSession();
-						if (session.getAttribute("menuList") == null) {
-							InitializeSession.intializeSission(request);
+						info = Constant.getRestTemplate().postForObject(Constant.url + "/changePassword", map1,
+								Info.class);
+						if (info.isError() == false) {
+
+							session.removeAttribute("userDetail");
+							session.removeAttribute("userInfo");
+							session.invalidate();
+
+							session = request.getSession();
+							if (session.getAttribute("menuList") == null) {
+								InitializeSession.intializeSission(request);
+							}
+
+							mav = "redirect:/login";
+							System.out.println(info.toString());
+							session.setAttribute("success", "Successfully Updated Password !");
 						}
-
-						mav = "redirect:/login";
-						System.out.println(info.toString());
-						session.setAttribute("success", "Successfully Updated Password !");
+					}else {
+						session.setAttribute("errorMsg", "Invalid Password !");
 					}
+
 				}
 			}
 		} catch (Exception e) {

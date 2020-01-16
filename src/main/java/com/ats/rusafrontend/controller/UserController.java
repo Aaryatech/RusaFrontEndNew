@@ -1,7 +1,9 @@
 package com.ats.rusafrontend.controller;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.InetAddress;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -90,18 +92,24 @@ public class UserController {
 
 		HttpSession session = request.getSession();
 
-		String userName = request.getParameter("userName");
-		String password = request.getParameter("password");
-		String captcha = session.getAttribute("captcha_security").toString();
-		System.out.println(captcha);
+		
 		String mav = new String();
 
 		try {
-		
+			String userName = request.getParameter("userName");
+			String password = request.getParameter("password");
+			String captcha = session.getAttribute("captcha_security").toString();
+			//System.out.println(captcha);
+			
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] messageDigest = md.digest(password.getBytes());
+			BigInteger number = new BigInteger(1, messageDigest);
+			String hashtext = number.toString(16);
+			
 			String verifyCaptcha = request.getParameter("captcha");
-			System.out.println("Form----------"+captcha);
+			//System.out.println("Form----------"+captcha);
 			if (captcha.equals(verifyCaptcha)) {
-				System.out.println("Captcha Found----------"+captcha);
+				//System.out.println("Captcha Found----------"+captcha);
 				Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 				if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -115,7 +123,7 @@ public class UserController {
 
 					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 					map.add("userName", userName);
-					map.add("password", password);
+					map.add("password", hashtext);
 
 					Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
 
@@ -213,7 +221,7 @@ public class UserController {
 				
 				}
 			} else {
-				System.out.println("Invalid Captcha----------"+captcha);
+				//System.out.println("Invalid Captcha----------"+captcha);
 				
 				String eventId = request.getParameter("eventId");
 
@@ -233,6 +241,7 @@ public class UserController {
 			
 
 		} catch (Exception e1) {
+			mav = "redirect:/login";
 			e1.printStackTrace();
 		}
 
@@ -902,6 +911,8 @@ public class UserController {
 		return mav;
 	}
 
+	
+	
 	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
 	public String changePass(HttpServletRequest request, HttpServletResponse response, Model model) {
 
@@ -940,29 +951,25 @@ public class UserController {
 	@RequestMapping(value = "/getPasswordCheck", method = RequestMethod.GET)
 	public @ResponseBody Info getPasswordCheck(HttpServletRequest request, HttpServletResponse response) {
 		Info info = new Info();
-		Registration verify = null;
+	 
 		HttpSession session = request.getSession();
 		String pass = request.getParameter("pass");
-
-		// int userDetail = 0;
-		ModelAndView mav = null;
+  
 		int userDetail = (int) session.getAttribute("UserDetail");
-		mav = new ModelAndView("change-pass");
+		 
 		try {
 
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] messageDigest = md.digest(pass.getBytes());
+			BigInteger number = new BigInteger(1, messageDigest);
+			String hashtext = number.toString(16);
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("userId", userDetail);
-			map.add("pass", pass);
+			map.add("pass", hashtext);
 
 			info = Constant.getRestTemplate().postForObject(Constant.url + "/checkPasswordByUserId", map, Info.class);
-			/*
-			 * if (verify.isError() == false) { mav = new ModelAndView("changePass");
-			 * 
-			 * } else { mav = new ModelAndView("changePass");
-			 * System.out.println("Invalid Password "); mav.addObject("msg",
-			 * "Invalid Password"); }
-			 */
-			System.out.println(info.toString());
+			 
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
