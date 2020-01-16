@@ -81,21 +81,27 @@ public class VpsImageUpload {
 
 	}
 
-	public Info saveUploadedFiles(MultipartFile file, String filePath, String[] allowExt, String imageName) throws IOException {
+	public Info saveUploadedFiles(MultipartFile file, String filePath, String[] allowExt, String imageName)
+			throws IOException {
 
 		Info info = new Info();
 		try {
 			String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 			if (ArrayUtils.contains(allowExt, extension.toLowerCase())) {
-				
+
 				Path path = Paths.get(filePath + imageName);
 
-				byte[] bytes = file.getBytes(); 
-				path = Paths.get(filePath + imageName); 
+				byte[] bytes = file.getBytes();
+				path = Paths.get(filePath + imageName);
 
 				Files.write(path, bytes);
+				info.setError(false);
+				info.setMsg("Upload Successfully ");
+			} else {
+				info.setError(true);
+				info.setMsg("Error While Uploading Image");
 			}
-			
+
 		} catch (Exception e) {
 
 			e.printStackTrace();

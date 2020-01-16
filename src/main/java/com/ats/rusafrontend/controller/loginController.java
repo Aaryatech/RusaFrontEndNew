@@ -865,13 +865,13 @@ public class loginController {
 				eventReg.setUserId(userDetail);
 				eventReg.setDoc1(pdfName);
 
-				EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister",
-						eventReg, EventRegistration.class);
+				info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
+				if (info.isError() == false) {
+					EventRegistration res = Constant.getRestTemplate()
+							.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
+					session.setAttribute("success", "Successfully Registed Event !");
+				}
 
-				System.out.println("res Id: " + res.toString());
-
-				session.setAttribute("success", "Successfully Registed Event !");
-				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
 			} else {
 				try {
 					/*

@@ -732,6 +732,7 @@ public class ImageController {
 
 				pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
 
+				
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("newsblogsId", newsblogsId);
@@ -750,11 +751,15 @@ public class ImageController {
 					eventReg.setUserId(userDetail.getRegId());
 					eventReg.setDoc1(pdfName);
 
-					EventRegistration res = Constant.getRestTemplate()
-							.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
+					info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
+					
+					if (info.isError() == false) {
+						EventRegistration res = Constant.getRestTemplate()
+								.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
 
-					session.setAttribute("success", "Successfully Registed Event !");
-					upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
+						session.setAttribute("success", "Successfully Registed Event !");
+					} 
+					//upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
 
 				} else {
 
