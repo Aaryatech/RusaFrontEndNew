@@ -48,7 +48,6 @@ import com.ats.rusafrontend.model.University;
 @Scope("session")
 public class UserController {
 
- 
 	int flag = 0;
 	/*
 	 * <dependency> <groupId>com.fasterxml.uuid</groupId>
@@ -64,7 +63,8 @@ public class UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "login");
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -73,7 +73,7 @@ public class UserController {
 
 				String eventId = request.getParameter("event");
 				String file = request.getParameter("file");
-				
+
 				model.addObject("eventId", eventId);
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
@@ -92,25 +92,25 @@ public class UserController {
 
 		HttpSession session = request.getSession();
 
-		
 		String mav = new String();
 
 		try {
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("password");
 			String captcha = session.getAttribute("captcha_security").toString();
-			//System.out.println(captcha);
-			
+			// System.out.println(captcha);
+
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			byte[] messageDigest = md.digest(password.getBytes());
 			BigInteger number = new BigInteger(1, messageDigest);
 			String hashtext = number.toString(16);
-			
+
 			String verifyCaptcha = request.getParameter("captcha");
-			//System.out.println("Form----------"+captcha);
+			// System.out.println("Form----------"+captcha);
 			if (captcha.equals(verifyCaptcha)) {
-				//System.out.println("Captcha Found----------"+captcha);
-				Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+				// System.out.println("Captcha Found----------"+captcha);
+				Maintainance maintainance = Constant.getRestTemplate()
+						.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 				if (maintainance.getMaintenanceStatus() == 1) {
 
 					mav = "maintainance";
@@ -125,46 +125,47 @@ public class UserController {
 					map.add("userName", userName);
 					map.add("password", hashtext);
 
-					Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/loginFrontEnd", map, Registration.class);
+					Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/loginFrontEnd", map,
+							Registration.class);
 
 					if (verify.isError() == false) {
 
 						String eventId = request.getParameter("eventId");
 						int langId = (Integer) session.getAttribute("langId");
-						
-						System.out.println("print: "+session.getId());
+
+						System.out.println("print: " + session.getId());
 						session.removeAttribute("userDetail");
 						session.removeAttribute("userInfo");
 						session.invalidate();
-						
+
 						session = request.getSession();
-						
-						System.out.println("print2: "+request.getSession().getId());
-						
+
+						System.out.println("print2: " + request.getSession().getId());
+
 						if (!eventId.equals("0")) {
-							
-							session.setAttribute("UserDetail", verify.getRegId()); 
+
+							session.setAttribute("UserDetail", verify.getRegId());
 							session.setAttribute("userInfo", verify);
 							session.setAttribute("userType", (Integer) verify.getUserType());
 							session.setAttribute("langId", langId);
-							
+
 							int file = Integer.parseInt(EmailUtility.DecodeKey(request.getParameter("file")));
-							
-							if(file==1) {
-								mav="redirect:/applyEventFrontWithFile/"+EmailUtility.DecodeKey(String.valueOf(eventId));
-							}else {
-								mav="redirect:/applyEventFront/"+EmailUtility.DecodeKey(String.valueOf(eventId));
+
+							if (file == 1) {
+								mav = "redirect:/applyEventFrontWithFile/"
+										+ EmailUtility.DecodeKey(String.valueOf(eventId));
+							} else {
+								mav = "redirect:/applyEventFront/" + EmailUtility.DecodeKey(String.valueOf(eventId));
 							}
-							 
+
 						} else {
 
 							session.setAttribute("mapping", "upcomingEvents");
-							
-							
+
 							if (session.getAttribute("menuList") == null) {
-								InitializeSession.intializeSissionByLangId(request,langId);
+								InitializeSession.intializeSissionByLangId(request, langId);
 							}
-							
+
 							if (verify.getExInt1() == 0) {
 								mav = "changePass";
 								session.setAttribute("UserDetail", verify.getRegId());
@@ -172,9 +173,7 @@ public class UserController {
 								session.setAttribute("userInfo", verify);
 
 							} else {
-								
-								
-								 
+
 								session.setAttribute("UserDetail", verify.getRegId());
 
 								session.setAttribute("userInfo", verify);
@@ -183,18 +182,18 @@ public class UserController {
 								MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 								map1.add("langId", langId);
-								NewsDetails[] newsDetails = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
-										NewsDetails[].class);
+								NewsDetails[] newsDetails = Constant.getRestTemplate().postForObject(
+										Constant.url + "/getAllUpcomingEvents", map1, NewsDetails[].class);
 								List<NewsDetails> upcoming = new ArrayList<NewsDetails>(Arrays.asList(newsDetails));
 
 								MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 								map2.add("regId", verify.getRegId());
-								Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map2,
-										Registration.class);
+								Registration editReg = Constant.getRestTemplate()
+										.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
 								model.addAttribute("editReg", editReg);
 								model.addAttribute("upcoming", upcoming);
 								model.addAttribute("typeId", 2);
-								session.setAttribute("info",editReg);
+								session.setAttribute("info", editReg);
 								session.setAttribute("successMsg", "Login Successful !");
 								session.setAttribute("profileUrl", Constant.getUserProfileURL);
 								mav = "redirect:/upcomingEvents";
@@ -202,43 +201,40 @@ public class UserController {
 						}
 
 					} else {
-						
-						
+
 						String eventId = request.getParameter("eventId");
-	 
+
 						if (!eventId.equals("0")) {
-							
-							String file = request.getParameter("file") ;
-							mav = "redirect:/login?file="+file+"&event=" + eventId;
-							
-						}else {
+
+							String file = request.getParameter("file");
+							mav = "redirect:/login?file=" + file + "&event=" + eventId;
+
+						} else {
 							mav = "redirect:/login";
 						}
-						 
+
 						session.setAttribute("errorMsg", true);
 						session.setAttribute("errorMsg", "Invalid login credentials !");
 					}
-				
+
 				}
 			} else {
-				//System.out.println("Invalid Captcha----------"+captcha);
-				
+				// System.out.println("Invalid Captcha----------"+captcha);
+
 				String eventId = request.getParameter("eventId");
 
 				if (!eventId.equals("0")) {
-					
-					String file = request.getParameter("file") ;
-					mav = "redirect:/login?file="+file+"&event=" + eventId;
-					
-				}else {
+
+					String file = request.getParameter("file");
+					mav = "redirect:/login?file=" + file + "&event=" + eventId;
+
+				} else {
 					mav = "redirect:/login";
 				}
-				 
+
 				session.setAttribute("errorMsg", true);
 				session.setAttribute("errorMsg", "Invalid Captcha!");
 			}
-
-			
 
 		} catch (Exception e1) {
 			mav = "redirect:/login";
@@ -257,7 +253,8 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "dashboard");
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav = "maintainance";
@@ -271,13 +268,14 @@ public class UserController {
 				System.out.println("userDetail : " + userDetail);
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId",
+						map, Registration.class);
 
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("langId", 1);
-				List<NewsDetails> upcoming = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEvents", map1,
-						List.class);
+				List<NewsDetails> upcoming = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/getAllUpcomingEvents", map1, List.class);
 				model.addAttribute("editReg", editReg);
 				System.out.println("list_new: " + upcoming.toString());
 				model.addAttribute("upcoming", upcoming);
@@ -300,7 +298,8 @@ public class UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "registration");
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				model = new ModelAndView("maintainance");
@@ -310,11 +309,12 @@ public class UserController {
 				model.addObject("siteKey", Constant.siteKey);
 				model.addObject("flag", flag);
 				flag = 0;
-				
-				University[] university = Constant.getRestTemplate().getForObject(Constant.url + "/getUniversityList", University[].class);
-				List<University> universityList = new ArrayList<>(Arrays.asList(university)); 
+
+				University[] university = Constant.getRestTemplate().getForObject(Constant.url + "/getUniversityList",
+						University[].class);
+				List<University> universityList = new ArrayList<>(Arrays.asList(university));
 				model.addObject("universityList", universityList);
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -322,88 +322,78 @@ public class UserController {
 
 		return model;
 	}
-	
-	
+
 	@RequestMapping(value = "/getInstitute", method = RequestMethod.POST)
 	public @ResponseBody List<InstituteInfo> getInstituteList(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		 
 		List<InstituteInfo> instituteInfolist = new ArrayList<>();
 		try {
-			
+
 			int uniId = Integer.parseInt(request.getParameter("uniId"));
-			 
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("uniId", uniId); 
-			InstituteInfo[] instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteListByUniversityId",map,
-					InstituteInfo[].class);
-			
+			map.add("uniId", uniId);
+			InstituteInfo[] instituteInfo = Constant.getRestTemplate()
+					.postForObject(Constant.url + "/getInstituteListByUniversityId", map, InstituteInfo[].class);
+
 			instituteInfolist = new ArrayList<>(Arrays.asList(instituteInfo));
-			 
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			 
+
 		}
-		
+
 		return instituteInfolist;
- 
 
 	}
-	
+
 	@RequestMapping(value = "/getAshecodeByInstiid", method = RequestMethod.GET)
-	public @ResponseBody InstituteInfo getAshecode(HttpServletRequest request,
-			HttpServletResponse response) {
+	public @ResponseBody InstituteInfo getAshecode(HttpServletRequest request, HttpServletResponse response) {
 
-		 
-		InstituteInfo instituteInfo  = new InstituteInfo();
+		InstituteInfo instituteInfo = new InstituteInfo();
 		try {
-			
+
 			int instiId = Integer.parseInt(request.getParameter("instiId"));
-			 
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("instiId", instiId); 
-			 instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoById",map,
-					InstituteInfo .class);
-			 
-			 
-		}catch(Exception e) {
+			map.add("instiId", instiId);
+			instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoById", map,
+					InstituteInfo.class);
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			 
+
 		}
-		
+
 		return instituteInfo;
- 
 
 	}
-	
+
 	@RequestMapping(value = "/getInstituteInformation", method = RequestMethod.GET)
 	public @ResponseBody InstituteInfo getInstituteInformation(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		 
-		InstituteInfo instituteInfo  = new InstituteInfo();
+		InstituteInfo instituteInfo = new InstituteInfo();
 		try {
-			
-			String instiaisheCode =  request.getParameter("instiaisheCode") ;
-			 
+
+			String instiaisheCode = request.getParameter("instiaisheCode");
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("asheCode", instiaisheCode); 
-			 instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
-					InstituteInfo .class);
-			 
-			if(instituteInfo==null) {
-				instituteInfo  = new InstituteInfo();
+			map.add("asheCode", instiaisheCode);
+			instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoByAsheCode", map,
+					InstituteInfo.class);
+
+			if (instituteInfo == null) {
+				instituteInfo = new InstituteInfo();
 			}
-			 
-			 
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			instituteInfo  = new InstituteInfo();
+			instituteInfo = new InstituteInfo();
 		}
-		
+
 		return instituteInfo;
- 
 
 	}
 
@@ -413,16 +403,15 @@ public class UserController {
 		String uuid = null;
 		HttpSession session = request.getSession();
 		boolean error = false;
-		
+
 		try {
-			Registration registration = new Registration(); 
+			Registration registration = new Registration();
 			int type = Integer.parseInt(request.getParameter("type"));
-			
 
 			if (type == 1) {
-				
-				String university = request.getParameter("university") ;
-				String collegeName = request.getParameter("collegeName") ;
+
+				String university = request.getParameter("university");
+				String collegeName = request.getParameter("collegeName");
 				String indAshecode = request.getParameter("indAshecode");
 				String name = request.getParameter("name");
 				String inddesognation = request.getParameter("inddesognation");
@@ -430,7 +419,7 @@ public class UserController {
 				String mobile = request.getParameter("mobile");
 				String email = request.getParameter("email");
 				String altEmail1 = request.getParameter("altEmail");
-				 
+
 				registration.setEmails(email);
 				registration.setAlternateEmail(altEmail1);
 				registration.setName(name);
@@ -441,27 +430,27 @@ public class UserController {
 				registration.setMobileNumber(mobile);
 				registration.setDesignationName(inddesognation);
 				registration.setAisheCode(indAshecode);
-				  
+
 			}
 			if (type == 2) {
-				
+
 				String instiaisheCode = request.getParameter("instiaisheCode");
 				String univ = request.getParameter("univ");
 				String institute = request.getParameter("institute");
 				String designation = request.getParameter("instidesignation");
 				String cAuthour = request.getParameter("cAuthour");
 				String collegeDept = request.getParameter("instiDept");
-				String collegeMobile = request.getParameter("instiMobile"); 
+				String collegeMobile = request.getParameter("instiMobile");
 				String instiEmail = request.getParameter("instiEmail");
 				String instialtEmail = request.getParameter("instialtEmail");
-				String instiPhone = request.getParameter("instiPhone"); 
-				
+				String instiPhone = request.getParameter("instiPhone");
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("asheCode", instiaisheCode); 
-				InstituteInfo instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
-						InstituteInfo .class);
-				  
-				if(instituteInfo!=null && instituteInfo.getYesNo()!=1) {
+				map.add("asheCode", instiaisheCode);
+				InstituteInfo instituteInfo = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/getInstituteInfoByAsheCode", map, InstituteInfo.class);
+
+				if (instituteInfo != null && instituteInfo.getYesNo() != 1) {
 					registration.setMobileNumber(collegeMobile);
 					registration.setEmails(instiEmail);
 					registration.setAlternateEmail(instialtEmail);
@@ -473,30 +462,30 @@ public class UserController {
 					registration.setDepartmentName(collegeDept);
 					registration.setDesignationName(designation);
 					registration.setExVar2(instiPhone);
-					registration.setUserType(2); 
-				}else {
-					error=true;
+					registration.setUserType(2);
+				} else {
+					error = true;
 				}
 			}
 			if (type == 3) {
-				
+
 				String uniName = request.getParameter("uniName");
 				String uniaisheName = request.getParameter("uniaisheName");
-				String uniinstitute = request.getParameter("uniinstitute"); 
+				String uniinstitute = request.getParameter("uniinstitute");
 				String uniAuthour = request.getParameter("uniAuthour");
 				String uniDes = request.getParameter("uniDes");
 				String uniDept = request.getParameter("uniDept");
-				String uniMobile = request.getParameter("uniMobile"); 
-				String uniEmail = request.getParameter("uniEmail"); 
+				String uniMobile = request.getParameter("uniMobile");
+				String uniEmail = request.getParameter("uniEmail");
 				String unialtEmail = request.getParameter("unialtEmail");
 				String uniPhone = request.getParameter("uniPhone");
-				
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("asheCode", uniaisheName); 
-				InstituteInfo instituteInfo = Constant.getRestTemplate().postForObject(Constant.url + "/getInstituteInfoByAsheCode",map,
-						InstituteInfo .class);
-				if(instituteInfo!=null && instituteInfo.getYesNo()!=1 ) {
-					
+				map.add("asheCode", uniaisheName);
+				InstituteInfo instituteInfo = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/getInstituteInfoByAsheCode", map, InstituteInfo.class);
+				if (instituteInfo != null && instituteInfo.getYesNo() != 1) {
+
 					registration.setMobileNumber(uniMobile);
 					registration.setEmails(uniEmail);
 					registration.setAlternateEmail(unialtEmail);
@@ -509,11 +498,10 @@ public class UserController {
 					registration.setDesignationName(uniDes);
 					registration.setExVar2(uniPhone);
 					registration.setUserType(3);
-					 
-				}else {
-					error=true;
+
+				} else {
+					error = true;
 				}
-				
 
 			}
 
@@ -531,23 +519,43 @@ public class UserController {
 			registration.setDelStatus(1);
 			registration.setRegisterVia("web");
 
-			if(error==false) {
-				Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", registration, Registration.class);
-				return "redirect:/verifyOtp/"+uuid;
-			}else {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("inputValue", registration.getEmails());
+			map.add("valueType", 2);
+			map.add("primaryKey", 0);
+
+			Info info = Constant.getRestTemplate().postForObject(Constant.url + "checkUniqueField", map, Info.class);
+
+			if (info.isError() == false) {
+
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("inputValue", registration.getMobileNumber());
+				map.add("valueType", 1);
+				map.add("primaryKey", 0);
+
+				info = Constant.getRestTemplate().postForObject(Constant.url + "checkUniqueField", map, Info.class);
+
+				if (error == false && info.isError() == false) {
+					Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", registration,
+							Registration.class);
+					return "redirect:/verifyOtp/" + uuid;
+				} else {
+					session.setAttribute("errorMsg", "Failed To Register");
+					return "redirect:/registration";
+				}
+			} else {
 				session.setAttribute("errorMsg", "Failed To Register");
-				return "redirect:/registration"; 
+				return "redirect:/registration";
 			}
-			
 
 		} catch (Exception e1) {
 			System.out.println("ex " + e1.getMessage());
 			e1.printStackTrace();
-			error=true;
+			error = true;
 			session.setAttribute("errorMsg", "Failed To Register");
-			return "redirect:/registration"; 
+			return "redirect:/registration";
 		}
-		 
+
 	}
 
 	@RequestMapping(value = "/verifyOtp/{uuid}", method = RequestMethod.GET)
@@ -560,17 +568,18 @@ public class UserController {
 			 * HttpSession session = request.getSession(); session.setAttribute("mapping",
 			 * "verifyOtp");
 			 * 
-			 * Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url +
-			 * "/checkIsMaintenance", Maintainance.class); if
-			 * (maintainance.getMaintenanceStatus() == 1) {
+			 * Maintainance maintainance =
+			 * Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+			 * Maintainance.class); if (maintainance.getMaintenanceStatus() == 1) {
 			 * 
 			 * model = new ModelAndView("maintainance"); model.addObject("maintainance",
 			 * maintainance); } else { MultiValueMap<String, Object> map = new
 			 * LinkedMultiValueMap<String, Object>(); map.add("slugName", "login");
-			 * PageMetaData pageMetaData = Constant.getRestTemplate().postForObject(Constant.url +
-			 * "/getPageMetaData", map, PageMetaData.class); model.addObject("pageMetaData",
-			 * pageMetaData); model.addObject("siteKey", Constant.siteKey);
-			 * model.addObject("flag", flag); flag = 0; }
+			 * PageMetaData pageMetaData =
+			 * Constant.getRestTemplate().postForObject(Constant.url + "/getPageMetaData",
+			 * map, PageMetaData.class); model.addObject("pageMetaData", pageMetaData);
+			 * model.addObject("siteKey", Constant.siteKey); model.addObject("flag", flag);
+			 * flag = 0; }
 			 */
 			model.addObject("uuid", uuid);
 
@@ -590,7 +599,7 @@ public class UserController {
 
 		ModelAndView mav = new ModelAndView("otp");
 		mav.addObject("uuid", uuid);
-		 
+
 		res.setContentType("text/html");
 		HttpSession session = request.getSession();
 		try {
@@ -600,14 +609,15 @@ public class UserController {
 				mav.addObject("uuid", uuid);
 				// mav.addObject("msg", "Invalid Otp");
 				session.setAttribute("errorMsg", "Invalid OTP !");
-				return "redirect:/verifyOtp/"+uuid; 
+				return "redirect:/verifyOtp/" + uuid;
 			} else {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("userOtp", userOtp);
 				map.add("uuid", uuid);
 
-				OtpResponse verifyOtp = Constant.getRestTemplate().postForObject(Constant.url + "/verifyOtpResponse", map, OtpResponse.class);
+				OtpResponse verifyOtp = Constant.getRestTemplate().postForObject(Constant.url + "/verifyOtpResponse",
+						map, OtpResponse.class);
 
 				if (verifyOtp.isError() == false) {
 					mav = new ModelAndView("registration");
@@ -617,7 +627,7 @@ public class UserController {
 					mav = new ModelAndView("otp");
 					mav.addObject("uuid", uuid);
 					session.setAttribute("errorMsg", "Invalid OTP !");
-					return "redirect:/verifyOtp/"+uuid; 
+					return "redirect:/verifyOtp/" + uuid;
 				}
 			}
 		} catch (Exception e) {
@@ -628,7 +638,6 @@ public class UserController {
 			return "redirect:/registration";
 		}
 
-		
 	}
 
 	@RequestMapping(value = "/resendOtpProcess", method = RequestMethod.POST)
@@ -639,7 +648,8 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "resendOtpProcess");
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				mav = new ModelAndView("maintainance");
@@ -653,8 +663,8 @@ public class UserController {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("uuid", uuid);
 
-				OtpResponse verifyOtp = Constant.getRestTemplate().postForObject(Constant.url + "/verifyResendOtpResponse", map,
-						OtpResponse.class);
+				OtpResponse verifyOtp = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/verifyResendOtpResponse", map, OtpResponse.class);
 
 				if (verifyOtp.isError() == false) {
 					mav = new ModelAndView("otp");
@@ -697,7 +707,8 @@ public class UserController {
 			map.add("endDate", endDate);
 			// map.add("firstDate", firstDate);
 
-			NewsDetails monthDate = Constant.getRestTemplate().postForObject(Constant.url + "/getCurrentMonthEvents", map, NewsDetails.class);
+			NewsDetails monthDate = Constant.getRestTemplate().postForObject(Constant.url + "/getCurrentMonthEvents",
+					map, NewsDetails.class);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -734,30 +745,31 @@ public class UserController {
 
 				int langId = (Integer) session.getAttribute("langId");
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-				map1.add("langId", langId); 
+				map1.add("langId", langId);
 				map1.add("newsblogsId", newsblogsId);
-				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId", map1,
-						NewsDetails.class); 
-				int userType = (Integer) session.getAttribute("userType"); 
+				NewsDetails eventList = Constant.getRestTemplate().postForObject(Constant.url + "/getEventListByNewsId",
+						map1, NewsDetails.class);
+				int userType = (Integer) session.getAttribute("userType");
 				String[] ids = eventList.getExVar2().split(",");
 
-				int allowd=0;
-				
+				int allowd = 0;
+
 				for (int i = 0; i < ids.length; i++) {
 
 					if (userType == Integer.parseInt(ids[i])) {
-						allowd=1;
+						allowd = 1;
 						break;
 					}
 				}
 
-				if(allowd==1) {
-					
+				if (allowd == 1) {
+
 					map1 = new LinkedMultiValueMap<String, Object>();
 
 					map1.add("newsblogsId", newsblogsId);
 					map1.add("userId", userDetail);
-					info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+					info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1,
+							Info.class);
 					if (info.isError() == true) {
 						EventRegistration eventReg = new EventRegistration();
 
@@ -772,25 +784,26 @@ public class UserController {
 						eventReg.setRegDate(sf.format(date));
 						eventReg.setUserId(userDetail);
 
-						EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister", eventReg,
-								EventRegistration.class);
+						EventRegistration res = Constant.getRestTemplate()
+								.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
 
 						if (res != null) {
 
 							session.setAttribute("success", "Successfully Registed Event !");
 						}
 					} else {
-						session.setAttribute("errorMsg", "Event Already Registered !"); 
+						session.setAttribute("errorMsg", "Event Already Registered !");
 					}
-				}else {
-					session.setAttribute("errorMsg", "You can't apply for this event !"); 
+				} else {
+					session.setAttribute("errorMsg", "You can't apply for this event !");
 				}
-				 
+
 				ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
 
 			} else {
 				session.setAttribute("errorMsg", "Please login for apply event !");
-				ss = "redirect:/login?file="+EmailUtility.Encrypt(String.valueOf(0))+"&event=" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
+				ss = "redirect:/login?file=" + EmailUtility.Encrypt(String.valueOf(0)) + "&event="
+						+ EmailUtility.Encrypt(String.valueOf(newsblogsId));
 
 			}
 
@@ -811,7 +824,8 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "upcomingEvents");
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			if (maintainance.getMaintenanceStatus() == 1) {
 
 				// model = new ModelAndView("maintainance");
@@ -828,8 +842,8 @@ public class UserController {
 
 				map1.add("langId", langId);
 				map1.add("userId", userDetail);
-				NewsDetails[] upcoming = Constant.getRestTemplate().postForObject(Constant.url + "/getAllUpcomingEventsWithIsApply", map1,
-						NewsDetails[].class);
+				NewsDetails[] upcoming = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/getAllUpcomingEventsWithIsApply", map1, NewsDetails[].class);
 				List<NewsDetails> upcomingList = new ArrayList<NewsDetails>(Arrays.asList(upcoming));
 
 				for (int i = 0; i < upcomingList.size(); i++) {
@@ -839,7 +853,8 @@ public class UserController {
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId",
+						map, Registration.class);
 				model.addAttribute("editReg", editReg);
 				// System.out.println("list_new: " + upcoming.toString());
 				model.addAttribute("upcoming", upcomingList);
@@ -868,7 +883,8 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "previousEvents");
 			int userDetail = (int) session.getAttribute("UserDetail");
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -879,11 +895,11 @@ public class UserController {
 				mav = "content/previous-dashboard";
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				int langId = (Integer) session.getAttribute("langId");
-				
+
 				map1.add("langId", langId);
 				map1.add("userId", userDetail);
-				EventRecord[] previousList = Constant.getRestTemplate().postForObject(Constant.url + "/allPreviousEventWithApllied", map1,
-						EventRecord[].class);
+				EventRecord[] previousList = Constant.getRestTemplate()
+						.postForObject(Constant.url + "/allPreviousEventWithApllied", map1, EventRecord[].class);
 				List<EventRecord> previous = new ArrayList<EventRecord>(Arrays.asList(previousList));
 
 				for (int i = 0; i < previous.size(); i++) {
@@ -893,7 +909,8 @@ public class UserController {
 				// List<ImageLink> imagList = new ArrayList<ImageLink>(Arrays.asList(image));
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId",
+						map, Registration.class);
 				model.addAttribute("editReg", editReg);
 				// System.out.println("list_new: " + previous.toString());
 				model.addAttribute("previous", previous);
@@ -911,8 +928,6 @@ public class UserController {
 		return mav;
 	}
 
-	
-	
 	@RequestMapping(value = "/changePass", method = RequestMethod.GET)
 	public String changePass(HttpServletRequest request, HttpServletResponse response, Model model) {
 
@@ -922,7 +937,8 @@ public class UserController {
 		try {
 			session.setAttribute("mapping", "changePass");
 
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -937,7 +953,8 @@ public class UserController {
 				System.out.println("userDetail : " + userDetail);
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId",
+						map, Registration.class);
 				model.addAttribute("editReg", editReg);
 			}
 		} catch (Exception e) {
@@ -951,25 +968,25 @@ public class UserController {
 	@RequestMapping(value = "/getPasswordCheck", method = RequestMethod.GET)
 	public @ResponseBody Info getPasswordCheck(HttpServletRequest request, HttpServletResponse response) {
 		Info info = new Info();
-	 
+
 		HttpSession session = request.getSession();
 		String pass = request.getParameter("pass");
-  
+
 		int userDetail = (int) session.getAttribute("UserDetail");
-		 
+
 		try {
 
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			byte[] messageDigest = md.digest(pass.getBytes());
 			BigInteger number = new BigInteger(1, messageDigest);
 			String hashtext = number.toString(16);
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("userId", userDetail);
 			map.add("pass", hashtext);
 
 			info = Constant.getRestTemplate().postForObject(Constant.url + "/checkPasswordByUserId", map, Info.class);
-			 
+
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -978,17 +995,17 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("User Logout");
 		// int userDetail = (int) session.getAttribute("UserDetail");
 		Cookie[] cookies = request.getCookies();
-	    if (cookies != null)
-	        for (Cookie cookie : cookies) {
-	            cookie.setValue("");
-	            cookie.setPath("/");
-	            cookie.setMaxAge(0);
-	            response.addCookie(cookie);
-	        }
+		if (cookies != null)
+			for (Cookie cookie : cookies) {
+				cookie.setValue("");
+				cookie.setPath("/");
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
 		session.removeAttribute("userDetail");
 		session.removeAttribute("userInfo");
 		session.invalidate();
@@ -1002,7 +1019,8 @@ public class UserController {
 		HttpSession session = request.getSession();
 		try {
 			session.setAttribute("mapping", "forgetPass");
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 
 			if (maintainance.getMaintenanceStatus() == 1) {
 
@@ -1035,7 +1053,8 @@ public class UserController {
 			map.add("email", userName);
 			map.add("mobileNumber", mobileNumber);
 
-			Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/forgetPassword", map, Registration.class);
+			Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/forgetPassword", map,
+					Registration.class);
 			if (verify.isError() == false) {
 				session.setAttribute("success", "Please Check mail !");
 				// System.out.println("Login :" + verify.getRegId());
@@ -1060,7 +1079,8 @@ public class UserController {
 
 		try {
 			HttpSession session = request.getSession();
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
 			session.setAttribute("mapping", "fillFeeback");
 
 			if (maintainance.getMaintenanceStatus() == 1) {
@@ -1075,7 +1095,8 @@ public class UserController {
 				mav = "eventfeedback";
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("regId", userDetail);
-				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+				Registration editReg = Constant.getRestTemplate().postForObject(Constant.url + "/getRegUserbyRegId",
+						map, Registration.class);
 				model.addAttribute("editReg", editReg);
 				model.addAttribute("eventId", eventId);
 			}
@@ -1105,7 +1126,8 @@ public class UserController {
 			map.add("eventId", eventId);
 			map.add("value", value);
 			map.add("messge", msg);
-			Info update = Constant.getRestTemplate().postForObject(Constant.url + "/updateEventFeedback", map, Info.class);
+			Info update = Constant.getRestTemplate().postForObject(Constant.url + "/updateEventFeedback", map,
+					Info.class);
 
 			if (update.isError() == true) {
 				session.setAttribute("errorMsg", "Failed to submit feedback ");
@@ -1133,7 +1155,7 @@ public class UserController {
 			String inputValue = request.getParameter("inputValue");
 			int valueType = Integer.parseInt(request.getParameter("valueType"));
 			int primaryKey = Integer.parseInt(request.getParameter("primaryKey"));
-			System.out.println("values are   " + inputValue + valueType + primaryKey);
+			System.out.println("values are   " + inputValue + "valueType" + valueType + "primaryKey" + primaryKey);
 
 			map.add("inputValue", inputValue);
 			map.add("valueType", valueType);
