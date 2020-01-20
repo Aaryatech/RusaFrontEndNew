@@ -3,7 +3,10 @@
 	uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
-
+<noscript>
+	<META HTTP-EQUIV="Refresh"
+		CONTENT="0;URL=${pageContext.request.contextPath}/javaScriptWarning">
+</noscript>
 <Style>
 .headerlogo img {
 	max-height: 100px;

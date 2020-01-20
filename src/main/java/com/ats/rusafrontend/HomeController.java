@@ -635,4 +635,17 @@ public class HomeController {
 
 		return mav;
 	}
+	
+	@RequestMapping(value = "/javaScriptWarning", method = RequestMethod.GET)
+	public String javaScriptWarning(HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		String ret = "javaScriptWarning";
+		try {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ret;
+	}
 }
