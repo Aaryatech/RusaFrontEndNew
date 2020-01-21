@@ -299,8 +299,27 @@ public class CmsController {
 	}
 
 	@RequestMapping(value = "/imgGallaryDetail/{slugname}/{catId}/{cateName}", method = RequestMethod.GET)
-	public ModelAndView imgGallaryDetail(@PathVariable("slugname") String slugname, @PathVariable("catId") int catId,
+	public String imgGallaryDetail(@PathVariable("slugname") String slugname, @PathVariable("catId") int catId,
 			@PathVariable("cateName") String cateName, HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			HttpSession session = request.getSession();
+			session.setAttribute("mapping", "imgGallary");
+
+			session.setAttribute("imageDetailCatId", catId);
+			session.setAttribute("imageDetailSlugname", slugname);
+			session.setAttribute("imageDetailCateName", cateName);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/imgGallaryDetail";
+	}
+
+	@RequestMapping(value = "/imgGallaryDetail", method = RequestMethod.GET)
+	public ModelAndView imgGallaryDetail(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("content/imgGallaryDetail");
 		try {
@@ -323,6 +342,10 @@ public class CmsController {
 
 				int langId = (Integer) session.getAttribute("langId");
 
+				int catId = (int) session.getAttribute("imageDetailCatId");
+				String slugname = (String) session.getAttribute("imageDetailSlugname");
+				String cateName = (String) session.getAttribute("imageDetailCateName");
+				
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("key", "gallarySectionId");
 				Setting setting = Constant.getRestTemplate().postForObject(Constant.url + "/getSettingRecordByKey", map,
