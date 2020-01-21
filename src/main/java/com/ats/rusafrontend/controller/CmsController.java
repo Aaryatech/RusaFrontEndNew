@@ -38,7 +38,7 @@ public class CmsController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "info-" + slugName);
 			int langId = (Integer) session.getAttribute("langId");
-			System.out.println(slugName);
+			//System.out.println(slugName);
 
 			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
 					Maintainance.class);
