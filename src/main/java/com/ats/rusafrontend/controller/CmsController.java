@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.EmailUtility;
+import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
 import com.ats.rusafrontend.model.*;
 
@@ -38,7 +39,7 @@ public class CmsController {
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "info-" + slugName);
 			int langId = (Integer) session.getAttribute("langId");
-			//System.out.println(slugName);
+			// System.out.println(slugName);
 
 			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
 					Maintainance.class);
@@ -298,28 +299,32 @@ public class CmsController {
 		return model;
 	}
 
+	/*
+	 * @RequestMapping(value = "/imgGallaryDetail/{slugname}/{catId}/{cateName}",
+	 * method = RequestMethod.GET) public String
+	 * imgGallaryDetail(@PathVariable("slugname") String
+	 * slugname, @PathVariable("catId") int catId,
+	 * 
+	 * @PathVariable("cateName") String cateName, HttpServletRequest request,
+	 * HttpServletResponse response) {
+	 * 
+	 * try {
+	 * 
+	 * HttpSession session = request.getSession(); session.setAttribute("mapping",
+	 * "imgGallary");
+	 * 
+	 * session.setAttribute("imageDetailCatId", catId);
+	 * session.setAttribute("imageDetailSlugname", slugname);
+	 * session.setAttribute("imageDetailCateName", cateName);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); }
+	 * 
+	 * return "redirect:/imgGallaryDetail"; }
+	 */
+
 	@RequestMapping(value = "/imgGallaryDetail/{slugname}/{catId}/{cateName}", method = RequestMethod.GET)
-	public String imgGallaryDetail(@PathVariable("slugname") String slugname, @PathVariable("catId") int catId,
+	public ModelAndView imgGallaryDetail(@PathVariable("slugname") String slugname, @PathVariable("catId") int catId,
 			@PathVariable("cateName") String cateName, HttpServletRequest request, HttpServletResponse response) {
-
-		try {
-
-			HttpSession session = request.getSession();
-			session.setAttribute("mapping", "imgGallary");
-
-			session.setAttribute("imageDetailCatId", catId);
-			session.setAttribute("imageDetailSlugname", slugname);
-			session.setAttribute("imageDetailCateName", cateName);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return "redirect:/imgGallaryDetail";
-	}
-
-	@RequestMapping(value = "/imgGallaryDetail", method = RequestMethod.GET)
-	public ModelAndView imgGallaryDetail(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("content/imgGallaryDetail");
 		try {
@@ -342,37 +347,55 @@ public class CmsController {
 
 				int langId = (Integer) session.getAttribute("langId");
 
-				int catId = (int) session.getAttribute("imageDetailCatId");
-				String slugname = (String) session.getAttribute("imageDetailSlugname");
-				String cateName = (String) session.getAttribute("imageDetailCateName");
-				
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("key", "gallarySectionId");
-				Setting setting = Constant.getRestTemplate().postForObject(Constant.url + "/getSettingRecordByKey", map,
-						Setting.class);
-
-				map = new LinkedMultiValueMap<String, Object>();
-				map.add("sectionId", setting.getKeyValues());
-				GetCategory[] category = Constant.getRestTemplate()
-						.postForObject(Constant.url + "/getAllCatIdBySectionId", map, GetCategory[].class);
-				List<GetCategory> categoryList = new ArrayList<GetCategory>(Arrays.asList(category));
-				model.addObject("rusaList", categoryList);
-
-				map = new LinkedMultiValueMap<String, Object>();
-				map.add("slugName", slugname);
+				map.add("galleryCatId", catId);
 				map.add("langId", langId);
-				System.out.println(map);
-				PageContent pageContent = Constant.getRestTemplate().postForObject(Constant.url + "/getImages", map,
-						PageContent.class);
-				model.addObject("imageList", pageContent.getGallaryDetailList());
-				model.addObject("videoList", pageContent.getVideoList());
-				model.addObject("gallryImageURL", Constant.getGallryImageURL);
-				model.addObject("catId", catId);
-				model.addObject("cateName", cateName);
-				model.addObject("slugname", slugname);
+				Info infoCat = Constant.getRestTemplate().postForObject(Constant.url + "/getCatName", map, Info.class);
+
+				/*
+				 * int catId = (int) session.getAttribute("imageDetailCatId"); String slugname =
+				 * (String) session.getAttribute("imageDetailSlugname"); String cateName =
+				 * (String) session.getAttribute("imageDetailCateName");
+				 */
+
+				System.out.println(cateName + " " + infoCat.getMsg());
+				if (infoCat.isError() == false && infoCat.getMsg().equals(cateName)) {
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("key", "gallarySectionId");
+					Setting setting = Constant.getRestTemplate().postForObject(Constant.url + "/getSettingRecordByKey",
+							map, Setting.class);
+
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("sectionId", setting.getKeyValues());
+					GetCategory[] category = Constant.getRestTemplate()
+							.postForObject(Constant.url + "/getAllCatIdBySectionId", map, GetCategory[].class);
+					List<GetCategory> categoryList = new ArrayList<GetCategory>(Arrays.asList(category));
+					model.addObject("rusaList", categoryList);
+
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("slugName", slugname);
+					map.add("langId", langId);
+					System.out.println(map);
+					PageContent pageContent = Constant.getRestTemplate().postForObject(Constant.url + "/getImages", map,
+							PageContent.class);
+					model.addObject("imageList", pageContent.getGallaryDetailList());
+					model.addObject("videoList", pageContent.getVideoList());
+					model.addObject("gallryImageURL", Constant.getGallryImageURL);
+					model.addObject("catId", catId);
+					model.addObject("cateName", infoCat.getMsg());
+					model.addObject("slugname", slugname);
+				} else {
+					model = new ModelAndView("error404");
+					String errorMsg = "something wrong";
+					model.addObject("errorMsg", errorMsg);
+				}
+
 			}
 
 		} catch (Exception e) {
+			model = new ModelAndView("error404");
+			String errorMsg = "Something Wrong";
+			model.addObject("errorMsg", errorMsg);
 			e.printStackTrace();
 		}
 
