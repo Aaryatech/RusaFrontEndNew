@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
@@ -321,7 +322,9 @@ public class ImageController {
 				flag = 1;
 				session.setAttribute("errorMsg", "Invalid Captcha !");
 			}
-
+			Random randChars = new Random();
+			String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
+			session.setAttribute("captcha_security", sImageCode); 
 		} catch (Exception e) {
 			session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
 			e.printStackTrace();

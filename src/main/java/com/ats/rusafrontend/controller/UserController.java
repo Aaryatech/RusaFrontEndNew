@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -219,8 +220,7 @@ public class UserController {
 
 				}
 			} else {
-				// System.out.println("Invalid Captcha----------"+captcha);
-
+				
 				String eventId = request.getParameter("eventId");
 
 				if (!eventId.equals("0")) {
@@ -236,8 +236,19 @@ public class UserController {
 				session.setAttribute("errorMsg", "Invalid Captcha!");
 			}
 
+			/*System.out.println("Captcha 1----------" + captcha);*/
+			Random randChars = new Random();
+			String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
+			session.setAttribute("captcha_security", sImageCode); 
+			 
+			//captcha = session.getAttribute("captcha_security").toString();
+			/*System.out.println("Captcha 2 ----------" + captcha);*/
+			
 		} catch (Exception e1) {
 			mav = "redirect:/login";
+			Random randChars = new Random();
+			String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
+			session.setAttribute("captcha_security", sImageCode); 
 			e1.printStackTrace();
 		}
 

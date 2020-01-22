@@ -48,14 +48,14 @@
 					<%
 						if (langId == 2) {
 					%><input class="form-control" type="text" placeholder="शोधा "
-						name="word" value="${seachSentence}">
+						name="word" value="${seachSentence}" required>
 					<button type="submit" id="contact-btn" class="btn button search">
 						<span class="icon-search icon"></span>
 					</button>
 					<%
 						} else {
 					%><input class="form-control" type="text" placeholder="Search"
-						name="word" value="${seachSentence}">
+						name="word" value="${seachSentence}" required>
 					<button type="submit" id="contact-btn" class="btn button search">
 						<span class="icon-search icon"></span>
 					</button>

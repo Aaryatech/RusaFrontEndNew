@@ -23,6 +23,7 @@ import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
+import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.*;
 
 @Controller
@@ -189,7 +190,7 @@ public class CmsController {
 			session.setAttribute("mapping", "searchData");
 
 			int langId = (Integer) session.getAttribute("langId");
-			String word = request.getParameter("word");
+			String word = XssEscapeUtils.jsoupParse(request.getParameter("word"));
 			session.setAttribute("seachSentence", word);
 			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
 					Maintainance.class);
