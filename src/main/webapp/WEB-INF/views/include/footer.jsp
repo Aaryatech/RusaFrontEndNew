@@ -164,7 +164,7 @@
 	</p>
 
 	<p>
-		Design & Developed By: <a href="http://aaryatechindia.in/atsuc/"
+		Design & Developed By: <a href="http://aaryatechindia.in"
 			target="_blank">Aaryatech Solutions</a>
 	</p>
 </div>
