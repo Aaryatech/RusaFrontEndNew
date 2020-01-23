@@ -33,8 +33,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
+import com.ats.rusafrontend.commen.FormValidation;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
+import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.EventRecord;
 import com.ats.rusafrontend.model.EventRegistration;
 import com.ats.rusafrontend.model.InstituteInfo;
@@ -220,7 +222,7 @@ public class UserController {
 
 				}
 			} else {
-				
+
 				String eventId = request.getParameter("eventId");
 
 				if (!eventId.equals("0")) {
@@ -236,19 +238,19 @@ public class UserController {
 				session.setAttribute("errorMsg", "Invalid Captcha!");
 			}
 
-			/*System.out.println("Captcha 1----------" + captcha);*/
+			/* System.out.println("Captcha 1----------" + captcha); */
 			Random randChars = new Random();
 			String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
-			session.setAttribute("captcha_security", sImageCode); 
-			 
-			//captcha = session.getAttribute("captcha_security").toString();
-			/*System.out.println("Captcha 2 ----------" + captcha);*/
-			
+			session.setAttribute("captcha_security", sImageCode);
+
+			// captcha = session.getAttribute("captcha_security").toString();
+			/* System.out.println("Captcha 2 ----------" + captcha); */
+
 		} catch (Exception e1) {
 			mav = "redirect:/login";
 			Random randChars = new Random();
 			String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
-			session.setAttribute("captcha_security", sImageCode); 
+			session.setAttribute("captcha_security", sImageCode);
 			e1.printStackTrace();
 		}
 
@@ -414,22 +416,41 @@ public class UserController {
 		String uuid = null;
 		HttpSession session = request.getSession();
 		boolean error = false;
-
+		boolean valError = false;
 		try {
 			Registration registration = new Registration();
 			int type = Integer.parseInt(request.getParameter("type"));
 
 			if (type == 1) {
 
-				String university = request.getParameter("university");
-				String collegeName = request.getParameter("collegeName");
-				String indAshecode = request.getParameter("indAshecode");
-				String name = request.getParameter("name");
-				String inddesognation = request.getParameter("inddesognation");
-				String depatment = request.getParameter("depatment");
-				String mobile = request.getParameter("mobile");
-				String email = request.getParameter("email");
-				String altEmail1 = request.getParameter("altEmail");
+				String university = XssEscapeUtils.jsoupParse(request.getParameter("university")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String collegeName = XssEscapeUtils.jsoupParse(request.getParameter("collegeName")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String indAshecode = XssEscapeUtils.jsoupParse(request.getParameter("indAshecode")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String name = XssEscapeUtils.jsoupParse(request.getParameter("name")).trim().replaceAll("[ ]{2,}", " ");
+				String inddesognation = XssEscapeUtils.jsoupParse(request.getParameter("inddesognation")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String depatment = XssEscapeUtils.jsoupParse(request.getParameter("depatment")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String mobile = XssEscapeUtils.jsoupParse(request.getParameter("mobile")).trim().replaceAll("[ ]{2,}",
+						" ");
+				String email = XssEscapeUtils.jsoupParse(request.getParameter("email")).trim().replaceAll("[ ]{2,}",
+						" ");
+				String altEmail1 = XssEscapeUtils.jsoupParse(request.getParameter("altEmail")).trim()
+						.replaceAll("[ ]{2,}", " ");
+
+				if (FormValidation.Validaton(university, "") == true
+						|| FormValidation.Validaton(collegeName, "") == true
+						|| FormValidation.Validaton(indAshecode, "") == true
+						|| FormValidation.Validaton(name, "") == true
+						|| FormValidation.Validaton(inddesognation, "") == true
+						|| FormValidation.Validaton(depatment, "") == true
+						|| FormValidation.Validaton(mobile, "mobile") == true
+						|| FormValidation.Validaton(email, "email") == true) {
+					valError = true;
+				}
 
 				registration.setEmails(email);
 				registration.setAlternateEmail(altEmail1);
@@ -445,16 +466,34 @@ public class UserController {
 			}
 			if (type == 2) {
 
-				String instiaisheCode = request.getParameter("instiaisheCode");
-				String univ = request.getParameter("univ");
-				String institute = request.getParameter("institute");
-				String designation = request.getParameter("instidesignation");
-				String cAuthour = request.getParameter("cAuthour");
-				String collegeDept = request.getParameter("instiDept");
-				String collegeMobile = request.getParameter("instiMobile");
-				String instiEmail = request.getParameter("instiEmail");
-				String instialtEmail = request.getParameter("instialtEmail");
-				String instiPhone = request.getParameter("instiPhone");
+				String instiaisheCode = XssEscapeUtils.jsoupParse(request.getParameter("instiaisheCode")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String univ = XssEscapeUtils.jsoupParse(request.getParameter("univ")).trim().replaceAll("[ ]{2,}", " ");
+				String institute = XssEscapeUtils.jsoupParse(request.getParameter("institute")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String designation = XssEscapeUtils.jsoupParse(request.getParameter("instidesignation")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String cAuthour = XssEscapeUtils.jsoupParse(request.getParameter("cAuthour")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String collegeDept = XssEscapeUtils.jsoupParse(request.getParameter("instiDept")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String collegeMobile = XssEscapeUtils.jsoupParse(request.getParameter("instiMobile")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String instiEmail = XssEscapeUtils.jsoupParse(request.getParameter("instiEmail")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String instialtEmail = XssEscapeUtils.jsoupParse(request.getParameter("instialtEmail")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String instiPhone = XssEscapeUtils.jsoupParse(request.getParameter("instiPhone")).trim()
+						.replaceAll("[ ]{2,}", " ");
+
+				if (FormValidation.Validaton(instiaisheCode, "") == true
+						|| FormValidation.Validaton(designation, "") == true
+						|| FormValidation.Validaton(cAuthour, "") == true
+						|| FormValidation.Validaton(collegeDept, "") == true
+						|| FormValidation.Validaton(collegeMobile, "mobile") == true
+						|| FormValidation.Validaton(instiEmail, "email") == true) {
+					valError = true;
+				}
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("asheCode", instiaisheCode);
@@ -480,17 +519,34 @@ public class UserController {
 			}
 			if (type == 3) {
 
-				String uniName = request.getParameter("uniName");
-				String uniaisheName = request.getParameter("uniaisheName");
-				String uniinstitute = request.getParameter("uniinstitute");
-				String uniAuthour = request.getParameter("uniAuthour");
-				String uniDes = request.getParameter("uniDes");
-				String uniDept = request.getParameter("uniDept");
-				String uniMobile = request.getParameter("uniMobile");
-				String uniEmail = request.getParameter("uniEmail");
-				String unialtEmail = request.getParameter("unialtEmail");
-				String uniPhone = request.getParameter("uniPhone");
+				String uniName = XssEscapeUtils.jsoupParse(request.getParameter("uniName")).trim().replaceAll("[ ]{2,}",
+						" ");
+				String uniaisheName = XssEscapeUtils.jsoupParse(request.getParameter("uniaisheName")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String uniinstitute = XssEscapeUtils.jsoupParse(request.getParameter("uniinstitute")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String uniAuthour = XssEscapeUtils.jsoupParse(request.getParameter("uniAuthour")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String uniDes = XssEscapeUtils.jsoupParse(request.getParameter("uniDes")).trim().replaceAll("[ ]{2,}",
+						" ");
+				String uniDept = XssEscapeUtils.jsoupParse(request.getParameter("uniDept")).trim().replaceAll("[ ]{2,}",
+						" ");
+				String uniMobile = XssEscapeUtils.jsoupParse(request.getParameter("uniMobile")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String uniEmail = XssEscapeUtils.jsoupParse(request.getParameter("uniEmail")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String unialtEmail = XssEscapeUtils.jsoupParse(request.getParameter("unialtEmail")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String uniPhone = XssEscapeUtils.jsoupParse(request.getParameter("uniPhone")).trim()
+						.replaceAll("[ ]{2,}", " ");
 
+				if (FormValidation.Validaton(uniaisheName, "") == true
+						|| FormValidation.Validaton(uniAuthour, "") == true
+						|| FormValidation.Validaton(uniDes, "") == true || FormValidation.Validaton(uniDept, "") == true
+						|| FormValidation.Validaton(uniMobile, "mobile") == true
+						|| FormValidation.Validaton(uniEmail, "email") == true) {
+					valError = true;
+				}
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map.add("asheCode", uniaisheName);
 				InstituteInfo instituteInfo = Constant.getRestTemplate()
@@ -537,7 +593,7 @@ public class UserController {
 
 			Info info = Constant.getRestTemplate().postForObject(Constant.url + "checkUniqueField", map, Info.class);
 
-			if (info.isError() == false) {
+			if (info.isError() == false && valError == false) {
 
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("inputValue", registration.getMobileNumber());

@@ -190,7 +190,7 @@ public class CmsController {
 			session.setAttribute("mapping", "searchData");
 
 			int langId = (Integer) session.getAttribute("langId");
-			String word = XssEscapeUtils.jsoupParse(request.getParameter("word"));
+			String word = XssEscapeUtils.jsoupParse(request.getParameter("word")).trim().replaceAll("[ ]{2,}", " ");
 			session.setAttribute("seachSentence", word);
 			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
 					Maintainance.class);

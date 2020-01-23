@@ -24,8 +24,10 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
+import com.ats.rusafrontend.commen.FormValidation;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.VpsImageUpload;
+import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.DocType;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.Registration;
@@ -98,13 +100,18 @@ public class DocumentUploadController {
 			HttpServletResponse response, Model model) {
 
 		HttpSession session = request.getSession();
-
+		String mav = new String();
 		try {
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			int typeId = Integer.parseInt(request.getParameter("typeId"));
-			String title = request.getParameter("docTitle");
+			String title = XssEscapeUtils.jsoupParse(request.getParameter("docTitle")).trim().replaceAll("[ ]{2,}",
+					" ");
 
+			boolean error = false;
+			if (FormValidation.Validaton(title, "") == true) {
+				error = true;
+			}
 			try {
 
 				VpsImageUpload upload = new VpsImageUpload();
@@ -114,7 +121,7 @@ public class DocumentUploadController {
 				imageName = dateTimeInGMT.format(date) + "_" + docName.get(0).getOriginalFilename();
 				Info info = upload.saveUploadedFiles(docName.get(0), Constant.userDocURL, Constant.files, imageName);
 
-				if (info.isError() == false) {
+				if (info.isError() == false && error == false) {
 					int userDetail = (int) session.getAttribute("UserDetail");
 
 					UploadDocument save = new UploadDocument();
@@ -137,12 +144,13 @@ public class DocumentUploadController {
 				session.setAttribute("errorMsg", "Failed to upload !");
 			}
 
+			mav = "redirect:/documentUpload";
 		} catch (Exception e) {
 			e.printStackTrace();
-			session.setAttribute("errorMsg", "Failed to upload !");
+			mav = "login";
 		}
 
-		return "redirect:/documentUpload";
+		return mav;
 	}
 
 }

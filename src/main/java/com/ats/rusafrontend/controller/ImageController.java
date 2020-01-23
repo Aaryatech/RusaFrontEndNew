@@ -36,6 +36,7 @@ import com.ats.rusafrontend.commen.FormValidation;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
 import com.ats.rusafrontend.commen.VpsImageUpload;
+import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.*;
 import com.ats.rusafrontend.reCaptcha.VerifyRecaptcha;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -257,11 +258,14 @@ public class ImageController {
 		try {
 			final long serialVersionUID = -6506682026701304964L;
 
-			String name = request.getParameter("name");
-			String email = request.getParameter("email");
-			String message = request.getParameter("message");
-			String mobileNo = request.getParameter("mobileNo");
-			String formType = request.getParameter("formType");
+			String name = XssEscapeUtils.jsoupParse(request.getParameter("name")).trim().replaceAll("[ ]{2,}", " ");
+			String email = XssEscapeUtils.jsoupParse(request.getParameter("email")).trim().replaceAll("[ ]{2,}", " ");
+			String message = XssEscapeUtils.jsoupParse(request.getParameter("message")).trim().replaceAll("[ ]{2,}",
+					" ");
+			String mobileNo = XssEscapeUtils.jsoupParse(request.getParameter("mobileNo")).trim().replaceAll("[ ]{2,}",
+					" ");
+			String formType = XssEscapeUtils.jsoupParse(request.getParameter("formType")).trim().replaceAll("[ ]{2,}",
+					" ");
 
 			String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
 			String captcha = session.getAttribute("captcha_security").toString();
@@ -320,11 +324,11 @@ public class ImageController {
 			} else {
 
 				flag = 1;
-				session.setAttribute("errorMsg", "Invalid Captcha !");
+				session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
 			}
 			Random randChars = new Random();
 			String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
-			session.setAttribute("captcha_security", sImageCode); 
+			session.setAttribute("captcha_security", sImageCode);
 		} catch (Exception e) {
 			session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
 			e.printStackTrace();
@@ -735,7 +739,6 @@ public class ImageController {
 
 				pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
 
-				
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
 				map1.add("newsblogsId", newsblogsId);
@@ -755,14 +758,15 @@ public class ImageController {
 					eventReg.setDoc1(pdfName);
 
 					info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
-					
+
 					if (info.isError() == false) {
 						EventRegistration res = Constant.getRestTemplate()
 								.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
 
 						session.setAttribute("success", "Successfully Registed Event !");
-					} 
-					//upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
+					}
+					// upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf,
+					// pdfName);
 
 				} else {
 

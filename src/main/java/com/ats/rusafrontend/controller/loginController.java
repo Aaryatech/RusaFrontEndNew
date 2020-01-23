@@ -31,9 +31,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
+import com.ats.rusafrontend.commen.FormValidation;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
 import com.ats.rusafrontend.commen.VpsImageUpload;
+import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.EventRegistration;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
@@ -163,7 +165,7 @@ public class loginController {
 		String uuid = editReg.getUserUuid();
 		try {
 			HttpSession session = request.getSession();
-
+			boolean valError = false;
 			Date date = new Date(); // your date
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal = Calendar.getInstance();
@@ -188,22 +190,33 @@ public class loginController {
 
 			if (type != 1) {
 
-				String cAuthour = request.getParameter("cAuthour");
+				String cAuthour = XssEscapeUtils.jsoupParse(request.getParameter("cAuthour"));
 
 			}
 
-			String altEmail2 = request.getParameter("altEmail");
-			String collegeDept = request.getParameter("depatment");
-			String collegeMobile = request.getParameter("mobile");
-			String designation = request.getParameter("inddesognation");
+			String altEmail2 = XssEscapeUtils.jsoupParse(request.getParameter("altEmail")).trim().replaceAll("[ ]{2,}",
+					" ");
+			String collegeDept = XssEscapeUtils.jsoupParse(request.getParameter("depatment")).trim()
+					.replaceAll("[ ]{2,}", " ");
+			String collegeMobile = XssEscapeUtils.jsoupParse(request.getParameter("mobile")).trim()
+					.replaceAll("[ ]{2,}", " ");
+			String designation = XssEscapeUtils.jsoupParse(request.getParameter("inddesognation")).trim()
+					.replaceAll("[ ]{2,}", " ");
 
 			if (prevrecrod.isError() == false) {
 
 				if (type != 1) {
 
-					String cAuthour = request.getParameter("cAuthour");
-					String phoneNo = request.getParameter("phoneNo");
+					String cAuthour = XssEscapeUtils.jsoupParse(request.getParameter("cAuthour")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String phoneNo = XssEscapeUtils.jsoupParse(request.getParameter("phoneNo")).trim()
+							.replaceAll("[ ]{2,}", " ");
 					// System.out.println(phoneNo);
+
+					if (FormValidation.Validaton(cAuthour, "") == true
+							|| FormValidation.Validaton(phoneNo, "") == true) {
+						valError = true;
+					}
 
 					if (!editReg.getAuthorizedPerson().equals(cAuthour)) {
 
@@ -224,6 +237,12 @@ public class loginController {
 						prevrecrod.setLastUpdate(dttime.format(date));
 						editReg.setExVar2(phoneNo);
 					}
+				}
+
+				if (FormValidation.Validaton(collegeDept, "") == true
+						|| FormValidation.Validaton(designation, "") == true
+						|| FormValidation.Validaton(collegeMobile, "mobile") == true || valError == true) {
+					valError = true;
 				}
 
 				if (!editReg.getAlternateEmail().equals(altEmail2)) {
@@ -257,185 +276,36 @@ public class loginController {
 				prevrecrod.setRegId(editReg.getRegId());
 			}
 
-			if (editReg.getMobileNumber().equals(collegeMobile)) {
+			if (valError == false) {
+				if (editReg.getMobileNumber().equals(collegeMobile)) {
 
-				Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration", editReg,
-						Registration.class);
+					Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration",
+							editReg, Registration.class);
 
-				ObjectMapper mapper = new ObjectMapper();
-				prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
+					ObjectMapper mapper = new ObjectMapper();
+					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
 
-				PreviousRegRecord update = Constant.getRestTemplate()
-						.postForObject(Constant.url + "/savePreviousRecord", prevrecrod, PreviousRegRecord.class);
+					PreviousRegRecord update = Constant.getRestTemplate()
+							.postForObject(Constant.url + "/savePreviousRecord", prevrecrod, PreviousRegRecord.class);
 
-				redirect = "redirect:/editProfile";
+					redirect = "redirect:/editProfile";
+				} else {
+
+					editReg.setExVar2(collegeMobile);
+					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
+				}
+				session.setAttribute("success", "Successfully Updated Information !");
 			} else {
-
-				/**
-				 * System.out.println("Email new");
-				 * 
-				 * editReg.setEditDate(sf.format(date)); Registration res =
-				 * Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", editReg,
-				 * Registration.class);
-				 */
-
-				editReg.setExVar2(collegeMobile);
-				redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
+				redirect = "redirect:/editProfile";
+				session.setAttribute("errorMsg", "Failed To Update Information");
 			}
 
-			/*
-			 * else if (type == 2) { String collegeEmail =
-			 * request.getParameter("collegeEmail"); String altEmail2 =
-			 * request.getParameter("altEmail"); String institute =
-			 * request.getParameter("institute"); String aisheName1 =
-			 * request.getParameter("aisheName"); String univ =
-			 * request.getParameter("univ"); String collegeDept =
-			 * request.getParameter("collegeDept"); String collegeMobile =
-			 * request.getParameter("collegeMobile"); String designation =
-			 * request.getParameter("designationCollege"); String cAuthour =
-			 * request.getParameter("collegeAuthour"); String dept =
-			 * request.getParameter("dept");
-			 * 
-			 * if (prevrecrod.isError() == false) {
-			 * 
-			 * if (!editReg.getAlternateEmail().equals(altEmail2)) {
-			 * 
-			 * jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
-			 * prevrecrod.setLastUpdate(dttime.format(date)); } if
-			 * (!editReg.getAuthorizedPerson().equals(cAuthour)) {
-			 * 
-			 * jsonRecord.setAuthorizedPerson(editReg.getAuthorizedPerson());
-			 * prevrecrod.setLastUpdate(dttime.format(date)); } if
-			 * (!editReg.getAisheCode().equals(aisheName1)) {
-			 * 
-			 * jsonRecord.setAisheCode(editReg.getAisheCode());
-			 * prevrecrod.setLastUpdate(dttime.format(date)); } if
-			 * (!editReg.getDepartmentName().equals(dept)) {
-			 * 
-			 * jsonRecord.setDepartmentName(editReg.getDepartmentName());
-			 * prevrecrod.setLastUpdate(dttime.format(date)); } if
-			 * (!editReg.getDesignationName().equals(designation)) {
-			 * 
-			 * jsonRecord.setDesignationName(editReg.getDesignationName());
-			 * prevrecrod.setLastUpdate(dttime.format(date)); } if
-			 * (!editReg.getUnversityName().equals(univ)) {
-			 * 
-			 * jsonRecord.setUnversityName(editReg.getUnversityName());
-			 * prevrecrod.setLastUpdate(dttime.format(date)); } }
-			 * 
-			 * editReg.setAlternateEmail(altEmail2); editReg.setName(institute);
-			 * editReg.setAuthorizedPerson(cAuthour); editReg.setAisheCode(aisheName1);
-			 * editReg.setUnversityName(univ); editReg.setDesignationName(designation);
-			 * editReg.setUserType(2); editReg.setDepartmentName(dept);
-			 * editReg.setEditDate(sf.format(date));
-			 * 
-			 * if (prevrecrod.isError() == true) {
-			 * 
-			 * jsonRecord = editReg; prevrecrod.setLastUpdate(dttime.format(date));
-			 * prevrecrod.setRegId(editReg.getRegId()); }
-			 * 
-			 * if (editReg.getMobileNumber().equals(collegeMobile)) {
-			 * 
-			 * Registration res = Constant.getRestTemplate().postForObject(Constant.url +
-			 * "/saveRegistration", editReg, Registration.class);
-			 * 
-			 * ObjectMapper mapper = new ObjectMapper();
-			 * prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
-			 * 
-			 * PreviousRegRecord update =
-			 * Constant.getRestTemplate().postForObject(Constant.url +
-			 * "/savePreviousRecord", prevrecrod, PreviousRegRecord.class);
-			 * 
-			 * redirect = "redirect:/editProfile"; } else {
-			 * 
-			 * System.out.println("Email new");
-			 * 
-			 * editReg.setEditDate(sf.format(date)); Registration res =
-			 * Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", editReg,
-			 * Registration.class);
-			 * 
-			 * editReg.setExVar2(collegeMobile); redirect = "redirect:/ editVerifyOtp /" +
-			 * uuid + "/1"; }
-			 * 
-			 * }
-			 */ /*
-				 * else if (type == 3) { String uniEmail = request.getParameter("uniEmail");
-				 * String altEmail3 = request.getParameter("altEmail"); String uniName =
-				 * request.getParameter("uniName"); String aisheName2 =
-				 * request.getParameter("aisheName"); String uniDept =
-				 * request.getParameter("uniDept"); String uniMobile =
-				 * request.getParameter("uniMobile"); String uniDes =
-				 * request.getParameter("uniDes"); String uniAuthour =
-				 * request.getParameter("uniAuthour");
-				 * 
-				 * if (prevrecrod.isError() == false) {
-				 * 
-				 * if (!editReg.getAlternateEmail().equals(altEmail3)) {
-				 * 
-				 * jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
-				 * prevrecrod.setLastUpdate(dttime.format(date)); } if
-				 * (!editReg.getAuthorizedPerson().equals(uniAuthour)) {
-				 * 
-				 * jsonRecord.setAuthorizedPerson(editReg.getAuthorizedPerson());
-				 * prevrecrod.setLastUpdate(dttime.format(date)); } if
-				 * (!editReg.getAisheCode().equals(aisheName2)) {
-				 * 
-				 * jsonRecord.setAisheCode(editReg.getAisheCode());
-				 * prevrecrod.setLastUpdate(dttime.format(date)); } if
-				 * (!editReg.getDepartmentName().equals(uniDept)) {
-				 * 
-				 * jsonRecord.setDepartmentName(editReg.getDepartmentName());
-				 * prevrecrod.setLastUpdate(dttime.format(date)); } if
-				 * (!editReg.getDesignationName().equals(uniDes)) {
-				 * 
-				 * jsonRecord.setDesignationName(editReg.getDesignationName());
-				 * prevrecrod.setLastUpdate(dttime.format(date)); }
-				 * 
-				 * }
-				 * 
-				 * editReg.setAlternateEmail(altEmail3); editReg.setAisheCode(aisheName2);
-				 * editReg.setName(uniName); editReg.setAuthorizedPerson(uniAuthour);
-				 * editReg.setDepartmentName(uniDept); editReg.setDesignationName(uniDes);
-				 * editReg.setUserType(3); editReg.setEditDate(sf.format(date));
-				 * 
-				 * if (prevrecrod.isError() == true) {
-				 * 
-				 * jsonRecord = editReg; prevrecrod.setLastUpdate(dttime.format(date));
-				 * prevrecrod.setRegId(editReg.getRegId()); }
-				 * 
-				 * if (editReg.getMobileNumber().equals(uniMobile)) {
-				 * 
-				 * Registration res = Constant.getRestTemplate().postForObject(Constant.url +
-				 * "/saveRegistration", editReg, Registration.class);
-				 * 
-				 * ObjectMapper mapper = new ObjectMapper();
-				 * prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
-				 * 
-				 * PreviousRegRecord update =
-				 * Constant.getRestTemplate().postForObject(Constant.url +
-				 * "/savePreviousRecord", prevrecrod, PreviousRegRecord.class);
-				 * 
-				 * redirect = "redirect:/editProfile"; } else {
-				 * 
-				 * System.out.println("Email new");
-				 * 
-				 * editReg.setEditDate(sf.format(date)); Registration res =
-				 * Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", editReg,
-				 * Registration.class);
-				 * 
-				 * editReg.setExVar2(uniMobile); redirect = "redirect:/ editVerifyOtp /" + uuid
-				 * + "/1"; }
-				 * 
-				 * }
-				 */
-			System.out.println("Data: " + editReg.toString());
-
-			session.setAttribute("success", "Successfully Updated Information !");
+			// System.out.println("Data: " + editReg.toString());
 
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			HttpSession session = request.getSession();
-			session.setAttribute("errorMsg", "Invalid Password !");
+			session.setAttribute("errorMsg", "Failed To Update Information");
 		}
 
 		return redirect;
@@ -531,8 +401,9 @@ public class loginController {
 	public String changePassword(HttpServletRequest request, HttpServletResponse response) {
 
 		String newPass = request.getParameter("newPass");
+		String confirmPass = request.getParameter("confirmPass");
 		String oldPass = request.getParameter("pass");
-		System.out.println("newPass : " + newPass);
+		// System.out.println("newPass : " + newPass);
 		ModelAndView mav = new ModelAndView("change-pass");
 		HttpSession session = request.getSession();
 
@@ -578,7 +449,7 @@ public class loginController {
 					Pattern p = Pattern.compile("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$");
 					Matcher m = p.matcher(newPass);
 
-					if (info.isError() == false && m.matches()) {
+					if (info.isError() == false && m.matches() && newPass.equals(confirmPass)) {
 
 						map = new LinkedMultiValueMap<String, Object>();
 						map.add("regId", userDetail);
@@ -968,7 +839,9 @@ public class loginController {
 	public String FirstChangePassword(HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		String newPass = request.getParameter("newPass");
-		System.out.println("newPass : " + newPass);
+		String confirmPass = request.getParameter("confirmPass");
+
+		// System.out.println("newPass : " + newPass);
 		String mav = new String();
 		HttpSession session = request.getSession();
 
@@ -997,7 +870,8 @@ public class loginController {
 					Pattern p = Pattern.compile("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$");
 					Matcher m = p.matcher(newPass);
 
-					if (m.matches()) {
+					if (m.matches() && newPass.equals(confirmPass)) {
+						
 						MessageDigest md = MessageDigest.getInstance("MD5");
 						byte[] messageDigest = md.digest(newPass.getBytes());
 						BigInteger number = new BigInteger(1, messageDigest);
@@ -1024,7 +898,7 @@ public class loginController {
 							System.out.println(info.toString());
 							session.setAttribute("success", "Successfully Updated Password !");
 						}
-					}else {
+					} else {
 						session.setAttribute("errorMsg", "Invalid Password !");
 					}
 
