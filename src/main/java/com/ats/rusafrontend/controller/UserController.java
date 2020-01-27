@@ -74,13 +74,27 @@ public class UserController {
 				model.addObject("maintainance", maintainance);
 			} else {
 
-				String eventId = request.getParameter("event");
-				String file = request.getParameter("file");
+				try {
+					String eventId = XssEscapeUtils.jsoupParse((String) session.getAttribute("eventFromApplyEven"));
+					String file = XssEscapeUtils.jsoupParse((String) session.getAttribute("fileFromApplyEvent"));
+					System.out.println(eventId);
+					System.out.println(file);
+					model.addObject("eventId", eventId);
+					model.addObject("file", file);
+				} catch (Exception e) {
 
-				model.addObject("eventId", eventId);
+					session.setAttribute("fileFromApplyEvent", "0");
+					session.setAttribute("eventFromApplyEven", "0");
+					model.addObject("eventId", 0);
+					model.addObject("file", 0);
+				}
+
+				/*
+				 * System.out.println(eventId); System.out.println(file);
+				 */
+				
 				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("flag", flag);
-				model.addObject("file", file);
+				model.addObject("flag", flag); 
 				flag = 0;
 			}
 		} catch (Exception e) {
@@ -98,8 +112,8 @@ public class UserController {
 		String mav = new String();
 
 		try {
-			String userName = request.getParameter("userName");
-			String password = request.getParameter("password");
+			String userName = XssEscapeUtils.jsoupParse(request.getParameter("userName"));
+			String password = XssEscapeUtils.jsoupParse(request.getParameter("password"));
 			String captcha = session.getAttribute("captcha_security").toString();
 			// System.out.println(captcha);
 
@@ -108,7 +122,7 @@ public class UserController {
 			BigInteger number = new BigInteger(1, messageDigest);
 			String hashtext = number.toString(16);
 
-			String verifyCaptcha = request.getParameter("captcha");
+			String verifyCaptcha = XssEscapeUtils.jsoupParse(request.getParameter("captcha"));
 			// System.out.println("Form----------"+captcha);
 			if (captcha.equals(verifyCaptcha)) {
 				// System.out.println("Captcha Found----------"+captcha);
@@ -133,7 +147,7 @@ public class UserController {
 
 					if (verify.isError() == false) {
 
-						String eventId = request.getParameter("eventId");
+						String eventId = XssEscapeUtils.jsoupParse(request.getParameter("eventId"));
 						int langId = (Integer) session.getAttribute("langId");
 
 						System.out.println("print: " + session.getId());
@@ -152,7 +166,7 @@ public class UserController {
 							session.setAttribute("userType", (Integer) verify.getUserType());
 							session.setAttribute("langId", langId);
 
-							int file = Integer.parseInt(EmailUtility.DecodeKey(request.getParameter("file")));
+							int file = Integer.parseInt(EmailUtility.DecodeKey(XssEscapeUtils.jsoupParse(request.getParameter("file"))));
 
 							if (file == 1) {
 								mav = "redirect:/applyEventFrontWithFile/"
@@ -161,6 +175,13 @@ public class UserController {
 								mav = "redirect:/applyEventFront/" + EmailUtility.DecodeKey(String.valueOf(eventId));
 							}
 
+							map = new LinkedMultiValueMap<String, Object>();
+							map.add("regId", verify.getRegId());
+							Registration editReg = Constant.getRestTemplate()
+									.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+							session.setAttribute("info", editReg);
+							session.setAttribute("profileUrl", Constant.getUserProfileURL);
+							
 						} else {
 
 							session.setAttribute("mapping", "upcomingEvents");
@@ -202,15 +223,18 @@ public class UserController {
 								mav = "redirect:/upcomingEvents";
 							}
 						}
-
+						session.removeAttribute("eventFromApplyEven");
+						session.removeAttribute("fileFromApplyEvent");
 					} else {
 
-						String eventId = request.getParameter("eventId");
+						String eventId = (String) session.getAttribute("eventFromApplyEven");
 
 						if (!eventId.equals("0")) {
 
-							String file = request.getParameter("file");
-							mav = "redirect:/login?file=" + file + "&event=" + eventId;
+							String file = (String) session.getAttribute("fileFromApplyEvent");
+							session.setAttribute("fileFromApplyEvent", file);
+							session.setAttribute("eventFromApplyEven", eventId);
+							mav = "redirect:/login";
 
 						} else {
 							mav = "redirect:/login";
@@ -223,12 +247,14 @@ public class UserController {
 				}
 			} else {
 
-				String eventId = request.getParameter("eventId");
+				String eventId = (String) session.getAttribute("eventFromApplyEven");
 
 				if (!eventId.equals("0")) {
 
-					String file = request.getParameter("file");
-					mav = "redirect:/login?file=" + file + "&event=" + eventId;
+					String file = (String) session.getAttribute("fileFromApplyEvent");
+					session.setAttribute("fileFromApplyEvent", file);
+					session.setAttribute("eventFromApplyEven", eventId);
+					mav = "redirect:/login";
 
 				} else {
 					mav = "redirect:/login";
@@ -869,8 +895,9 @@ public class UserController {
 
 			} else {
 				session.setAttribute("errorMsg", "Please login for apply event !");
-				ss = "redirect:/login?file=" + EmailUtility.Encrypt(String.valueOf(0)) + "&event="
-						+ EmailUtility.Encrypt(String.valueOf(newsblogsId));
+				session.setAttribute("fileFromApplyEvent", EmailUtility.Encrypt(String.valueOf(0)));
+				session.setAttribute("eventFromApplyEven", EmailUtility.Encrypt(String.valueOf(newsblogsId)));
+				ss = "redirect:/login";
 
 			}
 

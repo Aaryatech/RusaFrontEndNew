@@ -234,7 +234,7 @@
 									<div class="col-sm-7">
 										<input type="file" name="pagePdf" id="pagePdf"
 											class="form-control" data-parsley-minlength="2" required
-											accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip" />
+											accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" />
 										<p>
 											<span> <strong>Please upload : </strong> .doc, .docx,
 												.pptx,.pdf and .xlsx only

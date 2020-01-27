@@ -358,7 +358,7 @@ public class loginController {
 		HttpSession session = request.getSession();
 
 		try {
-			String userOtp = request.getParameter("userOtp");
+			String userOtp = XssEscapeUtils.jsoupParse(request.getParameter("userOtp"));
 			SimpleDateFormat dttime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date = new Date();
 
@@ -400,9 +400,9 @@ public class loginController {
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
 	public String changePassword(HttpServletRequest request, HttpServletResponse response) {
 
-		String newPass = request.getParameter("newPass");
-		String confirmPass = request.getParameter("confirmPass");
-		String oldPass = request.getParameter("pass");
+		String newPass = XssEscapeUtils.jsoupParse(request.getParameter("newPass"));
+		String confirmPass = XssEscapeUtils.jsoupParse(request.getParameter("confirmPass"));
+		String oldPass = XssEscapeUtils.jsoupParse(request.getParameter("pass"));
 		// System.out.println("newPass : " + newPass);
 		ModelAndView mav = new ModelAndView("change-pass");
 		HttpSession session = request.getSession();
@@ -486,7 +486,7 @@ public class loginController {
 		ModelAndView mav = new ModelAndView("editRegOtp");
 		try {
 
-			String uuid = request.getParameter("uuid");
+			String uuid = XssEscapeUtils.jsoupParse(request.getParameter("uuid"));
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("uuid", uuid);
 
@@ -612,8 +612,8 @@ public class loginController {
 		try {
 			session.setAttribute("mapping", "eventDetail");
 			int userDetail = (int) session.getAttribute("UserDetail");
-			String id = request.getParameter("newsblogsId");
-			String type = request.getParameter("typeId");
+			String id = XssEscapeUtils.jsoupParse(request.getParameter("newsblogsId"));
+			String type = XssEscapeUtils.jsoupParse(request.getParameter("typeId"));
 
 			int newsblogsId = Integer.parseInt(EmailUtility.DecodeKey(String.valueOf(id)));
 			int typeId = Integer.parseInt(EmailUtility.DecodeKey(String.valueOf(type)));
@@ -768,11 +768,13 @@ public class loginController {
 				eventReg.setUserId(userDetail);
 				eventReg.setDoc1(pdfName);
 
-				info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
+				info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, pdfName);
 				if (info.isError() == false) {
 					EventRegistration res = Constant.getRestTemplate()
 							.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
 					session.setAttribute("success", "Successfully Registed Event !");
+				}else {
+					session.setAttribute("errorMsg", "Error While File Upload");
 				}
 
 			} else {
@@ -838,8 +840,8 @@ public class loginController {
 	@RequestMapping(value = "/firstChangePassword", method = RequestMethod.POST)
 	public String FirstChangePassword(HttpServletRequest request, HttpServletResponse response, Model model) {
 
-		String newPass = request.getParameter("newPass");
-		String confirmPass = request.getParameter("confirmPass");
+		String newPass = XssEscapeUtils.jsoupParse(request.getParameter("newPass"));
+		String confirmPass = XssEscapeUtils.jsoupParse(request.getParameter("confirmPass"));
 
 		// System.out.println("newPass : " + newPass);
 		String mav = new String();

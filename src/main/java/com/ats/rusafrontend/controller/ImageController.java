@@ -757,7 +757,7 @@ public class ImageController {
 					eventReg.setUserId(userDetail.getRegId());
 					eventReg.setDoc1(pdfName);
 
-					info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, pdfName);
+					info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, pdfName);
 
 					if (info.isError() == false) {
 						EventRegistration res = Constant.getRestTemplate()
@@ -776,11 +776,18 @@ public class ImageController {
 			} else {
 
 				imageName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
-				upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf, imageName);
-				System.out.println("User Id: " + userDetail);
-				session.setAttribute("errorMsg", "Please login for apply event !");
-				ss = "redirect:/login?file=" + EmailUtility.Encrypt(String.valueOf(1)) + "&event="
-						+ EmailUtility.Encrypt(String.valueOf(newsblogsId));
+				info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, imageName);
+				if (info.isError() == false) {
+					System.out.println("User Id: " + userDetail);
+					session.setAttribute("errorMsg", "Please login for apply event !");
+					session.setAttribute("fileFromApplyEvent", EmailUtility.Encrypt(String.valueOf(1)));
+					session.setAttribute("eventFromApplyEven", EmailUtility.Encrypt(String.valueOf(newsblogsId)));
+					ss = "redirect:/login";
+				}else {
+					session.setAttribute("errorMsg", "File Upload Error");
+					ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
+				}
+				
 
 			}
 		} catch (Exception e) {
@@ -877,8 +884,9 @@ public class ImageController {
 			} else {
 
 				session.setAttribute("errorMsg", "Please login for apply event !");
-				ss = "redirect:/login?file=" + EmailUtility.Encrypt(String.valueOf(1)) + "&event="
-						+ EmailUtility.Encrypt(String.valueOf(newsblogsId));
+				ss = "redirect:/login";
+				session.setAttribute("fileFromApplyEvent", EmailUtility.Encrypt(String.valueOf(1)));
+				session.setAttribute("eventFromApplyEven", EmailUtility.Encrypt(String.valueOf(newsblogsId)));
 
 			}
 		} catch (Exception e) {

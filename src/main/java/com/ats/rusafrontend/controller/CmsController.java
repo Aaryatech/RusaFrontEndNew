@@ -242,7 +242,7 @@ public class CmsController {
 
 			try {
 
-				slugname = request.getParameter("name");
+				slugname = XssEscapeUtils.jsoupParse(request.getParameter("name"));
 
 			} catch (Exception e) {
 
