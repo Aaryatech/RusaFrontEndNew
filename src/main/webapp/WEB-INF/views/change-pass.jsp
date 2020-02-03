@@ -12,6 +12,16 @@
 		response.sendRedirect(contextPath);
 	}
 %>
+
+
+
+
+<%@ page import="java.util.UUID"%>
+<%@ page import="java.security.MessageDigest"%>
+<%@ page import="java.math.BigInteger"%>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,11 +150,27 @@
 					%>
 					<h2>Change Password</h2>
 
+
+
+					<%
+						UUID uuid = UUID.randomUUID();
+						MessageDigest md = MessageDigest.getInstance("MD5");
+						byte[] messageDigest = md.digest(String.valueOf(uuid).getBytes());
+						BigInteger number = new BigInteger(1, messageDigest);
+						String hashtext = number.toString(16);
+						session = request.getSession();
+						session.setAttribute("generatedKey", hashtext);
+					%>
+
+
+
+
 					<form method="post"
 						action="${pageContext.request.contextPath}/changePassword"
 						onSubmit="return checkPassword(this)" name="login_form">
 
-
+						<input type="hidden" value="<%out.println(hashtext);%>"
+							name="token" id="token">
 						<div id="currentPassDiv" class="col-12 col-sm-12 col-lg-12">
 							<div class="col-12 col-sm-12 col-lg-12">
 								<label>Current password</label> <input type="password"
@@ -166,7 +192,8 @@
 						<div id="newPassDiv" style="display: none"
 							class="col-12 col-sm-12 col-lg-12">
 							<div class="col-12 col-sm-12 col-lg-12" style="color: green;">
-								Note :contain minimum 8 letter,one capital letter,one small letter, one digit, one special character</div>
+								Note :contain minimum 8 letter,one capital letter,one small
+								letter, one digit, one special character</div>
 							<div class="col-12 col-sm-12 col-lg-12">
 								<label>New Password</label> <input type="password"
 									class="form-control" name="newPass" id="newPass"
@@ -262,7 +289,7 @@
 			$('#error_matchpass').hide();
 			var allowPass = document.getElementById("allowPass").value;
 			//alert(allowPass);
-			
+
 			// If password not entered 
 			if (password1 == '' || allowPass == 0) {
 				$('#error_newpass').show();
@@ -286,12 +313,12 @@
 			}
 		}
 	</script>
-	
+
 	<script>
 		function passwordChanged() {
-			
+
 			var strength = document.getElementById("error_newpass");
-			
+
 			var strongRegex = new RegExp(
 					"^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$",
 					"g");
@@ -300,27 +327,27 @@
 					"g");
 			var enoughRegex = new RegExp("(?=.{6,}).*", "g");
 			var pwd = document.getElementById("newPass").value;
-			 
+
 			if (pwd.length == 0) {
 				document.getElementById("error_newpass").innerHTML = "Type Password";
 				$('#error_newpass').show();
-				document.getElementById("allowPass").value=0;
+				document.getElementById("allowPass").value = 0;
 			} else if (false == enoughRegex.test(pwd)) {
 				document.getElementById("error_newpass").innerHTML = "More Characters";
 				$('#error_newpass').show();
-				document.getElementById("allowPass").value=0;
+				document.getElementById("allowPass").value = 0;
 			} else if (strongRegex.test(pwd)) {
 				document.getElementById("error_newpass").innerHTML = "<span style='color:green'>Strong!</span>";
 				$('#error_newpass').show();
-				document.getElementById("allowPass").value=1;
+				document.getElementById("allowPass").value = 1;
 			} else if (mediumRegex.test(pwd)) {
 				document.getElementById("error_newpass").innerHTML = "<span style='color:orange'>Medium!</span>";
 				$('#error_newpass').show();
-				document.getElementById("allowPass").value=0;
+				document.getElementById("allowPass").value = 0;
 			} else {
 				document.getElementById("error_newpass").innerHTML = "<span style='color:red'>Weak!</span>";
 				$('#error_newpass').show();
-				document.getElementById("allowPass").value=0;
+				document.getElementById("allowPass").value = 0;
 			}
 		}
 	</script>

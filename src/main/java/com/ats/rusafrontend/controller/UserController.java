@@ -36,6 +36,7 @@ import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.FormValidation;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
+import com.ats.rusafrontend.commen.SessionKeyGen;
 import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.EventRecord;
 import com.ats.rusafrontend.model.EventRegistration;
@@ -92,9 +93,9 @@ public class UserController {
 				/*
 				 * System.out.println(eventId); System.out.println(file);
 				 */
-				
+
 				model.addObject("siteKey", Constant.siteKey);
-				model.addObject("flag", flag); 
+				model.addObject("flag", flag);
 				flag = 0;
 			}
 		} catch (Exception e) {
@@ -112,167 +113,182 @@ public class UserController {
 		String mav = new String();
 
 		try {
-			String userName = XssEscapeUtils.jsoupParse(request.getParameter("userName"));
-			String password = XssEscapeUtils.jsoupParse(request.getParameter("password"));
-			String captcha = session.getAttribute("captcha_security").toString();
-			// System.out.println(captcha);
 
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			byte[] messageDigest = md.digest(password.getBytes());
-			BigInteger number = new BigInteger(1, messageDigest);
-			String hashtext = number.toString(16);
+			String token = request.getParameter("token");
+			String key = (String) session.getAttribute("generatedKey");
 
-			String verifyCaptcha = XssEscapeUtils.jsoupParse(request.getParameter("captcha"));
-			// System.out.println("Form----------"+captcha);
-			if (captcha.equals(verifyCaptcha)) {
-				// System.out.println("Captcha Found----------"+captcha);
-				Maintainance maintainance = Constant.getRestTemplate()
-						.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
-				if (maintainance.getMaintenanceStatus() == 1) {
+			if (token.trim().equals(key.trim())) {
 
-					mav = "maintainance";
-					model.addAttribute("maintainance", maintainance);
-				} else {
+				String userName = XssEscapeUtils.jsoupParse(request.getParameter("userName"));
+				String password = XssEscapeUtils.jsoupParse(request.getParameter("password"));
+				String captcha = session.getAttribute("captcha_security").toString();
+				// System.out.println(captcha);
 
-					model.addAttribute("siteKey", Constant.siteKey);
-					model.addAttribute("flag", flag);
-					flag = 0;
+				MessageDigest md = MessageDigest.getInstance("MD5");
+				byte[] messageDigest = md.digest(password.getBytes());
+				BigInteger number = new BigInteger(1, messageDigest);
+				String hashtext = number.toString(16);
 
-					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-					map.add("userName", userName);
-					map.add("password", hashtext);
+				String verifyCaptcha = XssEscapeUtils.jsoupParse(request.getParameter("captcha"));
+				// System.out.println("Form----------"+captcha);
+				if (captcha.equals(verifyCaptcha)) {
+					// System.out.println("Captcha Found----------"+captcha);
+					Maintainance maintainance = Constant.getRestTemplate()
+							.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
+					if (maintainance.getMaintenanceStatus() == 1) {
 
-					Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/loginFrontEnd", map,
-							Registration.class);
-
-					if (verify.isError() == false) {
-
-						String eventId = XssEscapeUtils.jsoupParse(request.getParameter("eventId"));
-						int langId = (Integer) session.getAttribute("langId");
-
-						System.out.println("print: " + session.getId());
-						session.removeAttribute("userDetail");
-						session.removeAttribute("userInfo");
-						session.invalidate();
-
-						session = request.getSession();
-
-						System.out.println("print2: " + request.getSession().getId());
-
-						if (!eventId.equals("0")) {
-
-							session.setAttribute("UserDetail", verify.getRegId());
-							session.setAttribute("userInfo", verify);
-							session.setAttribute("userType", (Integer) verify.getUserType());
-							session.setAttribute("langId", langId);
-
-							int file = Integer.parseInt(EmailUtility.DecodeKey(XssEscapeUtils.jsoupParse(request.getParameter("file"))));
-
-							if (file == 1) {
-								mav = "redirect:/applyEventFrontWithFile/"
-										+ EmailUtility.DecodeKey(String.valueOf(eventId));
-							} else {
-								mav = "redirect:/applyEventFront/" + EmailUtility.DecodeKey(String.valueOf(eventId));
-							}
-
-							map = new LinkedMultiValueMap<String, Object>();
-							map.add("regId", verify.getRegId());
-							Registration editReg = Constant.getRestTemplate()
-									.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
-							session.setAttribute("info", editReg);
-							session.setAttribute("profileUrl", Constant.getUserProfileURL);
-							
-						} else {
-
-							session.setAttribute("mapping", "upcomingEvents");
-
-							if (session.getAttribute("menuList") == null) {
-								InitializeSession.intializeSissionByLangId(request, langId);
-							}
-
-							if (verify.getExInt1() == 0) {
-								mav = "changePass";
-								session.setAttribute("UserDetail", verify.getRegId());
-
-								session.setAttribute("userInfo", verify);
-
-							} else {
-
-								session.setAttribute("UserDetail", verify.getRegId());
-
-								session.setAttribute("userInfo", verify);
-								session.setAttribute("userType", (Integer) verify.getUserType());
-
-								MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-
-								map1.add("langId", langId);
-								NewsDetails[] newsDetails = Constant.getRestTemplate().postForObject(
-										Constant.url + "/getAllUpcomingEvents", map1, NewsDetails[].class);
-								List<NewsDetails> upcoming = new ArrayList<NewsDetails>(Arrays.asList(newsDetails));
-
-								MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
-								map2.add("regId", verify.getRegId());
-								Registration editReg = Constant.getRestTemplate()
-										.postForObject(Constant.url + "/getRegUserbyRegId", map2, Registration.class);
-								model.addAttribute("editReg", editReg);
-								model.addAttribute("upcoming", upcoming);
-								model.addAttribute("typeId", 2);
-								session.setAttribute("info", editReg);
-								session.setAttribute("successMsg", "Login Successful !");
-								session.setAttribute("profileUrl", Constant.getUserProfileURL);
-								mav = "redirect:/upcomingEvents";
-							}
-						}
-						session.removeAttribute("eventFromApplyEven");
-						session.removeAttribute("fileFromApplyEvent");
+						mav = "maintainance";
+						model.addAttribute("maintainance", maintainance);
 					} else {
 
-						String eventId = (String) session.getAttribute("eventFromApplyEven");
+						model.addAttribute("siteKey", Constant.siteKey);
+						model.addAttribute("flag", flag);
+						flag = 0;
 
-						if (!eventId.equals("0")) {
+						MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+						map.add("userName", userName);
+						map.add("password", hashtext);
 
-							String file = (String) session.getAttribute("fileFromApplyEvent");
-							session.setAttribute("fileFromApplyEvent", file);
-							session.setAttribute("eventFromApplyEven", eventId);
-							mav = "redirect:/login";
+						Registration verify = Constant.getRestTemplate().postForObject(Constant.url + "/loginFrontEnd",
+								map, Registration.class);
 
+						if (verify.isError() == false) {
+
+							String eventId = XssEscapeUtils.jsoupParse(request.getParameter("eventId"));
+							int langId = (Integer) session.getAttribute("langId");
+
+							System.out.println("print: " + session.getId());
+							session.removeAttribute("userDetail");
+							session.removeAttribute("userInfo");
+							session.invalidate();
+
+							session = request.getSession();
+
+							System.out.println("print2: " + request.getSession().getId());
+
+							if (!eventId.equals("0")) {
+
+								session.setAttribute("UserDetail", verify.getRegId());
+								session.setAttribute("userInfo", verify);
+								session.setAttribute("userType", (Integer) verify.getUserType());
+								session.setAttribute("langId", langId);
+
+								int file = Integer.parseInt(EmailUtility
+										.DecodeKey(XssEscapeUtils.jsoupParse(request.getParameter("file"))));
+
+								if (file == 1) {
+									mav = "redirect:/applyEventFrontWithFile/"
+											+ EmailUtility.DecodeKey(String.valueOf(eventId));
+								} else {
+									mav = "redirect:/applyEventFront/"
+											+ EmailUtility.DecodeKey(String.valueOf(eventId));
+								}
+
+								map = new LinkedMultiValueMap<String, Object>();
+								map.add("regId", verify.getRegId());
+								Registration editReg = Constant.getRestTemplate()
+										.postForObject(Constant.url + "/getRegUserbyRegId", map, Registration.class);
+								session.setAttribute("info", editReg);
+								session.setAttribute("profileUrl", Constant.getUserProfileURL);
+
+							} else {
+
+								session.setAttribute("mapping", "upcomingEvents");
+
+								if (session.getAttribute("menuList") == null) {
+									InitializeSession.intializeSissionByLangId(request, langId);
+								}
+
+								if (verify.getExInt1() == 0) {
+									mav = "changePass";
+									session.setAttribute("UserDetail", verify.getRegId());
+
+									session.setAttribute("userInfo", verify);
+
+								} else {
+
+									session.setAttribute("UserDetail", verify.getRegId());
+
+									session.setAttribute("userInfo", verify);
+									session.setAttribute("userType", (Integer) verify.getUserType());
+
+									MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+									map1.add("langId", langId);
+									NewsDetails[] newsDetails = Constant.getRestTemplate().postForObject(
+											Constant.url + "/getAllUpcomingEvents", map1, NewsDetails[].class);
+									List<NewsDetails> upcoming = new ArrayList<NewsDetails>(Arrays.asList(newsDetails));
+
+									MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+									map2.add("regId", verify.getRegId());
+									Registration editReg = Constant.getRestTemplate().postForObject(
+											Constant.url + "/getRegUserbyRegId", map2, Registration.class);
+									model.addAttribute("editReg", editReg);
+									model.addAttribute("upcoming", upcoming);
+									model.addAttribute("typeId", 2);
+									session.setAttribute("info", editReg);
+									session.setAttribute("successMsg", "Login Successful !");
+									session.setAttribute("profileUrl", Constant.getUserProfileURL);
+									mav = "redirect:/upcomingEvents";
+								}
+							}
+							session.removeAttribute("eventFromApplyEven");
+							session.removeAttribute("fileFromApplyEvent");
 						} else {
-							mav = "redirect:/login";
+
+							String eventId = (String) session.getAttribute("eventFromApplyEven");
+
+							if (!eventId.equals("0")) {
+
+								String file = (String) session.getAttribute("fileFromApplyEvent");
+								session.setAttribute("fileFromApplyEvent", file);
+								session.setAttribute("eventFromApplyEven", eventId);
+								mav = "redirect:/login";
+
+							} else {
+								mav = "redirect:/login";
+							}
+
+							session.setAttribute("errorMsg", true);
+							session.setAttribute("errorMsg", "Invalid login credentials !");
 						}
 
-						session.setAttribute("errorMsg", true);
-						session.setAttribute("errorMsg", "Invalid login credentials !");
+					}
+				} else {
+
+					String eventId = (String) session.getAttribute("eventFromApplyEven");
+
+					if (!eventId.equals("0")) {
+
+						String file = (String) session.getAttribute("fileFromApplyEvent");
+						session.setAttribute("fileFromApplyEvent", file);
+						session.setAttribute("eventFromApplyEven", eventId);
+						mav = "redirect:/login";
+
+					} else {
+						mav = "redirect:/login";
 					}
 
-				}
-			} else {
-
-				String eventId = (String) session.getAttribute("eventFromApplyEven");
-
-				if (!eventId.equals("0")) {
-
-					String file = (String) session.getAttribute("fileFromApplyEvent");
-					session.setAttribute("fileFromApplyEvent", file);
-					session.setAttribute("eventFromApplyEven", eventId);
-					mav = "redirect:/login";
-
-				} else {
-					mav = "redirect:/login";
+					session.setAttribute("errorMsg", true);
+					session.setAttribute("errorMsg", "Invalid Captcha!");
 				}
 
-				session.setAttribute("errorMsg", true);
-				session.setAttribute("errorMsg", "Invalid Captcha!");
+				/* System.out.println("Captcha 1----------" + captcha); */
+				Random randChars = new Random();
+				String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
+				session.setAttribute("captcha_security", sImageCode);
+
+				// captcha = session.getAttribute("captcha_security").toString();
+				/* System.out.println("Captcha 2 ----------" + captcha); */
 			}
 
-			/* System.out.println("Captcha 1----------" + captcha); */
-			Random randChars = new Random();
-			String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
-			session.setAttribute("captcha_security", sImageCode);
+			else {
 
-			// captcha = session.getAttribute("captcha_security").toString();
-			/* System.out.println("Captcha 2 ----------" + captcha); */
-
+				mav = "accessDenied";
+			}
+			SessionKeyGen.changeSessionKey(request);
 		} catch (Exception e1) {
+			SessionKeyGen.changeSessionKey(request);
 			mav = "redirect:/login";
 			Random randChars = new Random();
 			String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
@@ -443,212 +459,229 @@ public class UserController {
 		HttpSession session = request.getSession();
 		boolean error = false;
 		boolean valError = false;
+		String a = new String();
 		try {
-			Registration registration = new Registration();
-			int type = Integer.parseInt(request.getParameter("type"));
 
-			if (type == 1) {
+			String token = request.getParameter("token");
+			String key = (String) session.getAttribute("generatedKey");
 
-				String university = XssEscapeUtils.jsoupParse(request.getParameter("university")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String collegeName = XssEscapeUtils.jsoupParse(request.getParameter("collegeName")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String indAshecode = XssEscapeUtils.jsoupParse(request.getParameter("indAshecode")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String name = XssEscapeUtils.jsoupParse(request.getParameter("name")).trim().replaceAll("[ ]{2,}", " ");
-				String inddesognation = XssEscapeUtils.jsoupParse(request.getParameter("inddesognation")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String depatment = XssEscapeUtils.jsoupParse(request.getParameter("depatment")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String mobile = XssEscapeUtils.jsoupParse(request.getParameter("mobile")).trim().replaceAll("[ ]{2,}",
-						" ");
-				String email = XssEscapeUtils.jsoupParse(request.getParameter("email")).trim().replaceAll("[ ]{2,}",
-						" ");
-				String altEmail1 = XssEscapeUtils.jsoupParse(request.getParameter("altEmail")).trim()
-						.replaceAll("[ ]{2,}", " ");
+			if (token.trim().equals(key.trim())) {
 
-				if (FormValidation.Validaton(university, "") == true
-						|| FormValidation.Validaton(collegeName, "") == true
-						|| FormValidation.Validaton(indAshecode, "") == true
-						|| FormValidation.Validaton(name, "") == true
-						|| FormValidation.Validaton(inddesognation, "") == true
-						|| FormValidation.Validaton(depatment, "") == true
-						|| FormValidation.Validaton(mobile, "mobile") == true
-						|| FormValidation.Validaton(email, "email") == true) {
-					valError = true;
+				Registration registration = new Registration();
+				int type = Integer.parseInt(request.getParameter("type"));
+
+				if (type == 1) {
+
+					String university = XssEscapeUtils.jsoupParse(request.getParameter("university")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String collegeName = XssEscapeUtils.jsoupParse(request.getParameter("collegeName")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String indAshecode = XssEscapeUtils.jsoupParse(request.getParameter("indAshecode")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String name = XssEscapeUtils.jsoupParse(request.getParameter("name")).trim().replaceAll("[ ]{2,}",
+							" ");
+					String inddesognation = XssEscapeUtils.jsoupParse(request.getParameter("inddesognation")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String depatment = XssEscapeUtils.jsoupParse(request.getParameter("depatment")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String mobile = XssEscapeUtils.jsoupParse(request.getParameter("mobile")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String email = XssEscapeUtils.jsoupParse(request.getParameter("email")).trim().replaceAll("[ ]{2,}",
+							" ");
+					String altEmail1 = XssEscapeUtils.jsoupParse(request.getParameter("altEmail")).trim()
+							.replaceAll("[ ]{2,}", " ");
+
+					if (FormValidation.Validaton(university, "") == true
+							|| FormValidation.Validaton(collegeName, "") == true
+							|| FormValidation.Validaton(indAshecode, "") == true
+							|| FormValidation.Validaton(name, "") == true
+							|| FormValidation.Validaton(inddesognation, "") == true
+							|| FormValidation.Validaton(depatment, "") == true
+							|| FormValidation.Validaton(mobile, "mobile") == true
+							|| FormValidation.Validaton(email, "email") == true) {
+						valError = true;
+					}
+
+					registration.setEmails(email);
+					registration.setAlternateEmail(altEmail1);
+					registration.setName(name);
+					registration.setCollegeName(collegeName);
+					registration.setUnversityName(university);
+					registration.setDepartmentName(depatment);
+					registration.setUserType(1);
+					registration.setMobileNumber(mobile);
+					registration.setDesignationName(inddesognation);
+					registration.setAisheCode(indAshecode);
+
+				}
+				if (type == 2) {
+
+					String instiaisheCode = XssEscapeUtils.jsoupParse(request.getParameter("instiaisheCode")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String univ = XssEscapeUtils.jsoupParse(request.getParameter("univ")).trim().replaceAll("[ ]{2,}",
+							" ");
+					String institute = XssEscapeUtils.jsoupParse(request.getParameter("institute")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String designation = XssEscapeUtils.jsoupParse(request.getParameter("instidesignation")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String cAuthour = XssEscapeUtils.jsoupParse(request.getParameter("cAuthour")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String collegeDept = XssEscapeUtils.jsoupParse(request.getParameter("instiDept")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String collegeMobile = XssEscapeUtils.jsoupParse(request.getParameter("instiMobile")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String instiEmail = XssEscapeUtils.jsoupParse(request.getParameter("instiEmail")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String instialtEmail = XssEscapeUtils.jsoupParse(request.getParameter("instialtEmail")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String instiPhone = XssEscapeUtils.jsoupParse(request.getParameter("instiPhone")).trim()
+							.replaceAll("[ ]{2,}", " ");
+
+					if (FormValidation.Validaton(instiaisheCode, "") == true
+							|| FormValidation.Validaton(designation, "") == true
+							|| FormValidation.Validaton(cAuthour, "") == true
+							|| FormValidation.Validaton(collegeDept, "") == true
+							|| FormValidation.Validaton(collegeMobile, "mobile") == true
+							|| FormValidation.Validaton(instiEmail, "email") == true) {
+						valError = true;
+					}
+
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					map.add("asheCode", instiaisheCode);
+					InstituteInfo instituteInfo = Constant.getRestTemplate()
+							.postForObject(Constant.url + "/getInstituteInfoByAsheCode", map, InstituteInfo.class);
+
+					if (instituteInfo != null && instituteInfo.getYesNo() != 1) {
+						registration.setMobileNumber(collegeMobile);
+						registration.setEmails(instiEmail);
+						registration.setAlternateEmail(instialtEmail);
+						registration.setName(instituteInfo.getInsName());
+						registration.setAuthorizedPerson(cAuthour);
+						registration.setAisheCode(instiaisheCode);
+						registration.setUnversityName(String.valueOf(instituteInfo.getAffUniversity()));
+						registration.setCollegeName(String.valueOf(instituteInfo.getMhInstId()));
+						registration.setDepartmentName(collegeDept);
+						registration.setDesignationName(designation);
+						registration.setExVar2(instiPhone);
+						registration.setUserType(2);
+					} else {
+						error = true;
+					}
+				}
+				if (type == 3) {
+
+					String uniName = XssEscapeUtils.jsoupParse(request.getParameter("uniName")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String uniaisheName = XssEscapeUtils.jsoupParse(request.getParameter("uniaisheName")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String uniinstitute = XssEscapeUtils.jsoupParse(request.getParameter("uniinstitute")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String uniAuthour = XssEscapeUtils.jsoupParse(request.getParameter("uniAuthour")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String uniDes = XssEscapeUtils.jsoupParse(request.getParameter("uniDes")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String uniDept = XssEscapeUtils.jsoupParse(request.getParameter("uniDept")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String uniMobile = XssEscapeUtils.jsoupParse(request.getParameter("uniMobile")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String uniEmail = XssEscapeUtils.jsoupParse(request.getParameter("uniEmail")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String unialtEmail = XssEscapeUtils.jsoupParse(request.getParameter("unialtEmail")).trim()
+							.replaceAll("[ ]{2,}", " ");
+					String uniPhone = XssEscapeUtils.jsoupParse(request.getParameter("uniPhone")).trim()
+							.replaceAll("[ ]{2,}", " ");
+
+					if (FormValidation.Validaton(uniaisheName, "") == true
+							|| FormValidation.Validaton(uniAuthour, "") == true
+							|| FormValidation.Validaton(uniDes, "") == true
+							|| FormValidation.Validaton(uniDept, "") == true
+							|| FormValidation.Validaton(uniMobile, "mobile") == true
+							|| FormValidation.Validaton(uniEmail, "email") == true) {
+						valError = true;
+					}
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					map.add("asheCode", uniaisheName);
+					InstituteInfo instituteInfo = Constant.getRestTemplate()
+							.postForObject(Constant.url + "/getInstituteInfoByAsheCode", map, InstituteInfo.class);
+					if (instituteInfo != null && instituteInfo.getYesNo() != 1) {
+
+						registration.setMobileNumber(uniMobile);
+						registration.setEmails(uniEmail);
+						registration.setAlternateEmail(unialtEmail);
+						registration.setAisheCode(uniaisheName);
+						registration.setName(instituteInfo.getInsName());
+						registration.setUnversityName(String.valueOf(instituteInfo.getAffUniversity()));
+						registration.setCollegeName(String.valueOf(instituteInfo.getMhInstId()));
+						registration.setAuthorizedPerson(uniAuthour);
+						registration.setDepartmentName(uniDept);
+						registration.setDesignationName(uniDes);
+						registration.setExVar2(uniPhone);
+						registration.setUserType(3);
+
+					} else {
+						error = true;
+					}
+
 				}
 
-				registration.setEmails(email);
-				registration.setAlternateEmail(altEmail1);
-				registration.setName(name);
-				registration.setCollegeName(collegeName);
-				registration.setUnversityName(university);
-				registration.setDepartmentName(depatment);
-				registration.setUserType(1);
-				registration.setMobileNumber(mobile);
-				registration.setDesignationName(inddesognation);
-				registration.setAisheCode(indAshecode);
+				Date date = new Date(); // your date
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
 
-			}
-			if (type == 2) {
+				uuid = UUID.randomUUID().toString();
 
-				String instiaisheCode = XssEscapeUtils.jsoupParse(request.getParameter("instiaisheCode")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String univ = XssEscapeUtils.jsoupParse(request.getParameter("univ")).trim().replaceAll("[ ]{2,}", " ");
-				String institute = XssEscapeUtils.jsoupParse(request.getParameter("institute")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String designation = XssEscapeUtils.jsoupParse(request.getParameter("instidesignation")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String cAuthour = XssEscapeUtils.jsoupParse(request.getParameter("cAuthour")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String collegeDept = XssEscapeUtils.jsoupParse(request.getParameter("instiDept")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String collegeMobile = XssEscapeUtils.jsoupParse(request.getParameter("instiMobile")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String instiEmail = XssEscapeUtils.jsoupParse(request.getParameter("instiEmail")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String instialtEmail = XssEscapeUtils.jsoupParse(request.getParameter("instialtEmail")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String instiPhone = XssEscapeUtils.jsoupParse(request.getParameter("instiPhone")).trim()
-						.replaceAll("[ ]{2,}", " ");
-
-				if (FormValidation.Validaton(instiaisheCode, "") == true
-						|| FormValidation.Validaton(designation, "") == true
-						|| FormValidation.Validaton(cAuthour, "") == true
-						|| FormValidation.Validaton(collegeDept, "") == true
-						|| FormValidation.Validaton(collegeMobile, "mobile") == true
-						|| FormValidation.Validaton(instiEmail, "email") == true) {
-					valError = true;
-				}
+				registration.setAddDate(sf.format(date));
+				registration.setUserPassword("0");
+				registration.setUserUuid(uuid);
+				registration.setIsActive(0);
+				registration.setDelStatus(1);
+				registration.setRegisterVia("web");
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("asheCode", instiaisheCode);
-				InstituteInfo instituteInfo = Constant.getRestTemplate()
-						.postForObject(Constant.url + "/getInstituteInfoByAsheCode", map, InstituteInfo.class);
-
-				if (instituteInfo != null && instituteInfo.getYesNo() != 1) {
-					registration.setMobileNumber(collegeMobile);
-					registration.setEmails(instiEmail);
-					registration.setAlternateEmail(instialtEmail);
-					registration.setName(instituteInfo.getInsName());
-					registration.setAuthorizedPerson(cAuthour);
-					registration.setAisheCode(instiaisheCode);
-					registration.setUnversityName(String.valueOf(instituteInfo.getAffUniversity()));
-					registration.setCollegeName(String.valueOf(instituteInfo.getMhInstId()));
-					registration.setDepartmentName(collegeDept);
-					registration.setDesignationName(designation);
-					registration.setExVar2(instiPhone);
-					registration.setUserType(2);
-				} else {
-					error = true;
-				}
-			}
-			if (type == 3) {
-
-				String uniName = XssEscapeUtils.jsoupParse(request.getParameter("uniName")).trim().replaceAll("[ ]{2,}",
-						" ");
-				String uniaisheName = XssEscapeUtils.jsoupParse(request.getParameter("uniaisheName")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String uniinstitute = XssEscapeUtils.jsoupParse(request.getParameter("uniinstitute")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String uniAuthour = XssEscapeUtils.jsoupParse(request.getParameter("uniAuthour")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String uniDes = XssEscapeUtils.jsoupParse(request.getParameter("uniDes")).trim().replaceAll("[ ]{2,}",
-						" ");
-				String uniDept = XssEscapeUtils.jsoupParse(request.getParameter("uniDept")).trim().replaceAll("[ ]{2,}",
-						" ");
-				String uniMobile = XssEscapeUtils.jsoupParse(request.getParameter("uniMobile")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String uniEmail = XssEscapeUtils.jsoupParse(request.getParameter("uniEmail")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String unialtEmail = XssEscapeUtils.jsoupParse(request.getParameter("unialtEmail")).trim()
-						.replaceAll("[ ]{2,}", " ");
-				String uniPhone = XssEscapeUtils.jsoupParse(request.getParameter("uniPhone")).trim()
-						.replaceAll("[ ]{2,}", " ");
-
-				if (FormValidation.Validaton(uniaisheName, "") == true
-						|| FormValidation.Validaton(uniAuthour, "") == true
-						|| FormValidation.Validaton(uniDes, "") == true || FormValidation.Validaton(uniDept, "") == true
-						|| FormValidation.Validaton(uniMobile, "mobile") == true
-						|| FormValidation.Validaton(uniEmail, "email") == true) {
-					valError = true;
-				}
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("asheCode", uniaisheName);
-				InstituteInfo instituteInfo = Constant.getRestTemplate()
-						.postForObject(Constant.url + "/getInstituteInfoByAsheCode", map, InstituteInfo.class);
-				if (instituteInfo != null && instituteInfo.getYesNo() != 1) {
-
-					registration.setMobileNumber(uniMobile);
-					registration.setEmails(uniEmail);
-					registration.setAlternateEmail(unialtEmail);
-					registration.setAisheCode(uniaisheName);
-					registration.setName(instituteInfo.getInsName());
-					registration.setUnversityName(String.valueOf(instituteInfo.getAffUniversity()));
-					registration.setCollegeName(String.valueOf(instituteInfo.getMhInstId()));
-					registration.setAuthorizedPerson(uniAuthour);
-					registration.setDepartmentName(uniDept);
-					registration.setDesignationName(uniDes);
-					registration.setExVar2(uniPhone);
-					registration.setUserType(3);
-
-				} else {
-					error = true;
-				}
-
-			}
-
-			Date date = new Date(); // your date
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-
-			uuid = UUID.randomUUID().toString();
-
-			registration.setAddDate(sf.format(date));
-			registration.setUserPassword("0");
-			registration.setUserUuid(uuid);
-			registration.setIsActive(0);
-			registration.setDelStatus(1);
-			registration.setRegisterVia("web");
-
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("inputValue", registration.getEmails());
-			map.add("valueType", 2);
-			map.add("primaryKey", 0);
-
-			Info info = Constant.getRestTemplate().postForObject(Constant.url + "checkUniqueField", map, Info.class);
-
-			if (info.isError() == false && valError == false) {
-
-				map = new LinkedMultiValueMap<String, Object>();
-				map.add("inputValue", registration.getMobileNumber());
-				map.add("valueType", 1);
+				map.add("inputValue", registration.getEmails());
+				map.add("valueType", 2);
 				map.add("primaryKey", 0);
 
-				info = Constant.getRestTemplate().postForObject(Constant.url + "checkUniqueField", map, Info.class);
+				Info info = Constant.getRestTemplate().postForObject(Constant.url + "checkUniqueField", map,
+						Info.class);
 
-				if (error == false && info.isError() == false) {
-					Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveReg", registration,
-							Registration.class);
-					return "redirect:/verifyOtp/" + uuid;
+				if (info.isError() == false && valError == false) {
+
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("inputValue", registration.getMobileNumber());
+					map.add("valueType", 1);
+					map.add("primaryKey", 0);
+
+					info = Constant.getRestTemplate().postForObject(Constant.url + "checkUniqueField", map, Info.class);
+
+					if (error == false && info.isError() == false) {
+						Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveReg",
+								registration, Registration.class);
+						a = "redirect:/verifyOtp/" + uuid;
+					} else {
+						session.setAttribute("errorMsg", "Failed To Register");
+						a = "redirect:/registration";
+					}
 				} else {
 					session.setAttribute("errorMsg", "Failed To Register");
-					return "redirect:/registration";
+					a = "redirect:/registration";
 				}
 			} else {
-				session.setAttribute("errorMsg", "Failed To Register");
-				return "redirect:/registration";
-			}
 
+				a = "redirect:/accessDenied";
+			}
+			SessionKeyGen.changeSessionKey(request);
 		} catch (Exception e1) {
+			SessionKeyGen.changeSessionKey(request);
 			System.out.println("ex " + e1.getMessage());
 			e1.printStackTrace();
 			error = true;
 			session.setAttribute("errorMsg", "Failed To Register");
-			return "redirect:/registration";
+			a = "redirect:/registration";
 		}
 
+		return a;
 	}
 
 	@RequestMapping(value = "/verifyOtp/{uuid}", method = RequestMethod.GET)
@@ -1207,34 +1240,44 @@ public class UserController {
 	public String submitFeedbackForm(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
-
+		String a = new String();
 		try {
+			String token = request.getParameter("token");
+			String key = (String) session.getAttribute("generatedKey");
 
-			int userDetail = (int) session.getAttribute("UserDetail");
-			int eventId = Integer.parseInt(request.getParameter("eventId"));
-			int value = Integer.parseInt(request.getParameter("formType"));
-			String msg = request.getParameter("message");
+			if (token.trim().equals(key.trim())) {
+				a = "redirect:/upcomingEvents";
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("userId", userDetail);
-			map.add("eventId", eventId);
-			map.add("value", value);
-			map.add("messge", msg);
-			Info update = Constant.getRestTemplate().postForObject(Constant.url + "/updateEventFeedback", map,
-					Info.class);
+				int userDetail = (int) session.getAttribute("UserDetail");
+				int eventId = Integer.parseInt(request.getParameter("eventId"));
+				int value = Integer.parseInt(request.getParameter("formType"));
+				String msg = request.getParameter("message");
 
-			if (update.isError() == true) {
-				session.setAttribute("errorMsg", "Failed to submit feedback ");
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("userId", userDetail);
+				map.add("eventId", eventId);
+				map.add("value", value);
+				map.add("messge", msg);
+				Info update = Constant.getRestTemplate().postForObject(Constant.url + "/updateEventFeedback", map,
+						Info.class);
+
+				if (update.isError() == true) {
+					session.setAttribute("errorMsg", "Failed to submit feedback ");
+				} else {
+					session.setAttribute("success", "Feebback submited Successfully !");
+				}
 			} else {
-				session.setAttribute("success", "Feebback submited Successfully !");
-			}
 
+				a = "redirect:/accessDenied";
+			}
+			SessionKeyGen.changeSessionKey(request);
 		} catch (Exception e1) {
+			SessionKeyGen.changeSessionKey(request);
 			session.setAttribute("errorMsg", "Failed to submit feedback ");
 			e1.printStackTrace();
 		}
 
-		return "redirect:/upcomingEvents";
+		return a;
 	}
 
 	@RequestMapping(value = "/checkUniqueField", method = RequestMethod.GET)

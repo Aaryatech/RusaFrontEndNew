@@ -35,6 +35,7 @@ import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.FormValidation;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
+import com.ats.rusafrontend.commen.SessionKeyGen;
 import com.ats.rusafrontend.commen.VpsImageUpload;
 import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.*;
@@ -254,87 +255,103 @@ public class ImageController {
 	public String insertContactUs(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
-
+		String a = new String();
 		try {
-			final long serialVersionUID = -6506682026701304964L;
 
-			String name = XssEscapeUtils.jsoupParse(request.getParameter("name")).trim().replaceAll("[ ]{2,}", " ");
-			String email = XssEscapeUtils.jsoupParse(request.getParameter("email")).trim().replaceAll("[ ]{2,}", " ");
-			String message = XssEscapeUtils.jsoupParse(request.getParameter("message")).trim().replaceAll("[ ]{2,}",
-					" ");
-			String mobileNo = XssEscapeUtils.jsoupParse(request.getParameter("mobileNo")).trim().replaceAll("[ ]{2,}",
-					" ");
-			String formType = XssEscapeUtils.jsoupParse(request.getParameter("formType")).trim().replaceAll("[ ]{2,}",
-					" ");
+			String token = request.getParameter("token");
+			String key = (String) session.getAttribute("generatedKey");
 
-			String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-			String captcha = session.getAttribute("captcha_security").toString();
-			boolean error;
+			if (token.trim().equals(key.trim())) {
+				a = "redirect:/ContactUs";
 
-			String verifyCaptcha = request.getParameter("captcha");
-			if (captcha.equals(verifyCaptcha)) {
-				error = false;
-			} else {
-				error = true;
-			}
+				final long serialVersionUID = -6506682026701304964L;
 
-			if (FormValidation.Validaton(email, "email") == true || FormValidation.Validaton(mobileNo, "mobile") == true
-					|| FormValidation.Validaton(name, "") == true || FormValidation.Validaton(message, "") == true
-					|| error == true) {
+				String name = XssEscapeUtils.jsoupParse(request.getParameter("name")).trim().replaceAll("[ ]{2,}", " ");
+				String email = XssEscapeUtils.jsoupParse(request.getParameter("email")).trim().replaceAll("[ ]{2,}",
+						" ");
+				String message = XssEscapeUtils.jsoupParse(request.getParameter("message")).trim().replaceAll("[ ]{2,}",
+						" ");
+				String mobileNo = XssEscapeUtils.jsoupParse(request.getParameter("mobileNo")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String formType = XssEscapeUtils.jsoupParse(request.getParameter("formType")).trim()
+						.replaceAll("[ ]{2,}", " ");
 
-				error = true;
+				String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+				String captcha = session.getAttribute("captcha_security").toString();
+				boolean error;
 
-			}
-
-			// boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-			// boolean verify = true;
-
-			Date date = new Date(); // your date
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-
-			if (error == false) {
-				InetAddress addr = InetAddress.getByName(request.getRemoteAddr());
-				String hostName = addr.getHostName();
-				String userAgent = request.getHeader("User-Agent");
-				contactUs.setIpAddress(hostName);
-				contactUs.setUserAgent(userAgent);
-				contactUs.setAddDate(sf.format(date));
-				contactUs.setContactName(name);
-				contactUs.setEmailId(email);
-				contactUs.setMessage(message);
-				contactUs.setMobileNo(mobileNo);
-				contactUs.setDelStatus(1);
-				contactUs.setStatus(1);
-				contactUs.setStatusByAdmin(0);
-				contactUs.setExVar1(formType);
-				System.out.println("Verify");
-				// contactUs.setRemark(null);
-
-				ContactUs res = Constant.getRestTemplate().postForObject(Constant.url + "/saveContactUs", contactUs,
-						ContactUs.class);
-
-				if (res == null) {
-					session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
+				String verifyCaptcha = request.getParameter("captcha");
+				if (captcha.equals(verifyCaptcha)) {
+					error = false;
 				} else {
-					session.setAttribute("success", "Your Message Successfully Sent ! ");
+					error = true;
 				}
 
+				if (FormValidation.Validaton(email, "email") == true
+						|| FormValidation.Validaton(mobileNo, "mobile") == true
+						|| FormValidation.Validaton(name, "") == true || FormValidation.Validaton(message, "") == true
+						|| error == true) {
+
+					error = true;
+
+				}
+
+				// boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+				// boolean verify = true;
+
+				Date date = new Date(); // your date
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+
+				if (error == false) {
+					InetAddress addr = InetAddress.getByName(request.getRemoteAddr());
+					String hostName = addr.getHostName();
+					String userAgent = request.getHeader("User-Agent");
+					contactUs.setIpAddress(hostName);
+					contactUs.setUserAgent(userAgent);
+					contactUs.setAddDate(sf.format(date));
+					contactUs.setContactName(name);
+					contactUs.setEmailId(email);
+					contactUs.setMessage(message);
+					contactUs.setMobileNo(mobileNo);
+					contactUs.setDelStatus(1);
+					contactUs.setStatus(1);
+					contactUs.setStatusByAdmin(0);
+					contactUs.setExVar1(formType);
+					System.out.println("Verify");
+					// contactUs.setRemark(null);
+
+					ContactUs res = Constant.getRestTemplate().postForObject(Constant.url + "/saveContactUs", contactUs,
+							ContactUs.class);
+
+					if (res == null) {
+						session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
+					} else {
+						session.setAttribute("success", "Your Message Successfully Sent ! ");
+					}
+
+				} else {
+
+					flag = 1;
+					session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
+				}
+				Random randChars = new Random();
+				String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
+				session.setAttribute("captcha_security", sImageCode);
 			} else {
 
-				flag = 1;
-				session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
+				a = "redirect:/accessDenied";
 			}
-			Random randChars = new Random();
-			String sImageCode = (Long.toString(Math.abs(randChars.nextLong()), 36)).substring(0, 6);
-			session.setAttribute("captcha_security", sImageCode);
+			SessionKeyGen.changeSessionKey(request);
+
 		} catch (Exception e) {
+			SessionKeyGen.changeSessionKey(request);
 			session.setAttribute("errorMsg", "Your Message Failed To Sent ! ");
 			e.printStackTrace();
 		}
 
-		return "redirect:/ContactUs";
+		return a;
 	}
 
 	@RequestMapping(value = "/verifyCaptcha", method = RequestMethod.GET)
@@ -783,11 +800,10 @@ public class ImageController {
 					session.setAttribute("fileFromApplyEvent", EmailUtility.Encrypt(String.valueOf(1)));
 					session.setAttribute("eventFromApplyEven", EmailUtility.Encrypt(String.valueOf(newsblogsId)));
 					ss = "redirect:/login";
-				}else {
+				} else {
 					session.setAttribute("errorMsg", "File Upload Error");
 					ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
 				}
-				
 
 			}
 		} catch (Exception e) {

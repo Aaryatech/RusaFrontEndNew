@@ -16,6 +16,24 @@
 		response.sendRedirect(contextPath);
 	}
 %>
+
+
+
+<%@ page import="java.util.UUID"%>
+<%@ page import="java.security.MessageDigest"%>
+<%@ page import="java.math.BigInteger"%>
+
+
+
+<%
+												UUID uuid = UUID.randomUUID();
+													MessageDigest md = MessageDigest.getInstance("MD5");
+													byte[] messageDigest = md.digest(String.valueOf(uuid).getBytes());
+													BigInteger number = new BigInteger(1, messageDigest);
+													String hashtext = number.toString(16);
+													session = request.getSession();
+													session.setAttribute("generatedKey", hashtext);
+											%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -158,6 +176,9 @@ msg-error {
 
 						<form action="${pageContext.request.contextPath}/insertContactUs"
 							method="post" id="submitForm">
+							
+							<input type="hidden" value="<%out.println(hashtext);%>"
+												name="token" id="token">
 							<p>
 								<strong>Please send your message</strong>
 							</p>

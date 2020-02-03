@@ -13,6 +13,27 @@
 		response.sendRedirect(contextPath);
 	}
 %>
+
+
+ 
+<%@ page import="java.util.UUID"%>
+<%@ page import="java.security.MessageDigest"%>
+<%@ page import="java.math.BigInteger"%>
+
+
+
+<%
+												UUID uuid = UUID.randomUUID();
+													MessageDigest md = MessageDigest.getInstance("MD5");
+													byte[] messageDigest = md.digest(String.valueOf(uuid).getBytes());
+													BigInteger number = new BigInteger(1, messageDigest);
+													String hashtext = number.toString(16);
+													session = request.getSession();
+													session.setAttribute("generatedKey", hashtext);
+											%>
+
+ 
+											
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,6 +163,11 @@ max-width:20px!important;
 					<form method="post" id="login_form"
 						action="${pageContext.request.contextPath}/loginResponse"
 						name="login_form">
+						
+						<input type="hidden" value="<%out.println(hashtext);%>"
+												name="token" id="token">
+						
+						
 						<label>User Name</label> <input type="text" class="form-control"
 							name="userName" placeholder="User Name" autocomplete="off">
 						<label>Password</label> <input type="password"

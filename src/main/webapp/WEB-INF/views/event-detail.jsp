@@ -5,6 +5,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.ats.rusafrontend.model.Maintainance"%>
 <%@ page session="true"%>
+
+
+<%@ page import="java.util.UUID"%>
+<%@ page import="java.security.MessageDigest"%>
+<%@ page import="java.math.BigInteger"%>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -84,7 +89,7 @@
 	<div class="container" id="main-content">
 		<div class="row row-eq-height">
 
-			  <jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
+			<jsp:include page="/WEB-INF/views/include/loginLeft.jsp"></jsp:include>
 
 
 			<div class="col-12 col-sm-12 col-lg-9">
@@ -106,6 +111,20 @@
 						<%
 							session.removeAttribute("success");
 						%>
+
+
+
+						<%
+							UUID uuid = UUID.randomUUID();
+							MessageDigest md = MessageDigest.getInstance("MD5");
+							byte[] messageDigest = md.digest(String.valueOf(uuid).getBytes());
+							BigInteger number = new BigInteger(1, messageDigest);
+							String hashtext = number.toString(16);
+							session = request.getSession();
+							session.setAttribute("generatedKey", hashtext);
+						%>
+
+
 						<c:if test="${sessionScope.errorMsg != null}">
 							<div class="col-12 col-sm-12 col-lg-12 ">
 								<div class="alert alert-danger ">
@@ -153,6 +172,10 @@
 													method="post" enctype="multipart/form-data"
 													name="form_sample_2" id="form_sample_2">
 
+
+													<input type="hidden" value="<%out.println(hashtext);%>"
+														name="token" id="token">
+
 													<p>
 														<strong>Upload Document : </strong>
 													</p>
@@ -192,7 +215,7 @@
 										<c:forEach items="${ids}" var="id">
 											<c:if test="${editReg.userType==id}">
 												<a
-													href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}"
+													href="${pageContext.request.contextPath}/applyEvent/${event.newsblogsId}/<%out.println(hashtext);%>"
 													class="btn button apply">Apply</a>
 
 											</c:if>

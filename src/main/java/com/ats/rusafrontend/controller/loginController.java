@@ -34,6 +34,7 @@ import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.FormValidation;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
+import com.ats.rusafrontend.commen.SessionKeyGen;
 import com.ats.rusafrontend.commen.VpsImageUpload;
 import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.EventRegistration;
@@ -161,148 +162,159 @@ public class loginController {
 	@RequestMapping(value = "/editUserRegistration", method = RequestMethod.POST)
 	public String editUserRegistration(HttpServletRequest request, HttpServletResponse response) {
 
-		String redirect = null;
+		String redirect = new String();
 		String uuid = editReg.getUserUuid();
 		try {
 			HttpSession session = request.getSession();
-			boolean valError = false;
-			Date date = new Date(); // your date
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-			int type = Integer.parseInt(request.getParameter("userType"));
 
-			SimpleDateFormat dttime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String token = request.getParameter("token");
+			String key = (String) session.getAttribute("generatedKey");
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-			map.add("regId", editReg.getRegId());
-			prevrecrod = Constant.getRestTemplate().postForObject(Constant.url + "/getPrevRecordByRegId", map,
-					PreviousRegRecord.class);
+			if (token.trim().equals(key.trim())) {
 
-			jsonRecord = new RegistrationUserDetail();
+				boolean valError = false;
+				Date date = new Date(); // your date
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				int type = Integer.parseInt(request.getParameter("userType"));
 
-			if (prevrecrod.isError() == false) {
+				SimpleDateFormat dttime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-				ObjectMapper mapper = new ObjectMapper();
-				jsonRecord = mapper.readValue(prevrecrod.getRecord(), RegistrationUserDetail.class);
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("regId", editReg.getRegId());
+				prevrecrod = Constant.getRestTemplate().postForObject(Constant.url + "/getPrevRecordByRegId", map,
+						PreviousRegRecord.class);
 
-			}
+				jsonRecord = new RegistrationUserDetail();
 
-			if (type != 1) {
+				if (prevrecrod.isError() == false) {
 
-				String cAuthour = XssEscapeUtils.jsoupParse(request.getParameter("cAuthour"));
+					ObjectMapper mapper = new ObjectMapper();
+					jsonRecord = mapper.readValue(prevrecrod.getRecord(), RegistrationUserDetail.class);
 
-			}
-
-			String altEmail2 = XssEscapeUtils.jsoupParse(request.getParameter("altEmail")).trim().replaceAll("[ ]{2,}",
-					" ");
-			String collegeDept = XssEscapeUtils.jsoupParse(request.getParameter("depatment")).trim()
-					.replaceAll("[ ]{2,}", " ");
-			String collegeMobile = XssEscapeUtils.jsoupParse(request.getParameter("mobile")).trim()
-					.replaceAll("[ ]{2,}", " ");
-			String designation = XssEscapeUtils.jsoupParse(request.getParameter("inddesognation")).trim()
-					.replaceAll("[ ]{2,}", " ");
-
-			if (prevrecrod.isError() == false) {
+				}
 
 				if (type != 1) {
 
-					String cAuthour = XssEscapeUtils.jsoupParse(request.getParameter("cAuthour")).trim()
-							.replaceAll("[ ]{2,}", " ");
-					String phoneNo = XssEscapeUtils.jsoupParse(request.getParameter("phoneNo")).trim()
-							.replaceAll("[ ]{2,}", " ");
-					// System.out.println(phoneNo);
+					String cAuthour = XssEscapeUtils.jsoupParse(request.getParameter("cAuthour"));
 
-					if (FormValidation.Validaton(cAuthour, "") == true
-							|| FormValidation.Validaton(phoneNo, "") == true) {
-						valError = true;
-					}
+				}
 
-					if (!editReg.getAuthorizedPerson().equals(cAuthour)) {
+				String altEmail2 = XssEscapeUtils.jsoupParse(request.getParameter("altEmail")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String collegeDept = XssEscapeUtils.jsoupParse(request.getParameter("depatment")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String collegeMobile = XssEscapeUtils.jsoupParse(request.getParameter("mobile")).trim()
+						.replaceAll("[ ]{2,}", " ");
+				String designation = XssEscapeUtils.jsoupParse(request.getParameter("inddesognation")).trim()
+						.replaceAll("[ ]{2,}", " ");
 
-						jsonRecord.setAuthorizedPerson(editReg.getAuthorizedPerson());
-						prevrecrod.setLastUpdate(dttime.format(date));
-						editReg.setAuthorizedPerson(cAuthour);
-					}
+				if (prevrecrod.isError() == false) {
 
-					try {
-						if (!editReg.getExVar2().equals(phoneNo)) {
+					if (type != 1) {
 
+						String cAuthour = XssEscapeUtils.jsoupParse(request.getParameter("cAuthour")).trim()
+								.replaceAll("[ ]{2,}", " ");
+						String phoneNo = XssEscapeUtils.jsoupParse(request.getParameter("phoneNo")).trim()
+								.replaceAll("[ ]{2,}", " ");
+						// System.out.println(phoneNo);
+
+						if (FormValidation.Validaton(cAuthour, "") == true
+								|| FormValidation.Validaton(phoneNo, "") == true) {
+							valError = true;
+						}
+
+						if (!editReg.getAuthorizedPerson().equals(cAuthour)) {
+
+							jsonRecord.setAuthorizedPerson(editReg.getAuthorizedPerson());
+							prevrecrod.setLastUpdate(dttime.format(date));
+							editReg.setAuthorizedPerson(cAuthour);
+						}
+
+						try {
+							if (!editReg.getExVar2().equals(phoneNo)) {
+
+								jsonRecord.setExVar2(editReg.getExVar2());
+								prevrecrod.setLastUpdate(dttime.format(date));
+								editReg.setExVar2(phoneNo);
+							}
+						} catch (Exception e) {
 							jsonRecord.setExVar2(editReg.getExVar2());
 							prevrecrod.setLastUpdate(dttime.format(date));
 							editReg.setExVar2(phoneNo);
 						}
-					} catch (Exception e) {
-						jsonRecord.setExVar2(editReg.getExVar2());
-						prevrecrod.setLastUpdate(dttime.format(date));
-						editReg.setExVar2(phoneNo);
 					}
+
+					if (FormValidation.Validaton(collegeDept, "") == true
+							|| FormValidation.Validaton(designation, "") == true
+							|| FormValidation.Validaton(collegeMobile, "mobile") == true || valError == true) {
+						valError = true;
+					}
+
+					if (!editReg.getAlternateEmail().equals(altEmail2)) {
+
+						jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+
+					if (!editReg.getDepartmentName().equals(collegeDept)) {
+
+						jsonRecord.setDepartmentName(editReg.getDepartmentName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+					if (!editReg.getDesignationName().equals(designation)) {
+
+						jsonRecord.setDesignationName(editReg.getDesignationName());
+						prevrecrod.setLastUpdate(dttime.format(date));
+					}
+
 				}
 
-				if (FormValidation.Validaton(collegeDept, "") == true
-						|| FormValidation.Validaton(designation, "") == true
-						|| FormValidation.Validaton(collegeMobile, "mobile") == true || valError == true) {
-					valError = true;
-				}
+				editReg.setAlternateEmail(altEmail2);
+				editReg.setDesignationName(designation);
+				editReg.setDepartmentName(collegeDept);
+				editReg.setEditDate(sf.format(date));
 
-				if (!editReg.getAlternateEmail().equals(altEmail2)) {
+				if (prevrecrod.isError() == true) {
 
-					jsonRecord.setAlternateEmail(editReg.getAlternateEmail());
+					jsonRecord = editReg;
 					prevrecrod.setLastUpdate(dttime.format(date));
+					prevrecrod.setRegId(editReg.getRegId());
 				}
 
-				if (!editReg.getDepartmentName().equals(collegeDept)) {
+				if (valError == false) {
+					if (editReg.getMobileNumber().equals(collegeMobile)) {
 
-					jsonRecord.setDepartmentName(editReg.getDepartmentName());
-					prevrecrod.setLastUpdate(dttime.format(date));
-				}
-				if (!editReg.getDesignationName().equals(designation)) {
+						Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration",
+								editReg, Registration.class);
 
-					jsonRecord.setDesignationName(editReg.getDesignationName());
-					prevrecrod.setLastUpdate(dttime.format(date));
-				}
+						ObjectMapper mapper = new ObjectMapper();
+						prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
 
-			}
+						PreviousRegRecord update = Constant.getRestTemplate().postForObject(
+								Constant.url + "/savePreviousRecord", prevrecrod, PreviousRegRecord.class);
 
-			editReg.setAlternateEmail(altEmail2);
-			editReg.setDesignationName(designation);
-			editReg.setDepartmentName(collegeDept);
-			editReg.setEditDate(sf.format(date));
+						redirect = "redirect:/editProfile";
+					} else {
 
-			if (prevrecrod.isError() == true) {
-
-				jsonRecord = editReg;
-				prevrecrod.setLastUpdate(dttime.format(date));
-				prevrecrod.setRegId(editReg.getRegId());
-			}
-
-			if (valError == false) {
-				if (editReg.getMobileNumber().equals(collegeMobile)) {
-
-					Registration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration",
-							editReg, Registration.class);
-
-					ObjectMapper mapper = new ObjectMapper();
-					prevrecrod.setRecord(mapper.writeValueAsString(jsonRecord));
-
-					PreviousRegRecord update = Constant.getRestTemplate()
-							.postForObject(Constant.url + "/savePreviousRecord", prevrecrod, PreviousRegRecord.class);
-
-					redirect = "redirect:/editProfile";
+						editReg.setExVar2(collegeMobile);
+						redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
+					}
+					session.setAttribute("success", "Successfully Updated Information !");
 				} else {
-
-					editReg.setExVar2(collegeMobile);
-					redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
+					redirect = "redirect:/editProfile";
+					session.setAttribute("errorMsg", "Failed To Update Information");
 				}
-				session.setAttribute("success", "Successfully Updated Information !");
+
+				// System.out.println("Data: " + editReg.toString());
 			} else {
-				redirect = "redirect:/editProfile";
-				session.setAttribute("errorMsg", "Failed To Update Information");
+
+				redirect = "redirect:/accessDenied";
 			}
-
-			// System.out.println("Data: " + editReg.toString());
-
+			SessionKeyGen.changeSessionKey(request);
 		} catch (Exception e1) {
+			SessionKeyGen.changeSessionKey(request);
 			e1.printStackTrace();
 			HttpSession session = request.getSession();
 			session.setAttribute("errorMsg", "Failed To Update Information");
@@ -406,78 +418,91 @@ public class loginController {
 		// System.out.println("newPass : " + newPass);
 		ModelAndView mav = new ModelAndView("change-pass");
 		HttpSession session = request.getSession();
-
+		String a = new String();
 		Info info = new Info();
 		try {
-			session.setAttribute("mapping", "changePassword");
-			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
-					Maintainance.class);
 
-			if (maintainance.getMaintenanceStatus() == 1) {
+			String token = request.getParameter("token");
+			String key = (String) session.getAttribute("generatedKey");
 
-				mav = new ModelAndView("maintainance");
-				mav.addObject("maintainance", maintainance);
-			} else {
+			if (token.trim().equals(key.trim())) {
+				a = "redirect:/changePass";
 
-				mav.addObject("siteKey", Constant.siteKey);
-				mav.addObject("flag", flag);
-				flag = 0;
-				int userDetail = (int) session.getAttribute("UserDetail");
+				session.setAttribute("mapping", "changePassword");
+				Maintainance maintainance = Constant.getRestTemplate()
+						.getForObject(Constant.url + "/checkIsMaintenance", Maintainance.class);
 
-				if (newPass.equalsIgnoreCase(" ") || newPass == null) {
-					mav = new ModelAndView("change-pass");
-					session.setAttribute("errorMsg", "Invalid Password !");
+				if (maintainance.getMaintenanceStatus() == 1) {
 
+					mav = new ModelAndView("maintainance");
+					mav.addObject("maintainance", maintainance);
 				} else {
 
-					MessageDigest md = MessageDigest.getInstance("MD5");
-					byte[] messageDigest = md.digest(oldPass.getBytes());
-					BigInteger number = new BigInteger(1, messageDigest);
-					String oldHashText = number.toString(16);
+					mav.addObject("siteKey", Constant.siteKey);
+					mav.addObject("flag", flag);
+					flag = 0;
+					int userDetail = (int) session.getAttribute("UserDetail");
 
-					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-					map.add("userId", userDetail);
-					map.add("pass", oldHashText);
-
-					info = Constant.getRestTemplate().postForObject(Constant.url + "/checkPasswordByUserId", map,
-							Info.class);
-
-					messageDigest = md.digest(newPass.getBytes());
-					number = new BigInteger(1, messageDigest);
-					String hashtext = number.toString(16);
-
-					Pattern p = Pattern.compile("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$");
-					Matcher m = p.matcher(newPass);
-
-					if (info.isError() == false && m.matches() && newPass.equals(confirmPass)) {
-
-						map = new LinkedMultiValueMap<String, Object>();
-						map.add("regId", userDetail);
-						map.add("password", hashtext);
-
-						info = Constant.getRestTemplate().postForObject(Constant.url + "/changePassword", map,
-								Info.class);
+					if (newPass.equalsIgnoreCase(" ") || newPass == null) {
 						mav = new ModelAndView("change-pass");
-						System.out.println(info.toString());
+						session.setAttribute("errorMsg", "Invalid Password !");
 
-						session.setAttribute("success", "Successfully Updated Password !");
-
-						MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
-						map1.add("regId", userDetail);
-						Registration editReg = Constant.getRestTemplate()
-								.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
-						mav.addObject("editReg", editReg);
 					} else {
-						session.setAttribute("errorMsg", "Invalid Password");
-					}
 
+						MessageDigest md = MessageDigest.getInstance("MD5");
+						byte[] messageDigest = md.digest(oldPass.getBytes());
+						BigInteger number = new BigInteger(1, messageDigest);
+						String oldHashText = number.toString(16);
+
+						MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+						map.add("userId", userDetail);
+						map.add("pass", oldHashText);
+
+						info = Constant.getRestTemplate().postForObject(Constant.url + "/checkPasswordByUserId", map,
+								Info.class);
+
+						messageDigest = md.digest(newPass.getBytes());
+						number = new BigInteger(1, messageDigest);
+						String hashtext = number.toString(16);
+
+						Pattern p = Pattern.compile("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$");
+						Matcher m = p.matcher(newPass);
+
+						if (info.isError() == false && m.matches() && newPass.equals(confirmPass)) {
+
+							map = new LinkedMultiValueMap<String, Object>();
+							map.add("regId", userDetail);
+							map.add("password", hashtext);
+
+							info = Constant.getRestTemplate().postForObject(Constant.url + "/changePassword", map,
+									Info.class);
+							mav = new ModelAndView("change-pass");
+							System.out.println(info.toString());
+
+							session.setAttribute("success", "Successfully Updated Password !");
+
+							MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+							map1.add("regId", userDetail);
+							Registration editReg = Constant.getRestTemplate()
+									.postForObject(Constant.url + "/getRegUserbyRegId", map1, Registration.class);
+							mav.addObject("editReg", editReg);
+						} else {
+							session.setAttribute("errorMsg", "Invalid Password");
+						}
+
+					}
 				}
+			} else {
+
+				a = "redirect:/accessDenied";
 			}
+			SessionKeyGen.changeSessionKey(request);
 		} catch (Exception e) {
+			SessionKeyGen.changeSessionKey(request);
 			e.printStackTrace();
 		}
 
-		return "redirect:/changePass";
+		return a;
 	}
 
 	@RequestMapping(value = "/resendEditOtpProcess", method = RequestMethod.POST)
@@ -665,65 +690,79 @@ public class loginController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/applyEvent/{newsblogsId}", method = RequestMethod.GET)
-	public String applyEvent(@PathVariable int newsblogsId, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/applyEvent/{newsblogsId}/{hashKey}", method = RequestMethod.GET)
+	public String applyEvent(@PathVariable int newsblogsId, HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String hashKey) {
 		HttpSession session = request.getSession();
 		// Registration userDetail=null;
 		int userDetail = 0;
 		Info info = null;
 		// String redirect=null;
 		ModelAndView mav = null;
+		String a = new String();
 		try {
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			a = "redirect:/eventDetail" + "?newsblogsId=" + EmailUtility.Encrypt(String.valueOf(newsblogsId))
+					+ "&typeId=" + EmailUtility.Encrypt(String.valueOf(2));
 
-			// userDetail =(Registration) session.getAttribute("UserDetail");
+			String key = (String) session.getAttribute("generatedKey");
 
-			userDetail = (int) session.getAttribute("UserDetail");
+			if (hashKey.trim().equals(key.trim())) {
 
-			// System.out.println("userDetail "+userDetail.getRegId());
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			System.out.println("User Id: " + userDetail);
+				// userDetail =(Registration) session.getAttribute("UserDetail");
 
-			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				userDetail = (int) session.getAttribute("UserDetail");
 
-			map1.add("newsblogsId", newsblogsId);
-			map1.add("userId", userDetail);
-			info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
-			if (info.isError() == true) {
-				EventRegistration eventReg = new EventRegistration();
+				// System.out.println("userDetail "+userDetail.getRegId());
 
-				Date date = new Date(); // your date
-				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				eventReg.setDelStatus(1);
-				// eventReg.setEventRegId();
-				eventReg.setIsActive(1);
-				eventReg.setNewsblogsId(newsblogsId);
-				eventReg.setRegDate(sf.format(date));
-				eventReg.setUserId(userDetail);
-
-				EventRegistration res = Constant.getRestTemplate().postForObject(Constant.url + "/saveEventRegister",
-						eventReg, EventRegistration.class);
-
-				System.out.println("res Id: " + res.toString());
-
-				if (res != null) {
-					session.setAttribute("success", "Successfully Registed Event !");
-				}
-			} else {
 				System.out.println("User Id: " + userDetail);
 
-				session.setAttribute("errorMsg", "Event Already Registered !");
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+				map1.add("newsblogsId", newsblogsId);
+				map1.add("userId", userDetail);
+				info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+				if (info.isError() == true) {
+					EventRegistration eventReg = new EventRegistration();
+
+					Date date = new Date(); // your date
+					SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					eventReg.setDelStatus(1);
+					// eventReg.setEventRegId();
+					eventReg.setIsActive(1);
+					eventReg.setNewsblogsId(newsblogsId);
+					eventReg.setRegDate(sf.format(date));
+					eventReg.setUserId(userDetail);
+
+					EventRegistration res = Constant.getRestTemplate()
+							.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
+
+					System.out.println("res Id: " + res.toString());
+
+					if (res != null) {
+						session.setAttribute("success", "Successfully Registed Event !");
+					}
+				} else {
+					System.out.println("User Id: " + userDetail);
+
+					session.setAttribute("errorMsg", "Event Already Registered !");
+				}
+			} else {
+				a = "redirect:/accessDenied";
 			}
+			SessionKeyGen.changeSessionKey(request);
 
 		} catch (Exception e) {
+			SessionKeyGen.changeSessionKey(request);
+
 			e.printStackTrace();
 		}
 
-		return "redirect:/eventDetail" + "?newsblogsId=" + EmailUtility.Encrypt(String.valueOf(newsblogsId))
-				+ "&typeId=" + EmailUtility.Encrypt(String.valueOf(2));
+		return a;
 	}
 
 	@RequestMapping(value = "/submtEventAppliedForm", method = RequestMethod.POST)
@@ -738,75 +777,89 @@ public class loginController {
 		int newsblogsId = Integer.parseInt(request.getParameter("newsblogsId"));
 		System.out.println("newsblogsId :" + newsblogsId);
 		int userDetail = 0;
-
+		String returnString = new String();
 		try {
-			userDetail = (int) session.getAttribute("UserDetail");
-			System.out.println("userDetail: " + userDetail);
 
-			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			String token = request.getParameter("token");
+			String key = (String) session.getAttribute("generatedKey");
 
-			VpsImageUpload upload = new VpsImageUpload();
-			pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
+			if (token.trim().equals(key.trim())) {
 
-			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+				returnString = "redirect:/eventDetail" + "?newsblogsId="
+						+ EmailUtility.Encrypt(String.valueOf(newsblogsId)) + "&typeId="
+						+ EmailUtility.Encrypt(String.valueOf(2));
 
-			map1.add("newsblogsId", newsblogsId);
-			map1.add("userId", userDetail);
-			info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+				userDetail = (int) session.getAttribute("UserDetail");
+				System.out.println("userDetail: " + userDetail);
 
-			if (info.isError() == true) {
-				EventRegistration eventReg = new EventRegistration();
+				Date date = new Date();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				eventReg.setDelStatus(1);
-				eventReg.setIsActive(1);
-				eventReg.setNewsblogsId(newsblogsId);
-				eventReg.setRegDate(sf.format(date));
-				eventReg.setUserId(userDetail);
-				eventReg.setDoc1(pdfName);
+				VpsImageUpload upload = new VpsImageUpload();
+				pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
 
-				info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, pdfName);
-				if (info.isError() == false) {
-					EventRegistration res = Constant.getRestTemplate()
-							.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
-					session.setAttribute("success", "Successfully Registed Event !");
-				}else {
-					session.setAttribute("errorMsg", "Error While File Upload");
+				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+				map1.add("newsblogsId", newsblogsId);
+				map1.add("userId", userDetail);
+				info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+
+				if (info.isError() == true) {
+					EventRegistration eventReg = new EventRegistration();
+
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					eventReg.setDelStatus(1);
+					eventReg.setIsActive(1);
+					eventReg.setNewsblogsId(newsblogsId);
+					eventReg.setRegDate(sf.format(date));
+					eventReg.setUserId(userDetail);
+					eventReg.setDoc1(pdfName);
+
+					info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, pdfName);
+					if (info.isError() == false) {
+						EventRegistration res = Constant.getRestTemplate()
+								.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
+						session.setAttribute("success", "Successfully Registed Event !");
+					} else {
+						session.setAttribute("errorMsg", "Error While File Upload");
+					}
+
+				} else {
+					try {
+						/*
+						 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+						 * Object>(); map.add("regId", userDetail); map.add("newsblogsId", newsblogsId);
+						 * map.add("pdfName", pdfName);
+						 * 
+						 * info = Constant.getRestTemplate().postForObject(Constant.url +
+						 * "/uploadEventDocument", map, Info.class);
+						 * 
+						 * System.out.println(info.toString());
+						 * 
+						 * upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
+						 */
+
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+
+					session.setAttribute("errorMsg", "Event Already Registered !");
+
 				}
-
 			} else {
-				try {
-					/*
-					 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
-					 * Object>(); map.add("regId", userDetail); map.add("newsblogsId", newsblogsId);
-					 * map.add("pdfName", pdfName);
-					 * 
-					 * info = Constant.getRestTemplate().postForObject(Constant.url +
-					 * "/uploadEventDocument", map, Info.class);
-					 * 
-					 * System.out.println(info.toString());
-					 * 
-					 * upload.saveUploadedFiles(pagePdf.get(0), Constant.uploadDocURL, pdfName);
-					 */
 
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}
-
-				session.setAttribute("errorMsg", "Event Already Registered !");
-
+				returnString = "redirect:/accessDenied";
 			}
-
+			SessionKeyGen.changeSessionKey(request);
 		} catch (Exception e) {
+			SessionKeyGen.changeSessionKey(request);
 			e.printStackTrace();
 		}
 
-		return "redirect:/eventDetail" + "?newsblogsId=" + EmailUtility.Encrypt(String.valueOf(newsblogsId))
-				+ "&typeId=" + EmailUtility.Encrypt(String.valueOf(2));
+		return returnString;
 	}
 
 	@RequestMapping(value = "/firstChangePass", method = RequestMethod.GET)
@@ -873,7 +926,7 @@ public class loginController {
 					Matcher m = p.matcher(newPass);
 
 					if (m.matches() && newPass.equals(confirmPass)) {
-						
+
 						MessageDigest md = MessageDigest.getInstance("MD5");
 						byte[] messageDigest = md.digest(newPass.getBytes());
 						BigInteger number = new BigInteger(1, messageDigest);

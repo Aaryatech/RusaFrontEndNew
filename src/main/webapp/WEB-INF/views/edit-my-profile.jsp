@@ -2,6 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<%@ page import="java.util.UUID"%>
+<%@ page import="java.security.MessageDigest"%>
+<%@ page import="java.math.BigInteger"%>
+
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -13,6 +18,10 @@
 		response.sendRedirect(contextPath);
 	}
 %>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,11 +196,28 @@
 					</h2>
 					<input type="hidden" class="form-control" name="type" id="type"
 						value="${editReg.userType}">
+
+
+
+					<%
+						UUID uuid = UUID.randomUUID();
+						MessageDigest md = MessageDigest.getInstance("MD5");
+						byte[] messageDigest = md.digest(String.valueOf(uuid).getBytes());
+						BigInteger number = new BigInteger(1, messageDigest);
+						String hashtext = number.toString(16);
+						session = request.getSession();
+						session.setAttribute("generatedKey", hashtext);
+					%>
+
+
 					<form
 						action="${pageContext.request.contextPath}/editUserRegistration"
 						method="post" name="login_form" id="submitForm">
 
-						<input type="hidden" name="userType" value="${editReg.userType}">
+
+						<input type="hidden" value="<%out.println(hashtext);%>"
+							name="token" id="token"> <input type="hidden"
+							name="userType" value="${editReg.userType}">
 
 						<%-- <c:if test="${editReg.userType==1}"> --%>
 

@@ -26,6 +26,7 @@ import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.FormValidation;
 import com.ats.rusafrontend.commen.Info;
+import com.ats.rusafrontend.commen.SessionKeyGen;
 import com.ats.rusafrontend.commen.VpsImageUpload;
 import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.DocType;
@@ -102,50 +103,64 @@ public class DocumentUploadController {
 		HttpSession session = request.getSession();
 		String mav = new String();
 		try {
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-			int typeId = Integer.parseInt(request.getParameter("typeId"));
-			String title = XssEscapeUtils.jsoupParse(request.getParameter("docTitle")).trim().replaceAll("[ ]{2,}",
-					" ");
+			String token = request.getParameter("token");
+			String key = (String) session.getAttribute("generatedKey");
 
-			boolean error = false;
-			if (FormValidation.Validaton(title, "") == true) {
-				error = true;
-			}
-			try {
+			if (token.trim().equals(key.trim())) {
 
-				VpsImageUpload upload = new VpsImageUpload();
-				Date date = new Date();
-				SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-				String imageName = new String();
-				imageName = dateTimeInGMT.format(date) + "_" + docName.get(0).getOriginalFilename();
-				Info info = upload.saveUploadedFiles(docName.get(0), Constant.userDocURL, Constant.files, imageName);
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-				if (info.isError() == false && error == false) {
-					int userDetail = (int) session.getAttribute("UserDetail");
+				int typeId = Integer.parseInt(request.getParameter("typeId"));
+				String title = XssEscapeUtils.jsoupParse(request.getParameter("docTitle")).trim().replaceAll("[ ]{2,}",
+						" ");
 
-					UploadDocument save = new UploadDocument();
-					save.setDelStatus(1);
-					save.setDocSize(docName.get(0).getSize());
-					save.setFileName(imageName);
-					save.setTypeId(typeId);
-					save.setRegId(userDetail);
-					save.setTitle(HtmlUtils.htmlEscape(title));
-					save.setUploadDateTime(sf.format(date));
+				boolean error = false;
+				if (FormValidation.Validaton(title, "") == true) {
+					error = true;
+				}
+				try {
 
-					UploadDocument res = Constant.getRestTemplate().postForObject(Constant.url + "/saveUploadDocument",
-							save, UploadDocument.class);
-					session.setAttribute("success", "Document Uploaded Successfully ");
-				} else {
+					VpsImageUpload upload = new VpsImageUpload();
+					Date date = new Date();
+					SimpleDateFormat dateTimeInGMT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+					String imageName = new String();
+					imageName = dateTimeInGMT.format(date) + "_" + docName.get(0).getOriginalFilename();
+					Info info = upload.saveUploadedFiles(docName.get(0), Constant.userDocURL, Constant.files,
+							imageName);
+
+					if (info.isError() == false && error == false) {
+						int userDetail = (int) session.getAttribute("UserDetail");
+
+						UploadDocument save = new UploadDocument();
+						save.setDelStatus(1);
+						save.setDocSize(docName.get(0).getSize());
+						save.setFileName(imageName);
+						save.setTypeId(typeId);
+						save.setRegId(userDetail);
+						save.setTitle(HtmlUtils.htmlEscape(title));
+						save.setUploadDateTime(sf.format(date));
+
+						UploadDocument res = Constant.getRestTemplate()
+								.postForObject(Constant.url + "/saveUploadDocument", save, UploadDocument.class);
+						session.setAttribute("success", "Document Uploaded Successfully ");
+					} else {
+						session.setAttribute("errorMsg", "Failed to upload !");
+					}
+
+				} catch (Exception e) {
 					session.setAttribute("errorMsg", "Failed to upload !");
 				}
 
-			} catch (Exception e) {
-				session.setAttribute("errorMsg", "Failed to upload !");
-			}
+				mav = "redirect:/documentUpload";
+			} else {
 
-			mav = "redirect:/documentUpload";
+				mav = "redirect:/accessDenied";
+			}
+			SessionKeyGen.changeSessionKey(request);
+
 		} catch (Exception e) {
+			SessionKeyGen.changeSessionKey(request);
 			e.printStackTrace();
 			mav = "login";
 		}
