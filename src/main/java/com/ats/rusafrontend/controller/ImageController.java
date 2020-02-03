@@ -825,8 +825,9 @@ public class ImageController {
 					ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
 				} else {
 
-					imageName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
+					String imageName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
 					session.setAttribute("eventFileName", imageName);
+					System.out.println(" imageName " + imageName);
 					info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, imageName);
 					if (info.isError() == false) {
 						System.out.println("User Id: " + userDetail);
@@ -918,7 +919,8 @@ public class ImageController {
 						eventReg.setRegDate(sf.format(date));
 						eventReg.setUserId(userDetail.getRegId());
 						try {
-							imageName = (String) session.getAttribute("eventFileName");
+							String imageName = (String) session.getAttribute("eventFileName");
+							System.out.println(" imageName " + imageName);
 							eventReg.setDoc1(imageName);
 						} catch (Exception e) {
 							eventReg.setDoc1(imageName);

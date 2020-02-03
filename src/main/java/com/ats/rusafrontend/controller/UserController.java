@@ -158,6 +158,13 @@ public class UserController {
 							int langId = (Integer) session.getAttribute("langId");
 
 							System.out.println("print: " + session.getId());
+							String imageName = new String();
+							
+							try {
+								imageName = (String) session.getAttribute("eventFileName");
+							}catch(Exception e) {
+								
+							}
 							session.removeAttribute("userDetail");
 							session.removeAttribute("userInfo");
 							session.invalidate();
@@ -177,6 +184,8 @@ public class UserController {
 										.DecodeKey(XssEscapeUtils.jsoupParse(request.getParameter("file"))));
 
 								if (file == 1) {
+									
+									session.setAttribute("eventFileName",imageName);
 									mav = "redirect:/applyEventFrontWithFile/"
 											+ EmailUtility.DecodeKey(String.valueOf(eventId));
 								} else {
