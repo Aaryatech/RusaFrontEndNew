@@ -304,7 +304,7 @@
 								<div class="col-12 col-sm-12 col-lg-6">
 									<label>Phone No. </label> <input type="text"
 										class="form-control" name="phoneNo" onchange="trim(this)"
-										value="${editReg.exVar2}" placeholder="Phone No" id="phoneNo">
+										value="${editReg.exVar1}" placeholder="Phone No" id="phoneNo">
 									<p class="error-msg" id="error_phoneNo" style="display: none;">Required
 										Field.</p>
 								</div>

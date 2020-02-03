@@ -562,7 +562,7 @@ public class UserController {
 						registration.setCollegeName(String.valueOf(instituteInfo.getMhInstId()));
 						registration.setDepartmentName(collegeDept);
 						registration.setDesignationName(designation);
-						registration.setExVar2(instiPhone);
+						registration.setExVar1(instiPhone);
 						registration.setUserType(2);
 					} else {
 						error = true;
@@ -615,7 +615,7 @@ public class UserController {
 						registration.setAuthorizedPerson(uniAuthour);
 						registration.setDepartmentName(uniDept);
 						registration.setDesignationName(uniDes);
-						registration.setExVar2(uniPhone);
+						registration.setExVar1(uniPhone);
 						registration.setUserType(3);
 
 					} else {

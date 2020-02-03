@@ -233,16 +233,16 @@ public class loginController {
 						}
 
 						try {
-							if (!editReg.getExVar2().equals(phoneNo)) {
+							if (!editReg.getExVar1().equals(phoneNo)) {
 
-								jsonRecord.setExVar2(editReg.getExVar2());
+								jsonRecord.setExVar1(editReg.getExVar1());
 								prevrecrod.setLastUpdate(dttime.format(date));
-								editReg.setExVar2(phoneNo);
+								editReg.setExVar1(phoneNo);
 							}
 						} catch (Exception e) {
-							jsonRecord.setExVar2(editReg.getExVar2());
+							jsonRecord.setExVar1(editReg.getExVar1());
 							prevrecrod.setLastUpdate(dttime.format(date));
-							editReg.setExVar2(phoneNo);
+							editReg.setExVar1(phoneNo);
 						}
 					}
 
@@ -298,8 +298,8 @@ public class loginController {
 						redirect = "redirect:/editProfile";
 					} else {
 
-						editReg.setExVar2(collegeMobile);
-						redirect = "redirect:/ editVerifyOtp /" + uuid + "/1";
+						editReg.setExVar1(collegeMobile);
+						redirect = "redirect:/editVerifyOtp/" + uuid + "/1";
 					}
 					session.setAttribute("success", "Successfully Updated Information !");
 				} else {
@@ -341,7 +341,7 @@ public class loginController {
 
 					MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 					map.add("uuid", uuid);
-					map.add("mobileNo", editReg.getExVar2());
+					map.add("mobileNo", editReg.getExVar1());
 					resWithOtp = Constant.getRestTemplate().postForObject(Constant.url + "/sendOtp", map, Info.class);
 					if (resWithOtp.isError() == false) {
 
@@ -382,8 +382,9 @@ public class loginController {
 				if (userOtp.equals(resWithOtp.getMsg())) {
 
 					jsonRecord.setMobileNumber(editReg.getMobileNumber());
-					editReg.setMobileNumber(editReg.getExVar2());
-
+					editReg.setMobileNumber(editReg.getExVar1());
+					editReg.setExVar1(jsonRecord.getExVar1());
+					
 					Registration a = Constant.getRestTemplate().postForObject(Constant.url + "/saveRegistration",
 							editReg, Registration.class);
 

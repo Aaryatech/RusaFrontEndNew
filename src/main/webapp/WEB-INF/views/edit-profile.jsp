@@ -171,8 +171,8 @@
 							<div class="col-12 col-sm-12 col-lg-12">
 								<label>Phone No. : </label>
 								<c:choose>
-									<c:when test="${not empty editReg.exVar2}">
-										<Strong>${editReg.exVar2}</Strong>
+									<c:when test="${not empty editReg.exVar1}">
+										<Strong>${editReg.exVar1}</Strong>
 									</c:when>
 									<c:otherwise>-</c:otherwise>
 								</c:choose>
