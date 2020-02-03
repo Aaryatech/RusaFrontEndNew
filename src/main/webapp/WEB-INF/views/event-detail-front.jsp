@@ -9,7 +9,9 @@
 <fmt:formatDate var="todayString" value="${today}" pattern="dd-MM-yyyy" />
 <fmt:formatDate var="dateString" value="${bean.date}"
 	pattern="dd/MM/yyyy" />
-
+<%@ page import="java.util.UUID"%>
+<%@ page import="java.security.MessageDigest"%>
+<%@ page import="java.math.BigInteger"%>
 <%@ page session="true"%>
 <%
 	//allow access only if session exists
@@ -117,7 +119,15 @@
 		<div class="row row-eq-height">
 			<c:set var="today_date" value="<%=new java.util.Date()%>" />
 
-
+			<%
+				UUID uuid = UUID.randomUUID();
+				MessageDigest md = MessageDigest.getInstance("MD5");
+				byte[] messageDigest = md.digest(String.valueOf(uuid).getBytes());
+				BigInteger number = new BigInteger(1, messageDigest);
+				String hashtext = number.toString(16);
+				session = request.getSession();
+				session.setAttribute("generatedKey", hashtext);
+			%>
 
 			<div class="col-12 col-sm-15 col-lg-18 right-Colm news-listing-page">
 				<c:if test="${sessionScope.success != null}">
@@ -203,10 +213,8 @@
 
 									</div>
 									<input type="hidden" name="newsblogsId"
-										value="${event.newsblogsId}">
-
-
-
+										value="${event.newsblogsId}"> <input type="hidden"
+										value="<%out.println(hashtext);%>" name="token" id="token">
 									<button type="submit" class="btn button apply">Apply</button>
 
 								</form>
@@ -247,8 +255,8 @@
 										</p>
 									</div>
 									<input type="hidden" name="newsblogsId"
-										value="${event.newsblogsId}">
-
+										value="${event.newsblogsId}"> <input type="hidden"
+										value="<%out.println(hashtext);%>" name="token" id="token">
 									<button type="submit" class="btn button apply">Apply</button>
 
 

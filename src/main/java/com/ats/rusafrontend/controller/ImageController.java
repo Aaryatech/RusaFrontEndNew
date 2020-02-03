@@ -752,59 +752,97 @@ public class ImageController {
 			e.printStackTrace();
 		}
 		try {
-			if (userDetail != null) {
 
-				pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
+			String token = request.getParameter("token");
+			String key = (String) session.getAttribute("generatedKey");
 
-				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+			if (token.trim().equals(key.trim())) {
 
-				map1.add("newsblogsId", newsblogsId);
-				map1.add("userId", userDetail.getRegId());
-				info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1, Info.class);
+				if (userDetail != null) {
 
-				if (info.isError() == true) {
-					EventRegistration eventReg = new EventRegistration();
+					pdfName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
 
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(date);
-					eventReg.setDelStatus(1);
-					eventReg.setIsActive(1);
-					eventReg.setNewsblogsId(newsblogsId);
-					eventReg.setRegDate(sf.format(date));
-					eventReg.setUserId(userDetail.getRegId());
-					eventReg.setDoc1(pdfName);
+					MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 
-					info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, pdfName);
+					map1.add("newsblogsId", newsblogsId);
+					map1.add("userId", userDetail.getRegId());
+					info = Constant.getRestTemplate().postForObject(Constant.url + "/getAppliedEvents", map1,
+							Info.class);
 
-					if (info.isError() == false) {
-						EventRegistration res = Constant.getRestTemplate()
-								.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
+					if (info.isError() == true) {
 
-						session.setAttribute("success", "Successfully Registed Event !");
+						int langId = (Integer) session.getAttribute("langId");
+						MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+						map.add("langId", langId);
+						map.add("newsblogsId", newsblogsId);
+						NewsDetails eventList = Constant.getRestTemplate()
+								.postForObject(Constant.url + "/getEventListByNewsId", map, NewsDetails.class);
+						int userType = (Integer) session.getAttribute("userType");
+						String[] ids = eventList.getExVar2().split(",");
+
+						int allowd = 0;
+
+						for (int i = 0; i < ids.length; i++) {
+
+							if (userType == Integer.parseInt(ids[i])) {
+								allowd = 1;
+								break;
+							}
+						}
+
+						if (allowd == 1) {
+
+							EventRegistration eventReg = new EventRegistration();
+
+							Calendar cal = Calendar.getInstance();
+							cal.setTime(date);
+							eventReg.setDelStatus(1);
+							eventReg.setIsActive(1);
+							eventReg.setNewsblogsId(newsblogsId);
+							eventReg.setRegDate(sf.format(date));
+							eventReg.setUserId(userDetail.getRegId());
+							eventReg.setDoc1(pdfName);
+
+							info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, pdfName);
+
+							if (info.isError() == false) {
+								EventRegistration res = Constant.getRestTemplate().postForObject(
+										Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
+
+								session.setAttribute("success", "Successfully Registed Event !");
+							}
+						} else {
+
+							session.setAttribute("errorMsg", "You can't apply for this event !");
+						}
+						// upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf,
+						// pdfName);
+
+					} else {
+
+						session.setAttribute("errorMsg", "Already Register ");
 					}
-					// upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.pdf,
-					// pdfName);
-
-				} else {
-
-					session.setAttribute("errorMsg", "Already Register ");
-				}
-				ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
-			} else {
-
-				imageName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
-				info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, imageName);
-				if (info.isError() == false) {
-					System.out.println("User Id: " + userDetail);
-					session.setAttribute("errorMsg", "Please login for apply event !");
-					session.setAttribute("fileFromApplyEvent", EmailUtility.Encrypt(String.valueOf(1)));
-					session.setAttribute("eventFromApplyEven", EmailUtility.Encrypt(String.valueOf(newsblogsId)));
-					ss = "redirect:/login";
-				} else {
-					session.setAttribute("errorMsg", "File Upload Error");
 					ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
-				}
+				} else {
 
+					imageName = dateTimeInGMT.format(date) + "_" + pagePdf.get(0).getOriginalFilename();
+					session.setAttribute("eventFileName", imageName);
+					info = upload.saveUploadedFiles(pagePdf.get(0), Constant.cmsPdf, Constant.files, imageName);
+					if (info.isError() == false) {
+						System.out.println("User Id: " + userDetail);
+						session.setAttribute("errorMsg", "Please login for apply event !");
+						session.setAttribute("fileFromApplyEvent", EmailUtility.Encrypt(String.valueOf(1)));
+						session.setAttribute("eventFromApplyEven", EmailUtility.Encrypt(String.valueOf(newsblogsId)));
+						ss = "redirect:/login";
+					} else {
+						session.setAttribute("errorMsg", "File Upload Error");
+						ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
+					}
+
+				}
+			} else {
+				ss = "redirect:/eventDetailfront/" + EmailUtility.Encrypt(String.valueOf(newsblogsId));
+				session.setAttribute("errorMsg", "something wrong");
 			}
 		} catch (Exception e) {
 
@@ -879,7 +917,12 @@ public class ImageController {
 						eventReg.setNewsblogsId(newsblogsId);
 						eventReg.setRegDate(sf.format(date));
 						eventReg.setUserId(userDetail.getRegId());
-						eventReg.setDoc1(imageName);
+						try {
+							imageName = (String) session.getAttribute("eventFileName");
+							eventReg.setDoc1(imageName);
+						} catch (Exception e) {
+							eventReg.setDoc1(imageName);
+						}
 
 						EventRegistration res = Constant.getRestTemplate()
 								.postForObject(Constant.url + "/saveEventRegister", eventReg, EventRegistration.class);
