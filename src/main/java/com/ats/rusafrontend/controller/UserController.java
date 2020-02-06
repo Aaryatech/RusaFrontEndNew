@@ -159,11 +159,11 @@ public class UserController {
 
 							System.out.println("print: " + session.getId());
 							String imageName = new String();
-							
+
 							try {
 								imageName = (String) session.getAttribute("eventFileName");
-							}catch(Exception e) {
-								
+							} catch (Exception e) {
+
 							}
 							session.removeAttribute("userDetail");
 							session.removeAttribute("userInfo");
@@ -184,8 +184,8 @@ public class UserController {
 										.DecodeKey(XssEscapeUtils.jsoupParse(request.getParameter("file"))));
 
 								if (file == 1) {
-									
-									session.setAttribute("eventFileName",imageName);
+
+									session.setAttribute("eventFileName", imageName);
 									mav = "redirect:/applyEventFrontWithFile/"
 											+ EmailUtility.DecodeKey(String.valueOf(eventId));
 								} else {
@@ -716,6 +716,7 @@ public class UserController {
 			 * model.addObject("siteKey", Constant.siteKey); model.addObject("flag", flag);
 			 * flag = 0; }
 			 */
+			uuid = XssEscapeUtils.jsoupParse(uuid);
 			model.addObject("uuid", uuid);
 
 		} catch (Exception e) {
@@ -730,7 +731,6 @@ public class UserController {
 
 		String userOtp = request.getParameter("userOtp");
 		String uuid = request.getParameter("uuid");
-		System.out.println("UUID :" + uuid + ", UserOTP :" + userOtp);
 
 		ModelAndView mav = new ModelAndView("otp");
 		mav.addObject("uuid", uuid);
@@ -1179,9 +1179,8 @@ public class UserController {
 	public String forgetPassword(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
-
-		String userName = request.getParameter("userName");
-		String mobileNumber = request.getParameter("phone");
+		String userName = XssEscapeUtils.jsoupParse(request.getParameter("userName"));
+		String mobileNumber = XssEscapeUtils.jsoupParse(request.getParameter("phone"));
 
 		try {
 
@@ -1225,7 +1224,7 @@ public class UserController {
 				model.addAttribute("maintainance", maintainance);
 			} else {
 				int userDetail = (int) session.getAttribute("UserDetail");
-				String id = request.getParameter("eventId");
+				String id = XssEscapeUtils.jsoupParse(request.getParameter("eventId"));
 
 				int eventId = Integer.parseInt(EmailUtility.DecodeKey(String.valueOf(id)));
 				mav = "eventfeedback";

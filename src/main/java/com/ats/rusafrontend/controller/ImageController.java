@@ -72,7 +72,7 @@ public class ImageController {
 		ModelAndView model = new ModelAndView("content/news-detail");
 
 		try {
-
+			newsblogsId = XssEscapeUtils.jsoupParse(newsblogsId);
 			session.setAttribute("mapping", "NewsDetails-" + newsblogsId);
 
 			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
@@ -576,7 +576,7 @@ public class ImageController {
 
 		ModelAndView model = new ModelAndView("event-detail-front");
 		try {
-
+			newsblogsId = XssEscapeUtils.jsoupParse(newsblogsId);
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "eventDetailfront/" + newsblogsId);
 

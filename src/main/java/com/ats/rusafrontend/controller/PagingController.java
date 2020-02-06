@@ -23,6 +23,7 @@ import com.ats.rusafrontend.commen.Constant;
 import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.InitializeSession;
+import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.Maintainance;
 import com.ats.rusafrontend.model.NewsDetails;
 import com.ats.rusafrontend.model.Registration;
@@ -39,6 +40,7 @@ public class PagingController {
 
 		ModelAndView model = new ModelAndView("content/eventList");
 		try {
+			page = XssEscapeUtils.jsoupParse(page);
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "listOFEvent");
 			 
@@ -117,6 +119,7 @@ public class PagingController {
 
 		ModelAndView model = new ModelAndView("content/news-list");
 		try {
+			page = XssEscapeUtils.jsoupParse(page);
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "listOFNews");
 			 

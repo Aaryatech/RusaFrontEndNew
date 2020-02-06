@@ -32,6 +32,7 @@ import com.ats.rusafrontend.commen.DateConvertor;
 import com.ats.rusafrontend.commen.EmailUtility;
 import com.ats.rusafrontend.commen.Info;
 import com.ats.rusafrontend.commen.InitializeSession;
+import com.ats.rusafrontend.commen.XssEscapeUtils;
 import com.ats.rusafrontend.model.*;
 
 /**
@@ -228,7 +229,7 @@ public class HomeController {
 	public String retriveSession(@PathVariable("url") String url, HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		String[] arry = url.split("-");
+		String[] arry = XssEscapeUtils.jsoupParse(url).split("-");
 
 		Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
 				Maintainance.class);
@@ -356,7 +357,7 @@ public class HomeController {
 
 		} else {
 
-			String[] arry = url.split("-");
+			String[] arry = XssEscapeUtils.jsoupParse(url).split("-");
 
 			try {
 				System.out.println(url);

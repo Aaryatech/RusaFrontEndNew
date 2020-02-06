@@ -334,7 +334,7 @@ public class loginController {
 
 			HttpSession session = request.getSession();
 			model.addObject("editReg", editReg);
-
+			uuid = XssEscapeUtils.jsoupParse(uuid);
 			if (uuid.equals(editReg.getUserUuid())) {
 
 				if (resend == 1) {
@@ -702,7 +702,7 @@ public class loginController {
 		ModelAndView mav = null;
 		String a = new String();
 		try {
-
+			hashKey = XssEscapeUtils.jsoupParse(hashKey);
 			a = "redirect:/eventDetail" + "?newsblogsId=" + EmailUtility.Encrypt(String.valueOf(newsblogsId))
 					+ "&typeId=" + EmailUtility.Encrypt(String.valueOf(2));
 
@@ -776,7 +776,7 @@ public class loginController {
 
 		HttpSession session = request.getSession();
 		int newsblogsId = Integer.parseInt(request.getParameter("newsblogsId"));
-		System.out.println("newsblogsId :" + newsblogsId);
+		 
 		int userDetail = 0;
 		String returnString = new String();
 		try {

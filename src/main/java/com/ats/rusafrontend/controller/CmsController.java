@@ -38,6 +38,7 @@ public class CmsController {
 		List<NewsSectionList> newsSectionList = new ArrayList<>();
 		try {
 			HttpSession session = request.getSession();
+			slugName = XssEscapeUtils.jsoupParse(slugName);
 			session.setAttribute("mapping", "info-" + slugName);
 			int langId = (Integer) session.getAttribute("langId");
 			// System.out.println(slugName);
@@ -329,7 +330,10 @@ public class CmsController {
 
 		ModelAndView model = new ModelAndView("content/imgGallaryDetail");
 		try {
-
+			cateName = XssEscapeUtils.jsoupParse(cateName);
+			slugname = XssEscapeUtils.jsoupParse(slugname);
+			catId = Integer.parseInt(XssEscapeUtils.jsoupParse(String.valueOf(catId)));
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("mapping", "imgGallary");
 
