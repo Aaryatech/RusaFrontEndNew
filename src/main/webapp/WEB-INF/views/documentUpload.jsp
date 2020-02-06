@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 	//allow access only if session exists
 	//	HttpSession session = request.getSession();
@@ -14,22 +14,22 @@
 		response.sendRedirect(contextPath);
 	}
 %>
- <%@ page import="java.util.UUID"%>
+<%@ page import="java.util.UUID"%>
 <%@ page import="java.security.MessageDigest"%>
 <%@ page import="java.math.BigInteger"%>
 
 
 
 <%
-												UUID uuid = UUID.randomUUID();
-													MessageDigest md = MessageDigest.getInstance("MD5");
-													byte[] messageDigest = md.digest(String.valueOf(uuid).getBytes());
-													BigInteger number = new BigInteger(1, messageDigest);
-													String hashtext = number.toString(16);
-													session = request.getSession();
-													session.setAttribute("generatedKey", hashtext);
-											%>
- 
+	UUID uuid = UUID.randomUUID();
+	MessageDigest md = MessageDigest.getInstance("MD5");
+	byte[] messageDigest = md.digest(String.valueOf(uuid).getBytes());
+	BigInteger number = new BigInteger(1, messageDigest);
+	String hashtext = number.toString(16);
+	session = request.getSession();
+	session.setAttribute("generatedKey", hashtext);
+%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -146,11 +146,10 @@
 						action="${pageContext.request.contextPath}/submitUploadDocForm"
 						method="post" name="login_form" id="submitForm"
 						enctype="multipart/form-data">
-						
-							<input type="hidden" value="<%out.println(hashtext);%>"
-												name="token" id="token">
 
-						<input type="hidden" name="userType" value="${editReg.userType}">
+						<input type="hidden" value="<%out.println(hashtext);%>"
+							name="token" id="token"> <input type="hidden"
+							name="userType" value="${editReg.userType}">
 
 						<div class="col-12 col-sm-12 col-lg-12">
 							<label>Document Name <span class="text-danger">*</span>
@@ -208,10 +207,12 @@
 									<tr class="odd">
 
 										<td>${count.index+1}</td>
-										<td><c:out value="${uploadDocumentlist.title}" escapeXml="true"/></td>
-										<td><c:out value="${uploadDocumentlist.typeName}" escapeXml="true"/></td>
+										<td><c:out value="${uploadDocumentlist.title}"
+												escapeXml="true" /></td>
+										<td><c:out value="${uploadDocumentlist.typeName}"
+												escapeXml="true" /></td>
 										<td><a
-											href="${frontDocUrl}${uploadDocumentlist.fileName}"
+											href="${pageContext.request.contextPath}/downloadDocument?docId=${uploadDocumentlist.docId}"
 											target="_blank">Download</a></td>
 										<td style="text-align: right;">${uploadDocumentlist.extraVarchar1}</td>
 									</tr>

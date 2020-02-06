@@ -1,11 +1,17 @@
 package com.ats.rusafrontend.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -94,6 +100,75 @@ public class DocumentUploadController {
 		}
 
 		return mav;
+	}
+
+	@RequestMapping(value = "/downloadDocument", method = RequestMethod.GET)
+	public void downloadDocument(HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+
+		try {
+
+			session.setAttribute("mapping", "documentUpload");
+
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+			} else {
+
+				int userId = (int) session.getAttribute("UserDetail");
+				int docId = Integer.parseInt(request.getParameter("docId"));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("userId", userId);
+				map.add("docId", docId);
+				Info imgRes = Constant.getRestTemplate().postForObject(Constant.url + "/getDocVarification", map,
+						Info.class);
+				System.out.println(imgRes);
+
+				if (imgRes.isError() == false) {
+					String dataDirectory = Constant.userDocURL;
+					/* request.getServletContext().getRealPath("/WEB-INF/downloads/pdf/"); */
+					String fileName = imgRes.getMsg();
+					Path file = Paths.get(dataDirectory, fileName);
+					if (Files.exists(file)) {
+						response.setContentType("application/pdf");
+						response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+						try {
+							Files.copy(file, response.getOutputStream());
+							response.getOutputStream().flush();
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						}
+					}
+				} else {
+					RequestDispatcher rd = request.getRequestDispatcher("accessDenied");
+					if (rd != null)
+						rd.forward(request, response);
+				}
+				// model.addAttribute("frontDocUrl", Constant.getUserDocURL);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			RequestDispatcher rd = request.getRequestDispatcher("accessDenied");
+			if (rd != null)
+				try {
+					rd.forward(request, response);
+				} catch (ServletException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		}
+
+	}
+
+	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+	public String accessDenied(HttpServletResponse response, Model model) {
+
+		return "accessDenied";
 	}
 
 	@RequestMapping(value = "/submitUploadDocForm", method = RequestMethod.POST)
