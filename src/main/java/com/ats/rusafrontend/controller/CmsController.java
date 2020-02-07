@@ -1,10 +1,15 @@
 package com.ats.rusafrontend.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -407,6 +412,62 @@ public class CmsController {
 		return model;
 	}
 
+	@RequestMapping(value = "downloadDocslink", method = RequestMethod.GET)
+	public void downloadDocuments( HttpServletRequest request, HttpServletResponse response) {
+
+		HttpSession session = request.getSession();
+		try {
+			Maintainance maintainance = Constant.getRestTemplate().getForObject(Constant.url + "/checkIsMaintenance",
+					Maintainance.class);
+			if (maintainance.getMaintenanceStatus() == 1) {
+
+			} else {
+
+				String token = request.getParameter("token") ;
+				int docId = Integer.parseInt(request.getParameter("docId"));
+				int userId = Integer.parseInt(request.getParameter("userId"));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
+				map.add("userId", userId);
+				map.add("token", token);
+				map.add("docId", docId);
+				Info imgRes = Constant.getRestTemplate().postForObject(Constant.url + "/getDocVarificationForApp", map,
+						Info.class);
+				System.out.println(imgRes);
+
+				if (imgRes.isError() == false) {
+					String dataDirectory = Constant.userDocURL;
+					/* request.getServletContext().getRealPath("/WEB-INF/downloads/pdf/"); */
+					String fileName = imgRes.getMsg();
+					Path file = Paths.get(dataDirectory, fileName);
+					if (Files.exists(file)) {
+						response.setContentType("application/pdf");
+						response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+						try {
+							Files.copy(file, response.getOutputStream());
+							response.getOutputStream().flush();
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						}
+					}
+				} else {
+					
+					MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+					map2.add("id", 1);
+					Logo logo = Constant.getRestTemplate().postForObject(Constant.url + "/getLogoListById", map2, Logo.class);
+					session.setAttribute("logo", logo);
+					session.setAttribute("logoUrl", Constant.getLgogImageURL);
+					RequestDispatcher rd = request.getRequestDispatcher("accessDenied");
+					if (rd != null)
+						rd.forward(request, response);
+				}
+				// model.addAttribute("frontDocUrl", Constant.getUserDocURL);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		  
+	}
+	
 	@RequestMapping(value = "errors", method = RequestMethod.GET)
 	public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
 
