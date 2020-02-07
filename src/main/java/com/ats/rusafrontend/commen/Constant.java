@@ -7,8 +7,8 @@ public class Constant {
 
 	//public static final String url = "http://localhost:8094/";
 
-	public static final String url = "http://115.124.111.54:8080/RusaSiteWebService/";
-	//public static final String url="http://10.9.63.2:8080/RusaSiteWebService/";
+	//public static final String url = "http://115.124.111.54:8080/RusaSiteWebService/";
+	public static final String url="http://10.9.63.2:8080/RusaSiteWebService/";
 
 	/*
 	 * public static final String getLgogImageURL =
@@ -62,8 +62,8 @@ public class Constant {
 	public static final String getUserProfileURL = "http://115.124.111.54:8080/mediarusa/userprofile/";
 	public static final String siteFrontEndUrl = "http://115.124.111.54:8080/Rusaweb/";
 	public static final String siteDomainUrl = "http://115.124.111.54:8080/";
-	public static final String getUserDocURL = "http://115.124.111.54:8080/mediarusa/userdocument/";
-	public static final String userDocURL = "/opt/tomcat/webapps/mediarusa/userdocument/";
+	public static final String getUserDocURL = "http://115.124.111.54:8080/mediarusa/userUploadeddocument/";
+	public static final String userDocURL = "/opt/tomcat/webapps/mediarusa/userUploadeddocument/";
 	public static final String userProfileURL = "/opt/tomcat/webapps/mediarusa/userprofile/";
 	public static final String cmsPdf = "/opt/tomcat/webapps/mediarusa/pdf/";
 
@@ -80,7 +80,7 @@ public class Constant {
 
 	public static RestTemplate getRestTemplate() {
 		rest = new RestTemplate();
-		rest.getInterceptors().add(new BasicAuthorizationInterceptor("aaryatech", "Aaryatech@123"));
+		rest.getInterceptors().add(new BasicAuthorizationInterceptor("aaryatech", "Aaryatech@1234567"));
 		return rest;
 
 	}

@@ -440,7 +440,7 @@ public class CmsController {
 					String fileName = imgRes.getMsg();
 					Path file = Paths.get(dataDirectory, fileName);
 					if (Files.exists(file)) {
-						response.setContentType("application/pdf");
+						//response.setContentType("application/pdf");
 						response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
 						try {
 							Files.copy(file, response.getOutputStream());
